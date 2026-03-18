@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>你的理想型男友 | 女也 She Is</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Courier+Prime:wght@400;700&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-override.css" />
+    <style>
+      :root {
+        --bg: #f5f0eb;
+        --paper: rgba(255, 255, 255, 0.84);
+        --ink: #2d2338;
+        --brand: #4A3073;
+        --brand-soft: rgba(74, 48, 115, 0.12);
+        --line: rgba(74, 48, 115, 0.14);
+        --muted: rgba(74, 48, 115, 0.68);
+        --shadow: 0 18px 44px rgba(74, 48, 115, 0.09);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at top left, rgba(74, 48, 115, 0.14), transparent 34%),
+          radial-gradient(circle at bottom right, rgba(74, 48, 115, 0.09), transparent 32%),
+          var(--bg);
+        color: var(--ink);
+        font-family: "Noto Serif SC", "Source Han Serif SC", serif;
+        line-height: 1.85;
+      }
+      .glow {
+        position: fixed;
+        pointer-events: none;
+        z-index: 0;
+        border-radius: 50%;
+        filter: blur(80px);
+      }
+      .glow.top {
+        width: 320px;
+        height: 320px;
+        top: -120px;
+        left: -80px;
+        background: rgba(74, 48, 115, 0.1);
+      }
+      .glow.bottom {
+        width: 280px;
+        height: 280px;
+        right: -60px;
+        bottom: -80px;
+        background: rgba(74, 48, 115, 0.08);
+      }
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 22px 18px 40px;
+      }
+      .back {
+        display: inline-block;
+        margin-bottom: 16px;
+        color: var(--brand);
+        text-decoration: none;
+        font-size: 14px;
+      }
+      .progress-shell {
+        height: 2px;
+        border-radius: 999px;
+        background: rgba(74, 48, 115, 0.08);
+        overflow: hidden;
+        margin-bottom: 12px;
+      }
+      .progress-bar {
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(90deg, var(--brand), rgba(74, 48, 115, 0.28));
+        transition: width .25s ease;
+      }
+      .meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 18px;
+        color: var(--muted);
+        font-size: 12px;
+        letter-spacing: .06em;
+      }
+      .panel {
+        background: var(--paper);
+        border: 1px solid rgba(255,255,255,.65);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(12px);
+        padding: 30px 22px;
+      }
+      .hidden { display: none; }
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--muted);
+        font-family: "Courier Prime", monospace;
+        font-size: 11px;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+      }
+      .title {
+        margin: 0;
+        font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+        font-size: 44px;
+        line-height: 1.08;
+        color: var(--ink);
+        letter-spacing: .03em;
+      }
+      .subtitle, .body-copy {
+        margin: 12px 0 0;
+        color: #5f5968;
+        font-size: 15px;
+      }
+      .intro-card {
+        margin-top: 22px;
+        padding: 18px;
+        border-radius: 18px;
+        background: rgba(74, 48, 115, 0.05);
+        border: 1px solid var(--line);
+      }
+      .intro-points {
+        margin: 16px 0 0;
+        padding-left: 18px;
+        color: #4f4a57;
+        font-size: 14px;
+      }
+      .intro-points li + li { margin-top: 8px; }
+      .btn-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 26px;
+      }
+      button, .link-btn {
+        appearance: none;
+        border: 0;
+        border-radius: 999px;
+        padding: 12px 20px;
+        font: inherit;
+        font-size: 14px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: transform .18s ease, opacity .18s ease, box-shadow .18s ease, background-color .18s ease;
+      }
+      button:hover, .link-btn:hover { transform: translateY(-1px); }
+      .primary {
+        color: #fff;
+        background: linear-gradient(135deg, var(--brand), #6b489e);
+        box-shadow: 0 10px 24px rgba(74, 48, 115, 0.18);
+      }
+      .ghost, .link-btn {
+        color: var(--brand);
+        background: transparent;
+        border: 1px solid var(--line);
+      }
+      .question-no {
+        color: var(--muted);
+        font-size: 12px;
+        letter-spacing: .08em;
+      }
+      .question-title {
+        margin: 10px 0 18px;
+        font-size: 28px;
+        line-height: 1.5;
+        color: var(--ink);
+        font-weight: 500;
+      }
+      .options {
+        display: grid;
+        gap: 12px;
+      }
+      .option {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 14px 16px;
+        background: rgba(255,255,255,0.72);
+        cursor: pointer;
+        transition: border-color .2s ease, background-color .2s ease, box-shadow .2s ease;
+      }
+      .option:hover {
+        border-color: rgba(74, 48, 115, 0.28);
+        background: rgba(74, 48, 115, 0.05);
+      }
+      .option input { display: none; }
+      .option-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+      .option-label {
+        font-size: 16px;
+        color: var(--ink);
+      }
+      .option-tag {
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .option.selected {
+        border-color: rgba(74, 48, 115, 0.4);
+        background: rgba(74, 48, 115, 0.08);
+        box-shadow: 0 8px 20px rgba(74, 48, 115, 0.08);
+      }
+      .result-emoji {
+        font-size: 46px;
+      }
+      .result-name {
+        margin: 8px 0 6px;
+        font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+        font-size: 42px;
+        letter-spacing: .04em;
+      }
+      .result-desc {
+        margin: 12px 0 0;
+        color: #55505e;
+        font-size: 15px;
+      }
+      .score-grid {
+        display: grid;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .score-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 12px 14px;
+        border-radius: 16px;
+        background: rgba(74, 48, 115, 0.05);
+        border: 1px solid var(--line);
+        color: #534d5f;
+        font-size: 14px;
+      }
+      .score-item strong { color: var(--brand); }
+      @media (max-width: 640px) {
+        .title { font-size: 36px; }
+        .question-title { font-size: 23px; }
+        .result-name { font-size: 34px; }
+        .panel { padding: 24px 18px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="glow top" aria-hidden="true"></div>
+    <div class="glow bottom" aria-hidden="true"></div>
+    <main class="page">
+      <a class="back" href="assessment.html">← 返回测评</a>
+      <div class="progress-shell"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="meta"><span id="progressText">INTRO</span><span>12 QUESTIONS · 5 TYPES</span></div>
+
+      <section class="panel" id="introView">
+        <p class="eyebrow">Ideal Boyfriend Archetype</p>
+        <h1 class="title">你的理想型男友</h1>
+        <p class="subtitle">一份关于陪伴节奏、情绪气候与亲密偏好的轻测验。</p>
+        <div class="intro-card">
+          <p class="body-copy">不是在挑一个“最好的人”，而是在辨认：什么样的男性气质，会让你真正感到被理解、被安放、被点亮。</p>
+          <ul class="intro-points">
+            <li>12 道单选题，按第一直觉作答即可。</li>
+            <li>结果会落在 5 个原型之一：守灯 / 野风 / 对镜 / 栖木 / 夜谈。</li>
+            <li>完成后可直接查看结果描述，并返回测评页。</li>
+          </ul>
+        </div>
+        <div class="btn-row">
+          <button class="primary" id="startBtn">开始测试</button>
+          <a class="link-btn" href="assessment.html">先返回</a>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="quizView">
+        <div class="question-no" id="questionNo"></div>
+        <h2 class="question-title" id="questionTitle"></h2>
+        <div class="options" id="options"></div>
+        <div class="btn-row">
+          <button class="ghost" id="prevBtn">上一题</button>
+          <button class="primary" id="nextBtn">下一题</button>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="resultView"></section>
+    </main>
+
+    <script>
+      const archetypes = {
+        keeper: {
+          name: '守灯',
+          emoji: '🕯️',
+          description: '你偏爱的不是轰烈，而是稳定发亮的人。他不一定最张扬，却会在深夜接住你的情绪，在日常里兑现承诺，让爱像一盏一直亮着的灯。'
+        },
+        wild: {
+          name: '野风',
+          emoji: '🌬️',
+          description: '你会被生命力和自由感吸引。理想中的他有一点不受驯，却愿意带你看更辽阔的世界；和他在一起，爱像空气流动，轻快、鲜活、有呼吸。'
+        },
+        mirror: {
+          name: '对镜',
+          emoji: '🪞',
+          description: '你需要的是一个真正看见你的人。他敏锐、会表达、愿意反思，也能把你的复杂情绪照得清楚而温柔。你想要的亲密，本质上是深度理解。'
+        },
+        nest: {
+          name: '栖木',
+          emoji: '🪺',
+          description: '你理想中的关系像一棵能停靠的树。他给人踏实、温厚、可依赖的感觉，不急着侵入你的世界，却会稳稳腾出空间让你安心落脚。'
+        },
+        midnight: {
+          name: '夜谈',
+          emoji: '🌙',
+          description: '你容易被灵魂感和深夜对话吸引。理想中的他有思想、有故事，愿意陪你聊那些无法轻易说出口的部分。爱对你来说，是精神上的同频与并肩。'
+        }
+      };
+
+      const questions = [
+        {
+          text: '一次疲惫又混乱的日子结束后，你最希望他怎么接住你？',
+          options: [
+            { text: '先给我稳定的安顿和照顾', tag: '安稳', scores: { keeper: 2, nest: 1 } },
+            { text: '拉我出去透气，让状态重新流动起来', tag: '松动', scores: { wild: 2, midnight: 1 } },
+            { text: '陪我把情绪说清楚，认真听我讲', tag: '理解', scores: { mirror: 2, midnight: 1 } }
+          ]
+        },
+        {
+          text: '你更容易被哪种靠近方式打动？',
+          options: [
+            { text: '持续、靠谱、不忽冷忽热', tag: '持续', scores: { keeper: 2, nest: 1 } },
+            { text: '自然有趣，不按套路但很真', tag: '鲜活', scores: { wild: 2, mirror: 1 } },
+            { text: '一开口就像懂你很久', tag: '懂你', scores: { mirror: 2, midnight: 1 } }
+          ]
+        },
+        {
+          text: '如果一起旅行，你最期待他带来的感受是？',
+          options: [
+            { text: '行程安心，不用我操心太多', tag: '可靠', scores: { keeper: 2, nest: 1 } },
+            { text: '有点冒险感，临时改计划也无妨', tag: '自由', scores: { wild: 2, midnight: 1 } },
+            { text: '路上会聊很多，像一起穿过内心', tag: '共鸣', scores: { mirror: 2, midnight: 1 } }
+          ]
+        },
+        {
+          text: '当你脆弱时，最怕遇到怎样的人？',
+          options: [
+            { text: '嘴上关心，行动却总是缺席', tag: '失约', scores: { keeper: 2 } },
+            { text: '过于控制，让我无法呼吸', tag: '压迫', scores: { wild: 2, nest: 1 } },
+            { text: '只给建议，却没有真正理解我', tag: '失真', scores: { mirror: 2, midnight: 1 } }
+          ]
+        },
+        {
+          text: '你希望亲密关系更像哪种画面？',
+          options: [
+            { text: '厨房有灯，回家有人等', tag: '灯火', scores: { keeper: 2, nest: 1 } },
+            { text: '一起上路，世界很大也敢去', tag: '远方', scores: { wild: 2 } },
+            { text: '坐在窗边，把心事慢慢讲完', tag: '深聊', scores: { midnight: 2, mirror: 1 } }
+          ]
+        },
+        {
+          text: '在你心里，成熟更接近以下哪一种？',
+          options: [
+            { text: '答应的事情会做到', tag: '兑现', scores: { keeper: 2 } },
+            { text: '有自己的方向，也尊重我的边界', tag: '松弛', scores: { wild: 2, nest: 1 } },
+            { text: '能表达感受，也能理解复杂情绪', tag: '洞察', scores: { mirror: 2, midnight: 1 } }
+          ]
+        },
+        {
+          text: '你最想从一段爱里得到什么？',
+          options: [
+            { text: '被稳稳接住的安全感', tag: '安全', scores: { keeper: 2, nest: 1 } },
+            { text: '一起活得更开阔的生命力', tag: '活力', scores: { wild: 2 } },
+            { text: '被深深理解后的放松', tag: '理解', scores: { mirror: 2, midnight: 1 } }
+          ]
+        },
+        {
+          text: '如果他发来一条消息，你最容易因为什么心动？',
+          options: [
+            { text: '内容很简单，但总在我需要时出现', tag: '在场', scores: { keeper: 2, nest: 1 } },
+            { text: '一句话就让我想笑，像风吹开窗', tag: '轻盈', scores: { wild: 2 } },
+            { text: '他记得我说过的细节，还愿意继续聊下去', tag: '记得', scores: { mirror: 2, midnight: 1 } }
+          ]
+        },
+        {
+          text: '你更欣赏他身上的哪种力量？',
+          options: [
+            { text: '沉着、稳定、关键时刻不掉线', tag: '定力', scores: { keeper: 2, nest: 1 } },
+            { text: '敢冒险，有一点野，也有一点光', tag: '锋芒', scores: { wild: 2 } },
+            { text: '有观察力，也有表达的诚意', tag: '敏锐', scores: { mirror: 2, midnight: 1 } }
+          ]
+        },
+        {
+          text: '你理想中的约会，更像下面哪一项？',
+          options: [
+            { text: '一起做饭、散步、看很普通却温柔的夜', tag: '日常', scores: { nest: 2, keeper: 1 } },
+            { text: '说走就走，去看陌生的风景', tag: '冒险', scores: { wild: 2 } },
+            { text: '找一家安静的店，从天黑聊到打烊', tag: '对话', scores: { midnight: 2, mirror: 1 } }
+          ]
+        },
+        {
+          text: '当关系进入平稳期，你最希望它保留什么？',
+          options: [
+            { text: '照旧可靠的陪伴和行动', tag: '恒定', scores: { keeper: 2, nest: 1 } },
+            { text: '仍然有惊喜，不被日常困住', tag: '流动', scores: { wild: 2 } },
+            { text: '依旧愿意交换真实想法与感受', tag: '真心', scores: { mirror: 2, midnight: 1 } }
+          ]
+        },
+        {
+          text: '最后，你觉得真正让你爱上的，通常是什么？',
+          options: [
+            { text: '他让我觉得生活可以被托付', tag: '托付', scores: { keeper: 2, nest: 1 } },
+            { text: '他让我看见更自由、更有趣的自己', tag: '打开', scores: { wild: 2 } },
+            { text: '他让我感到灵魂有回声', tag: '回声', scores: { midnight: 2, mirror: 1 } }
+          ]
+        }
+      ];
+
+      const state = { current: -1, answers: new Array(questions.length).fill(null) };
+
+      const introView = document.getElementById('introView');
+      const quizView = document.getElementById('quizView');
+      const resultView = document.getElementById('resultView');
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
+      const questionNo = document.getElementById('questionNo');
+      const questionTitle = document.getElementById('questionTitle');
+      const optionsEl = document.getElementById('options');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const startBtn = document.getElementById('startBtn');
+
+      function updateProgress() {
+        if (state.current < 0) {
+          progressBar.style.width = '0%';
+          progressText.textContent = 'INTRO';
+          return;
+        }
+        const percent = ((state.current + 1) / questions.length) * 100;
+        progressBar.style.width = percent + '%';
+        progressText.textContent = 'Q ' + (state.current + 1) + ' / ' + questions.length;
+      }
+
+      function renderQuestion() {
+        const question = questions[state.current];
+        questionNo.textContent = 'QUESTION ' + (state.current + 1);
+        questionTitle.textContent = question.text;
+        optionsEl.innerHTML = '';
+
+        question.options.forEach((option, index) => {
+          const label = document.createElement('label');
+          label.className = 'option';
+          if (state.answers[state.current] === index) {
+            label.classList.add('selected');
+          }
+          label.innerHTML = `
+            <input type="radio" name="answer" value="${index}" ${state.answers[state.current] === index ? 'checked' : ''}>
+            <div class="option-top">
+              <span class="option-label">${option.text}</span>
+              <span class="option-tag">${option.tag}</span>
+            </div>
+          `;
+          label.addEventListener('click', function () {
+            state.answers[state.current] = index;
+            renderQuestion();
+          });
+          optionsEl.appendChild(label);
+        });
+
+        prevBtn.style.visibility = state.current === 0 ? 'hidden' : 'visible';
+        nextBtn.textContent = state.current === questions.length - 1 ? '查看结果' : '下一题';
+        updateProgress();
+      }
+
+      function startQuiz() {
+        state.current = 0;
+        introView.classList.add('hidden');
+        resultView.classList.add('hidden');
+        quizView.classList.remove('hidden');
+        renderQuestion();
+      }
+
+      function getResult() {
+        const totals = { keeper: 0, wild: 0, mirror: 0, nest: 0, midnight: 0 };
+        state.answers.forEach((answerIndex, questionIndex) => {
+          const selected = questions[questionIndex].options[answerIndex];
+          Object.keys(selected.scores).forEach((key) => {
+            totals[key] += selected.scores[key];
+          });
+        });
+        const winner = Object.keys(totals).sort((a, b) => totals[b] - totals[a])[0];
+        return { winner, totals };
+      }
+
+      function showResult() {
+        const result = getResult();
+        const active = archetypes[result.winner];
+        const orderedScores = Object.entries(result.totals).sort((a, b) => b[1] - a[1]);
+
+        quizView.classList.add('hidden');
+        resultView.classList.remove('hidden');
+        progressBar.style.width = '100%';
+        progressText.textContent = 'RESULT';
+
+        resultView.innerHTML = `
+          <p class="eyebrow">Your Match Archetype</p>
+          <div class="result-emoji">${active.emoji}</div>
+          <h2 class="result-name">${active.name}</h2>
+          <p class="result-desc">${active.description}</p>
+          <div class="score-grid">
+            ${orderedScores.map(([key, score]) => `<div class="score-item"><span>${archetypes[key].emoji} ${archetypes[key].name}</span><strong>${score} 分</strong></div>`).join('')}
+          </div>
+          <div class="btn-row">
+            <button class="primary" id="restartBtn">再测一次</button>
+            <a class="link-btn" href="assessment.html">返回测评</a>
+          </div>
+        `;
+
+        document.getElementById('restartBtn').addEventListener('click', restartQuiz);
+      }
+
+      function restartQuiz() {
+        state.current = -1;
+        state.answers = new Array(questions.length).fill(null);
+        quizView.classList.add('hidden');
+        resultView.classList.add('hidden');
+        introView.classList.remove('hidden');
+        updateProgress();
+      }
+
+      prevBtn.addEventListener('click', function () {
+        if (state.current > 0) {
+          state.current -= 1;
+          renderQuestion();
+        }
+      });
+
+      nextBtn.addEventListener('click', function () {
+        if (state.answers[state.current] === null) {
+          alert('先选择一个答案。');
+          return;
+        }
+        if (state.current === questions.length - 1) {
+          showResult();
+          return;
+        }
+        state.current += 1;
+        renderQuestion();
+      });
+
+      startBtn.addEventListener('click', startQuiz);
+      updateProgress();
+    </script>
+  </body>
+</html>
