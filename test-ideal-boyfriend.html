@@ -511,12 +511,15 @@
             ${orderedScores.map(([key, score]) => `<div class="score-item"><span>${archetypes[key].emoji} ${archetypes[key].name}</span><strong>${score} 分</strong></div>`).join('')}
           </div>
           <div class="btn-row">
-            <button class="primary" id="restartBtn">再测一次</button>
+            <button class="primary" id="retryBtn">再测一次</button>
             <a class="link-btn" href="assessment.html">返回测评</a>
           </div>
         `;
 
-        document.getElementById('restartBtn').addEventListener('click', restartQuiz);
+        const retryBtn = document.getElementById('retryBtn') || document.getElementById('restartBtn');
+        if (retryBtn) {
+          retryBtn.addEventListener('click', restartQuiz);
+        }
       }
 
       function restartQuiz() {
@@ -549,6 +552,9 @@
       });
 
       startBtn.addEventListener('click', startQuiz);
+      resultView.addEventListener('click', (event) => {
+        if (event.target && (event.target.id === 'retryBtn' || event.target.id === 'restartBtn')) restartQuiz();
+      });
       updateProgress();
     </script>
   </body>
