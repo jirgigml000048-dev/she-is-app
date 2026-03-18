@@ -1,0 +1,68 @@
+{
+  "version": "v1",
+  "updatedAt": "2026-03-12",
+  "categories": [
+    {
+      "id": "deep",
+      "name": "深度探索",
+      "tests": [
+        {
+          "id": "ecr-36",
+          "title": "依恋风格测评",
+          "subtitle": "你在关系里，习惯靠近还是保持距离？",
+          "itemCount": 36,
+          "duration": "约 8-12 分钟",
+          "status": "active",
+          "tags": ["依恋", "关系模式"],
+          "path": "test-ecr.html"
+        },
+        {
+          "id": "hsp-27",
+          "title": "高敏感测评",
+          "subtitle": "探索你的感受力与环境敏感度",
+          "itemCount": 27,
+          "duration": "约 8-10 分钟",
+          "status": "active",
+          "tags": ["高敏感", "感官加工"],
+          "path": "test-hsp.html"
+        },
+        {
+          "id": "erq-10",
+          "title": "情绪调节测评",
+          "subtitle": "压力来临时，你更常用哪种调节策略？",
+          "itemCount": 10,
+          "duration": "约 4-6 分钟",
+          "status": "active",
+          "tags": ["情绪", "调节策略"],
+          "path": "test-erq.html"
+        },
+        {
+          "id": "eight-dim-personality",
+          "title": "八维人格",
+          "subtitle": "你的心理功能偏好图谱（筹备中）",
+          "itemCount": 64,
+          "duration": "约 12-15 分钟",
+          "status": "coming_soon",
+          "tags": ["人格", "八维"],
+          "path": "test-8d.html"
+        }
+      ]
+    },
+    {
+      "id": "light",
+      "name": "轻量趣味",
+      "tests": [
+        {
+          "id": "light-draft-01",
+          "title": "轻量趣味测评（占位）",
+          "subtitle": "用于后续快速上新题库",
+          "itemCount": 12,
+          "duration": "约 3-5 分钟",
+          "status": "draft",
+          "tags": ["趣味", "占位"],
+          "path": "#"
+        }
+      ]
+    }
+  ]
+}

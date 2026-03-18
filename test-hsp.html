@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HSP-27 高敏感测评 | 女也 She Is</title>
+  <style>
+:root{--bg:#f7f3ee;--card:#fffdfa;--ink:#2f2a26;--muted:#8a8178;--line:#e7dfd6;--accent:#86a7b9;}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;margin:0 auto;min-height:100vh;padding:18px 16px 28px}
+    .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .back{color:var(--muted);text-decoration:none;font-size:14px}
+    .logo{margin:0;font-size:26px;font-family:"Cormorant Garamond",serif;letter-spacing:.12em}
+    h1{margin:8px 0 4px;font-family:"Cormorant Garamond",serif;font-size:24px}
+    .sub{margin:0 0 16px;color:var(--muted);font-size:13px}
+    .meta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin:14px 0 8px}
+    .progress{height:6px;background:#eadfd3;border-radius:999px;overflow:hidden;margin-bottom:14px}
+    .bar{height:100%;width:0;background:linear-gradient(90deg,#9ec0d1,#7aa8be);transition:width .25s}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 14px;box-shadow:0 6px 20px rgba(48,35,23,.06)}
+    .q-text{font-size:18px;line-height:1.6;min-height:100px}
+    .likert{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:14px}
+    .opt{height:42px;border-radius:10px;border:1px solid #d9cfc3;background:#fff;cursor:pointer;font-size:15px}
+    .opt.active{background:#e8f2f8;border-color:#86a7b9;color:#355365;font-weight:600}
+    .labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:8px}
+    .actions{display:flex;gap:10px;margin-top:14px}
+    .btn{flex:1;height:44px;border-radius:10px;border:1px solid #d4c8bc;background:#fff;cursor:pointer;font-size:14px}
+    .btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .btn:disabled{opacity:.4;cursor:default}
+    .result-panel{display:none;padding:8px 0}
+    .result-panel.show{display:block}
+    .quiz-panel.hide{display:none}
+    .r-type{font-family:"Cormorant Garamond",serif;font-size:30px;font-weight:600;margin:0 0 14px;color:var(--ink)}
+    .r-desc{font-size:15px;line-height:1.8;color:#555;margin:0 0 18px}
+    .r-score{font-size:13px;color:var(--muted);margin-bottom:24px}
+    .r-score span{font-size:24px;font-weight:600;color:var(--accent)}
+  
+      .story-link-hint {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: #888;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .story-link-hint a {
+        color: #555;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .test-intro {
+        padding: 8px 0 24px;
+      }
+
+      .test-intro-card {
+        display: flex;
+        background: #F7F3EE;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(44,32,20,0.07);
+      }
+
+      .test-intro-accent {
+        width: 4px;
+        flex-shrink: 0;
+        background: #8FAF8A;
+        border-radius: 0;
+      }
+
+      .test-intro-content {
+        padding: 28px 24px 28px 22px;
+        flex: 1;
+      }
+
+      .test-intro-source {
+        margin: 0;
+        font-family: 'Courier Prime', monospace;
+        font-size: 11px;
+        color: #888;
+        letter-spacing: 0.08em;
+        line-height: 1.5;
+      }
+
+      .test-intro-rule {
+        height: 0.5px;
+        background: #e0dbd4;
+        margin: 14px 0;
+      }
+
+      .test-intro-scale {
+        margin: 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 36px;
+        font-weight: 600;
+        color: #2e2e2e;
+        line-height: 1.1;
+        letter-spacing: 0.08em;
+      }
+
+      .test-intro-body {
+        margin: 0 0 12px;
+        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+        font-size: 15px;
+        line-height: 1.9;
+        color: #555;
+      }
+
+      .test-intro-note {
+        margin: 0;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 12px;
+        color: #999;
+        line-height: 1.6;
+      }
+
+      .test-intro-btn {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #8FAF8A 0%, #C8C5DE 100%);
+        color: #fff;
+        border: none;
+        border-radius: 30px;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 14px;
+        letter-spacing: 0.15em;
+        cursor: pointer;
+        box-shadow: 0 4px 16px rgba(143,175,138,0.35);
+        transition: opacity 0.2s ease;
+        margin-top: 32px;
+      }
+
+      .test-intro-btn:hover {
+        opacity: 0.88;
+      }
+          .vi-glow {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(80px);
+          }
+          .vi-glow--top {
+            width: 340px;
+            height: 340px;
+            top: -100px;
+            right: -80px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+          }
+          .vi-glow--bottom {
+            width: 280px;
+            height: 280px;
+            bottom: -60px;
+            left: -60px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+          }
+        </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/font-override.css" />
+</head>
+<body>
+    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+<div class="page">
+  <div class="test-intro">
+    <div class="test-intro-card">
+      <div class="test-intro-accent"></div>
+      <div class="test-intro-content">
+        <p class="test-intro-source">基于 Elaine Aron (1997) 高度敏感人格量表（Highly Sensitive Person Scale）</p>
+        <div class="test-intro-rule"></div>
+        <h2 class="test-intro-scale">HSP<br>感受力测评</h2>
+        <div class="test-intro-rule"></div>
+        <p class="test-intro-body">别人没注意到的气氛变化，你先感觉到了。一个眼神、一句语气、一段旋律，都可能在你心里留很久。<br><br>高敏感从来不是"你想太多了"。它是一种神经系统层面的特质——你的感受器比多数人拧得更细，接收到的信号更多、更密。这不是脆弱，是一种需要被理解的感知方式。</p>
+        <p class="test-intro-note">这份测评包含 27 道题，帮你辨认自己是怎样接收声音、气氛、情绪与美感的——不是为了证明你太敏感，而是为了更理解自己的神经系统。</p>
+        <button class="test-intro-btn" id="startBtn">准备好了</button>
+      </div>
+    </div>
+  </div>
+  <div class="test-body" id="testBody" style="display:none">
+<main class="page">
+  <div class="top">
+    <a class="back" href="assessment-more.html">← back</a>
+    <h2 class="logo">女也</h2>
+  </div>
+  <h1>HSP-27 高敏感测评</h1>
+  <p class="sub">你的感受力，比你以为的更丰富</p>
+
+  <div id="quizPanel" class="quiz-panel">
+    <div class="meta"><span id="counter">1 / 27</span><span id="answered">已完成 0 / 27</span></div>
+    <div class="progress"><div id="bar" class="bar"></div></div>
+    <div class="card">
+      <div class="q-text" id="qText"></div>
+      <div class="likert" id="likert"></div>
+      <div class="labels"><span>1 完全不符合</span><span>7 非常符合</span></div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="prevBtn">上一题</button>
+      <button class="btn" id="nextBtn">下一题</button>
+      <button class="btn primary" id="submitBtn" disabled>翻开这一页</button>
+    </div>
+  </div>
+
+  <div id="resultPanel" class="result-panel">
+    <div class="card">
+      <p class="r-type" id="rType"></p>
+      <p class="r-desc" id="rDesc"></p><p class="r-score">平均得分 <span id="rScore"></span> / 7</p>
+
+<a class="btn primary" href="profile.html" style="max-width:220px;text-decoration:none;display:inline-block;text-align:center">这个维度是你画像的一部分——查看五个维度的完整模式，看看它们如何相互影响。</a>
+<button class="btn primary" id="retryBtn" style="max-width:140px">重新测评</button>
+<div class="story-link-hint">
+  <span>你可能会有共鸣 →</span>
+  <a href="story-zixingche.html">30岁却像15岁的赛博格</a>
+</div>
+</div>
+</div>
+</main>
+
+  </div>
+</div>
+<script src="assets/profile-utils.js"></script>
+<script>
+const Qs = [
+'我很容易注意到环境中细微的变化。',
+'别人的情绪会比较强烈地影响到我。',
+'我对疼痛比较敏感。',
+'在繁忙的一天后，我需要找一个安静的地方独处、恢复。',
+'我对咖啡因比较敏感。',
+'强光、强烈气味、粗糙布料或附近的嘈杂声会让我感到困扰。',
+'我有丰富而复杂的内心世界。',
+'噪音让我感到不舒服。',
+'我会被某些艺术、音乐或文学深深打动。',
+'当我需要同时处理很多事情时，会感到混乱和焦虑。',
+'受到惊吓时，我需要一段时间才能平静。',
+'当生活变得混乱或剧变时，我会感到很烦恼。',
+'当别人在身体上不舒服时，我很能感同身受。',
+'在短时间内需要完成太多事情时，我会感到很烦。',
+'我很努力避免犯错或忘事。',
+'我会特别欣赏某些香气、味道、声音或艺术带来的美好感受。',
+'我的内心结构是我人格的核心部分之一。',
+'我似乎能感受到别人感受不到的东西。',
+'饥饿、疲惫等身体信号会强烈影响我的注意力和情绪。',
+'意外状况或混乱的环境让我很难受。',
+'一次性接触太多刺激时，我会很难集中精神。',
+'对即将发生的事情的期待，容易让我感到焦虑和紧张。',
+'时间压力或截止日期会让我感到相当不舒服。',
+'在他人的批评或评价中，我往往比别人更难受。',
+'影视或故事中的暴力画面会让我非常不安，需要刻意回避。',
+'我有时会感到，自己的敏感让日常生活比别人更费力。',
+'我对美好的事物有一种近乎崇拜的感受力。'
+];
+const Rs = {
+high: {
+type: '高敏感人格',
+desc: '你比大多数人接收到更多。声音、光线、别人语气里微妙的变化、一个房间里没有人说出口的紧张感。超市的灯管嗡嗡作响，大多数人根本不会注意到，你已经开始不舒服了。朋友笑着说的一句话，你听到了笑底下那层勉强。你的神经系统像一台增益开得很大的收音机，信号和噪音一起进来，你没法选择只收你想要的那部分。你拥有罕见的感知力和共情深度，但也比别人更容易被消耗。你可能需要更多的独处时间、更安静的环境、更长的恢复周期。这些不是脆弱，是一个高精度系统正常的运转需求。别人充电一小时能用一天，你可能需要整个下午把门关上才能缓过来。你感受世界的方式是昂贵的。也是珍贵的。'
+},
+mid: {
+type: '中等感受力',
+desc: '你有敏感的时候，但不是对所有事都如此。有些场景你会被深深触动，有些你可以自然滑过去。像一个会自动对焦的镜头，只在某些画面上变得锐利。一首歌可能突然让你鼻酸，但十分钟后你已经忘了它在放什么。一个人的语气变化你接收到了，但你可以选择不跟进去。你能共情，但不至于被别人的情绪淹没；能感知氛围，但不会因此完全丢失自己的节奏。大多数时候，你掌握着那个旋钮。你知道自己在哪些地方容易被击中，也慢慢学会了在被击中之前稍微侧一下身。这个本能保护着你，让你可以在感受和消耗之间保持一个还算舒服的位置。'
+},
+low: {
+type: '低敏感倾向',
+desc: '你的情绪系统波动不大，不容易被外界突然扰动。别人可能已经被一件事搅得心神不宁了，你还保持着自己的步调。你不太会被环境的情绪裹挟，也不容易因为他人的反应失去判断。挺稳的。有时候这让你成为乱局里最清醒的那个人，别人慌的时候你还在正常运转。但你可能偶尔也会困惑：为什么别人那么容易被影响？一件你觉得没什么大不了的事，在另一个人那里却成了一整天的阴影。你不太理解那种被情绪卷走的失控感。你跟世界之间有一层你自己也未必注意到的缓冲。它让你稳，也偶尔让你离某些体验远了一步。'
+}
+};
+
+const ans = Array(Qs.length).fill(null);
+let cur = 0;
+const $=id=>document.getElementById(id);
+
+function render(){
+$('qText').textContent = Qs[cur];
+$('counter').textContent = `${cur + 1} / ${Qs.length}`;
+const done = ans.filter(v=>v!==null).length;
+$('answered').textContent = `已完成 ${done} / ${Qs.length}`;
+$('bar').style.width = `${(done / Qs.length) * 100}%`;
+$('prevBtn').disabled = cur===0;
+$('nextBtn').disabled = cur===Qs.length-1;
+$('submitBtn').disabled = done!==Qs.length;
+const likert=$('likert'); likert.innerHTML='';
+for(let i=1;i<=7;i++){
+const b=document.createElement('button');
+b.className='opt'+(ans[cur]===i?' active':'');
+b.textContent=i;
+b.type='button';
+b.onclick=()=>{ans[cur]=i;render();};
+likert.appendChild(b);
+}
+}
+
+$('prevBtn').onclick=()=>{if(cur>0){cur--;render();}};
+$('nextBtn').onclick=()=>{if(cur<Qs.length-1){cur++;render();}};
+$('submitBtn').onclick=()=>{
+const mean=ans.reduce((a,b)=>a+b,0)/ans.length;
+const r=mean>=4.5?Rs.high:mean>=3.0?Rs.mid:Rs.low;
+const summary=mean>=4.5?'高敏感':mean>=3.0?'中敏感':'低敏感';
+if(window.SheProfileStore){window.SheProfileStore.saveResult({moduleId:'hsp',moduleName:'高敏感特质',summary,score:{sensitivity:mean},topDimension:'sensitivity'});}
+$('rType').textContent=r.type;
+$('rDesc').innerHTML=r.desc;
+
+$('rScore').textContent=mean.toFixed(2);
+$('quizPanel').classList.add('hide');
+$('resultPanel').classList.add('show');
+window.scrollTo(0,0);
+};
+$('retryBtn').onclick=()=>{
+ans.fill(null); cur=0;
+$('quizPanel').classList.remove('hide');
+$('resultPanel').classList.remove('show');
+render();
+};
+document.getElementById('startBtn').addEventListener('click', function() {
+  document.querySelector('.test-intro').style.display = 'none';
+  document.getElementById('testBody').style.display = 'block';
+});
+render();
+</script>
+</body>
+</html>

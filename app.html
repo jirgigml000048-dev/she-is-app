@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>女也 She Is</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<style>
+      :root {
+        --bg: #f7f3ee;
+        --ink: #2e2e2e;
+        --body: #555;
+        --muted: #888;
+        --shadow: 0 4px 18px rgba(44, 32, 20, 0.08);
+        --accent: #c4a882;
+        --line: #e8e2d9;
+        --tab-h: 56px;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--body);
+        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+      }
+      .page {
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 22px 20px 30px;
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .back {
+        text-decoration: none;
+        color: var(--body);
+        font-size: 14px;
+      }
+      .logo {
+        margin: 0;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 1;
+        color: #1c1c1c;
+        letter-spacing: 0.12em;
+      }
+      .title {
+        margin: 10px 0 0;
+        font-family: "Noto Serif SC", "Cormorant Garamond", "Source Han Serif SC", serif;
+        font-size: 34px;
+        font-weight: 600;
+        color: var(--ink);
+        letter-spacing: 0.08em;
+      }
+      .subtitle {
+        margin: 8px 0 18px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .section-label {
+        margin: 20px 0 10px;
+        color: var(--muted);
+        font-size: 13px;
+        letter-spacing: 0.12em;
+      }
+      .cards {
+        display: grid;
+        gap: 10px;
+      }
+      .assessment-card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        background: #fff;
+        border-radius: 12px;
+        border-left: 3px solid transparent;
+        box-shadow: var(--shadow);
+        padding: 12px;
+      }
+      .assessment-card.science { border-left-color: #8faf8a; }
+      .assessment-card.light { border-left-color: #c8c5de; }
+      .head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .name {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--ink);
+        letter-spacing: 0.06em;
+      }
+      .desc {
+        margin: 4px 0 0;
+        color: var(--body);
+        font-size: 13px;
+        line-height: 1.35;
+      }
+      .meta {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .tags {
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .status {
+        font-size: 11px;
+        border-radius: 999px;
+        padding: 3px 8px;
+        white-space: nowrap;
+      }
+      .status.active { background: #dcead9; color: #2f5a35; }
+      .status.coming { background: #eceaf8; color: #4f4a7c; }
+      .status.draft { background: #f4ece3; color: #7f6248; }
+      .footnote {
+        margin: 18px 0 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+      }
+      .app {
+        max-width: 480px;
+        margin: 0 auto;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg);
+      }
+      main.page {
+        flex: 1;
+        padding-bottom: calc(var(--tab-h) + env(safe-area-inset-bottom) + 20px);
+      }
+      .view { display: none; }
+      .view.active { display: block; }
+
+      .home-header {
+        margin-bottom: 10px;
+      }
+      .home-tagline {
+        margin: 6px 0 0;
+        font-family: "Courier Prime", monospace;
+        font-size: 11px;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+      }
+
+      .story-grid {
+        display: grid;
+        gap: 10px;
+      }
+      .placeholder {
+        background: #efebe4;
+        border-left-color: #d8d1c6 !important;
+      }
+
+      .top-back {
+        display: none;
+        align-items: center;
+        padding: 10px 20px;
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+      .back-btn {
+        border: 0;
+        background: transparent;
+        color: var(--body);
+        font-size: 14px;
+        padding: 0;
+      }
+
+      .iframe-wrap {
+        height: calc(100dvh - 46px);
+        margin: -22px -20px -30px;
+      }
+      .iframe-wrap iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #fff;
+      }
+
+      .me-placeholder {
+        margin-top: 16px;
+        min-height: 30vh;
+        display: grid;
+        place-items: center;
+        color: var(--muted);
+      }
+
+      .tabbar {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+        width: 100%;
+        max-width: 480px;
+        height: calc(var(--tab-h) + env(safe-area-inset-bottom));
+        padding-bottom: env(safe-area-inset-bottom);
+        background: #fff;
+        border-top: 1px solid #e8e2d9;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        z-index: 10;
+      }
+      .tab {
+        border: 0;
+        background: transparent;
+        color: var(--body);
+        font-size: 13px;
+        height: 56px;
+      }
+      .tab.active { color: var(--accent); }
+          .vi-glow {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(80px);
+          }
+          .vi-glow--top {
+            width: 340px;
+            height: 340px;
+            top: -100px;
+            right: -80px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+          }
+          .vi-glow--bottom {
+            width: 280px;
+            height: 280px;
+            bottom: -60px;
+            left: -60px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+          }
+        </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/font-override.css" />
+</head>
+  <body>
+    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+    <div class="app">
+      <div id="topBack" class="top-back">
+        <button id="backBtn" class="back-btn" type="button">← 返回</button>
+      </div>
+
+      <main class="page">
+        <section id="view-home" class="view">
+          <header class="home-header">
+            <h1 class="logo">女也</h1>
+            <p class="home-tagline">She Is ______</p>
+          </header>
+
+          <a class="assessment-card science" href="#/story/tuanzi">
+            <div class="head">
+              <div>
+                <h3 class="name">团子</h3>
+                <p class="desc">她身体里住着一道错误的方程</p>
+              </div>
+              <span class="status active">最新</span>
+            </div>
+            <p class="meta">点击进入故事</p>
+          </a>
+
+          <a class="assessment-card light" href="#/assess">
+            <div class="head">
+              <div>
+                <h3 class="name">自我图鉴</h3>
+                <p class="desc">4组心理量表等你探索</p>
+              </div>
+              <span class="status coming">可开始</span>
+            </div>
+            <p class="meta">进入测评页</p>
+          </a>
+        </section>
+
+        <section id="view-stories" class="view">
+          <h1 class="title">她们的故事</h1>
+          <div class="story-grid">
+            <a class="assessment-card science" href="#/story/tuanzi">
+              <div class="head">
+                <div>
+                  <h3 class="name">团子</h3>
+                  <p class="desc">她身体里住着一道错误的方程</p>
+                </div>
+                <span class="status active">可阅读</span>
+              </div>
+            </a>
+
+            <article class="assessment-card placeholder">
+              <div class="head"><h3 class="name">故事 02</h3><span class="status coming">即将上线</span></div>
+            </article>
+            <article class="assessment-card placeholder">
+              <div class="head"><h3 class="name">故事 03</h3><span class="status coming">即将上线</span></div>
+            </article>
+            <article class="assessment-card placeholder">
+              <div class="head"><h3 class="name">故事 04</h3><span class="status coming">即将上线</span></div>
+            </article>
+            <article class="assessment-card placeholder">
+              <div class="head"><h3 class="name">故事 05</h3><span class="status coming">即将上线</span></div>
+            </article>
+            <article class="assessment-card placeholder">
+              <div class="head"><h3 class="name">故事 06</h3><span class="status coming">即将上线</span></div>
+            </article>
+            <article class="assessment-card placeholder">
+              <div class="head"><h3 class="name">故事 07</h3><span class="status coming">即将上线</span></div>
+            </article>
+            <article class="assessment-card placeholder">
+              <div class="head"><h3 class="name">故事 08</h3><span class="status coming">即将上线</span></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="view-assess" class="view">
+          <h1 class="title">更多测试</h1>
+          <p class="subtitle">自我图鉴题库持续更新中</p>
+          <p class="section-label">深度探索</p>
+          <div class="cards">
+            <a class="assessment-card science" href="#/test/ecr">
+              <div class="head">
+                <div>
+                  <h3 class="name">ECR-36 依恋风格</h3>
+                  <p class="desc">你在关系里，习惯靠近还是保持距离？</p>
+                </div>
+                <span class="status active">可测试</span>
+              </div>
+              <p class="meta">36 题 · 约 8-12 分钟</p>
+              <p class="tags">#依恋 #关系模式</p>
+            </a>
+
+            <a class="assessment-card science" href="#/test/hsp">
+              <div class="head">
+                <div>
+                  <h3 class="name">HSP-27 高敏感</h3>
+                  <p class="desc">探索你的感受力与环境敏感度。</p>
+                </div>
+                <span class="status active">框架开放</span>
+              </div>
+              <p class="meta">27 题 · 约 8-10 分钟</p>
+              <p class="tags">#高敏感 #感官加工</p>
+            </a>
+
+            <a class="assessment-card science" href="#/test/erq">
+              <div class="head">
+                <div>
+                  <h3 class="name">ERQ-10 情绪调节</h3>
+                  <p class="desc">压力来临时，你更常用哪种调节策略？</p>
+                </div>
+                <span class="status active">可测试</span>
+              </div>
+              <p class="meta">10 题 · 约 4-6 分钟</p>
+              <p class="tags">#情绪 #调节策略</p>
+            </a>
+
+            <a class="assessment-card science" href="#/test/fmps">
+              <div class="head">
+                <div>
+                  <h3 class="name">FMPS-15 完美主义</h3>
+                  <p class="desc">你对「做好」的标准有多高？</p>
+                </div>
+                <span class="status active">可测试</span>
+              </div>
+              <p class="meta">15 题 · 约 4 分钟</p>
+              <p class="tags">#完美主义 #自我标准</p>
+            </a>
+          </div>
+        </section>
+
+        <section id="view-story" class="view">
+          <div class="iframe-wrap">
+            <iframe id="storyFrame" src="story-tuanzi-v3.html" title="故事"></iframe>
+          </div>
+        </section>
+
+        <section id="view-test" class="view">
+          <div class="iframe-wrap">
+            <iframe id="testFrame" src="" title="测评"></iframe>
+          </div>
+        </section>
+
+        <section id="view-me" class="view">
+          <h1 class="title">我</h1>
+          <div class="me-placeholder">即将上线</div>
+        </section>
+      </main>
+
+      <nav id="tabbar" class="tabbar">
+        <button class="tab" data-route="/home" type="button">首页</button>
+        <button class="tab" data-route="/stories" type="button">故事</button>
+        <button class="tab" data-route="/assess" type="button">测评</button>
+        <button class="tab" data-route="/me" type="button">我</button>
+      </nav>
+    </div>
+
+    <script>
+      (function () {
+        const defaultRoute = '/home';
+        const views = {
+          home: document.getElementById('view-home'),
+          stories: document.getElementById('view-stories'),
+          assess: document.getElementById('view-assess'),
+          story: document.getElementById('view-story'),
+          test: document.getElementById('view-test'),
+          me: document.getElementById('view-me')
+        };
+        const topBack = document.getElementById('topBack');
+        const backBtn = document.getElementById('backBtn');
+        const tabbar = document.getElementById('tabbar');
+        const tabs = Array.from(document.querySelectorAll('.tab'));
+        const storyFrame = document.getElementById('storyFrame');
+        const testFrame = document.getElementById('testFrame');
+
+        const testMap = {
+          ecr: 'test-ecr.html',
+          erq: 'test-erq.html',
+          fmps: 'test-fmps.html',
+          hsp: 'test-hsp.html'
+        };
+
+        function hashRoute() {
+          const raw = location.hash.replace(/^#/, '') || defaultRoute;
+          return raw.startsWith('/') ? raw : defaultRoute;
+        }
+
+        function show(name) {
+          Object.values(views).forEach((v) => v.classList.remove('active'));
+          views[name].classList.add('active');
+        }
+
+        function setTab(route) {
+          tabs.forEach((tab) => tab.classList.toggle('active', tab.dataset.route === route));
+        }
+
+        function render() {
+          const route = hashRoute();
+
+          topBack.style.display = 'none';
+          tabbar.style.display = 'grid';
+
+          if (route === '/home') {
+            show('home');
+            setTab('/home');
+            return;
+          }
+
+          if (route === '/stories') {
+            show('stories');
+            setTab('/stories');
+            return;
+          }
+
+          if (route === '/assess') {
+            show('assess');
+            setTab('/assess');
+            return;
+          }
+
+          if (route === '/me') {
+            show('me');
+            setTab('/me');
+            return;
+          }
+
+          if (route.startsWith('/story/')) {
+            show('story');
+            topBack.style.display = 'flex';
+            tabbar.style.display = 'none';
+            setTab('');
+            storyFrame.src = 'story-tuanzi-v3.html';
+            return;
+          }
+
+          if (route.startsWith('/test/')) {
+            const key = route.split('/')[2];
+            const file = testMap[key];
+            if (!file) {
+              location.hash = '#/assess';
+              return;
+            }
+            show('test');
+            topBack.style.display = 'flex';
+            tabbar.style.display = 'none';
+            setTab('');
+            testFrame.src = file;
+            return;
+          }
+
+          location.hash = '#/home';
+        }
+
+        tabs.forEach((tab) => {
+          tab.addEventListener('click', () => {
+            location.hash = '#' + tab.dataset.route;
+          });
+        });
+
+        backBtn.addEventListener('click', () => {
+          const route = hashRoute();
+          if (route.startsWith('/story/')) {
+            location.hash = '#/stories';
+            return;
+          }
+          if (route.startsWith('/test/')) {
+            location.hash = '#/assess';
+          }
+        });
+
+        window.addEventListener('hashchange', render);
+        if (!location.hash) location.hash = '#/home';
+        render();
+      })();
+    </script>
+  </body>
+</html>

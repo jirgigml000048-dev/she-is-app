@@ -1,0 +1,50 @@
+{
+  "id": "erq-10",
+  "title": "压力来的时候，你怎么办",
+  "subtitle": "情绪调节探索 · 10题 · 约3分钟",
+  "scale": 7,
+  "scaleLabels": ["十分不符合", "", "", "无法确定", "", "", "十分符合"],
+  "instruction": "下面是一些关于情绪调节方式的描述。请凭第一感觉作答，答案没有对错之分。",
+  "questions": [
+    { "id": 1, "text": "当我想感受一些积极的情绪（如快乐或高兴）时，我会改变自己思考问题的角度", "dimension": "reappraisal" },
+    { "id": 2, "text": "我不会表露自己的情绪", "dimension": "suppression" },
+    { "id": 3, "text": "当我想少感受一些消极的情绪（如悲伤或愤怒）时，我会改变自己思考问题的角度", "dimension": "reappraisal" },
+    { "id": 4, "text": "当感受到积极情绪时，我会很小心地不让它们表露出来", "dimension": "suppression" },
+    { "id": 5, "text": "在面对压力情境时，我会使自己以一种有助于保持平静的方式来考虑它", "dimension": "reappraisal" },
+    { "id": 6, "text": "我控制自己情绪的方式是不表达它们", "dimension": "suppression" },
+    { "id": 7, "text": "当我想多感受一些积极的情绪时，我会改变自己对情境的考虑方式", "dimension": "reappraisal" },
+    { "id": 8, "text": "我会通过改变对情境的考虑方式来控制自己的情绪", "dimension": "reappraisal" },
+    { "id": 9, "text": "当感受到消极的情绪时，我确定不会表露它们", "dimension": "suppression" },
+    { "id": 10, "text": "当我想少感受一些消极的情绪时，我会改变自己对情境的考虑方式", "dimension": "reappraisal" }
+  ],
+  "scoring": {
+    "reappraisal": { "items": [1, 3, 5, 7, 8, 10], "method": "mean" },
+    "suppression": { "items": [2, 4, 6, 9], "method": "mean" }
+  },
+  "results": {
+    "high_reappraisal_low_suppression": {
+      "label": "思考派",
+      "emoji": "💡",
+      "tagline": "你习惯换个角度看事情",
+      "desc": "遇到情绪风暴，你更倾向于在脑子里重新理解发生了什么——'也许不是我想的那样'，'从长远看没那么严重'。这是一种相对健康的应对方式，也意味着你不容易被情绪淹没。"
+    },
+    "high_reappraisal_high_suppression": {
+      "label": "双管派",
+      "emoji": "⚡",
+      "tagline": "你用很多方式管理自己的情绪",
+      "desc": "你既会调整思维框架，也会管控情绪的外在表达。这双重策略有时有效，有时会让你感觉内外都在用力。不妨问问自己：有没有什么情绪，你不需要管它？"
+    },
+    "low_reappraisal_high_suppression": {
+      "label": "压下去派",
+      "emoji": "🔒",
+      "tagline": "你更习惯把情绪藏起来",
+      "desc": "你处理情绪的方式，更多是不让它们流出来。这样做能保持表面平静，但情绪本身还在。长期来看，给它们找一个出口——无论是写、说、还是跑步——会让你轻松一些。"
+    },
+    "low_reappraisal_low_suppression": {
+      "label": "随流派",
+      "emoji": "🌀",
+      "tagline": "你不太主动调节情绪，让它自然流动",
+      "desc": "你不太用力去管理情绪，更多是让它自己来、自己走。这有时是一种自然的韧性，有时也意味着情绪会在你身上停留更久。没有对错，只是了解自己的一个入口。"
+    }
+  }
+}

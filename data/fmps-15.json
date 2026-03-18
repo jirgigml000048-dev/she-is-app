@@ -1,0 +1,78 @@
+{
+  "id": "fmps-15",
+  "title": "你对「做好」的标准有多高",
+  "subtitle": "完美主义探索 · 15题 · 约4分钟",
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "labels": ["完全不符合", "有点不符合", "不确定", "有点符合", "完全符合"]
+  },
+  "dimensions": [
+    { "id": "CM", "name": "担心错误", "description": "你怎么看待「犯错」这件事", "items": [1, 2, 3] },
+    { "id": "OR", "name": "条理性", "description": "你对秩序和整洁的态度", "items": [4, 5, 6] },
+    { "id": "PE", "name": "父母期望", "description": "你感知到的来自父母的标准", "items": [7, 8, 9] },
+    { "id": "PS", "name": "个人标准", "description": "你为自己设定的目标高度", "items": [10, 11, 12] },
+    { "id": "DA", "name": "行动疑虑", "description": "开始和完成一件事对你来说难不难", "items": [13, 14, 15] }
+  ],
+  "questions": [
+    { "id": 1, "dimension": "CM", "text": "做事或学习的时候若是有部分的失败，我会觉得自己完全失败了" },
+    { "id": 2, "dimension": "CM", "text": "假如我犯错误，人们很可能会轻看我" },
+    { "id": 3, "dimension": "CM", "text": "如果我不能做得跟别人一样好，说明我是个低人一等的人" },
+    { "id": 4, "dimension": "OR", "text": "做事有条理有系统对我是十分重要的" },
+    { "id": 5, "dimension": "OR", "text": "整洁对我来说是十分重要的" },
+    { "id": 6, "dimension": "OR", "text": "我是一个有条理的人" },
+    { "id": 7, "dimension": "PE", "text": "我的父母曾给我定下很高的标准" },
+    { "id": 8, "dimension": "PE", "text": "我的父母曾经期望我做得特别出色" },
+    { "id": 9, "dimension": "PE", "text": "我从不觉得自己能达到我父母为我定下的标准" },
+    { "id": 10, "dimension": "PS", "text": "比起大多数人，我定下更高的目标" },
+    { "id": 11, "dimension": "PS", "text": "我厌恶做事不能做得最佳" },
+    { "id": 12, "dimension": "PS", "text": "我有极高的目标" },
+    { "id": 13, "dimension": "DA", "text": "尽管我小心翼翼地做事，还是经常感到自己做得不太正确" },
+    { "id": 14, "dimension": "DA", "text": "我经常对一些日常小事也犹豫不决" },
+    { "id": 15, "dimension": "DA", "text": "为了把一件事情做好，我需要花较长的时间" }
+  ],
+  "scoring": {
+    "method": "dimension_average",
+    "note": "每个维度取3题平均分（1-5），OR为积极完美主义，CM/DA/PE/PS为消极完美主义维度",
+    "negativeGroup": ["CM", "DA", "PE", "PS"],
+    "positiveGroup": ["OR"]
+  },
+  "results": [
+    {
+      "id": "high_cm_da",
+      "condition": "CM >= 3.5 AND DA >= 3.5",
+      "title": "你太怕做错了",
+      "body": "你对犯错有很强的恐惧，同时在开始一件事之前会反复犹豫。不是不想做，是太怕做错。这种组合很常见，也很耗力气。"
+    },
+    {
+      "id": "high_ps_low_cm",
+      "condition": "PS >= 3.5 AND CM < 3.5 AND DA < 3.5",
+      "title": "你对自己有很高的要求，但不会被它压垮",
+      "body": "你给自己设定的标准比多数人高，但你不会因为没达到就觉得自己失败。这是适应性完美主义——推动你前进，而不是拖住你。"
+    },
+    {
+      "id": "high_pe",
+      "condition": "PE >= 3.5",
+      "title": "你内化了很多来自父母的标准",
+      "body": "你感受到父母对你有很高的期待，这些期待已经成了你评价自己的一把尺子。有时候你可能不太清楚，哪些标准是你真正想要的。"
+    },
+    {
+      "id": "high_da_low_cm",
+      "condition": "DA >= 3.5 AND CM < 3.5",
+      "title": "开始对你来说是最难的那一步",
+      "body": "你不太担心犯错本身，但「做完了是不是真的对」这个问题会困住你。有时候为了做好一件事，你需要比别人更长的准备时间。"
+    },
+    {
+      "id": "high_or",
+      "condition": "OR >= 3.5 AND CM < 3 AND DA < 3 AND PE < 3 AND PS < 3",
+      "title": "你喜欢秩序，但不焦虑",
+      "body": "整洁和条理对你很重要，但这更像是一种偏好，而不是强迫。你的完美主义是轻量的，甚至有点让人羡慕。"
+    },
+    {
+      "id": "balanced",
+      "condition": "default",
+      "title": "你在「够好」和「更好」之间找到了某种平衡",
+      "body": "你的完美主义各维度都不特别突出，说明你对「做好」这件事的态度比较灵活。不同情境下你会调整自己的标准，这是一种实用主义。"
+    }
+  ]
+}

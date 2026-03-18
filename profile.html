@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>我的内在画像 | 女也 She Is</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-override.css" />
+    <style>
+      :root {
+        --bg: #f7f3ee;
+        --panel: rgba(255,255,255,.76);
+        --ink: #2e2e2e;
+        --body: #555;
+        --muted: #888;
+        --line: rgba(44,32,20,.1);
+        --brand: #4A3073;
+        --brand-hover: #3D2565;
+        --brand-soft: rgba(74,48,115,.12);
+        --brand-softer: rgba(74,48,115,.08);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(ellipse at top, rgba(74,48,115,.08), transparent 36%),
+          var(--bg);
+        color: var(--body);
+        font-family: "Noto Serif SC", serif;
+        line-height: 1.85;
+      }
+      .page { max-width: 480px; margin: 0 auto; padding: 20px 18px 36px; position: relative; z-index: 1; }
+      .back { color: var(--brand); text-decoration: none; font-size: 14px; }
+      .back:hover { color: var(--brand-hover); }
+      .eyebrow { margin: 18px 0 6px; font: 11px/1.2 "Courier Prime", monospace; letter-spacing: .24em; color: #b3aba2; text-transform: uppercase; }
+      .title { margin: 0; font-size: 34px; color: var(--ink); }
+      .subtitle { margin: 10px 0 0; font-size: 14px; color: var(--muted); }
+      .hero, .panel, .module-card, .todo-card { border: 1px solid var(--line); border-radius: 20px; background: var(--panel); backdrop-filter: blur(10px); }
+      .hero { padding: 18px; margin-top: 18px; box-shadow: 0 8px 24px rgba(44,32,20,.06); }
+      .hero h2 { margin: 0; font-size: 28px; color: var(--ink); }
+      .hero p { margin: 10px 0 0; }
+      .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+      .chip { padding: 6px 10px; border-radius: 999px; font-size: 12px; background: rgba(74,48,115,.12); color: var(--brand); }
+      .panel { padding: 18px; margin-top: 16px; }
+      .panel-title { margin: 0 0 14px; font-size: 20px; color: var(--ink); }
+      .radar-wrap { display: grid; place-items: center; gap: 10px; }
+      canvas { width: 100%; max-width: 320px; height: auto; }
+      .legend { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; width: 100%; }
+      .legend-item { padding: 10px 12px; border-radius: 14px; background: rgba(255,255,255,.65); border: 1px solid rgba(44,32,20,.06); }
+      .legend-item strong { display: block; color: var(--ink); font-size: 14px; }
+      .legend-item span { font-size: 12px; color: var(--muted); }
+      .module-grid, .todo-grid { display: grid; gap: 10px; }
+      .module-card, .todo-card { padding: 14px; }
+      .module-card h3, .todo-card h3 { margin: 0; font-size: 16px; color: var(--ink); }
+      .module-card p, .todo-card p { margin: 6px 0 0; font-size: 13px; }
+      .module-meta { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+      .module-tag { padding: 4px 8px; border-radius: 999px; background: rgba(74,48,115,.12); color: var(--brand); font-size: 12px; }
+      .todo-card a, .actions a, .actions button { display: inline-block; text-decoration: none; border: 1px solid rgba(74,48,115,.16); border-radius: 999px; padding: 11px 14px; color: var(--brand); background: rgba(255,255,255,.86); font: inherit; cursor: pointer; transition: color .2s ease, background .2s ease, border-color .2s ease; }
+      .todo-card a:hover, .actions a:hover, .actions button:hover { color: #fff; background: var(--brand-hover); border-color: var(--brand-hover); }
+      .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+      .actions .primary { color: #fff; background: linear-gradient(135deg, var(--brand), var(--brand-hover)); border-color: transparent; }
+      .actions .primary:hover { background: var(--brand-hover); }
+      .profile-disclaimer {
+        font-size: 0.78rem;
+        color: #999;
+        text-align: center;
+        margin-top: 2rem;
+        line-height: 1.6;
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .empty { text-align: center; padding: 28px 18px; }
+      .empty p { margin: 8px 0 0; }
+          .vi-glow {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(80px);
+          }
+          .vi-glow--top {
+            width: 340px;
+            height: 340px;
+            top: -100px;
+            right: -80px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+          }
+          .vi-glow--bottom {
+            width: 280px;
+            height: 280px;
+            bottom: -60px;
+            left: -60px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+          }
+        </style>
+  </head>
+  <body>
+    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+    <div aria-hidden="true" style="position:fixed;top:-120px;left:-120px;width:500px;height:500px;background:radial-gradient(ellipse at top left, rgba(74,48,115,0.15) 0%, transparent 60%);filter:blur(50px);pointer-events:none;z-index:0;"></div>
+    <div aria-hidden="true" style="position:fixed;right:-100px;bottom:-100px;width:400px;height:400px;background:radial-gradient(ellipse at bottom right, rgba(74,48,115,0.10) 0%, transparent 60%);filter:blur(60px);pointer-events:none;z-index:0;"></div>
+    <main class="page">
+      <a class="back" href="assessment.html">← 返回测评</a>
+      <p class="eyebrow">PROFILE</p>
+      <h1 class="title">我的内在画像</h1>
+      <p class="subtitle"><strong>这是你当下的内在模式，不是定义，不是诊断。</strong><br />五个维度勾勒出你此刻感知世界、回应情绪、进入关系的方式。它会变，而你可以决定方向。</p>
+
+      <section class="hero" id="heroCard">
+        <h2 id="heroTitle">正在读取你的画像…</h2>
+        <p id="heroDescription"></p>
+        <div class="chip-row" id="heroChips"></div>
+        <div class="actions">
+          <button class="primary" id="shareBtn" type="button">分享这张画像</button>
+          <a href="assessment.html">继续做测评</a>
+        </div>
+        <p class="profile-disclaimer">这张画像基于你的自我报告，反映的是你当下对自己的感知，不是心理诊断。随着你的成长和变化，它也会变。</p>
+      </section>
+
+      <section class="panel" id="radarPanel">
+        <h2 class="panel-title">五维内在雷达</h2>
+        <div class="radar-wrap">
+          <canvas id="radarCanvas" width="320" height="320" aria-label="五维雷达图"></canvas>
+          <div class="legend" id="legend"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="panel-title">已完成的测评</h2>
+        <p class="profile-disclaimer" style="text-align:left;margin-top:0;margin-bottom:12px;">注：趣味测评结果不会计入五维雷达画像。</p>
+        <div class="module-grid" id="completedModules"></div>
+      </section>
+
+      <section class="panel">
+        <h2 class="panel-title">还没做的部分</h2>
+        <p id="remainingText"></p>
+        <div class="todo-grid" id="todoModules"></div>
+      </section>
+    </main>
+
+    <script src="assets/profile-utils.js"></script>
+    <script>
+      (function () {
+        const MODULES = [
+          { id: 'ecr', name: '依恋风格', href: 'test-ecr.html' },
+          { id: 'hsp', name: '高敏感特质', href: 'test-hsp.html' },
+          { id: 'erq', name: '情绪调节', href: 'test-erq.html' },
+          { id: 'fmps', name: '完美主义', href: 'test-fmps.html' },
+          { id: 'cognitive', name: '荣格认知功能', href: 'test-cognitive.html' },
+          { id: 'boundary-sense', name: '边界感', href: 'test-boundary-sense.html' },
+          { id: 'relationship-role', name: '关系角色', href: 'test-relationship-role.html' },
+          { id: 'today-mood', name: '今日情绪', href: 'test-today-mood.html' }
+        ];
+
+        const results = window.SheProfileStore ? window.SheProfileStore.readAllResults() : [];
+        const resultMap = Object.fromEntries(results.map(item => [item.moduleId, item]));
+        const completed = MODULES.filter(item => resultMap[item.id]);
+        const remaining = MODULES.filter(item => !resultMap[item.id]);
+
+        function clamp(value) {
+          return Math.max(0, Math.min(5, Number(value.toFixed(2))));
+        }
+
+        function clampNullable(value) {
+          return typeof value === 'number' && !Number.isNaN(value) ? clamp(value) : null;
+        }
+
+        function average(values) {
+          const valid = values.filter(value => typeof value === 'number' && !Number.isNaN(value));
+          if (!valid.length) return null;
+          return valid.reduce((sum, value) => sum + value, 0) / valid.length;
+        }
+
+        const dimensions = [
+          {
+            label: '敏感度',
+            description: '你对外界信号的接收强度',
+            score: clampNullable(resultMap.hsp && resultMap.hsp.score && typeof resultMap.hsp.score.sensitivity === 'number'
+              ? resultMap.hsp.score.sensitivity / 7 * 5
+              : null)
+          },
+          {
+            label: '情绪调节力',
+            description: '你消化和转化情绪的资源储备',
+            score: clampNullable(resultMap.erq && resultMap.erq.score
+              ? (resultMap.erq.score.regulation || resultMap.erq.score.reappraisal)
+              : null)
+          },
+          {
+            label: '关系安全感',
+            description: '你在亲密关系中感受到的稳定程度',
+            score: clampNullable(resultMap.ecr && resultMap.ecr.score
+              ? average([8 - resultMap.ecr.score.anxiety, 8 - resultMap.ecr.score.avoidance]) / 7 * 5
+              : null)
+          },
+          {
+            label: '边界稳定性',
+            description: '你区分"我的"和"别人的"时有多清晰',
+            score: clampNullable(resultMap['boundary-sense'] && resultMap['boundary-sense'].score
+              ? Math.max.apply(null, Object.values(resultMap['boundary-sense'].score)) / 4 * 5
+              : null)
+          },
+          {
+            label: '自我慈悲度',
+            description: '你对自己犯错或不够好时的温和程度',
+            score: clampNullable(resultMap.fmps && resultMap.fmps.score
+              ? (resultMap.fmps.score.selfCompassion || (6 - average([resultMap.fmps.score.CM, resultMap.fmps.score.PS, resultMap.fmps.score.DA])))
+              : null)
+          }
+        ];
+
+        function buildDescription(dims) {
+          // dims: { sensitivity, regulation, security, boundary, compassion } 各 0-5 分
+          const { sensitivity, regulation, security, boundary, compassion } = dims;
+
+          const lowCount = [sensitivity, regulation, security, boundary, compassion].filter(v => v !== null && v < 2.5).length;
+          const midCount = [sensitivity, regulation, security, boundary, compassion].filter(v => v !== null && v >= 2.5 && v <= 3.5).length;
+
+          // 正向画像优先
+          if (compassion !== null && compassion >= 3.5 && [sensitivity, regulation, security, boundary].filter(v => v !== null && v >= 2.5).length >= 3) {
+            return '你对自己有比较充足的温和与接纳，这让你在面对压力和挫败时有更大的缓冲空间。自我慈悲不是放低标准，是你允许自己在够不到标准的时候不额外受罚。';
+          }
+          if (security !== null && security >= 3.5 && [sensitivity, regulation, boundary, compassion].filter(v => v !== null && v >= 2.5).length >= 3) {
+            return '你在关系中有比较稳定的安全感基础，这是一个很实在的资源——它意味着你在面对其他维度的波动时，有一个可以回去的锚点。关系里的稳定感会外溢到其他领域。';
+          }
+
+          // 问题组合
+          if (sensitivity !== null && sensitivity >= 3.5 && security !== null && security < 2.5) {
+            return '你接收到的信号比大多数人多，而在关系里，你还没有足够的安全感来安放这些信号。这会让你更快感受到波动——有时在对方还没意识到之前。这不是你想太多，是你的感知系统在认真工作，只是它还需要一个更稳的着陆点。';
+          }
+          if (sensitivity !== null && sensitivity >= 3.5 && regulation !== null && regulation < 2.5) {
+            return '你感受得很多，但目前用来消化这些感受的方式还不够多。这意味着情绪来的时候，你容易被它的强度淹没，而不是被内容本身困住。建立更多调节通道，会让敏感从负担变成资源。';
+          }
+          if (compassion !== null && compassion < 2 && regulation !== null && regulation < 2.5) {
+            return '你对自己的标准很高，同时情绪调节的储备还不够稳固。这两者叠在一起，会让你在做不好一件事时格外难受——不只是对事的挫败，还有对自己的失望。先处理后者，前者会自然松动。';
+          }
+          if (compassion !== null && compassion < 2 && boundary !== null && boundary < 2.5) {
+            return '你对自己要求严格，同时不太容易在关系中守住自己的边界。这个组合常常表现为：别人的需求你很难拒绝，而自己的需求你很难承认。边界不是墙，是你允许自己存在的空间。';
+          }
+          if (lowCount >= 3) {
+            return '你目前在多个维度上的资源都偏少，这不代表你有问题——它更像是一个阶段，你可能正处在消耗大于补给的时期。不需要同时处理所有事，从你最想改变的那一个点开始就够了。';
+          }
+          if (midCount >= 4) {
+            return '你的内在模式整体比较均衡，没有特别突出的短板，也没有明显的极端值。这种状态意味着你有一个相对稳定的基础，可以选择在某个方向上更深入地发展。';
+          }
+
+          return '每个人的内在模式都是独特的组合。完成更多测评，这张画像会更清晰。';
+        }
+
+        function renderHero() {
+          const heroTitle = document.getElementById('heroTitle');
+          const heroDescription = document.getElementById('heroDescription');
+          const heroChips = document.getElementById('heroChips');
+          if (!results.length) {
+            heroTitle.textContent = '你的画像还没有开始生成';
+            heroDescription.textContent = '先完成任意一个测评，系统就会开始累计你的内在模式线索。';
+            document.getElementById('radarPanel').innerHTML = '<div class="empty"><h2 class="panel-title">五维内在雷达</h2><p>还没有足够数据来绘制雷达图，先去做一份测评吧。</p></div>';
+            return;
+          }
+          heroTitle.textContent = '这是一张持续生长中的内在模式画像';
+          heroDescription.textContent = buildDescription({
+            sensitivity: dimensions[0].score,
+            regulation: dimensions[1].score,
+            security: dimensions[2].score,
+            boundary: dimensions[3].score,
+            compassion: dimensions[4].score
+          });
+          heroChips.innerHTML = dimensions
+            .filter(item => item.score !== null)
+            .map(item => `<span class="chip">${item.label} ${item.score.toFixed(1)}</span>`)
+            .join('');
+        }
+
+        function drawRadar() {
+          if (!results.length) return;
+          const canvas = document.getElementById('radarCanvas');
+          const ctx = canvas.getContext('2d');
+          const cx = 160, cy = 160, radius = 110;
+          const count = dimensions.length;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          for (let ring = 1; ring <= 5; ring += 1) {
+            ctx.beginPath();
+            dimensions.forEach((_, index) => {
+              const angle = -Math.PI / 2 + (Math.PI * 2 * index / count);
+              const x = cx + Math.cos(angle) * radius * (ring / 5);
+              const y = cy + Math.sin(angle) * radius * (ring / 5);
+              if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            });
+            ctx.closePath();
+            ctx.strokeStyle = 'rgba(44,32,20,.12)';
+            ctx.stroke();
+          }
+
+          dimensions.forEach((item, index) => {
+            const angle = -Math.PI / 2 + (Math.PI * 2 * index / count);
+            const x = cx + Math.cos(angle) * radius;
+            const y = cy + Math.sin(angle) * radius;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(x, y);
+            ctx.strokeStyle = 'rgba(44,32,20,.12)';
+            ctx.stroke();
+
+            const tx = cx + Math.cos(angle) * (radius + 22);
+            const ty = cy + Math.sin(angle) * (radius + 22);
+            ctx.fillStyle = '#7a6f64';
+            ctx.font = '12px Noto Serif SC';
+            ctx.textAlign = 'center';
+            ctx.fillText(item.label, tx, ty);
+          });
+
+          ctx.beginPath();
+          dimensions.forEach((item, index) => {
+            const angle = -Math.PI / 2 + (Math.PI * 2 * index / count);
+            const score = item.score === null ? 0 : item.score;
+            const x = cx + Math.cos(angle) * radius * (score / 5);
+            const y = cy + Math.sin(angle) * radius * (score / 5);
+            if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          });
+          ctx.closePath();
+          ctx.fillStyle = 'rgba(74,48,115,0.2)';
+          ctx.strokeStyle = '#4A3073';
+          ctx.lineWidth = 2;
+          ctx.fill();
+          ctx.stroke();
+
+          dimensions.forEach((item, index) => {
+            const angle = -Math.PI / 2 + (Math.PI * 2 * index / count);
+            const score = item.score === null ? 0 : item.score;
+            const x = cx + Math.cos(angle) * radius * (score / 5);
+            const y = cy + Math.sin(angle) * radius * (score / 5);
+            ctx.beginPath();
+            ctx.arc(x, y, 4, 0, Math.PI * 2);
+            ctx.fillStyle = '#4A3073';
+            ctx.fill();
+          });
+
+          document.getElementById('legend').innerHTML = dimensions.map(item => `
+            <div class="legend-item">
+              <strong>${item.label}</strong>
+              <span>${item.description}</span>
+            </div>
+          `).join('');
+        }
+
+        function renderCompleted() {
+          const container = document.getElementById('completedModules');
+          if (!completed.length) {
+            container.innerHTML = '<div class="module-card">还没有完成的测评记录。</div>';
+            return;
+          }
+          container.innerHTML = completed.map(item => {
+            const result = resultMap[item.id];
+            return `
+              <article class="module-card">
+                <div class="module-meta">
+                  <h3>${result.moduleName}</h3>
+                  <span class="module-tag">${result.summary || '已完成'}</span>
+                </div>
+                <p>最高线索：${result.topDimension || '—'}</p>
+              </article>
+            `;
+          }).join('');
+        }
+
+        function renderRemaining() {
+          document.getElementById('remainingText').textContent = remaining.length
+            ? '你已经完成了部分探索，还有几个维度的数据缺失——继续完成后，这张画像会更完整也更准确。'
+            : '8 个测评都已完成，你的画像已经具备完整基础数据。';
+          document.getElementById('todoModules').innerHTML = remaining.map(item => `
+            <article class="todo-card">
+              <h3>${item.name}</h3>
+              <p><a href="${item.href}">去完成这份测评 →</a></p>
+            </article>
+          `).join('') || '<div class="todo-card"><h3>已全部完成</h3><p>现在你可以直接截图分享这张画像。</p></div>';
+        }
+
+        document.getElementById('shareBtn').addEventListener('click', function () {
+          alert('分享功能已准备为截图版本：请直接截取当前页面，保存或发送给朋友。');
+        });
+
+        renderHero();
+        drawRadar();
+        renderCompleted();
+        renderRemaining();
+      })();
+    </script>
+  </body>
+</html>

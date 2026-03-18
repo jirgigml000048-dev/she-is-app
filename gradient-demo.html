@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>渐变方向对比</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f5f0eb; font-family: Georgia, 'Noto Serif SC', serif; padding: 48px 24px; }
+  h1 { font-size: 0.8rem; letter-spacing: 0.25em; color: #999; text-align: center; margin-bottom: 48px; text-transform: uppercase; font-weight: 400; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 680px; margin: 0 auto; }
+  .card { border-radius: 20px; overflow: hidden; background: white; box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+  .swatch { height: 200px; }
+  .info { padding: 20px 24px 24px; }
+  .name { font-size: 1rem; color: #2a2a2a; margin-bottom: 6px; }
+  .desc { font-size: 0.78rem; color: #999; line-height: 1.6; margin-bottom: 10px; }
+  .hex { font-size: 0.7rem; color: #ccc; font-family: monospace; letter-spacing: 0.05em; }
+  .tag { display: inline-block; font-size: 0.68rem; letter-spacing: 0.08em; padding: 3px 10px; border-radius: 20px; margin-top: 10px; }
+  .tag-rec { background: #4A3073; color: white; }
+  .tag-alt { background: #eee; color: #888; }
+      .vi-glow {
+        position: fixed;
+        pointer-events: none;
+        z-index: 0;
+        border-radius: 50%;
+        filter: blur(80px);
+      }
+      .vi-glow--top {
+        width: 340px;
+        height: 340px;
+        top: -100px;
+        right: -80px;
+        background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+      }
+      .vi-glow--bottom {
+        width: 280px;
+        height: 280px;
+        bottom: -60px;
+        left: -60px;
+        background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+      }
+    </style>
+</head>
+<body>
+    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+<h1>渐变方向对比 · she-is-app</h1>
+<div class="grid">
+
+  <div class="card">
+    <div class="swatch" style="background: linear-gradient(135deg, #4A3073 0%, #1A2560 100%)"></div>
+    <div class="info">
+      <div class="name">紫 → 深蓝</div>
+      <div class="desc">宇宙深处感，最神秘冷峻，有星空的气质。</div>
+      <div class="hex">#4A3073 → #1A2560</div>
+      <span class="tag tag-alt">冷调神秘</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="swatch" style="background: linear-gradient(135deg, #4A3073 0%, #1A0A35 100%)"></div>
+    <div class="info">
+      <div class="name">紫 → 深紫黑</div>
+      <div class="desc">最有深度感，像凝视深渊，沉静而有力量。</div>
+      <div class="hex">#4A3073 → #1A0A35</div>
+      <span class="tag tag-rec">✦ 推荐</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="swatch" style="background: linear-gradient(135deg, #4A3073 0%, #7B3F7A 100%)"></div>
+    <div class="info">
+      <div class="name">紫 → 暖紫</div>
+      <div class="desc">带一点温度，感性而流动，不那么冷。</div>
+      <div class="hex">#4A3073 → #7B3F7A</div>
+      <span class="tag tag-alt">暖调神秘</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="swatch" style="background: radial-gradient(ellipse at top left, #4A3073 0%, transparent 70%), #f5f0eb"></div>
+    <div class="info">
+      <div class="name">紫 → 透明</div>
+      <div class="desc">用于背景装饰，紫色从角落渗出，消失在米白里，最自然优雅。</div>
+      <div class="hex">#4A3073 → transparent</div>
+      <span class="tag tag-rec">✦ 推荐</span>
+    </div>
+  </div>
+
+</div>
+
+<p style="text-align:center;margin-top:40px;font-size:0.72rem;color:#bbb;letter-spacing:0.1em;">底色 #f5f0eb · 品牌紫 #4A3073</p>
+</body>
+</html>

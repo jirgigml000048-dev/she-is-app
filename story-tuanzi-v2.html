@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>团子：她身体里住着一道错误的方程 | 女也 She Is</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<style>
+      :root {
+        --bg: #faf8f5;
+        --ink: #1f1b1a;
+        --muted: #7f7773;
+        --primary: #e8a598;
+        --primary-soft: #fdf0ec;
+        --secondary: #8faf8a;
+        --line: #ddd5cf;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+      }
+
+      .page {
+        max-width: 480px;
+        margin: 0 auto;
+        min-height: 100vh;
+        padding-bottom: 48px;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 24px;
+        margin: 0 24px;
+        border-bottom: 0.5px solid var(--secondary);
+        background: rgba(250, 248, 245, 0.95);
+        backdrop-filter: blur(6px);
+      }
+
+      .back-btn,
+      .issue-tag {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-decoration: none;
+      }
+
+      .back-btn { color: #6f6763; }
+
+      .issue-tag {
+        color: #c4775a;
+        border: 1px solid rgba(232, 165, 152, 0.8);
+        background: #fdecea;
+        padding: 4px 10px;
+        border-radius: 999px;
+      }
+
+      .character-card {
+        margin: 24px;
+        padding: 18px;
+        border: 1px solid #ead9d4;
+        border-radius: 14px;
+        background: linear-gradient(160deg, #fff8f6, #f7f6f2 55%, #f0f6ef);
+        border-bottom: 2px solid #E8A598;
+        padding-bottom: 20px;
+        margin-bottom: 24px;
+      }
+
+      .story-subtitle {
+        margin: 0 0 10px;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 22px;
+        line-height: 1.3;
+        color: #523d38;
+      }
+
+      .character-name {
+        margin: 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 30px;
+        font-weight: 600;
+      }
+
+      .character-meta {
+        margin: 6px 0 12px;
+        font-family: 'DM Sans', sans-serif;
+        color: #6b6460;
+        font-size: 13px;
+      }
+
+      .pill-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+
+      .pill {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 11px;
+        padding: 4px 10px;
+        border-radius: 999px;
+      }
+
+      .pill:nth-child(odd) {
+        background: #FDECEA;
+        color: #C4775A;
+      }
+
+      .pill:nth-child(even) {
+        background: #EAF2EA;
+        color: #5A8C5A;
+      }
+
+      .illus-placeholder {
+        margin: 18px 24px;
+        min-height: 220px;
+        border: 1.5px dashed #d4c5b8;
+        border-radius: 10px;
+        background: #f0eae3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 8px;
+      }
+
+      .illus-placeholder.inline {
+        min-height: 160px;
+        margin: 1.6em 0 1.8em;
+      }
+
+      .illus-title {
+        margin: 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 26px;
+        color: #8f6f62;
+      }
+
+      .illus-note {
+        margin: 0;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        color: #af9c8f;
+      }
+
+      .hook {
+        margin: 10px 24px 8px;
+        padding: 16px 14px;
+        border-left: 3px solid var(--primary);
+      }
+
+      .hook-text {
+        margin: 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 42px;
+        line-height: 1.1;
+        font-weight: 600;
+        color: #362b29;
+      }
+
+      .story-body { padding: 8px 24px 0; }
+
+      .story-body p {
+        margin: 0 0 1.2em;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 19px;
+        line-height: 1.8;
+        color: #3e3633;
+      }
+
+      .formula-section {
+        position: relative;
+        margin: 48px 0 24px;
+        padding-left: 0;
+      }
+
+      .sec-num {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 56px;
+        color: #E8A598;
+        opacity: 0.25;
+        line-height: 1;
+        position: absolute;
+        left: -8px;
+        top: -12px;
+        user-select: none;
+      }
+
+      .sec-content {
+        padding-left: 44px;
+      }
+
+      .sec-label {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 11px;
+        color: #B8A898;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+
+      .sec-equation {
+        display: inline-block;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        color: #C4775A;
+        background: #FDF0EC;
+        padding: 5px 14px;
+        border-radius: 4px;
+        letter-spacing: 0.04em;
+      }
+
+      .equation {
+        margin: 0.8em 0 1.2em;
+        padding: 10px 12px;
+        border: 1px solid rgba(232, 165, 152, 0.6);
+        background: var(--primary-soft);
+        border-radius: 8px;
+        font-family: 'Courier Prime', monospace;
+        font-size: 15px;
+        color: #7b4d45;
+        letter-spacing: 0.03em;
+      }
+
+      blockquote {
+        margin: 16px 0;
+        padding: 10px 12px 10px 14px;
+        border-left: 2px solid #E8A598;
+        background: rgba(232,165,152,0.07);
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 20px;
+        line-height: 1.7;
+        color: #5a4d49;
+      }
+
+      .footer {
+        margin: 18px 24px 0;
+        padding-top: 20px;
+        border-top: 0.5px solid var(--line);
+      }
+
+      .source {
+        margin: 0 0 14px;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .test-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        border: 1px solid #C5DCC5;
+        color: #4b6150;
+        border-radius: 12px;
+        padding: 10px 14px;
+        background: #EAF2EA;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 13px;
+        letter-spacing: 0.02em;
+      }
+
+      .test-link strong { color: #5A8C5A; }
+          .vi-glow {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(80px);
+          }
+          .vi-glow--top {
+            width: 340px;
+            height: 340px;
+            top: -100px;
+            right: -80px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+          }
+          .vi-glow--bottom {
+            width: 280px;
+            height: 280px;
+            bottom: -60px;
+            left: -60px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+          }
+        </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/font-override.css" />
+</head>
+  <body>
+    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+    <main class="page">
+      <header class="site-header">
+        <a href="index.html" class="back-btn">← 返回</a>
+        <span class="issue-tag">第 001 期</span>
+      </header>
+
+      <section class="character-card">
+        <p class="story-subtitle">团子：她身体里住着一道错误的方程</p>
+        <h2 class="character-name">团子</h2>
+        <p class="character-meta">博士 · 北京 · 30岁</p>
+        <div class="pill-wrap">
+          <span class="pill">#害怕被丢下</span>
+          <span class="pill">#身体比脑子先知道</span>
+          <span class="pill">#感受力很强</span>
+          <span class="pill">#总是先想到别人</span>
+        </div>
+      </section>
+
+      <div style="margin:0 0 24px;background:#F0EAE3;height:220px;border:1.5px dashed #D4C5B8;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+        <img src="illus-tuanzi-01.png" onerror="this.style.display='none'" style="max-height:200px;border-radius:8px;">
+        <span style="font-family:'DM Sans',sans-serif;font-size:13px;color:#B8A898;">插图 · 团子</span>
+        <span style="font-family:'DM Sans',sans-serif;font-size:11px;color:#C8BAB0;">Lumi 生成中</span>
+      </div>
+
+      <section class="hook">
+        <p class="hook-text">“加班等于会死。”</p>
+      </section>
+
+      <article class="story-body">
+        <p>这是团子在跟一个大模型反复对话之后，从自己身体里挖出来的一条公式。</p>
+        <p>她知道这很荒谬。她是博士，清北的本科，在事业单位做着朝九晚五的工作，领导同事都很好。但只要收到一条“周末需要加班”的消息，她中午的午觉就立刻报废。午觉报废意味着下午的精力全部归零，然后心跳加快，然后失眠，然后PTSD发作——侧躺在床上的那个姿势，会把她拽回一年多以前，她蜷在床上拨打120之前的那几个小时。</p>
+        <p>坐在西单北大街的绿茶餐厅里，团子说话慢吞吞的，温柔得不像个东北人。圆圆的脸，肉嘟嘟的，透着一种大病初愈后，皮肤还没来得及学会衰老的那种红润。</p>
+        <p>在过去两年里，她失去了两个胚胎、一段婚姻、大半条命和全身的肌肉力量，然后用所有的时间慢慢把自己养回来。</p>
+        <p>我们聊了将近四个小时。菜凉了热，热了又凉。一开始，她几乎没怎么吃东西，但把每件事情都讲得极其清楚——时间线、因果链、每一步的决策逻辑。讲到某些地方她会停下来，眼眶红了，但不会失控，只是安静地等那阵潮水过去，然后接着讲。</p>
+        <p>后来我才明白，这种“把一切都理清楚”的本能，既是她最大的天赋，也是她身体里那些错误公式的来源。</p>
+
+        <section class="formula-section">
+          <div class="sec-num">01</div>
+          <div class="sec-content">
+            <div class="sec-label">第一条公式</div>
+            <div class="sec-equation">学习好 = 被爱</div>
+          </div>
+        </section>
+
+        <p>团子记得自己三四岁的时候，把虚岁和实岁搞混了，当众说错了一句话。</p>
+        <blockquote>“然后我就一直哭，好像哭到了晚上。”</blockquote>
+        <p>三四岁的孩子说错一句话，哭到天黑。她自己现在回忆也觉得不可思议。但那种“说错了就完了”的恐惧是真实的，从那么小就刻进了身体。</p>
+        <p>后来这种恐惧找到了一个出口：学习。高中时她成绩极好，顶尖的那一批，刷题带来的快感是源源不断的——“做一道会一道的快乐是无法想象的。”团子说，她还特别愿意帮任何人讲题，哪怕高考前时间很紧，有人来问她也会停下来一道一道讲。</p>
+        <p>她把所有人对她的喜欢，都归因到了成绩上。</p>
+        <blockquote>“没有人因为我学习好而爱我，但当时我不知道。我一直以为大家爱我，是因为我学习好。”</blockquote>
+        <p>这条公式在高中运转得很完美。但到了大学，它开始失灵。团子考进了全国最顶尖的学校，班上一半是竞赛生，高中就学过大学的课。老师对着顶尖的学生讲，她跟不上。“每上一次课，我不会的东西就又多了一些。”</p>
+        <p>当“学习好”这个变量坍塌的时候，整条公式的结论也跟着塌了，她开始相信自己不值得被爱。</p>
+        <p>博士阶段更惨。导师和她预设的结论和真实结果相反，她在上面死磕了很久，怎么做都做不出来。她开始没有办法看文献，每次打开一篇论文，看不到五分钟就止不住要哭。</p>
+        <p>不是不想做，是做不了。每天坐在电脑前，她只要打开任何跟科研有关的东西，大脑就像一台过载的机器，直接蓝屏。也没有办法去实验室，出门就要换衣服，换衣服之前要洗头，而光是“洗头”这一个动作，就能卡住她。拖一会，洗了。再拖一会，换好衣服了。然后，最后还是没能出去。</p>
+        <p>后来，她在网上找到一本伯恩斯的《新情绪疗法》的电子版，翻译得很烂。她一边读，一边对着英文原文把翻译错误一个个改过来。</p>
+        <blockquote>“改到最后，我就好了。”</blockquote>
+        <p>她自己也不知道是怎么好的。也许是那本书的内容起了作用，也许是“一边读一边改”这个动作本身，让她重新确认了一件事：我的大脑还能运转，我还是有能力的。这是她人生中第一次自救，也是她debug的原型——把痛苦拆成零件，找到那条错误的逻辑，然后用理性把它改写。</p>
+        <p>毕业论文是在最后一个月赶出来的。每天只能睡四个小时，从十二点睡到四点就醒，爬起来接着写。那段时间她困到把所有重要证件，本科毕业证、各种证书随手放在工位旁边忘了收，第二天发现被保洁阿姨当垃圾扔了。她去垃圾站翻垃圾堆，一件件把自己的东西翻了出来。</p>
+        <p>论文交上去的那天，导师说：“我要是评审员，我不会让你过的。”那段日子她靠网上的算命视频撑，“人在自救的时候什么方法都会试。”眼前这个戴着眼镜的博士生无奈地坦言，“有一个博主说我会‘低空飞过’。”</p>
+        <p>后来她真的毕了，快乐地把关注的算命博主通通删掉。</p>
+        <p>找工作时28岁，已婚未育，女博士。“人家宁愿要男硕士，不要女博士。”最后找到了现在的工作。她以为过了这个坎，后面就都是快乐的事了。</p>
+
+        <div style="margin:16px 0 24px;background:#F0EAE3;height:160px;border:1.5px dashed #D4C5B8;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+          <img src="illus-tuanzi-02.png" onerror="this.style.display='none'" style="max-height:140px;border-radius:8px;">
+          <span style="font-family:'DM Sans',sans-serif;font-size:13px;color:#B8A898;">插图 · 学习的代价</span>
+          <span style="font-family:'DM Sans',sans-serif;font-size:11px;color:#C8BAB0;">Lumi 生成中</span>
+        </div>
+
+        <section class="formula-section">
+          <div class="sec-num">02</div>
+          <div class="sec-content">
+            <div class="sec-label">第二条公式</div>
+            <div class="sec-equation">不能生 = 被扔掉</div>
+          </div>
+        </section>
+
+        <p>团子的婚姻是相亲来的。对方清华本硕，央企拿了户口又跳槽到民企去挣钱，山东人，家里条件也比较好。两家合力在北京全款买了房。从外部参数看，这是一段完美的匹配。</p>
+        <blockquote>“在没有孩子的阶段，谈恋爱也好，结婚也好，其实就是一起出去吃饭，一起玩。”</blockquote>
+        <p>第一次怀孕是宫外孕，胚胎没发育好，自然流产。她以为这只是一个小的挫折，调整一下就能继续。第二次怀孕，又是宫外孕。但这一次，输卵管破裂了。</p>
+        <p>周六下午开始疼，她认为忍一忍就好，于是家里人都听了她的，拖了几个小时才叫120。到医院的时候，血压高压50多，低压40多。抢救过程中血压一度降到零。</p>
+        <blockquote>“失掉了2600毫升的血。相当于一个女人十年的月经量，一下子流完。”</blockquote>
+        <p>她在手术台上还是清醒的。麻醉师准备上麻药的时候没有按常规询问身高体重，她在那种状态下还追问了一句：“你们为什么不问我的身高体重？”医生们都很无奈——都这么紧急了，你还问这个。她说完自己的身高体重，攒了最后一口力气吸了氧，然后失去了意识。</p>
+        <p>从急诊推往手术室的路上，她妈妈一米五，快六十岁，在后面跑着追那辆推车。在电梯里追上的一瞬间，她对妈妈说了一句话。</p>
+        <blockquote>“妈妈别怕。”</blockquote>
+        <p>讲到这里的时候，坐在我对面的这个女孩停了下来。她没有哭出声，但眼泪已经在眼眶里了。我也停了下来，想知道全身只剩半管血的人，握住妈妈的手，最后能感知到的温度，会更暖和一些吗。</p>
+
+        <div style="margin:16px 0 24px;background:#F0EAE3;height:160px;border:1.5px dashed #D4C5B8;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+          <img src="illus-tuanzi-03.png" onerror="this.style.display='none'" style="max-height:140px;border-radius:8px;">
+          <span style="font-family:'DM Sans',sans-serif;font-size:13px;color:#B8A898;">插图 · 妈妈别怕</span>
+          <span style="font-family:'DM Sans',sans-serif;font-size:11px;color:#C8BAB0;">Lumi 生成中</span>
+        </div>
+
+        <p>如果那是她留在世上的最后一句话，她对妈妈说的是：别怕。</p>
+        <p>手术成功了。医生推开门说“人我给你们保住了”，她的前夫跪在手术室门口磕了几个头。她后来说，那大概是他为这段婚姻做出的最后一次动情的事。</p>
+        <p>因为第二天，婆婆没有来医院。通过前夫传了一句话给她的父母：“养好身体，以后的事情以后再说。”她父母对视一眼，心都凉了。</p>
+        <blockquote>“我在病床上醒来的第一天就知道，我一定会被离婚。”</blockquote>
+        <p>她在小月子里就把所有的方案都评估了一遍：自己再怀、做试管、代孕、领养、让丈夫找别人生一个抱回来养……每一条路都拆解过利弊和风险。最终的判断是：这个人不值得她为之再冒一次生命危险。</p>
+        <blockquote>“如果他肯等两年，我现在说不定就可以怀了。但他等不了。他的人生从来都是上坡路，他以为抛弃这个选择，就能继续往上走。”</blockquote>
+        <p>她在身体最虚弱的时候，反过来成了两个老人的心理支柱。父母因为这件事一下子老了很多，爸爸半夜两点就醒再也睡不着，妈妈隔一天就熬一整夜。她必须让他们看到女儿在一天天变好，哪怕自己还虚弱到无法摸凉的门把手。</p>
+        <blockquote>“在我身体最虚弱的时候，我必须成为他们的心理支柱。”</blockquote>
+        <p>她说这话的语气非常平静，一种已经不需要解释的、被接受了的倒置。</p>
+        <p>讲到那段婚姻里快乐的部分时，她又一次红了眼眶。“晚上睡觉前我会专门要求他摸我，他的手法也逐渐练出来了，就专门在肚子上面抓……”她顿了一下，声音轻了。“好难过，以后就没有了。”</p>
+        <p>前夫从家里消失了整整一年。没有联系，没有协商，直到开庭才再见面。</p>
+        <blockquote>“离婚谈判里，他承诺的补偿是：她可以继续共享他的Steam游戏库，哈哈。后来开庭前还是又把我踢了出去。”</blockquote>
+        <p>这条公式比第一条更残忍：不是你不够好，而是你的身体不够好，所以你会被扔掉。</p>
+
+        <section class="formula-section">
+          <div class="sec-num">03</div>
+          <div class="sec-content">
+            <div class="sec-label">第三条公式</div>
+            <div class="sec-equation">加班 = 会死</div>
+          </div>
+        </section>
+
+        <p>离婚以后，她开始拼命恢复身体。</p>
+        <p>那种虚弱是常人难以想象的。全身的肌肉力量几乎流失殆尽，手指夹不稳筷子，手机拿起来会从手里滑掉，晚上盖被子的力气都没有。什么都不做的时候心跳就是100——身体的全部能量流向了器官和脑子，像一座城市断电后，最后一点电力只够保住医院和消防站。</p>
+        <p>团子说她中午吃饭只能自己吃，因为如果和别人一起吃，通常会聊天，而到中午已经没有用于闲聊的能量，必须快速吃完之后回去睡午觉。如果偶尔上午开会挤占了午休，开到一半的时候眼睛就已经睁不开，散会后不吃午饭也要先躺下睡觉。</p>
+        <p>中医给她忌了烟、酒、奶茶、咖啡、巧克力。半年里她一口巧克力都没吃过，别人分享的都拿回家给妈妈。中药的最大功效是让她胃口大开，胖了十斤。“我妈养了两年都没养胖的人，吃了中药以后终于胖回来了。”肌肉回来以后，那些细小的恢复终于肉眼可见了：能拎包了，能正常走路了，能吃完饭不喘了。</p>
+        <p>但身体在变好的同时，那条最荒诞的公式也在她体内悄悄成型。</p>
+        <p>今年一月，她被通知周末需要加班。她中午没睡着，下午开始哭，哭到停不下来。她意识到不对，去找大模型对话，一层一层往下挖，最后挖出了那条被身体自动压缩过的因果链：</p>
+        <div class="equation">加班→身体透支→怀孕→宫外孕→大出血→差点死</div>
+        <p>离婚之后，“怀孕”这个环节被剔除了，整条链自动简化成了——加班=会死。</p>
+        <blockquote>“我也不知道身体是怎么总结出这么奇怪的一条规则的。”她自己都觉得好笑。“但意识到之后，马上要加的那个班，我就可以很平静地接受了。”</blockquote>
+        <p>这是她第三次自救，也是最漂亮的一次debug。不是对抗公式，不是强撑着去加班，而是把那条错误的代码找出来，看清楚它，然后它就失去了对她的控制。</p>
+
+        <section class="formula-section">
+          <div class="sec-num">04</div>
+          <div class="sec-content">
+            <div class="sec-label">第四条公式</div>
+            <div class="sec-equation">锦旗未寄</div>
+          </div>
+        </section>
+
+        <p>她家里放着六面锦旗，是分别给120急救中心、急诊、手术、病房的医生和护士的。已经放了一年多了。</p>
+        <p>那是她早就订好的。但她一直没有送出去，每一次试图回到那家医院，PTSD就会发作，光是想起来这些事就开始哭，哭到没有力气。她问过前夫要不要一起去送，前夫说不要。后来前夫从她的生活里消失了，锦旗还在家里。</p>
+        <p>她现在开始在小红书上回复那些跟她经历相似的人。有一个刚宫外孕的女孩给她发私信，说“我觉得他们家不会再留我了。”</p>
+        <blockquote>“我不是专业的心理咨询师，很多建议我没有资格给。但至少我可以作为一个案例，告诉她们——走得出来的。”</blockquote>
+        <p>听她讲完，我在回去的路上想了很久。</p>
+        <p>我们每个人身体里大概都住着几条这样的方程。它们不是我们自己写的，有些是童年写的，有些是父母写的，有些是社会写的，有些是身体在某次重创之后自动生成的。它们在后台静默运行，我们甚至不知道它们的存在，直到生活出了岔子，才发现自己一直在按照一条错误的公式活着。</p>
+        <p>团子的妈妈坚信“女儿没有伴侣=会孤独一生”，所以焦虑到隔一天就失眠一夜。团子自己在30岁断定“离过婚的女博士=再也找不到了”——千挑万选的基因都没能留住，下一个怎么可能更好？我听她讲的时候，也在心里翻检自己那些方程：讨好=被接纳，不起冲突=关系安全。</p>
+        <p>它们看起来都很合理。合理到你不会去质疑。但合理和正确是两回事。</p>
+        <p>团子教给我的是：你不需要消灭那些公式，你只需要把它们找出来，看清楚它们。一条被看见的错误方程，就不再有控制你的力量。</p>
+        <p>饭局结束的时候，菜早就凉透了。</p>
+        <p>星期天下午的西单北大街“合理”地堵上了，她坚持要陪我等到滴滴到达，说话还是慢吞吞的，温柔得不像个东北人。</p>
+        <p>至于那些锦旗，我相信她总有一天会送出去的。不急。</p>
+      </article>
+
+      <footer class="footer">
+        <p class="source">故事来源：女也 She Is 真实人物访谈计划（第 001 期）</p>
+        <a class="test-link" href="test-ecr.html"><strong>测试推荐</strong>：了解你的依恋风格 →</a>
+      </footer>
+    </main>
+  </body>
+</html>

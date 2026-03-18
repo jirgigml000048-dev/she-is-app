@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>你的边界感 | 女也 She Is</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<style>
+      :root {
+        --bg: #faf6ef;
+        --card: rgba(255, 253, 248, 0.92);
+        --ink: #2c2c2c;
+        --muted: rgba(44, 44, 44, 0.68);
+        --line: rgba(44, 44, 44, 0.12);
+        --line-strong: rgba(44, 44, 44, 0.22);
+        --sage: #8faf8a;
+        --rose: #d4917a;
+        --sand: #c9a88b;
+        --accent: #c4a882;
+        --shadow: 0 10px 30px rgba(44, 44, 44, 0.08);
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        min-height: 100vh;
+        color: var(--ink);
+        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+        line-height: 1.65;
+        background-color: var(--bg);
+        background-image:
+          radial-gradient(circle at 20% 30%, rgba(44, 44, 44, 0.03) 0 1px, transparent 1px 100%),
+          radial-gradient(circle at 80% 70%, rgba(143, 175, 138, 0.05) 0 1px, transparent 1px 100%),
+          radial-gradient(circle at 40% 60%, rgba(212, 145, 122, 0.04) 0 1px, transparent 1px 100%),
+          repeating-linear-gradient(0deg, rgba(44, 44, 44, 0.01), rgba(44, 44, 44, 0.01) 1px, transparent 1px, transparent 3px);
+      }
+      h1, h2, h3 { margin: 0; font-family: "Noto Serif SC", "Cormorant Garamond", "Source Han Serif SC", serif; font-weight: 600; letter-spacing: .04em; color: var(--ink); }
+      p { margin: 0; }
+      a { color: inherit; text-decoration: none; }
+      button { font: inherit; }
+      .page { width: min(100%, 520px); margin: 0 auto; min-height: 100vh; padding: 18px 16px 28px; }
+      .nav-back { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px; font-size: .86rem; border: 1px solid var(--line); background: rgba(255,255,255,.58); padding: 7px 12px; border-radius: 999px; }
+      .topline { height: 4px; background: rgba(44,44,44,.08); border-radius: 999px; overflow: hidden; }
+      .topline > span { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--sage)); transition: width .28s ease; }
+      .meta { display:flex; justify-content:space-between; align-items:center; margin:10px 0 16px; font-size:12px; color:var(--muted); letter-spacing:.06em; }
+      .panel { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 24px 18px; box-shadow: var(--shadow); min-height: 76vh; display:flex; flex-direction:column; }
+      .hidden { display:none; }
+      .eyebrow { font-family: "Courier Prime", monospace; font-size: .78rem; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+      .title { font-size: 2.3rem; line-height: 1.05; margin-top: 8px; }
+      .subtitle { margin-top: 12px; color: var(--muted); font-size: .98rem; }
+      .intro-note { margin-top: 18px; padding: 14px 16px; border-radius: 16px; background: rgba(255,255,255,.6); border: 1px solid rgba(44,44,44,.08); color: rgba(44,44,44,.78); }
+      .primary, .ghost { border-radius: 999px; padding: 10px 16px; cursor: pointer; transition: all .2s ease; }
+      .primary { margin-top: auto; border: none; background: var(--accent); color: #fffdf8; box-shadow: 0 8px 18px rgba(0,0,0,.08); }
+      .primary:hover { transform: translateY(-1px); filter: brightness(.98); }
+      .ghost { border: 1px solid var(--line-strong); background: transparent; color: var(--ink); }
+      .question-id { font-size: 12px; color: rgba(44,44,44,.56); letter-spacing: .08em; text-transform: uppercase; }
+      .question-text { margin-top: 10px; font-size: 1.42rem; line-height: 1.35; }
+      .question-desc { margin-top: 10px; color: var(--muted); font-size: .94rem; }
+      .options { display: grid; gap: 12px; margin-top: 22px; }
+      .option { width: 100%; text-align: left; padding: 14px 16px; border-radius: 16px; border: 1px solid rgba(44,44,44,.1); background: rgba(255,255,255,.8); color: var(--ink); display:flex; gap: 12px; align-items:flex-start; }
+      .option:hover { transform: translateY(-1px); border-color: rgba(44,44,44,.18); background: #fff; }
+      .option-mark { width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(44,44,44,.15); display:grid; place-items:center; flex-shrink:0; font-size:.88rem; color:var(--muted); background: rgba(250,246,239,.8); }
+      .option-copy { flex: 1; font-size: .98rem; line-height: 1.55; }
+      .result-card { margin-top: 18px; padding: 18px 16px; border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.68)); border: 1px solid rgba(44,44,44,.1); }
+      .result-tag { font-family: "Courier Prime", monospace; font-size: .76rem; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+      .result-title { margin-top: 8px; font-size: 2rem; line-height: 1.08; }
+      .result-desc { margin-top: 12px; font-size: .98rem; color: rgba(44,44,44,.8); }
+      .result-actions { display:flex; gap:10px; margin-top:auto; padding-top:22px; }
+      .result-actions a, .result-actions button { flex:1; text-align:center; }
+      .fade-out { opacity: 0; transform: translateY(8px); }
+      .view { transition: opacity .22s ease, transform .22s ease; }
+      .story-link-hint {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: #888;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .story-link-hint a {
+        color: #555;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      @media (max-width: 540px) {
+        .title { font-size: 2rem; }
+        .question-text { font-size: 1.28rem; }
+        .result-title { font-size: 1.78rem; }
+        .result-actions { flex-direction: column; }
+      }
+      .disclaimer-note { font-size: 0.78rem; color: #aaa; display: block; margin-top: 0.5rem; }
+      .story-link-hint { margin-top: 1rem; font-size: 0.85rem; color: #888; display: flex; align-items: center; gap: 0.5rem; }
+      .story-link-hint a { color: #555; text-decoration: underline; text-underline-offset: 3px; }
+          .vi-glow {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(80px);
+          }
+          .vi-glow--top {
+            width: 340px;
+            height: 340px;
+            top: -100px;
+            right: -80px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+          }
+          .vi-glow--bottom {
+            width: 280px;
+            height: 280px;
+            bottom: -60px;
+            left: -60px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+          }
+        </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/font-override.css" />
+</head>
+  <body>
+    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+    <main class="page">
+      <a class="nav-back" href="assessment.html">← back</a>
+      <div class="topline"><span id="progressBar"></span></div>
+      <div class="meta"><span id="progressText">准备开始</span><span>Boundary Sense</span></div>
+
+      <section class="panel view" id="introView">
+        <p class="eyebrow">Light Quiz</p>
+        <h1 class="title">你的边界感</h1>
+        <p class="subtitle" id="introDesc"></p>
+        <div class="intro-note">一题一页，像把手电筒一格一格打在自己身上。别急着做对，只选那个让你心里轻轻点头的答案。</div>
+        <button class="primary" id="startBtn">准备好了</button>
+      </section>
+
+      <section class="panel view hidden" id="quizView">
+        <div class="question-id" id="questionCounter"></div>
+        <h2 class="question-text" id="questionText"></h2>
+        <p class="question-desc">单选 · 选完自动进入下一题</p>
+        <div class="options" id="options"></div>
+      </section>
+
+      <section class="panel view hidden" id="resultView">
+        <p class="eyebrow">Result</p>
+        <h1 class="title">测试完成</h1>
+        <div class="result-card">
+          <div class="result-tag" id="resultTag"></div>
+          <h2 class="result-title" id="resultTitle"></h2>
+          <p class="result-desc" id="resultDesc"></p>
+          <p style="font-size:12px;color:#999;margin-top:12px;">这是你当下的模式，不是诊断，也不是定论。</p>
+        </div>
+        <div class="story-link-hint">
+          <span>你可能会有共鸣 →</span>
+          <a href="story-xiaochen.html">世界需要"愤怒"的女孩</a>
+        </div>
+        <div class="result-actions">
+          <a class="ghost" href="assessment.html">返回测试列表</a>
+          <a class="ghost" href="profile.html">这个维度是你画像的一部分——查看五个维度的完整模式，看看它们如何相互影响。</a>
+          <button class="primary" id="restartBtn">再测一次</button>
+        </div>
+        <div class="story-link-hint">
+          <span>你可能会有共鸣 →</span>
+          <a href="story-xiuxiu.html">在北京，允许不长大</a>
+        </div>
+      </section>
+    </main>
+
+    <script src="assets/profile-utils.js"></script>
+<script>
+      const testData = {
+  "id": "boundary-sense",
+  "title": "你的边界感",
+  "description": "有些\"好啊\"，其实是心里那句\"不想\"还没来得及被自己听见。你可能是在怕别人失望，怕气氛冷掉，也可能只是太习惯先照顾外面，再回头问自己。这个小测试想陪你辨认：你的边界，最常在哪里先变得模糊。",
+  "type": "choice",
+  "questions": [
+    {
+      "id": 1,
+      "text": "已经很累了，朋友临时约你晚上出去散心，还说\"只有你最懂我\"。你更可能：",
+      "options": [
+        {
+          "value": "A",
+          "text": "明明想休息，还是答应下来，不想让她失望",
+          "tag": "情感型边界缺失"
+        },
+        {
+          "value": "B",
+          "text": "如果她在群里这样说，你更难当场拒绝",
+          "tag": "社交型边界缺失"
+        },
+        {
+          "value": "C",
+          "text": "会先愣一下，得想一会儿才知道自己到底想不想去",
+          "tag": "自我型边界缺失"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "text": "同事把原本不属于你的活顺手推给你，说\"你做这个最靠谱\"。你通常会：",
+      "options": [
+        {
+          "value": "A",
+          "text": "怕拒绝了显得不好相处，于是接下来",
+          "tag": "情感型边界缺失"
+        },
+        {
+          "value": "B",
+          "text": "尤其在大家都在场时，很难直接说不",
+          "tag": "社交型边界缺失"
+        },
+        {
+          "value": "C",
+          "text": "先接了再说，后来才意识到这其实挤占了自己的时间",
+          "tag": "自我型边界缺失"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "text": "家人希望你周末回去吃饭，但你其实只想一个人待着。你的第一反应更像：",
+      "options": [
+        {
+          "value": "A",
+          "text": "想到他们会失望，就很难开口拒绝",
+          "tag": "情感型边界缺失"
+        },
+        {
+          "value": "B",
+          "text": "如果亲戚群里都在等你回应，你更说不出口",
+          "tag": "社交型边界缺失"
+        },
+        {
+          "value": "C",
+          "text": "你会怀疑\"是不是我太自私了\"，不太确定休息算不算正当理由",
+          "tag": "自我型边界缺失"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "text": "朋友总喜欢不提前打招呼就给你打视频。你更可能：",
+      "options": [
+        {
+          "value": "A",
+          "text": "即使不方便也会接，怕对方多想",
+          "tag": "情感型边界缺失"
+        },
+        {
+          "value": "B",
+          "text": "如果旁边有人起哄说\"快接呀\"，你更难拒绝",
+          "tag": "社交型边界缺失"
+        },
+        {
+          "value": "C",
+          "text": "经常接完才发现自己其实一点都不想被打扰",
+          "tag": "自我型边界缺失"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "text": "你买了一张很想看的演出票，但朋友突然说那天想你陪她办点事。你通常会：",
+      "options": [
+        {
+          "value": "A",
+          "text": "虽然舍不得，还是更容易先顾她那边",
+          "tag": "情感型边界缺失"
+        },
+        {
+          "value": "B",
+          "text": "如果这件事被几个人一起拜托，你基本不好意思坚持自己原计划",
+          "tag": "社交型边界缺失"
+        },
+        {
+          "value": "C",
+          "text": "会开始权衡半天，却说不清自己到底更想去哪边",
+          "tag": "自我型边界缺失"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "text": "有人向你借钱，金额不大，但你心里并不舒服。你更像会：",
+      "options": [
+        {
+          "value": "A",
+          "text": "担心不借显得冷淡，最后还是借了",
+          "tag": "情感型边界缺失"
+        },
+        {
+          "value": "B",
+          "text": "如果对方当着别人面开口，你几乎不会拒绝",
+          "tag": "社交型边界缺失"
+        },
+        {
+          "value": "C",
+          "text": "你会先答应，之后才慢慢意识到自己其实不愿意",
+          "tag": "自我型边界缺失"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "text": "朋友总把负面情绪倾倒给你，一聊就是很久。某天你状态很差。你更可能：",
+      "options": [
+        {
+          "value": "A",
+          "text": "还是撑着陪她，怕她觉得你不在乎",
+          "tag": "情感型边界缺失"
+        },
+        {
+          "value": "B",
+          "text": "如果她在共同朋友圈里表现得很脆弱，你更难退出",
+          "tag": "社交型边界缺失"
+        },
+        {
+          "value": "C",
+          "text": "你其实分不清自己是不想听了，还是只是今天累了",
+          "tag": "自我型边界缺失"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "text": "有人问你\"你想吃什么、去哪儿、怎么安排\"，你最常出现的状态是：",
+      "options": [
+        {
+          "value": "A",
+          "text": "怕麻烦别人，常说\"都可以，你定吧\"",
+          "tag": "情感型边界缺失"
+        },
+        {
+          "value": "B",
+          "text": "只要大家已经有倾向，你就不太会提出不同意见",
+          "tag": "社交型边界缺失"
+        },
+        {
+          "value": "C",
+          "text": "你是真的常常答不上来，因为一时也不知道自己想要什么",
+          "tag": "自我型边界缺失"
+        }
+      ]
+    }
+  ],
+  "results": {
+    "情感型边界缺失": {
+      "title": "EMOTIONAL — 你更容易被\"别让人失望\"牵着走",
+      "desc": "你总是先感受到别人的需要，然后才想起自己的。很少说\"不\"，因为你太清楚拒绝之后对方脸上会出现什么表情——那个画面比你自己的不舒服更重。帮人、迁就、主动退让，做这些的时候你甚至是真心的。只是事后会觉得累。一种说不清来源的累。比如聚餐结束回到家，门一关上，整个人突然卸下来，坐在玄关好一会儿都不想动。你说不上来刚才哪个瞬间越了界，但身体已经给了答案。你把太多感受力花在了维护关系的温度上，留给自己的，常常只剩愧疚和疲倦之间那个窄窄的缝隙。你其实隐约知道问题在哪——你太害怕成为那个让气氛变冷的人。温柔是你的天赋，但你大概也感觉到了，它也是你最容易丢失自己的入口。而最让你为难的是，你分不清哪些温柔是给别人的，哪些只是在安抚自己的不安。"
+    },
+    "社交型边界缺失": {
+      "title": "SOCIAL — 你更容易在群体氛围里退让",
+      "desc": "你有自己的判断，只是人多的时候会自动收起来。你对群体气氛的感知太灵敏了——谁不自在了、话题快冷场了、有人被忽略了——你全都接收得到。于是你习惯去补位、去圆场，哪怕这意味着你自己的声音一再被推迟。比如一桌人吃饭，你可能全程都在照顾对话的流向，确保没有人被晾在一边，回到家才发现自己一整晚其实没说过几句真正想说的话。一对一的时候你松弛得多。那才更接近你本来的样子。你在群体里承担的那个角色，尽责，但不一定是你选的。久了你甚至会分不清：是你喜欢这个位置，还是你只是太熟悉它了。那种自动运转的状态本身就值得停下来看一看。"
+    },
+    "自我型边界缺失": {
+      "title": "INNER — 你有时还没来得及听见自己",
+      "desc": "你常常是做完了才意识到自己并不想那样做。答应得太快，反应得太即时，等情绪慢半拍到达的时候，事情已经发生了。比如随口答应了一个周末的邀约，挂掉电话才感觉到胃里一小团抗拒。但你不会取消。因为话已经说出去了，你觉得收回来比硬撑更难受。你跟自己的真实感受之间好像有一小段延迟——善意和本能总是跑在自我确认前面。你可能偶尔会对自己生气：为什么又这样？但那个\"又\"字里藏着的，是一个还在学习听见自己声音的人。你不缺边界感。你缺的是反应之前给自己留出的那几秒停顿。那几秒里住着你真正的答案，只是你还不太习惯等它出现。"
+    }
+  }
+};
+      const state = { index: -1, answers: [], counts: {} };
+      const introView = document.getElementById('introView');
+      const quizView = document.getElementById('quizView');
+      const resultView = document.getElementById('resultView');
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
+      const introDesc = document.getElementById('introDesc');
+      const questionCounter = document.getElementById('questionCounter');
+      const questionText = document.getElementById('questionText');
+      const options = document.getElementById('options');
+      const resultTag = document.getElementById('resultTag');
+      const resultTitle = document.getElementById('resultTitle');
+      const resultDesc = document.getElementById('resultDesc');
+
+      introDesc.textContent = `${testData.description} 共 ${testData.questions.length} 题。`;
+
+      function setView(view) {
+        [introView, quizView, resultView].forEach((el) => el.classList.add('hidden'));
+        view.classList.remove('hidden');
+      }
+
+      function updateProgress() {
+        const total = testData.questions.length;
+        if (state.index < 0) {
+          progressText.textContent = '准备开始';
+          progressBar.style.width = '0%';
+          return;
+        }
+        if (state.index >= total) {
+          progressText.textContent = `已完成 · 共${total}题`;
+          progressBar.style.width = '100%';
+          return;
+        }
+        progressText.textContent = `第${state.index + 1}题 / 共${total}题`;
+        progressBar.style.width = `${((state.index + 1) / total) * 100}%`;
+      }
+
+      function renderQuestion() {
+        updateProgress();
+        const question = testData.questions[state.index];
+        questionCounter.textContent = `Question ${state.index + 1}`;
+        questionText.textContent = question.text;
+        options.innerHTML = '';
+        question.options.forEach((option) => {
+          const button = document.createElement('button');
+          button.className = 'option';
+          button.type = 'button';
+          button.innerHTML = `<span class="option-mark">${option.value}</span><span class="option-copy">${option.text}</span>`;
+          button.addEventListener('click', () => chooseOption(option));
+          options.appendChild(button);
+        });
+      }
+
+      function chooseOption(option) {
+        state.answers[state.index] = option.tag;
+        state.counts[option.tag] = (state.counts[option.tag] || 0) + 1;
+        const active = options.children;
+        for (const item of active) item.disabled = true;
+        setTimeout(() => {
+          state.index += 1;
+          if (state.index >= testData.questions.length) {
+            renderResult();
+          } else {
+            renderQuestion();
+          }
+        }, 220);
+      }
+
+      function getTopTag() {
+        const firstSeen = [];
+        state.answers.forEach((tag) => { if (!firstSeen.includes(tag)) firstSeen.push(tag); });
+        return Object.entries(state.counts)
+          .sort((a, b) => b[1] - a[1] || firstSeen.indexOf(a[0]) - firstSeen.indexOf(b[0]))[0][0];
+      }
+
+      function renderResult() {
+        updateProgress();
+        const tag = getTopTag();
+        const result = testData.results[tag];
+        resultTag.textContent = tag;
+        resultTitle.textContent = result.title;
+        resultDesc.innerHTML = result.desc;
+        if (window.SheProfileStore) {
+          const counts = { ...state.counts };
+          const topEntry = Object.entries(counts).sort((a, b) => b[1] - a[1])[0] || [tag, 0];
+          window.SheProfileStore.saveResult({
+            moduleId: 'boundary-sense',
+            moduleName: '边界感',
+            summary: tag.replace(/ — .*/, '').slice(0, 4),
+            score: counts,
+            topDimension: topEntry[0]
+          });
+        }
+        setView(resultView);
+      }
+
+      function startQuiz() {
+        state.index = 0;
+        state.answers = [];
+        state.counts = {};
+        setView(quizView);
+        renderQuestion();
+      }
+
+      document.getElementById('startBtn').addEventListener('click', startQuiz);
+      document.getElementById('restartBtn').addEventListener('click', startQuiz);
+      updateProgress();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ECR-36 依恋风格测评 | 女也 She Is</title>
+    <style>
+      :root {
+        --bg: #faf9f7;
+        --ink: #2c2c2c;
+        --gold: #c4a882;
+        --line: #e9e3da;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+      }
+      .page {
+        max-width: 680px;
+        margin: 0 auto;
+        min-height: 100vh;
+        padding: 18px 18px 28px;
+      }
+      .topline { height: 2px; background: var(--line); border-radius: 99px; overflow: hidden; }
+      .topline > span { display: block; height: 100%; width: 0%; background: var(--gold); transition: width .3s ease; }
+      .meta { display: flex; justify-content: space-between; align-items: center; margin: 10px 0 16px; font-size: 12px; color: #6c6c6c; letter-spacing: .04em; }
+      .panel {
+        background: #fff;
+        border: 1px solid #eee8de;
+        border-radius: 18px;
+        padding: 26px 20px;
+        box-shadow: 0 10px 30px rgba(88, 68, 43, 0.06);
+        min-height: 72vh;
+      }
+      .hidden { display: none; }
+      h1,h2 { margin: 0; font-family: "Noto Serif SC", "Cormorant Garamond", "Source Han Serif SC", serif; color: var(--ink); }
+      .title { font-size: 35px; letter-spacing: .04em; }
+      .subtitle { margin-top: 10px; color: #6f6a64; font-size: 14px; }
+      .desc { margin-top: 18px; line-height: 1.8; color: #46433f; font-size: 15px; }
+      .primary {
+        margin-top: 26px;
+        border: 0;
+        background: var(--ink);
+        color: #fff;
+        border-radius: 999px;
+        padding: 12px 22px;
+        font-size: 15px;
+        cursor: pointer;
+      }
+      .question-wrap { transition: opacity .3s ease, transform .3s ease; }
+      .question-wrap.fade-out { opacity: 0; transform: translateY(12px); }
+      .question-id { font-size: 12px; color: #8d867f; letter-spacing: .08em; }
+      .question-text { margin-top: 10px; font-size: 25px; line-height: 1.45; }
+      .slider-card {
+        margin-top: 22px;
+        padding: 18px 16px 14px;
+        border-radius: 18px;
+        border: 1px solid #efe6db;
+        background: linear-gradient(180deg, #fcfaf7 0%, #f8f4ee 100%);
+      }
+      .slider-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+      .slider-caption {
+        font-size: 12px;
+        color: #8b8279;
+        letter-spacing: .06em;
+      }
+      .slider-value {
+        min-width: 68px;
+        text-align: center;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(74, 48, 115, 0.10);
+        color: #4A3073;
+        font-size: 13px;
+      }
+      .scale-labels {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 8px;
+        font-size: 0.78rem;
+        color: #777;
+        line-height: 1.4;
+      }
+      .scale-labels span:last-child { text-align: right; }
+      .slider-wrap { min-width: 0; }
+      .answer-slider {
+        width: 100%;
+        margin: 0;
+        accent-color: #4A3073;
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+      }
+      .answer-slider::-webkit-slider-runnable-track {
+        height: 10px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(74,48,115,0.18) 0%, rgba(74,48,115,0.38) 100%);
+      }
+      .answer-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 30px;
+        height: 30px;
+        margin-top: -10px;
+        border-radius: 50%;
+        background: #4A3073;
+        border: 4px solid #fdfaf6;
+        box-shadow: 0 4px 14px rgba(74,48,115,0.22);
+      }
+      .answer-slider::-moz-range-track {
+        height: 10px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(74,48,115,0.18) 0%, rgba(74,48,115,0.38) 100%);
+      }
+      .answer-slider::-moz-range-thumb {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #4A3073;
+        border: 4px solid #fdfaf6;
+        box-shadow: 0 4px 14px rgba(74,48,115,0.22);
+      }
+      .slider-ticks {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        margin-top: 8px;
+        font-size: 11px;
+        color: #998f85;
+      }
+      .slider-ticks span { text-align: center; }
+      .slider-card .slider-value { margin-top: 10px; }
+      .actions { display: flex; justify-content: space-between; margin-top: 24px; gap: 10px; flex-wrap: wrap; }
+      .ghost {
+        border: 1px solid #dad2c6; background: transparent; color: #5f5850;
+        border-radius: 999px; padding: 9px 16px; font-size: 13px; cursor: pointer;
+      }
+      .result-emoji { font-size: 38px; margin: 0; }
+      .result-type { margin-top: 8px; font-size: 34px; }
+      .tagline { margin-top: 8px; font-size: 18px; color: #4f4a45; }
+      .share-tip { margin-top: 20px; padding-top: 16px; border-top: 1px dashed #ddcfbc; font-size: 14px; color: #6b6258; }
+      @media (max-width: 540px) {
+        .title { font-size: 30px; }
+        .question-text { font-size: 21px; }
+        .panel { padding: 22px 16px; }
+        .slider-card { padding: 18px 14px 14px; }
+        .slider-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+        .slider-value { margin-top: 2px; }
+        .scale-labels {
+          font-size: 0.76rem;
+          gap: 10px;
+        }
+      }
+      .story-link-hint {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: #888;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .story-link-hint a {
+        color: #555;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .test-intro {
+        padding: 8px 0 24px;
+      }
+      .test-intro-card {
+        display: flex;
+        background: #F7F3EE;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(44,32,20,0.07);
+      }
+      .test-intro-accent {
+        width: 4px;
+        flex-shrink: 0;
+        background: #F2A98A;
+        border-radius: 0;
+      }
+      .test-intro-content {
+        padding: 28px 24px 28px 22px;
+        flex: 1;
+      }
+      .test-intro-source {
+        margin: 0;
+        font-family: 'Courier Prime', monospace;
+        font-size: 11px;
+        color: #888;
+        letter-spacing: 0.08em;
+        line-height: 1.5;
+      }
+      .test-intro-rule {
+        height: 0.5px;
+        background: #e0dbd4;
+        margin: 14px 0;
+      }
+      .test-intro-scale {
+        margin: 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 36px;
+        font-weight: 600;
+        color: #2e2e2e;
+        line-height: 1.1;
+        letter-spacing: 0.08em;
+      }
+      .test-intro-body {
+        margin: 0 0 12px;
+        font-size: 15px;
+        line-height: 1.9;
+        color: #555;
+      }
+      .test-intro-note {
+        margin: 0;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 12px;
+        color: #999;
+        line-height: 1.6;
+      }
+      .test-intro-btn {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #F2A98A 0%, #C8C5DE 100%);
+        color: #fff;
+        border: none;
+        border-radius: 30px;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 14px;
+        letter-spacing: 0.15em;
+        cursor: pointer;
+        box-shadow: 0 4px 16px rgba(242,169,138,0.35);
+        transition: opacity 0.2s ease;
+        margin-top: 32px;
+      }
+      .test-intro-btn:hover { opacity: 0.88; }
+          .vi-glow {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(80px);
+          }
+          .vi-glow--top {
+            width: 340px;
+            height: 340px;
+            top: -100px;
+            right: -80px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+          }
+          .vi-glow--bottom {
+            width: 280px;
+            height: 280px;
+            bottom: -60px;
+            left: -60px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+          }
+        </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-override.css" />
+  </head>
+  <body>
+    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+    <div class="page">
+      <div class="test-intro">
+        <div class="test-intro-card">
+          <div class="test-intro-accent"></div>
+          <div class="test-intro-content">
+            <p class="test-intro-source">基于 Brennan, Clark &amp; Shaver (1998) 亲密关系经历量表</p>
+            <div class="test-intro-rule"></div>
+            <h2 class="test-intro-scale">ECR-36<br>依恋风格测评</h2>
+            <div class="test-intro-rule"></div>
+            <p class="test-intro-body">在关系里，你是那种靠近了又害怕被淹没的人，还是总担心对方会悄悄离开？<br><br>依恋风格不是性格缺陷，而是我们学会爱与被爱的方式。它在很早的时候就开始形成，也可以慢慢被看见、被改写。</p>
+            <p class="test-intro-note">这份测评包含 36 道题，帮你了解你在亲密关系中的两个核心维度：焦虑（害怕被抛弃）和回避（害怕太亲密）。</p>
+            <button class="test-intro-btn" id="startBtn">准备好了</button>
+          </div>
+        </div>
+      </div>
+      <div class="test-body" id="testBody" style="display:none">
+        <div style="max-width:480px;margin:0 auto;padding:12px 20px 0"><a href="assessment-more.html" style="color:#888;font-size:14px;text-decoration:none;">← 测评</a></div>
+        <main class="page"><div style="padding:12px 0 4px"><a href="assessment-more.html" style="color:#888;font-size:14px;text-decoration:none;">← 测评</a></div>
+          <div class="topline"><span id="progressBar"></span></div>
+          <div class="meta"><span id="progressText">准备开始</span><span>ECR-36</span></div>
+
+          <section class="panel" id="intro">
+            <h1 class="title">你和亲密关系的方式</h1>
+            <p class="subtitle">36题 · 约8分钟 · 依恋风格探索</p>
+            <p class="desc">不用表现成熟，也不用证明自己没事。只要诚实地回答：当爱靠近时，你的身体和心，通常会往哪里走。</p>
+            <button class="primary" id="beginQuizBtn">开始</button>
+          </section>
+
+          <section class="panel hidden" id="quiz">
+            <div class="question-wrap" id="questionWrap">
+              <div class="question-id" id="questionId"></div>
+              <h2 class="question-text" id="questionText"></h2>
+              <div class="slider-card">
+                <div class="slider-header">
+                  <span class="slider-caption">请在 1-7 之间滑动选择</span>
+                  <span class="slider-value" id="currentValue">当前选择：4</span>
+                </div>
+                <div class="slider-wrap">
+                  <div class="scale-labels"><span>非常不同意</span><span>非常同意</span></div>
+                  <input class="answer-slider" id="answerSlider" type="range" min="1" max="7" step="1" value="4" />
+                  <div class="slider-ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></div>
+                </div>
+              </div>
+              <div class="actions">
+                <button class="ghost" id="prevBtn">← 上一题</button>
+                <button class="ghost" id="nextBtn">确认本题</button>
+                <button class="ghost" id="restartBtn">重新开始</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel hidden" id="result"></section>
+        </main>
+      </div>
+    </div>
+    <script src="assets/profile-utils.js"></script>
+    <script>
+      const DATA = {
+        id: "ecr-36",
+        questions: [
+          { id: 1, text: "总的来说，我不喜欢让恋人知道自己内心深处的感觉", reverse: false },
+          { id: 2, text: "我担心我会被抛弃", reverse: false },
+          { id: 3, text: "我觉得跟恋人亲近是一件惬意的事情", reverse: true },
+          { id: 4, text: "我很担心我的恋爱关系", reverse: false },
+          { id: 5, text: "当恋人开始要跟我亲近时，我发现我自己在退缩", reverse: false },
+          { id: 6, text: "我担心恋人不会像我关心他/她那样地关心我", reverse: false },
+          { id: 7, text: "当恋人希望跟我非常亲近时，我会觉得不自在", reverse: false },
+          { id: 8, text: "我有点担心会失去恋人", reverse: false },
+          { id: 9, text: "我觉得对恋人开诚布公，不是一件很舒服的事情", reverse: false },
+          { id: 10, text: "我常常希望恋人对我的感情和我对恋人的感情一样强烈", reverse: false },
+          { id: 11, text: "我想与恋人亲近，但我又总是会退缩不前", reverse: false },
+          { id: 12, text: "我常常想与恋人形影不离，但有时这样会把恋人吓跑", reverse: false },
+          { id: 13, text: "当恋人跟我过分亲密的时候，我会感到内心紧张", reverse: false },
+          { id: 14, text: "我担心一个人独处", reverse: false },
+          { id: 15, text: "我愿意把我内心的想法和感觉告诉恋人，我觉得这是一件自在的事情", reverse: true },
+          { id: 16, text: "我想跟恋人非常亲密的愿望，有时会把恋人吓跑", reverse: false },
+          { id: 17, text: "我试图避免与恋人变得太亲近", reverse: false },
+          { id: 18, text: "我需要我的恋人一再地保证他/她是爱我的", reverse: false },
+          { id: 19, text: "我觉得我比较容易与恋人亲近", reverse: true },
+          { id: 20, text: "我觉得自己在要求恋人把更多的感觉，以及对恋爱关系的投入程度表现出来", reverse: false },
+          { id: 21, text: "我发现让我依赖恋人，是一件困难的事情", reverse: false },
+          { id: 22, text: "我并不是常常担心被恋人抛弃", reverse: true },
+          { id: 23, text: "我倾向于不跟恋人过分亲密", reverse: false },
+          { id: 24, text: "如果我无法得到恋人的注意和关心，我会心烦意乱或者生气", reverse: false },
+          { id: 25, text: "我跟恋人什么事情都讲", reverse: true },
+          { id: 26, text: "我发现恋人并不愿意像我所想的那样跟我亲近", reverse: false },
+          { id: 27, text: "我经常与恋人讨论我所遇到的问题以及我关心的事情", reverse: true },
+          { id: 28, text: "如果我还没有恋人的话，我会感到有点焦虑和不安", reverse: false },
+          { id: 29, text: "我觉得依赖恋人是很自在的事情", reverse: true },
+          { id: 30, text: "如果恋人不能像我所希望的那样在我身边时，我会感到灰心丧气", reverse: false },
+          { id: 31, text: "我并不在意从恋人那里寻找安慰、听取劝告、得到帮助", reverse: true },
+          { id: 32, text: "如果在我需要的时候，恋人却不在我身边，我会感到沮丧", reverse: false },
+          { id: 33, text: "在需要的时候，我向恋人求助，是很有用的", reverse: true },
+          { id: 34, text: "当恋人不赞同我时，我觉得确实是我不好", reverse: false },
+          { id: 35, text: "我会在很多事情上向恋人求助，包括寻求安慰和得到承诺", reverse: true },
+          { id: 36, text: "当恋人不花时间和我在一起时，我会感到怨恨", reverse: false }
+        ],
+        results: {
+          secure: { label: "安全型", emoji: "🌿", tagline: "你知道怎么爱，也知道怎么被爱", desc: "你在亲密关系中是安稳的那个人。靠近时不慌，拉开时也不追。遇到摩擦，你既不崩溃，也不关门。这份稳定是你的优势——它让身边的人感到安全，也给了你选择亲密节奏的自由。" },
+          fearful: { label: "恐惧型", emoji: "🌊", tagline: "你想靠近，但靠近本身让你害怕", desc: "你渴望亲密，又担心受伤。关系里的你有时进一步、退两步——不是不爱，是太在意了。这份在意也是你的优势：你对关系的觉察力比多数人更深，一旦感到安全，你的投入会非常真诚。" },
+          preoccupied: { label: "专注型", emoji: "🔥", tagline: "你爱得很用力，有时用力到把人吓跑", desc: "你对亲密关系的投入很深，深到会放大每一个信号，反复确认对方是否真的在乎。你不是太敏感，是太认真了。这份认真是你的优势——你愿意为关系全力以赴，这种热烈本身就是珍贵的。" },
+          dismissing: { label: "冷漠型", emoji: "🧊", tagline: "你习惯靠自己，但其实你也想被接住", desc: "你表面上对亲密关系不太上心，但这未必是冷漠——更可能是习惯了自己扛，忘了也可以让人进来。这份独立是你的优势：你不轻易依赖，有自己的节奏和空间感，关系里不容易失去自我。" }
+        }
+      };
+
+      const state = { index: -1, answers: Array(DATA.questions.length).fill(null) };
+      const introEl = document.getElementById("intro");
+      const quizEl = document.getElementById("quiz");
+      const resultEl = document.getElementById("result");
+      const qWrap = document.getElementById("questionWrap");
+      const qId = document.getElementById("questionId");
+      const qText = document.getElementById("questionText");
+      const progressBar = document.getElementById("progressBar");
+      const progressText = document.getElementById("progressText");
+      const answerSlider = document.getElementById("answerSlider");
+      const currentValue = document.getElementById("currentValue");
+
+      function updateProgress() {
+        if (state.index < 0) {
+          progressBar.style.width = "0%";
+          progressText.textContent = "准备开始";
+          return;
+        }
+        const done = state.answers.filter(v => v !== null).length;
+        progressBar.style.width = `${(done / DATA.questions.length) * 100}%`;
+        progressText.textContent = `${Math.min(state.index + 1, DATA.questions.length)}/${DATA.questions.length}`;
+      }
+
+      function syncSliderValue(value) {
+        currentValue.textContent = `当前选择：${value}`;
+        answerSlider.value = value;
+      }
+
+      function renderQuestion() {
+        const q = DATA.questions[state.index];
+        qId.textContent = `第 ${q.id} 题`;
+        qText.textContent = q.text;
+        syncSliderValue(state.answers[state.index] || 4);
+        updateProgress();
+      }
+
+      function transition(next) {
+        qWrap.classList.add("fade-out");
+        setTimeout(() => {
+          next();
+          qWrap.classList.remove("fade-out");
+        }, 300);
+      }
+
+      function commitCurrentAnswer() {
+        state.answers[state.index] = Number(answerSlider.value);
+      }
+
+      function nextQuestion() {
+        commitCurrentAnswer();
+        const isLast = state.index === DATA.questions.length - 1;
+        if (isLast) {
+          transition(showResult);
+        } else {
+          transition(() => { state.index += 1; renderQuestion(); });
+        }
+      }
+
+      function goPrev() {
+        if (state.index <= 0) return;
+        commitCurrentAnswer();
+        transition(() => { state.index -= 1; renderQuestion(); });
+      }
+
+      function mean(list) { return list.reduce((a, b) => a + b, 0) / list.length; }
+
+      function showResult() {
+        introEl.classList.add("hidden");
+        quizEl.classList.add("hidden");
+        resultEl.classList.remove("hidden");
+
+        const scored = DATA.questions.map((q, idx) => q.reverse ? 8 - state.answers[idx] : state.answers[idx]);
+        const odd = scored.filter((_, idx) => (idx + 1) % 2 === 1);
+        const even = scored.filter((_, idx) => (idx + 1) % 2 === 0);
+        const avoidance = mean(odd);
+        const anxiety = mean(even);
+
+        const typeScores = {
+          secure: avoidance * 3.2893296 + anxiety * 5.4725318 - 11.5307833,
+          fearful: avoidance * 7.2371075 + anxiety * 8.1776448 - 32.3553266,
+          preoccupied: avoidance * 3.9246754 + anxiety * 9.7102446 - 28.457322,
+          dismissing: avoidance * 7.3654621 + anxiety * 4.9392039 - 22.2281088
+        };
+
+        const winner = Object.entries(typeScores).sort((a, b) => b[1] - a[1])[0][0];
+        const r = DATA.results[winner];
+        const summaryMap = { secure: "安全型", fearful: "恐惧型", preoccupied: "专注型", dismissing: "冷漠型" };
+
+        progressBar.style.width = "100%";
+        progressText.textContent = "完成";
+
+        if (window.SheProfileStore) {
+          const dominant = anxiety >= avoidance ? "anxiety" : "avoidance";
+          window.SheProfileStore.saveResult({
+            moduleId: "ecr",
+            moduleName: "依恋风格",
+            summary: summaryMap[winner] || r.label,
+            score: { anxiety, avoidance, security: ((8 - anxiety) + (8 - avoidance)) / 2 },
+            topDimension: dominant
+          });
+        }
+
+        resultEl.innerHTML = `
+          <p class="result-emoji">${r.emoji}</p>
+          <h2 class="result-type">${r.label}</h2>
+          <p class="tagline">${r.tagline}</p>
+          <p class="desc">${r.desc}</p>
+          <p class="desc">回避得分：${avoidance.toFixed(2)} ｜ 焦虑得分：${anxiety.toFixed(2)}</p>
+          <p class="desc" style="font-size:12px;color:#999;margin-top:12px;">这是你当下的模式，不是诊断，也不是定论。</p>
+          <p class="share-tip">把结果分享给朋友，看看你们在亲密关系中的不同靠近方式。</p>
+          <div class="actions">
+            <button class="ghost" id="redoBtn">再测一次</button>
+            <a class="ghost" href="profile.html" style="text-decoration:none;display:inline-block;">这个维度是你画像的一部分——查看五个维度的完整模式，看看它们如何相互影响。</a>
+            <a class="ghost" href="assessment-more.html" style="text-decoration:none;display:inline-block;">返回更多测试</a>
+          </div>
+          <div class="story-link-hint">
+            <span>你可能会有共鸣 →</span>
+            <a href="story-tuanzi-v3.html">她身体里住着一道错误的方程</a>
+          </div>
+        `;
+
+        document.getElementById("redoBtn").onclick = restart;
+      }
+
+      function startQuiz() {
+        state.index = 0;
+        introEl.classList.add("hidden");
+        resultEl.classList.add("hidden");
+        quizEl.classList.remove("hidden");
+        renderQuestion();
+      }
+
+      function restart() {
+        state.index = -1;
+        state.answers = Array(DATA.questions.length).fill(null);
+        resultEl.classList.add("hidden");
+        quizEl.classList.add("hidden");
+        introEl.classList.remove("hidden");
+        syncSliderValue(4);
+        updateProgress();
+      }
+
+      answerSlider.addEventListener("input", function () {
+        syncSliderValue(Number(this.value));
+      });
+      document.getElementById("startBtn").onclick = () => {
+        document.querySelector(".test-intro").style.display = "none";
+        document.getElementById("testBody").style.display = "block";
+      };
+      document.getElementById("beginQuizBtn").onclick = startQuiz;
+      document.getElementById("prevBtn").onclick = goPrev;
+      document.getElementById("nextBtn").onclick = nextQuestion;
+      document.getElementById("restartBtn").onclick = restart;
+      updateProgress();
+    </script>
+  </body>
+</html>

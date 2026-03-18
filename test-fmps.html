@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>你对「做好」的标准有多高 | 女也 She Is</title>
+    <style>
+:root {
+        --bg: #faf9f7;
+        --ink: #2c2c2c;
+        --gold: #c4a882;
+        --line: #e9e3da;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+      }
+      .page {
+        max-width: 680px;
+        margin: 0 auto;
+        min-height: 100vh;
+        padding: 18px 18px 28px;
+      }
+      .topline { height: 2px; background: var(--line); border-radius: 99px; overflow: hidden; }
+      .topline > span { display: block; height: 100%; width: 0%; background: var(--gold); transition: width .3s ease; }
+      .meta { display: flex; justify-content: space-between; align-items: center; margin: 10px 0 16px; font-size: 12px; color: #6c6c6c; letter-spacing: .04em; }
+      .panel {
+        background: #fff;
+        border: 1px solid #eee8de;
+        border-radius: 18px;
+        padding: 26px 20px;
+        box-shadow: 0 10px 30px rgba(88, 68, 43, 0.06);
+        min-height: 72vh;
+      }
+      .hidden { display: none; }
+      h1,h2,h3 { margin: 0; font-family: "Noto Serif SC", "Cormorant Garamond", "Source Han Serif SC", serif; color: var(--ink); }
+      .title { font-size: 35px; letter-spacing: .04em; }
+      .subtitle { margin-top: 10px; color: #6f6a64; font-size: 14px; }
+      .desc { margin-top: 18px; line-height: 1.8; color: #46433f; font-size: 15px; }
+      .primary {
+        margin-top: 26px;
+        border: 0;
+        background: var(--ink);
+        color: #fff;
+        border-radius: 999px;
+        padding: 12px 22px;
+        font-size: 15px;
+        cursor: pointer;
+      }
+      .question-wrap { transition: opacity .3s ease, transform .3s ease; }
+      .question-wrap.fade-out { opacity: 0; transform: translateY(12px); }
+      .question-id { font-size: 12px; color: #8d867f; letter-spacing: .08em; }
+      .question-text { margin-top: 10px; font-size: 25px; line-height: 1.45; }
+      .scale-labels { display: flex; justify-content: space-between; margin: 20px 2px 12px; font-size: 12px; color: #8b8279; }
+      .options { display: flex; flex-wrap: wrap; gap: 10px; }
+      .option {
+        width: 42px; height: 42px; border-radius: 50%;
+        border: 1.5px solid #cab8a1; background: #fff; color: #6a635c;
+        display: grid; place-items: center; cursor: pointer; font-size: 14px;
+        transition: all .2s ease;
+      }
+      .option:hover, .option.active { background: var(--gold); color: #fff; border-color: var(--gold); transform: translateY(-1px); }
+      .actions { display: flex; justify-content: space-between; margin-top: 24px; gap: 10px; }
+      .ghost {
+        border: 1px solid #dad2c6; background: transparent; color: #5f5850;
+        border-radius: 999px; padding: 9px 16px; font-size: 13px; cursor: pointer;
+      }
+      .result-type { margin-top: 4px; font-size: 34px; }
+      .tagline { margin-top: 8px; font-size: 18px; color: #4f4a45; }
+      .share-tip { margin-top: 20px; padding-top: 16px; border-top: 1px dashed #ddcfbc; font-size: 14px; color: #6b6258; }
+      .chart-wrap {
+        margin-top: 18px;
+        border: 1px solid #efe6da;
+        border-radius: 14px;
+        padding: 14px;
+        background: #fcfbf9;
+      }
+      .bars { margin-top: 14px; display: grid; gap: 10px; }
+      .bar-row { display: grid; grid-template-columns: 68px 1fr 46px; gap: 8px; align-items: center; font-size: 13px; }
+      .bar-track { height: 10px; border-radius: 999px; background: #efe8de; overflow: hidden; }
+      .bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #bda07b, #d4bb9c); }
+      .bar-row.top2 .bar-label { color: #8a5a22; font-weight: 700; }
+      .bar-row.top2 .bar-fill { background: linear-gradient(90deg, #b37a3d, #d69e62); }
+      .scores-note { margin-top: 10px; color: #7a736b; font-size: 12px; }
+      @media (max-width: 540px) {
+        .title { font-size: 30px; }
+        .question-text { font-size: 21px; }
+      }
+    
+      .story-link-hint {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: #888;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .story-link-hint a {
+        color: #555;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .test-intro {
+        padding: 8px 0 24px;
+      }
+
+      .test-intro-card {
+        display: flex;
+        background: #F7F3EE;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(44,32,20,0.07);
+      }
+
+      .test-intro-accent {
+        width: 4px;
+        flex-shrink: 0;
+        background: #E8C9A0;
+        border-radius: 0;
+      }
+
+      .test-intro-content {
+        padding: 28px 24px 28px 22px;
+        flex: 1;
+      }
+
+      .test-intro-source {
+        margin: 0;
+        font-family: 'Courier Prime', monospace;
+        font-size: 11px;
+        color: #888;
+        letter-spacing: 0.08em;
+        line-height: 1.5;
+      }
+
+      .test-intro-rule {
+        height: 0.5px;
+        background: #e0dbd4;
+        margin: 14px 0;
+      }
+
+      .test-intro-scale {
+        margin: 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 36px;
+        font-weight: 600;
+        color: #2e2e2e;
+        line-height: 1.1;
+        letter-spacing: 0.08em;
+      }
+
+      .test-intro-body {
+        margin: 0 0 12px;
+        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+        font-size: 15px;
+        line-height: 1.9;
+        color: #555;
+      }
+
+      .test-intro-note {
+        margin: 0;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 12px;
+        color: #999;
+        line-height: 1.6;
+      }
+
+      .test-intro-btn {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #E8C9A0 0%, #C8C5DE 100%);
+        color: #fff;
+        border: none;
+        border-radius: 30px;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 14px;
+        letter-spacing: 0.15em;
+        cursor: pointer;
+        box-shadow: 0 4px 16px rgba(232,201,160,0.35);
+        transition: opacity 0.2s ease;
+        margin-top: 32px;
+      }
+
+      .test-intro-btn:hover {
+        opacity: 0.88;
+      }
+          .vi-glow {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(80px);
+          }
+          .vi-glow--top {
+            width: 340px;
+            height: 340px;
+            top: -100px;
+            right: -80px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+          }
+          .vi-glow--bottom {
+            width: 280px;
+            height: 280px;
+            bottom: -60px;
+            left: -60px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+          }
+        </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/font-override.css" />
+</head>
+  <body>
+    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+<div class="page">
+  <div class="test-intro">
+    <div class="test-intro-card">
+      <div class="test-intro-accent"></div>
+      <div class="test-intro-content">
+        <p class="test-intro-source">基于 Frost et al. (1990) 多维完美主义量表（Frost Multidimensional Perfectionism Scale）</p>
+        <div class="test-intro-rule"></div>
+        <h2 class="test-intro-scale">FMPS-15<br>完美主义探索</h2>
+        <div class="test-intro-rule"></div>
+        <p class="test-intro-body">做完一件事，你的第一反应是"还不够好"吗？明明别人已经说了很好，你心里那个声音还是不放过自己。<br><br>完美主义不只是“要求高”，它也可能是一种悬着的警报：做得不够好，就不够安全、不够值得被爱。<br><br>这份测评想陪你分辨，那股追求极致的力量，什么时候在成就你，什么时候又在悄悄消耗你。</p>
+        <p class="test-intro-note">这份测评包含 15 道题，帮你看见自己在个人标准、犯错焦虑和行动怀疑上的完美主义倾向。</p>
+        <button class="test-intro-btn" id="startBtn">准备好了</button>
+      </div>
+    </div>
+  </div>
+  <div class="test-body" id="testBody" style="display:none">
+    <div style="max-width:480px;margin:0 auto;padding:12px 20px 0"><a href="assessment-more.html" style="color:#888;font-size:14px;text-decoration:none;">← 测评</a></div>
+    <main class="page">
+      <div class="topline"><span id="progressBar"></span></div>
+      <div class="meta"><span id="progressText">准备开始</span><span>FMPS-15</span></div>
+
+      <section class="panel" id="intro">
+        <h1 class="title">你对「做好」的标准有多高</h1>
+        <p class="subtitle">完美主义探索 · 15题 · 约4分钟</p>
+        <p class="desc">别替那个理智、懂事、会表现的自己作答。只回答一句：这到底像不像我。</p>
+        <button class="primary" id="beginQuizBtn">开始</button>
+      </section>
+
+      <section class="panel hidden" id="quiz">
+        <div class="question-wrap" id="questionWrap">
+          <div class="question-id" id="questionId"></div>
+          <h2 class="question-text" id="questionText"></h2>
+          <div class="scale-labels"><span>完全不符合</span><span>不确定</span><span>完全符合</span></div>
+          <div class="options" id="options"></div>
+          <div class="actions">
+            <button class="ghost" id="prevBtn">← 上一题</button>
+            <button class="ghost" id="restartBtn">重新开始</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="result"></section>
+    </main>
+
+    
+  </div>
+</div>
+<script src="assets/profile-utils.js"></script>
+<script>
+      const DATA = {
+        id: "fmps-15",
+        title: "你对「做好」的标准有多高",
+        dimensions: [
+          { id: "CM", name: "担心错误", items: [1, 2, 3] },
+          { id: "OR", name: "条理性", items: [4, 5, 6] },
+          { id: "PE", name: "父母期望", items: [7, 8, 9] },
+          { id: "PS", name: "个人标准", items: [10, 11, 12] },
+          { id: "DA", name: "行动疑虑", items: [13, 14, 15] }
+        ],
+        questions: [
+          { id: 1, dimension: "CM", text: "做事或学习的时候若是有部分的失败，我会觉得自己完全失败了" },
+          { id: 2, dimension: "CM", text: "假如我犯错误，人们很可能会轻看我" },
+          { id: 3, dimension: "CM", text: "如果我不能做得跟别人一样好，说明我是个低人一等的人" },
+          { id: 4, dimension: "OR", text: "做事有条理有系统对我是十分重要的" },
+          { id: 5, dimension: "OR", text: "整洁对我来说是十分重要的" },
+          { id: 6, dimension: "OR", text: "我是一个有条理的人" },
+          { id: 7, dimension: "PE", text: "我的父母曾给我定下很高的标准" },
+          { id: 8, dimension: "PE", text: "我的父母曾经期望我做得特别出色" },
+          { id: 9, dimension: "PE", text: "我从不觉得自己能达到我父母为我定下的标准" },
+          { id: 10, dimension: "PS", text: "比起大多数人，我定下更高的目标" },
+          { id: 11, dimension: "PS", text: "我厌恶做事不能做得最佳" },
+          { id: 12, dimension: "PS", text: "我有极高的目标" },
+          { id: 13, dimension: "DA", text: "尽管我小心翼翼地做事，还是经常感到自己做得不太正确" },
+          { id: 14, dimension: "DA", text: "我经常对一些日常小事也犹豫不决" },
+          { id: 15, dimension: "DA", text: "为了把一件事情做好，我需要花较长的时间" }
+        ],
+        results: {
+          high_cm_da: {
+            title: "你太怕做错了",
+            body: "你对犯错有很强的恐惧，同时开始一件事之前会反复犹豫——不是不想做，是太怕做错。这个特质的优势是：这份认真让你做出来的东西，往往比大多数人更经得起挑剔。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
+          },
+          high_ps_low_cm: {
+            title: "你对自己有很高的要求，但不会被它压垮",
+            body: "你给自己设定的标准比多数人高，但不会因为没达到就觉得自己失败。这是适应性完美主义——推动你前进，而不是拖住你。这个特质的优势是：高标准驱动高质量，而你又足够灵活，不会为追求完美而瘫痪。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
+          },
+          high_pe: {
+            title: "你内化了很多来自父母的标准",
+            body: "你感受到父母对你有很高的期待，这些期待已经成了你评价自己的一把尺子。有时你可能分不清，哪些标准是真正属于自己的。这个特质的优势是：这份早早被激活的进取心，让你在很多领域都能把事情做得扎实。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
+          },
+          high_da_low_cm: {
+            title: "开始对你来说是最难的那一步",
+            body: "你不太担心犯错本身，但「做完了是不是真的对」会困住你。为了做好一件事，你往往需要比别人更长的准备时间。这个特质的优势是：你交出去的东西几乎不会有明显漏洞，因为你已经在心里检查过很多遍了。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
+          },
+          high_or: {
+            title: "你喜欢秩序，但不焦虑",
+            body: "整洁和条理对你很重要，但这更像是一种偏好，而不是强迫。你的完美主义是轻量的。这个特质的优势是：你能在复杂环境中保持清晰，帮助你和周围的人都保持效率。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
+          },
+          balanced: {
+            title: "你在「够好」和「更好」之间找到了某种平衡",
+            body: "你的完美主义各维度都不特别突出，说明你对「做好」这件事的态度比较灵活。不同情境下你会调整自己的标准。这个特质的优势是：这种弹性让你能随机应变，而不是被一套固定标准困住。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
+          }
+        }
+      };
+
+      const state = { index: -1, answers: Array(DATA.questions.length).fill(null) };
+      const introEl = document.getElementById("intro");
+      const quizEl = document.getElementById("quiz");
+      const resultEl = document.getElementById("result");
+      const qWrap = document.getElementById("questionWrap");
+      const qId = document.getElementById("questionId");
+      const qText = document.getElementById("questionText");
+      const options = document.getElementById("options");
+      const progressBar = document.getElementById("progressBar");
+      const progressText = document.getElementById("progressText");
+
+      function updateProgress() {
+        if (state.index < 0) {
+          progressBar.style.width = "0%";
+          progressText.textContent = "准备开始";
+          return;
+        }
+        const done = state.answers.filter(v => v !== null).length;
+        progressBar.style.width = `${(done / DATA.questions.length) * 100}%`;
+        progressText.textContent = `${Math.min(state.index + 1, DATA.questions.length)}/${DATA.questions.length}`;
+      }
+
+      function renderQuestion() {
+        const q = DATA.questions[state.index];
+        qId.textContent = `第 ${q.id} 题 · ${q.dimension}`;
+        qText.textContent = q.text;
+        options.innerHTML = "";
+        for (let i = 1; i <= 5; i++) {
+          const btn = document.createElement("button");
+          btn.className = "option" + (state.answers[state.index] === i ? " active" : "");
+          btn.textContent = i;
+          btn.onclick = () => selectAnswer(i);
+          options.appendChild(btn);
+        }
+        updateProgress();
+      }
+
+      function transition(next) {
+        qWrap.classList.add("fade-out");
+        setTimeout(() => {
+          next();
+          qWrap.classList.remove("fade-out");
+        }, 260);
+      }
+
+      function selectAnswer(score) {
+        state.answers[state.index] = score;
+        const isLast = state.index === DATA.questions.length - 1;
+        if (isLast) transition(showResult);
+        else transition(() => { state.index += 1; renderQuestion(); });
+      }
+
+      function goPrev() {
+        if (state.index <= 0) return;
+        transition(() => { state.index -= 1; renderQuestion(); });
+      }
+
+      function mean(arr) { return arr.reduce((a, b) => a + b, 0) / arr.length; }
+
+      function calcDimensionScores() {
+        const byId = Object.fromEntries(DATA.questions.map((q, idx) => [q.id, state.answers[idx]]));
+        const scores = {};
+        DATA.dimensions.forEach(d => {
+          scores[d.id] = mean(d.items.map(id => byId[id]));
+        });
+        return scores;
+      }
+
+      function matchResult(s) {
+        if (s.CM >= 3.5 && s.DA >= 3.5) return "high_cm_da";
+        if (s.PS >= 3.5 && s.CM < 3.5 && s.DA < 3.5) return "high_ps_low_cm";
+        if (s.PE >= 3.5) return "high_pe";
+        if (s.DA >= 3.5 && s.CM < 3.5) return "high_da_low_cm";
+        if (s.OR >= 3.5 && s.CM < 3 && s.DA < 3 && s.PE < 3 && s.PS < 3) return "high_or";
+        return "balanced";
+      }
+
+      function buildRadar(scores) {
+        const keys = ["CM", "OR", "PE", "PS", "DA"];
+        const labels = Object.fromEntries(DATA.dimensions.map(d => [d.id, d.name]));
+        const cx = 150, cy = 150, maxR = 98;
+
+        function point(i, val) {
+          const angle = -Math.PI / 2 + (Math.PI * 2 * i) / keys.length;
+          const r = (val / 5) * maxR;
+          return [cx + Math.cos(angle) * r, cy + Math.sin(angle) * r];
+        }
+
+        const rings = [1, 2, 3, 4, 5].map(level => {
+          const pts = keys.map((_, i) => {
+            const angle = -Math.PI / 2 + (Math.PI * 2 * i) / keys.length;
+            const r = (level / 5) * maxR;
+            return `${cx + Math.cos(angle) * r},${cy + Math.sin(angle) * r}`;
+          }).join(" ");
+          return `<polygon points="${pts}" fill="none" stroke="#e8ded1" stroke-width="1" />`;
+        }).join("");
+
+        const spokes = keys.map((_, i) => {
+          const [x, y] = point(i, 5);
+          return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#e8ded1" stroke-width="1"/>`;
+        }).join("");
+
+        const shape = keys.map((k, i) => point(i, scores[k]).join(",")).join(" ");
+
+        const text = keys.map((k, i) => {
+          const [x, y] = point(i, 5.6);
+          return `<text x="${x}" y="${y}" font-size="12" fill="#7a6f64" text-anchor="middle" dominant-baseline="middle">${labels[k]}</text>`;
+        }).join("");
+
+        return `
+          <svg viewBox="0 0 300 300" width="100%" height="260" aria-label="五维雷达图">
+            ${rings}
+            ${spokes}
+            <polygon points="${shape}" fill="rgba(196,168,130,.26)" stroke="#b28756" stroke-width="2"/>
+            ${keys.map((k, i) => {
+              const [x, y] = point(i, scores[k]);
+              return `<circle cx="${x}" cy="${y}" r="3.6" fill="#9d6f3d"/>`;
+            }).join("")}
+            ${text}
+          </svg>
+        `;
+      }
+
+      function buildBars(scores, top2) {
+        const order = ["CM", "OR", "PE", "PS", "DA"];
+        const labels = Object.fromEntries(DATA.dimensions.map(d => [d.id, d.name]));
+        return order.map(k => {
+          const v = scores[k];
+          const pct = (v / 5) * 100;
+          const isTop = top2.includes(k);
+          return `
+            <div class="bar-row ${isTop ? "top2" : ""}">
+              <div class="bar-label">${labels[k]}${isTop ? " ★" : ""}</div>
+              <div class="bar-track"><div class="bar-fill" style="width:${pct.toFixed(1)}%"></div></div>
+              <div>${v.toFixed(2)}</div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function showResult() {
+        introEl.classList.add("hidden");
+        quizEl.classList.add("hidden");
+        resultEl.classList.remove("hidden");
+
+        const scores = calcDimensionScores();
+        const resultId = matchResult(scores);
+        const r = DATA.results[resultId];
+        const sortedDimensions = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+        const top2 = sortedDimensions.slice(0, 2).map(([k]) => k);
+
+        progressBar.style.width = "100%";
+        progressText.textContent = "完成";
+
+        if (window.SheProfileStore) {
+          window.SheProfileStore.saveResult({
+            moduleId: "fmps",
+            moduleName: "完美主义",
+            summary: r.title.slice(0, 4),
+            score: { ...scores, selfCompassion: Math.max(0, Math.min(5, 6 - ((scores.CM + scores.PS + scores.DA) / 3))) },
+            topDimension: sortedDimensions[0][0]
+          });
+        }
+
+        resultEl.innerHTML = `
+          <h2 class="result-type">${r.title}</h2>
+          <p class="tagline">${DATA.title}</p>
+          <p class="desc">${r.body}</p>
+
+          <div class="chart-wrap">
+            ${buildRadar(scores)}
+            <div class="bars">${buildBars(scores, top2)}</div>
+            <div class="scores-note">评分方式：CM / OR / PE / PS / DA 各维度 3 题均分（1-5 分）</div>
+          </div>
+
+          <p class="share-tip">你最高的两个维度已高亮，方便你快速识别最影响你的完美主义模式。</p>
+
+          <div class="actions">
+            <button class="ghost" id="redoBtn">再测一次</button>
+            <a class="ghost" href="profile.html" style="text-decoration:none;display:inline-block;">这个维度是你画像的一部分——查看五个维度的完整模式，看看它们如何相互影响。</a>
+            <a class="ghost" href="assessment-more.html" style="text-decoration:none;display:inline-block;">返回更多测试</a>
+          </div>
+          <div class="story-link-hint">
+            <span>你可能会有共鸣 →</span>
+            <a href="story-xiaoli.html">她决定在精密结构里，自己养一颗星星</a>
+          </div>
+        `;
+
+        document.getElementById("redoBtn").onclick = restart;
+      }
+
+      function startQuiz() {
+        state.index = 0;
+        introEl.classList.add("hidden");
+        resultEl.classList.add("hidden");
+        quizEl.classList.remove("hidden");
+        renderQuestion();
+      }
+
+      function restart() {
+        state.index = -1;
+        state.answers = Array(DATA.questions.length).fill(null);
+        resultEl.classList.add("hidden");
+        quizEl.classList.add("hidden");
+        introEl.classList.remove("hidden");
+        updateProgress();
+      }
+
+      document.getElementById('startBtn').onclick = () => {
+        document.querySelector('.test-intro').style.display = 'none';
+        document.getElementById('testBody').style.display = 'block';
+      };
+      document.getElementById("beginQuizBtn").onclick = startQuiz;
+      document.getElementById("prevBtn").onclick = goPrev;
+      document.getElementById("restartBtn").onclick = restart;
+      updateProgress();
+    </script>
+  </body>
+</html>

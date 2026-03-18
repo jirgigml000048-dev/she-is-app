@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>荣格八维认知功能测试 | 女也 She Is</title>
+    <style>
+:root {
+        --bg: #faf6ef;
+        --card: #fffdf8;
+        --ink: #2c2c2c;
+        --muted: rgba(44, 44, 44, 0.68);
+        --line: rgba(44, 44, 44, 0.12);
+        --line-strong: rgba(44, 44, 44, 0.22);
+        --sage: #8faf8a;
+        --rose: #d4917a;
+        --gold: #c4a882;
+        --shadow: 0 10px 30px rgba(44, 44, 44, 0.08);
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        min-height: 100vh;
+        color: var(--ink);
+        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+        line-height: 1.65;
+        background-color: var(--bg);
+        background-image:
+          radial-gradient(circle at 20% 30%, rgba(44, 44, 44, 0.03) 0 1px, transparent 1px 100%),
+          radial-gradient(circle at 80% 70%, rgba(143, 175, 138, 0.05) 0 1px, transparent 1px 100%),
+          radial-gradient(circle at 40% 60%, rgba(212, 145, 122, 0.04) 0 1px, transparent 1px 100%),
+          repeating-linear-gradient(0deg, rgba(44, 44, 44, 0.01), rgba(44, 44, 44, 0.01) 1px, transparent 1px, transparent 3px);
+        background-size: 240px 240px, 200px 200px, 180px 180px, 100% 100%; }
+      h1, h2, h3 { margin: 0; font-family: "Noto Serif SC", "Cormorant Garamond", "Source Han Serif SC", serif; letter-spacing: .02em; }
+      a { color: inherit; text-decoration: none; }
+      button { font: inherit; }
+      .page { width: min(100%, 520px); margin: 0 auto; min-height: 100vh; padding: 18px 16px 28px; }
+      .nav-back { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px; font-size: .86rem; border: 1px solid var(--line); background: rgba(255,255,255,.58); padding: 7px 12px; border-radius: 999px; }
+      .topline { height: 3px; background: rgba(44,44,44,.08); border-radius: 999px; overflow: hidden; }
+      .topline > span { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold), var(--sage)); transition: width .3s ease; }
+      .meta { display: flex; justify-content: space-between; align-items: center; margin: 10px 0 16px; font-size: 12px; color: var(--muted); letter-spacing: .04em; }
+      .panel { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 24px 18px; box-shadow: var(--shadow); min-height: 76vh; }
+      .hidden { display: none; }
+      .title { font-size: 2rem; }
+      .subtitle, .dimension-note { margin-top: 8px; color: var(--muted); font-size: .92rem; }
+      .desc { margin-top: 16px; font-size: .95rem; color: rgba(44,44,44,.82); }
+      .primary, .ghost { border-radius: 999px; padding: 10px 16px; cursor: pointer; transition: all .2s ease; }
+      .primary { margin-top: 22px; border: none; background: var(--sage); color: #fffdf8; }
+      .primary:hover { transform: translateY(-1px); background: #7da578; }
+      .ghost { border: 1px solid var(--line-strong); background: transparent; color: var(--ink); }
+      .ghost:hover { transform: translateY(-1px); background: rgba(255,255,255,.72); }
+      .question-wrap { transition: opacity .25s ease, transform .25s ease; }
+      .question-wrap.fade-out { opacity: 0; transform: translateY(10px); }
+      .question-group { display: grid; gap: 14px; margin-top: 18px; }
+      .question-card { border: 1px solid var(--line); border-radius: 14px; padding: 14px; background: rgba(255,255,255,.65); }
+      .question-id { font-size: 12px; color: rgba(44,44,44,.56); letter-spacing: .08em; }
+      .question-text { margin-top: 6px; font-size: 1rem; line-height: 1.7; }
+      .scale-labels { display: flex; justify-content: space-between; gap: 10px; margin: 14px 0 10px; font-size: 12px; color: rgba(44,44,44,.56); }
+      .options { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+      .option { min-height: 42px; border-radius: 999px; border: 1.5px solid rgba(196,168,130,.7); background: #fff; color: #5f5850; display: grid; place-items: center; }
+      .option:hover, .option.active { background: var(--gold); border-color: var(--gold); color: #fff; }
+      .actions { display: flex; justify-content: space-between; gap: 10px; margin-top: 22px; }
+      .actions .ghost, .actions .primary { flex: 1; text-align: center; }
+      .result-intro { margin-top: 14px; color: var(--muted); font-size: .95rem; }
+      .highlight { margin-top: 18px; padding: 14px; border-radius: 14px; background: rgba(143, 175, 138, .12); border: 1px solid rgba(143, 175, 138, .3); }
+      .highlight strong { display: block; font-family: "Noto Serif SC", serif; font-size: 1.08rem; margin-bottom: 6px; }
+      .chart-wrap { margin-top: 18px; padding: 14px; border-radius: 16px; background: rgba(255,255,255,.72); border: 1px solid var(--line); }
+      canvas { width: 100%; height: 280px; display: block; }
+      .result-list { margin-top: 18px; display: grid; gap: 10px; }
+      .result-card { border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; background: rgba(255,255,255,.7); }
+      .result-card.top { border-color: rgba(212,145,122,.42); background: rgba(212,145,122,.10); }
+      .result-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+      .result-name { font-family: "Noto Serif SC", serif; font-size: 1rem; }
+      .result-score { font-size: .85rem; color: var(--muted); }
+      .result-bar { height: 8px; border-radius: 999px; background: rgba(44,44,44,.08); overflow: hidden; margin: 10px 0 8px; }
+      .result-bar > span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--rose), var(--sage)); }
+      .footer-note { margin-top: 18px; padding-top: 14px; border-top: 1px dashed rgba(44,44,44,.14); color: var(--muted); font-size: .88rem; }
+      .error { color: #8a4d3b; background: rgba(212,145,122,.1); padding: 12px 14px; border-radius: 12px; margin-top: 16px; }
+      @media (max-width: 540px) {
+        .title { font-size: 1.72rem; }
+        .options { gap: 6px; }
+        .option { min-height: 38px; font-size: .92rem; }
+        .actions { flex-direction: column; }
+      }
+      .disclaimer-note { font-size: 0.78rem; color: #aaa; display: block; margin-top: 0.5rem; }
+      .story-link-hint { margin-top: 1rem; font-size: 0.85rem; color: #888; display: flex; align-items: center; gap: 0.5rem; }
+      .story-link-hint a { color: #555; text-decoration: underline; text-underline-offset: 3px; }
+
+      .story-link-hint {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: #888;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .story-link-hint a {
+        color: #555;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .test-intro {
+        padding: 8px 0 24px;
+      }
+
+      .test-intro-card {
+        display: flex;
+        background: #F7F3EE;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(44,32,20,0.07);
+      }
+
+      .test-intro-accent {
+        width: 4px;
+        flex-shrink: 0;
+        background: #A8C4D4;
+        border-radius: 0;
+      }
+
+      .test-intro-content {
+        padding: 28px 24px 28px 22px;
+        flex: 1;
+      }
+
+      .test-intro-source {
+        margin: 0;
+        font-family: 'Courier Prime', monospace;
+        font-size: 11px;
+        color: #888;
+        letter-spacing: 0.08em;
+        line-height: 1.5;
+      }
+
+      .test-intro-rule {
+        height: 0.5px;
+        background: #e0dbd4;
+        margin: 14px 0;
+      }
+
+      .test-intro-scale {
+        margin: 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 36px;
+        font-weight: 600;
+        color: #2e2e2e;
+        line-height: 1.1;
+        letter-spacing: 0.08em;
+      }
+
+      .test-intro-body {
+        margin: 0 0 12px;
+        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+        font-size: 15px;
+        line-height: 1.9;
+        color: #555;
+      }
+
+      .test-intro-note {
+        margin: 0;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 12px;
+        color: #999;
+        line-height: 1.6;
+      }
+
+      .test-intro-btn {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #A8C4D4 0%, #C8C5DE 100%);
+        color: #fff;
+        border: none;
+        border-radius: 30px;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 14px;
+        letter-spacing: 0.15em;
+        cursor: pointer;
+        box-shadow: 0 4px 16px rgba(168,196,212,0.35);
+        transition: opacity 0.2s ease;
+        margin-top: 32px;
+      }
+
+      .test-intro-btn:hover {
+        opacity: 0.88;
+      }
+          .vi-glow {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(80px);
+          }
+          .vi-glow--top {
+            width: 340px;
+            height: 340px;
+            top: -100px;
+            right: -80px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+          }
+          .vi-glow--bottom {
+            width: 280px;
+            height: 280px;
+            bottom: -60px;
+            left: -60px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+          }
+        </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/font-override.css" />
+</head>
+  <body>
+    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+    <div class="page">
+  <div class="test-intro">
+        <div class="test-intro-card">
+          <div class="test-intro-accent"></div>
+          <div class="test-intro-content">
+            <p class="test-intro-source">基于 C.G. Jung 认知功能理论 + Dario Nardi 八维认知功能模型</p>
+            <div class="test-intro-rule"></div>
+            <h2 class="test-intro-scale">认知功能<br>思维方式探索</h2>
+            <div class="test-intro-rule"></div>
+            <p class="test-intro-body">你有没有发现，有些人靠直觉做决定，有些人必须把逻辑链条走完才安心？有些人活在细节里，有些人脑子里永远在跑"如果……会怎样"。<br><br>这不是给你归类，而是把脑海里那些总在自动运行的路线图慢慢显影。有人先抓住细节，有人先看见趋势；有人用逻辑铺路，有人靠价值感校准方向。<br><br>认知功能想做的，是让你知道：你之所以这样理解世界，并不是偶然。</p>
+            <p class="test-intro-note">这份测评包含 80 道题，探索你在八个认知维度上的偏好分布：感觉、直觉、思维、情感，每个都有向外和向内两种朝向。</p>
+            <button class="test-intro-btn" id="startBtn">准备好了</button>
+          </div>
+        </div>
+      </div>
+      <div class="test-body" id="testBody" style="display:none">
+    <main class="page">
+      <a class="nav-back" href="assessment.html">← back</a>
+      <div class="topline"><span id="progressBar"></span></div>
+      <div class="meta"><span id="progressText">准备开始</span><span id="metaCode">Cognitive Functions</span></div>
+
+      <section class="panel" id="intro">
+        <h1 class="title">荣格八维认知功能测试</h1>
+        <p class="subtitle">80题 · 8页 · 每页10题</p>
+        <p class="desc" id="introDesc">加载中…</p>
+        <p class="desc">请根据你平时最自然、最常见的状态作答。没有标准答案，重点是你长期更习惯的认知方式。</p>
+        <button class="primary" id="beginQuizBtn" disabled>准备好了</button>
+        <div class="error hidden" id="loadError"></div>
+      </section>
+
+      <section class="panel hidden" id="quiz">
+        <div class="question-wrap" id="questionWrap">
+          <div class="question-id" id="pageTitle"></div>
+          <h2 id="dimensionTitle"></h2>
+          <p class="dimension-note" id="dimensionDesc"></p>
+          <div class="scale-labels" id="scaleLabels"></div>
+          <div class="question-group" id="questionGroup"></div>
+          <div class="actions">
+            <button class="ghost" id="prevBtn">← 上一页</button>
+            <button class="ghost" id="restartBtn">重新开始</button>
+            <button class="primary" id="nextBtn">下一页 →</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="result"></section>
+    </main>
+
+      </div>
+    </div>
+    <script src="assets/profile-utils.js"></script>
+<script>
+      const testData = {
+      "id": "cognitive-functions",
+      "title": "认知功能测试",
+      "description": "基于荣格八维理论，探索你最常使用的认知过程。",
+      "total": 80,
+      "scale": {
+            "min": 1,
+            "max": 5,
+            "labels": [
+                  "完全不符合",
+                  "不太符合",
+                  "有时符合",
+                  "比较符合",
+                  "完全符合"
+            ]
+      },
+      "dimensions": [
+            {
+                  "id": "Se",
+                  "name": "外感觉 Se",
+                  "description": "关注当下环境与即时体验，善于捕捉外界变化，偏好直接行动、真实感官刺激与现场应变。"
+            },
+            {
+                  "id": "Si",
+                  "name": "内感觉 Si",
+                  "description": "重视经验积累与内部参照，关注细节、稳定性与熟悉感，倾向依赖记忆和既有经验判断。"
+            },
+            {
+                  "id": "Ne",
+                  "name": "外直觉 Ne",
+                  "description": "擅长从外部信息中联想到多种可能，喜欢发散、探索新点子与跨领域连接。"
+            },
+            {
+                  "id": "Ni",
+                  "name": "内直觉 Ni",
+                  "description": "倾向从复杂信息中提炼核心模式与长期趋势，关注隐含意义、预感与深层洞察。"
+            },
+            {
+                  "id": "Te",
+                  "name": "外思维 Te",
+                  "description": "重视客观标准、效率与执行结果，擅长组织资源、制定流程并推动任务落地。"
+            },
+            {
+                  "id": "Ti",
+                  "name": "内思维 Ti",
+                  "description": "追求概念上的精确与逻辑一致，擅长拆解问题、澄清定义并建立内部理论框架。"
+            },
+            {
+                  "id": "Fe",
+                  "name": "外情感 Fe",
+                  "description": "关注群体氛围与人际互动，重视关系协调、他人感受与社会情境中的恰当表达。"
+            },
+            {
+                  "id": "Fi",
+                  "name": "内情感 Fi",
+                  "description": "重视个人价值、真实感受与内在道德判断，倾向依据内心认同来作出选择。"
+            }
+      ],
+      "questions": [
+            {
+                  "id": 1,
+                  "text": "我通常会先注意到眼前环境中的变化，而不是先思考它的意义。",
+                  "dimension": "Se"
+            },
+            {
+                  "id": 2,
+                  "text": "比起长时间设想未来，我更愿意直接投入现实情境中行动。",
+                  "dimension": "Se"
+            },
+            {
+                  "id": 3,
+                  "text": "我对声音、颜色、气味、动作等感官信息相当敏感。",
+                  "dimension": "Se"
+            },
+            {
+                  "id": 4,
+                  "text": "遇到突发情况时，我往往能快速根据现场情况做出反应。",
+                  "dimension": "Se"
+            },
+            {
+                  "id": 5,
+                  "text": "我喜欢通过亲身体验来理解事物，而不是只看理论说明。",
+                  "dimension": "Se"
+            },
+            {
+                  "id": 6,
+                  "text": "在生活中，我容易被新鲜、有冲击力或有趣的现实体验吸引。",
+                  "dimension": "Se"
+            },
+            {
+                  "id": 7,
+                  "text": "我做决定时，常会参考此时此刻最真实、最直接的信息。",
+                  "dimension": "Se"
+            },
+            {
+                  "id": 8,
+                  "text": "我喜欢边做边调整，而不是事先把所有步骤都想清楚。",
+                  "dimension": "Se"
+            },
+            {
+                  "id": 9,
+                  "text": "别人可能会觉得我在现场感、临场反应或动手能力上比较强。",
+                  "dimension": "Se"
+            },
+            {
+                  "id": 10,
+                  "text": "当生活过于单调、缺乏刺激时，我会明显感到无聊或不满足。",
+                  "dimension": "Se"
+            },
+            {
+                  "id": 11,
+                  "text": "我会自然地把当前经历与过去类似的经验进行比较。",
+                  "dimension": "Si"
+            },
+            {
+                  "id": 12,
+                  "text": "熟悉的流程、环境或做法，会让我更安心、更容易发挥。",
+                  "dimension": "Si"
+            },
+            {
+                  "id": 13,
+                  "text": "我对细节变化很敏感，常能发现\"这次和以前不一样\"。",
+                  "dimension": "Si"
+            },
+            {
+                  "id": 14,
+                  "text": "面对新事物时，我通常会先想：以前有没有类似情况可参考。",
+                  "dimension": "Si"
+            },
+            {
+                  "id": 15,
+                  "text": "我习惯保留对自己有用的经验，并在以后重复使用。",
+                  "dimension": "Si"
+            },
+            {
+                  "id": 16,
+                  "text": "我重视生活中的稳定、规律和可预期性。",
+                  "dimension": "Si"
+            },
+            {
+                  "id": 17,
+                  "text": "我常凭借记忆中的具体印象来判断一件事是否可靠。",
+                  "dimension": "Si"
+            },
+            {
+                  "id": 18,
+                  "text": "别人随意改变既定安排时，我往往会感到不适或被打乱。",
+                  "dimension": "Si"
+            },
+            {
+                  "id": 19,
+                  "text": "我倾向于一步一步地确认信息，而不是直接跳到结论。",
+                  "dimension": "Si"
+            },
+            {
+                  "id": 20,
+                  "text": "我通常认为，经过时间验证的方法比全新的做法更值得信赖。",
+                  "dimension": "Si"
+            },
+            {
+                  "id": 21,
+                  "text": "一个想法常常会让我联想到更多不同的可能性。",
+                  "dimension": "Ne"
+            },
+            {
+                  "id": 22,
+                  "text": "我喜欢从看似无关的事物之间发现新联系。",
+                  "dimension": "Ne"
+            },
+            {
+                  "id": 23,
+                  "text": "当别人提出问题时，我脑中常会一下子冒出很多种解法。",
+                  "dimension": "Ne"
+            },
+            {
+                  "id": 24,
+                  "text": "我对未知、变化和新奇的概念通常抱有好奇心。",
+                  "dimension": "Ne"
+            },
+            {
+                  "id": 25,
+                  "text": "我比起维持单一路线，更喜欢探索替代方案。",
+                  "dimension": "Ne"
+            },
+            {
+                  "id": 26,
+                  "text": "我容易被概念、隐喻、创意点子或脑洞式讨论激发灵感。",
+                  "dimension": "Ne"
+            },
+            {
+                  "id": 27,
+                  "text": "在对话中，我常会突然想到一个别人没提过的方向。",
+                  "dimension": "Ne"
+            },
+            {
+                  "id": 28,
+                  "text": "我喜欢让事情保持开放，不急着过早定论。",
+                  "dimension": "Ne"
+            },
+            {
+                  "id": 29,
+                  "text": "同一件事在我看来，往往不只有一种解释。",
+                  "dimension": "Ne"
+            },
+            {
+                  "id": 30,
+                  "text": "我经常因为想到新的可能性，而临时改变原本的计划。",
+                  "dimension": "Ne"
+            },
+            {
+                  "id": 31,
+                  "text": "我常会从纷杂的信息中突然形成一个整体性的判断。",
+                  "dimension": "Ni"
+            },
+            {
+                  "id": 32,
+                  "text": "很多时候，我先有一种\"就是这样\"的直觉，之后才说得清理由。",
+                  "dimension": "Ni"
+            },
+            {
+                  "id": 33,
+                  "text": "我倾向关注事情背后的模式、趋势或深层含义。",
+                  "dimension": "Ni"
+            },
+            {
+                  "id": 34,
+                  "text": "面对复杂局面时，我更想找出核心线索，而不是处理所有表面细节。",
+                  "dimension": "Ni"
+            },
+            {
+                  "id": 35,
+                  "text": "我常会思考一件事在更长时间尺度上会如何发展。",
+                  "dimension": "Ni"
+            },
+            {
+                  "id": 36,
+                  "text": "我会被象征、隐喻、主题或\"隐藏信息\"所吸引。",
+                  "dimension": "Ni"
+            },
+            {
+                  "id": 37,
+                  "text": "我倾向把零散现象收束成一个统一的理解框架。",
+                  "dimension": "Ni"
+            },
+            {
+                  "id": 38,
+                  "text": "别人可能觉得我看问题比较深，常能看到事情的另一层。",
+                  "dimension": "Ni"
+            },
+            {
+                  "id": 39,
+                  "text": "当方向感明确时，我可以长期围绕一个核心目标持续投入。",
+                  "dimension": "Ni"
+            },
+            {
+                  "id": 40,
+                  "text": "我更重视洞察是否抓住本质，而不是是否覆盖了所有可能。",
+                  "dimension": "Ni"
+            },
+            {
+                  "id": 41,
+                  "text": "我习惯先明确目标、标准和完成条件，再开始做事。",
+                  "dimension": "Te"
+            },
+            {
+                  "id": 42,
+                  "text": "我会自然地思考怎样安排资源，才能更高效地推进任务。",
+                  "dimension": "Te"
+            },
+            {
+                  "id": 43,
+                  "text": "我重视结果是否可衡量、可验证，而不只是\"感觉不错\"。",
+                  "dimension": "Te"
+            },
+            {
+                  "id": 44,
+                  "text": "发现流程低效时，我会想办法优化它。",
+                  "dimension": "Te"
+            },
+            {
+                  "id": 45,
+                  "text": "在团队中，我常会主动推动分工、排期或执行节奏。",
+                  "dimension": "Te"
+            },
+            {
+                  "id": 46,
+                  "text": "我倾向依据事实、数据或客观证据来判断方案优劣。",
+                  "dimension": "Te"
+            },
+            {
+                  "id": 47,
+                  "text": "如果讨论迟迟没有结论，我通常会想办法把它收束到可执行层面。",
+                  "dimension": "Te"
+            },
+            {
+                  "id": 48,
+                  "text": "我通常认为，一个好方案应该既清晰又能真正落地。",
+                  "dimension": "Te"
+            },
+            {
+                  "id": 49,
+                  "text": "我不太介意显得直接，只要这能提高效率或减少混乱。",
+                  "dimension": "Te"
+            },
+            {
+                  "id": 50,
+                  "text": "当别人表达含糊时，我会希望把要求、规则或标准说清楚。",
+                  "dimension": "Te"
+            },
+            {
+                  "id": 51,
+                  "text": "我喜欢先弄清一个概念的定义，再继续讨论。",
+                  "dimension": "Ti"
+            },
+            {
+                  "id": 52,
+                  "text": "面对问题时，我会先分析其中的结构与逻辑关系。",
+                  "dimension": "Ti"
+            },
+            {
+                  "id": 53,
+                  "text": "如果一个说法在逻辑上不一致，我很难直接接受它。",
+                  "dimension": "Ti"
+            },
+            {
+                  "id": 54,
+                  "text": "我经常会在心里把复杂问题拆成几个更基础的部分。",
+                  "dimension": "Ti"
+            },
+            {
+                  "id": 55,
+                  "text": "我倾向独立思考，直到自己真正想明白为止。",
+                  "dimension": "Ti"
+            },
+            {
+                  "id": 56,
+                  "text": "我关心的不只是结论对不对，还包括推理过程是否严密。",
+                  "dimension": "Ti"
+            },
+            {
+                  "id": 57,
+                  "text": "当别人用模糊、笼统的表达时，我会想进一步厘清其中的含义。",
+                  "dimension": "Ti"
+            },
+            {
+                  "id": 58,
+                  "text": "我喜欢建立一套自己能自洽解释问题的理论框架。",
+                  "dimension": "Ti"
+            },
+            {
+                  "id": 59,
+                  "text": "哪怕别人都同意，我也会继续检验一个观点是否真的说得通。",
+                  "dimension": "Ti"
+            },
+            {
+                  "id": 60,
+                  "text": "我常因追求更准确的理解，而在细节上反复推敲。",
+                  "dimension": "Ti"
+            },
+            {
+                  "id": 61,
+                  "text": "我会自然关注他人的情绪变化，以及现场氛围是否融洽。",
+                  "dimension": "Fe"
+            },
+            {
+                  "id": 62,
+                  "text": "在群体中，我常会根据场合调整自己的表达方式。",
+                  "dimension": "Fe"
+            },
+            {
+                  "id": 63,
+                  "text": "如果有人被冷落或尴尬，我通常会想办法缓和局面。",
+                  "dimension": "Fe"
+            },
+            {
+                  "id": 64,
+                  "text": "我重视别人是否感到被理解、被尊重、被妥善对待。",
+                  "dimension": "Fe"
+            },
+            {
+                  "id": 65,
+                  "text": "做决定时，我会考虑这会对关系和整体氛围产生什么影响。",
+                  "dimension": "Fe"
+            },
+            {
+                  "id": 66,
+                  "text": "我常能察觉别人没有说出口的情绪需求。",
+                  "dimension": "Fe"
+            },
+            {
+                  "id": 67,
+                  "text": "我愿意为了维持合作和谐，适度调整自己的做法。",
+                  "dimension": "Fe"
+            },
+            {
+                  "id": 68,
+                  "text": "当沟通出现冲突时，我通常会先寻找双方都能接受的表达。",
+                  "dimension": "Fe"
+            },
+            {
+                  "id": 69,
+                  "text": "我会在意自己的行为是否符合场合中的人际期待。",
+                  "dimension": "Fe"
+            },
+            {
+                  "id": 70,
+                  "text": "别人可能会觉得我在人际互动中比较体贴、会顾全大局。",
+                  "dimension": "Fe"
+            },
+            {
+                  "id": 71,
+                  "text": "我做决定时，很看重这是否真正符合自己的内心。",
+                  "dimension": "Fi"
+            },
+            {
+                  "id": 72,
+                  "text": "即使别人都认同，我也不会轻易违背自己的价值判断。",
+                  "dimension": "Fi"
+            },
+            {
+                  "id": 73,
+                  "text": "我对\"真实\"很敏感，不喜欢违心的表达或表演式互动。",
+                  "dimension": "Fi"
+            },
+            {
+                  "id": 74,
+                  "text": "我会认真分辨自己的感受，而不是只顺着外界期待行动。",
+                  "dimension": "Fi"
+            },
+            {
+                  "id": 75,
+                  "text": "我倾向尊重每个人独特的处境和个人选择。",
+                  "dimension": "Fi"
+            },
+            {
+                  "id": 76,
+                  "text": "当某件事触及我深层认同的价值时，我会非常坚定。",
+                  "dimension": "Fi"
+            },
+            {
+                  "id": 77,
+                  "text": "我通常不会轻易公开情绪，但内心体验其实很深。",
+                  "dimension": "Fi"
+            },
+            {
+                  "id": 78,
+                  "text": "我更在意一件事是否\"对我来说是对的\"，而不只是是否合群。",
+                  "dimension": "Fi"
+            },
+            {
+                  "id": 79,
+                  "text": "我会对不公、虚伪或违背原则的事情产生强烈反应。",
+                  "dimension": "Fi"
+            },
+            {
+                  "id": 80,
+                  "text": "我希望自己做出的选择，能够忠于真实的自我而非外在压力。",
+                  "dimension": "Fi"
+            }
+      ]
+};
+      const state = { data: null, page: -1, answers: [] };
+      const introEl = document.getElementById('intro');
+      const quizEl = document.getElementById('quiz');
+      const resultEl = document.getElementById('result');
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
+      const introDesc = document.getElementById('introDesc');
+      const loadError = document.getElementById('loadError');
+      const beginQuizBtn = document.getElementById('beginQuizBtn');
+      const qWrap = document.getElementById('questionWrap');
+      const pageTitle = document.getElementById('pageTitle');
+      const dimensionTitle = document.getElementById('dimensionTitle');
+      const dimensionDesc = document.getElementById('dimensionDesc');
+      const scaleLabels = document.getElementById('scaleLabels');
+      const questionGroup = document.getElementById('questionGroup');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const restartBtn = document.getElementById('restartBtn');
+
+      function getPageCount() {
+        return state.data ? state.data.dimensions.length : 0;
+      }
+
+      function getQuestionsForPage(pageIndex) {
+        const start = pageIndex * 10;
+        return state.data.questions.slice(start, start + 10);
+      }
+
+      function answeredCount() {
+        return state.answers.filter(v => v != null).length;
+      }
+
+      function updateProgress() {
+        if (!state.data || state.page < 0) {
+          progressBar.style.width = '0%';
+          progressText.textContent = '准备开始';
+          return;
+        }
+        progressBar.style.width = `${((state.page + 1) / getPageCount()) * 100}%`;
+        progressText.textContent = `第 ${state.page + 1} / ${getPageCount()} 页 · 已答 ${answeredCount()} / ${state.data.total}`;
+      }
+
+      function renderScaleLabels(labels) {
+        scaleLabels.innerHTML = '';
+        labels.forEach(label => {
+          const span = document.createElement('span');
+          span.textContent = label;
+          scaleLabels.appendChild(span);
+        });
+      }
+
+      function renderQuestionCard(question) {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        const current = state.answers[question.id - 1];
+        card.innerHTML = `<div class="question-id">第 ${question.id} 题</div><div class="question-text">${question.text}</div>`;
+        const options = document.createElement('div');
+        options.className = 'options';
+        for (let i = state.data.scale.min; i <= state.data.scale.max; i += 1) {
+          const btn = document.createElement('button');
+          btn.className = `option${current === i ? ' active' : ''}`;
+          btn.textContent = i;
+          btn.type = 'button';
+          btn.onclick = () => {
+            state.answers[question.id - 1] = i;
+            renderPage();
+          };
+          options.appendChild(btn);
+        }
+        card.appendChild(options);
+        return card;
+      }
+
+      function renderPage() {
+        const dimension = state.data.dimensions[state.page];
+        const questions = getQuestionsForPage(state.page);
+        pageTitle.textContent = `维度 ${state.page + 1} / ${getPageCount()}`;
+        dimensionTitle.textContent = dimension.name;
+        dimensionDesc.textContent = dimension.description;
+        renderScaleLabels(state.data.scale.labels);
+        questionGroup.innerHTML = '';
+        questions.forEach(q => questionGroup.appendChild(renderQuestionCard(q)));
+        prevBtn.disabled = state.page === 0;
+        prevBtn.style.opacity = state.page === 0 ? '.45' : '1';
+        nextBtn.textContent = state.page === getPageCount() - 1 ? '翻开这一页' : '下一页 →';
+        updateProgress();
+      }
+
+      function transition(next) {
+        qWrap.classList.add('fade-out');
+        setTimeout(() => {
+          next();
+          qWrap.classList.remove('fade-out');
+        }, 220);
+      }
+
+      function validatePage() {
+        const missing = getQuestionsForPage(state.page).filter(q => state.answers[q.id - 1] == null);
+        if (missing.length) {
+          alert(`这一页还有 ${missing.length} 题未作答。`);
+          return false;
+        }
+        return true;
+      }
+
+      function goNext() {
+        if (!validatePage()) return;
+        if (state.page === getPageCount() - 1) {
+          showResult();
+          return;
+        }
+        transition(() => { state.page += 1; renderPage(); });
+      }
+
+      function goPrev() {
+        if (state.page <= 0) return;
+        transition(() => { state.page -= 1; renderPage(); });
+      }
+
+      function restart() {
+        state.page = -1;
+        state.answers = Array(state.data.total).fill(null);
+        resultEl.classList.add('hidden');
+        quizEl.classList.add('hidden');
+        introEl.classList.remove('hidden');
+        updateProgress();
+      }
+
+      function drawRadarChart(canvas, dims) {
+        const ctx = canvas.getContext('2d');
+        const dpr = window.devicePixelRatio || 1;
+        const cssWidth = canvas.clientWidth || 440;
+        const cssHeight = 280;
+        canvas.width = cssWidth * dpr;
+        canvas.height = cssHeight * dpr;
+        ctx.scale(dpr, dpr);
+        const width = cssWidth;
+        const height = cssHeight;
+        const cx = width / 2;
+        const cy = height / 2;
+        const radius = Math.min(width, height) * 0.34;
+        const levels = 5;
+        ctx.clearRect(0, 0, width, height);
+        ctx.strokeStyle = 'rgba(44,44,44,.12)';
+        ctx.fillStyle = 'rgba(44,44,44,.48)';
+        ctx.lineWidth = 1;
+
+        for (let level = 1; level <= levels; level += 1) {
+          ctx.beginPath();
+          dims.forEach((dim, index) => {
+            const angle = (-Math.PI / 2) + (Math.PI * 2 * index / dims.length);
+            const r = radius * (level / levels);
+            const x = cx + Math.cos(angle) * r;
+            const y = cy + Math.sin(angle) * r;
+            if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          });
+          ctx.closePath();
+          ctx.stroke();
+        }
+
+        dims.forEach((dim, index) => {
+          const angle = (-Math.PI / 2) + (Math.PI * 2 * index / dims.length);
+          const x = cx + Math.cos(angle) * radius;
+          const y = cy + Math.sin(angle) * radius;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(x, y);
+          ctx.stroke();
+          const lx = cx + Math.cos(angle) * (radius + 18);
+          const ly = cy + Math.sin(angle) * (radius + 18);
+          ctx.font = '12px sans-serif';
+          ctx.textAlign = lx < cx - 10 ? 'right' : lx > cx + 10 ? 'left' : 'center';
+          ctx.textBaseline = ly < cy ? 'bottom' : 'top';
+          ctx.fillText(dim.id, lx, ly);
+        });
+
+        ctx.beginPath();
+        dims.forEach((dim, index) => {
+          const angle = (-Math.PI / 2) + (Math.PI * 2 * index / dims.length);
+          const ratio = dim.average / state.data.scale.max;
+          const x = cx + Math.cos(angle) * radius * ratio;
+          const y = cy + Math.sin(angle) * radius * ratio;
+          if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        });
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(212,145,122,.22)';
+        ctx.strokeStyle = 'rgba(212,145,122,.95)';
+        ctx.lineWidth = 2;
+        ctx.fill();
+        ctx.stroke();
+
+        dims.forEach((dim, index) => {
+          const angle = (-Math.PI / 2) + (Math.PI * 2 * index / dims.length);
+          const ratio = dim.average / state.data.scale.max;
+          const x = cx + Math.cos(angle) * radius * ratio;
+          const y = cy + Math.sin(angle) * radius * ratio;
+          ctx.beginPath();
+          ctx.arc(x, y, 3.5, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(143,175,138,.98)';
+          ctx.fill();
+        });
+      }
+
+      function showResult() {
+        introEl.classList.add('hidden');
+        quizEl.classList.add('hidden');
+        resultEl.classList.remove('hidden');
+        progressBar.style.width = '100%';
+        progressText.textContent = '已完成';
+
+        const scored = state.data.dimensions.map(dim => {
+          const qs = state.data.questions.filter(q => q.dimension === dim.id);
+          const total = qs.reduce((sum, q) => sum + state.answers[q.id - 1], 0);
+          return {
+            ...dim,
+            total,
+            average: total / qs.length,
+            percent: (total / (qs.length * state.data.scale.max)) * 100
+          };
+        }).sort((a, b) => b.total - a.total);
+
+        const topScore = scored[0].total;
+        const topDimensions = scored.filter(item => item.total === topScore);
+        const topSummary = topDimensions.map(item => item.name).join(' / ');
+
+        if (window.SheProfileStore) {
+          const score = Object.fromEntries(scored.map(item => [item.id, Number(item.average.toFixed(2))]));
+          window.SheProfileStore.saveResult({
+            moduleId: "cognitive",
+            moduleName: "荣格认知功能",
+            summary: topDimensions[0].name.slice(0, 4),
+            score,
+            topDimension: topDimensions[0].id
+          });
+        }
+
+        resultEl.innerHTML = `
+          <h2>你的认知功能画像</h2>
+          <p class="result-intro">以下是你在日常中用得更顺手的心理加工方式——不是标签，而是你认知模式的入口。</p>
+          <div class="highlight">
+            <strong>你用得最顺手的方式：${topSummary}</strong>
+            <span>你${topDimensions.map(item => item.description.replace(/^[关重擅倾追]/, s => s)).join(' ')}</span>
+            <span class="disclaimer-note">这是你当下的模式，不是诊断，也不是定论。</span>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="radarChart"></canvas>
+          </div>
+          <div class="result-list">
+            ${scored.map(item => `
+              <article class="result-card${item.total === topScore ? ' top' : ''}">
+                <div class="result-head">
+                  <div class="result-name">${item.name}${item.total === topScore ? ' · 最高分' : ''}</div>
+                  <div class="result-score">${item.total}/50 · 均分 ${item.average.toFixed(1)}</div>
+                </div>
+                <div class="result-bar"><span style="width:${item.percent}%"></span></div>
+                <div>你${item.description}<span class="disclaimer-note">这是你当下的模式，不是诊断，也不是定论。</span></div>
+              </article>
+            `).join('')}
+          </div>
+          <p class="footer-note">如果你想看更细的差异，可以留意第二高分与第三高分维度，它们往往一起构成你更具体的思考与决策风格。</p>
+
+          <div class="actions">
+            <button class="ghost" id="redoBtn">再测一次</button>
+            <a class="ghost" href="profile.html">这个维度是你画像的一部分——查看五个维度的完整模式，看看它们如何相互影响。</a>
+            <a class="ghost" href="assessment.html">返回测试页</a>
+          </div>
+          <div class="story-link-hint">
+            <span>你可能会有共鸣 →</span>
+            <a href="story-bingbing.html">穿百褶裙的机甲驾驶员</a>
+          </div>
+        `;
+
+        drawRadarChart(document.getElementById('radarChart'), state.data.dimensions.map(dim => {
+          const found = scored.find(item => item.id === dim.id);
+          return { id: dim.id, average: found.average };
+        }));
+        document.getElementById('redoBtn').onclick = restart;
+      }
+
+      function loadData() {
+        try {
+          state.data = testData;
+          state.answers = Array(state.data.total).fill(null);
+          introDesc.textContent = state.data.description;
+          beginQuizBtn.disabled = false;
+        } catch (error) {
+          loadError.textContent = '题库加载失败，请确认 data/cognitive-functions.json 存在且内容有效。';
+          loadError.classList.remove('hidden');
+          introDesc.textContent = '当前无法读取题库。';
+        }
+      }
+
+      document.getElementById('startBtn').onclick = () => {
+        document.querySelector('.test-intro').style.display = 'none';
+        document.getElementById('testBody').style.display = 'block';
+      };
+
+      beginQuizBtn.onclick = () => {
+        state.page = 0;
+        introEl.classList.add('hidden');
+        resultEl.classList.add('hidden');
+        quizEl.classList.remove('hidden');
+        renderPage();
+      };
+      prevBtn.onclick = goPrev;
+      nextBtn.onclick = goNext;
+      restartBtn.onclick = restart;
+      loadData();
+    </script>
+  </body>
+</html>

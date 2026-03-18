@@ -1,0 +1,60 @@
+body,
+p,
+li,
+a,
+button,
+input,
+textarea,
+select,
+label,
+span,
+div,
+article,
+section,
+main,
+aside,
+blockquote,
+dd,
+dt,
+figcaption,
+small {
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.title,
+.card-title,
+.section-title,
+.story-title,
+.section-row-title,
+.character-name,
+.sec-title,
+.sec-label,
+.hook-text,
+.r-type {
+  font-family: "Noto Serif SC", "Cormorant Garamond", "Source Han Serif SC", serif !important;
+}
+
+body * {
+  font-family: inherit;
+}
+
+code,
+pre,
+kbd,
+samp,
+.eyebrow,
+.tagline,
+.logo-en,
+.page-pretitle,
+.result-tag,
+.test-intro-source,
+.row-en-tag,
+.home-tagline {
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif !important;
+}

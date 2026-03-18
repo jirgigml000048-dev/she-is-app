@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>女也 She Is — Edition 01</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<style>
+    :root {
+      --cream: #FAF6EF;
+      --sage: #8FAF8A;
+      --rose: #D4917A;
+      --ink: #2C2C2C;
+      --paper-ink: #1f1d1a;
+      --bar-h: 80px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--paper-ink);
+      overflow: hidden;
+      position: relative;
+      font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+    }
+
+    .grain {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      opacity: 0.26;
+      mix-blend-mode: multiply;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(0,0,0,.20) 0 0.8px, transparent 1px),
+        radial-gradient(circle at 75% 60%, rgba(0,0,0,.18) 0 0.9px, transparent 1.2px),
+        radial-gradient(circle at 40% 75%, rgba(0,0,0,.14) 0 0.7px, transparent 1px);
+      background-size: 3px 3px, 4px 4px, 2px 2px;
+      filter: contrast(130%);
+      z-index: 20;
+    }
+
+    .top-bar,
+    .bottom-bar {
+      height: var(--bar-h);
+      background: var(--sage);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Courier Prime", monospace;
+      color: #f6f6f1;
+      letter-spacing: 0.06em;
+      font-size: 12px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .main {
+      height: calc(100vh - var(--bar-h) * 2);
+      position: relative;
+      display: grid;
+      grid-template-columns: 60% 40%;
+      align-items: center;
+      z-index: 5;
+      overflow: hidden;
+    }
+
+    .glyph-stage {
+      position: relative;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .glyph {
+      position: absolute;
+      margin: 0;
+      line-height: 0.84;
+      font-family: "Noto Serif SC", serif;
+      font-weight: 900;
+      font-size: clamp(14rem, 58vw, 18rem);
+      user-select: none;
+    }
+
+    .glyph.nu {
+      color: var(--rose);
+      left: -28%;
+      top: 5%;
+      z-index: 2;
+    }
+
+    .glyph.nu::after {
+      content: "女";
+      position: absolute;
+      inset: 0;
+      color: transparent;
+      background: radial-gradient(circle, rgba(108, 63, 48, 0.85) 30%, transparent 33%);
+      background-size: 8px 8px;
+      -webkit-background-clip: text;
+      background-clip: text;
+      mix-blend-mode: multiply;
+      opacity: 0.8;
+      transform: translate(1px, 1px);
+    }
+
+    .glyph.ye {
+      color: var(--ink);
+      left: 36%;
+      top: 20%;
+      z-index: 3;
+      mix-blend-mode: multiply;
+    }
+
+    .nav-col {
+      padding: 0 1.1rem 0 0;
+      align-self: center;
+      z-index: 8;
+    }
+
+    .nav-wrap {
+      width: 100%;
+      max-width: 180px;
+      margin-left: auto;
+      font-weight: 700;
+      color: #24201b;
+      font-size: 20px;
+      line-height: 1.8;
+    }
+
+    .nav-head {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 20px;
+      margin-bottom: 2px;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    .nav-head .line {
+      display: inline-block;
+      flex: 1;
+      border-bottom: 1px solid rgba(44, 44, 44, 0.85);
+      transform: translateY(-2px);
+      min-width: 30px;
+    }
+
+    .rule {
+      height: 1px;
+      background: rgba(44, 44, 44, 0.85);
+      margin: 8px 0 14px;
+    }
+
+    .nav-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      text-decoration: none;
+      color: inherit;
+      margin: 2px 0;
+    }
+
+    .nav-item .arrow {
+      padding-left: 10px;
+    }
+        .vi-glow {
+          position: fixed;
+          pointer-events: none;
+          z-index: 0;
+          border-radius: 50%;
+          filter: blur(80px);
+        }
+        .vi-glow--top {
+          width: 340px;
+          height: 340px;
+          top: -100px;
+          right: -80px;
+          background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+        }
+        .vi-glow--bottom {
+          width: 280px;
+          height: 280px;
+          bottom: -60px;
+          left: -60px;
+          background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+        }
+      </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/font-override.css" />
+</head>
+<body>
+    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+  <header class="top-bar">女也 She Is — EDITION 01 — 2026</header>
+
+  <main class="main">
+    <section class="glyph-stage" aria-hidden="true">
+      <p class="glyph nu">女</p>
+      <p class="glyph ye">也</p>
+    </section>
+
+    <aside class="nav-col">
+      <nav class="nav-wrap" aria-label="主导航">
+        <div class="nav-head">
+          <span>She Is</span>
+          <span class="line"></span>
+        </div>
+        <div class="rule"></div>
+
+        <a class="nav-item" href="#"><span>100位女孩</span><span class="arrow">→</span></a>
+        <a class="nav-item" href="#"><span>自我图鉴</span><span class="arrow">→</span></a>
+        <a class="nav-item" href="#"><span>来信</span><span class="arrow">→</span></a>
+      </nav>
+    </aside>
+  </main>
+
+  <footer class="bottom-bar">© 女也 She Is</footer>
+  <div class="grain" aria-hidden="true"></div>
+</body>
+</html>

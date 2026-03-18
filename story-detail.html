@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>曲奇：真空里的野蛮生长 | 女也 She Is</title>
+    
+    <style>
+      :root {
+        --bg: #F4F0E4;
+        --ink: #2C2C2C;
+        --deep: #532058;
+        --rose: #a8408b;
+        --blue: #0b8ba4;
+        --pink: #f9bff2;
+        --lemon: #efe957;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+      }
+
+      .page {
+        max-width: 480px;
+        margin: 0 auto;
+        min-height: 100vh;
+        padding-bottom: 48px;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 24px;
+        margin: 0 24px;
+        border-bottom: 1px solid rgba(168,64,139,0.2);
+        background: rgba(244,240,228,0.95);
+        backdrop-filter: blur(6px);
+      }
+
+      .back-btn {
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-decoration: none;
+        color: var(--ink);
+      }
+
+      .page-header-row {
+        display: flex;
+        
+        
+        width: 100%;
+        margin-bottom: 0;
+      
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .logo {
+        margin: 0;
+        
+        font-family: "Cormorant Garamond", serif;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        color: var(--ink);
+      
+        margin-left: auto;
+        text-align: right;
+      }
+
+      .logo small {
+        display: block;
+        font-family: "Courier Prime", monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        color: rgba(44,44,44,0.62);
+        margin-top: 2px;
+      }
+
+      .character-card {
+        margin: 24px;
+        padding: 18px;
+        border: 1px solid rgba(168,64,139,0.25);
+        border-radius: 14px;
+        background: rgba(244,240,228,0.7);
+        border-bottom: 2px solid var(--blue);
+      }
+
+      .story-subtitle {
+        margin: 0 0 10px;
+        font-size: 16px;
+        line-height: 1.5;
+        font-weight: 500;
+        color: var(--ink);
+      }
+
+      .pill-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+
+      .story-tag {
+        font-size: 11px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(168,64,139,0.10);
+        color: var(--rose);
+      }
+
+      .story-illus {
+        margin: 16px 0 24px;
+        min-height: 180px;
+        border: 1.5px dashed rgba(168,64,139,0.4);
+        border-radius: 12px;
+        background: rgba(168,64,139,0.08);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 8px;
+        color: var(--rose);
+        font-size: 12px;
+      }
+
+      .story-body { padding: 8px 24px 0; }
+
+      .story-body p {
+        margin: 0 0 1.2em;
+        font-size: 15px;
+        line-height: 1.9;
+        color: var(--ink);
+      }
+
+      .story-section {
+        position: relative;
+        margin: 48px 0 24px;
+      }
+
+      .story-section-num {
+        font-size: 56px;
+        color: var(--deep);
+        opacity: 0.2;
+        line-height: 1;
+        position: absolute;
+        left: -8px;
+        top: -12px;
+        user-select: none;
+        font-weight: 600;
+      }
+
+      .sec-content { padding-left: 44px; }
+
+      .sec-label {
+        font-size: 11px;
+        color: var(--rose);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+
+      .story-formula {
+        display: inline-block;
+        background: rgba(168,64,139,0.12);
+        color: var(--rose);
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        padding: 5px 14px;
+        border-radius: 4px;
+        letter-spacing: 0.04em;
+      }
+
+      .equation {
+        margin: 0.8em 0 1.2em;
+        padding: 10px 12px;
+        border: 1px solid rgba(168,64,139,0.35);
+        background: rgba(168,64,139,0.12);
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+        font-size: 15px;
+        color: var(--ink);
+        letter-spacing: 0.03em;
+      }
+
+      .story-quote {
+        margin: 16px 0;
+        padding: 10px 12px 10px 14px;
+        border-left: 2px solid var(--blue);
+        background: rgba(11,139,164,0.08);
+        font-size: 15px;
+        line-height: 1.9;
+        color: var(--ink);
+      }
+
+      .footer {
+        margin: 18px 24px 0;
+        padding-top: 20px;
+        border-top: 1px solid rgba(168,64,139,0.2);
+      }
+
+      .source {
+        margin: 0 0 14px;
+        font-size: 12px;
+        color: var(--ink);
+      }
+
+      .story-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        border: 1px solid var(--deep);
+        color: var(--ink);
+        border-radius: 12px;
+        padding: 10px 14px;
+        background: rgba(83,32,88,0.08);
+        font-size: 13px;
+        letter-spacing: 0.02em;
+      }
+
+      .story-cta strong { color: var(--deep); }
+    .audio-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 100;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(44,44,44,0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px rgba(44,32,20,0.12);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.audio-btn:hover { opacity: 0.85; transform: scale(1.08); }
+.audio-btn.playing { animation: spin 4s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.audio-btn.playing:hover { animation-play-state: paused; }
+.audio-btn svg { width: 18px; height: 18px; fill: #2e2e2e; }
+
+      .vi-glow {
+
+        position: fixed;
+
+        pointer-events: none;
+
+        z-index: 0;
+
+        border-radius: 50%;
+
+        filter: blur(80px);
+
+      }
+
+      .vi-glow--top {
+
+        width: 340px;
+
+        height: 340px;
+
+        top: -100px;
+
+        right: -80px;
+
+        background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+
+      }
+
+      .vi-glow--bottom {
+
+        width: 280px;
+
+        height: 280px;
+
+        bottom: -60px;
+
+        left: -60px;
+
+        background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+
+      }
+
+    </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/font-override.css" />
+</head>
+  <body>
+    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+    <main class="page"><header class="site-header page-header-row">
+        <a href="stories.html" class="back-btn">← 故事</a>
+        <h2 class="logo">女也<small>She Is</small></h2>
+      </header>
+
+      <section class="character-card">
+        <h1 class="story-subtitle">曲奇：真空里的野蛮生长</h1>
+        <div class="pill-wrap">
+          <span class="story-tag">#真空生长</span>
+          <span class="story-tag">#提前懂事</span>
+          <span class="story-tag">#慢慢长大</span>
+        </div>
+      </section>
+
+      <div class="story-illus">
+        <img src="illustrations/story-queqie.png" alt="" style="width:100%;display:block;border-radius:8px;">
+      </div>
+
+      <article class="story-body">
+        <blockquote class="story-quote">「我一直的梦想是变小。」</blockquote>
+
+        <section class="story-section">
+          <div class="story-section-num">01</div>
+          <div class="sec-content">
+            <div class="sec-label">停机</div>
+            <div class="story-formula">停机 ≠ 故障</div>
+          </div>
+        </section>
+
+        <p>对于大多数中国孩子来说，19岁是被镶嵌在"大一新生"坐标轴上的刻度，是群体性的狂欢、宿舍熄灯后的闲谈、社团招新的传单填满的年纪。但曲奇的过去三年，更像是一场漫长的停机。</p>
+        <p>"我一上高一就抑郁了。高中三年，我完整在校的时间只有四个月。"</p>
+        <p>高一确诊，之后是断断续续的请假、休学、复学、再休学。学校没有为难她——"我确实是有抑郁症，我有病，他也怕我在学校出点事。"她这样解释老师的通融，语气里没有委屈，倒像是在陈述一个对双方都合理的交易。</p>
+        <p>"每天不知道自己在干什么。也不知道在想什么。"她顿了一下，"但我一直觉得自己是一个特别幸运的人。我总是在人生坠到谷底的时候，突然不知道由于什么原因就想开了。"</p>
+        <p>她把这称为"神秘力量"。现在的复读，对她而言不是重回赛道。"我连上高中都上不下去学，更别说去机构了。"没有早操，没有晚自习，没有班主任在走廊里巡视的脚步声。</p>
+        <p>"我觉得我其实自由度是比大学高的。大学还有什么熄灯时间，你要回去。我的话，都是我掌握时间。"</p>
+        <p>但她也承认了另一面："我跟大学生的区别就是，我没有什么认识人的渠道，其实我会感觉有点孤独。"</p>
+        <p>曲奇的"停机"并不是故障。在一条所有人都被默认设置为"正常运转"的传送带上，身体的崩溃有时候是它替你做出的第一个诚实的决定。</p>
+
+        <section class="story-section">
+          <div class="story-section-num">02</div>
+          <div class="sec-content">
+            <div class="sec-label">"神人"的女儿</div>
+            <div class="story-formula">妈妈的妈妈</div>
+          </div>
+        </section>
+
+        <p>曲奇将她的家庭形容为"非典型东亚风格"。</p>
+        <p>谈到母亲时，她眉心微微皱起，像是在一团极度复杂的线团里抽一根最准确的线。最后她吐出两个字："神人。"</p>
+        <p>在曲奇的记忆里，母亲从不避讳将自己的感情生活展现在女儿面前。初三那年，母亲和一个男人每天都在争吵。"我当时确实太小了，我才十四五岁，我没有办法承受这些。然后我也没有办法跟我爸说——我怎么说？"</p>
+        <p>"我有时候觉得，我更像是我妈的妈妈。"</p>
+        <p>但她对母亲没有恨。</p>
+        <p>"她是从东北一个人闯过来的。从她十几岁就离开姥姥姥爷，一个人来河南，又去北京，一直都是一个人。所以她特别自我。因为她不自我的话，她活不下去的。"</p>
+        <p>"所以我特别理解她。"</p>
+        <p>她说到这里，那种说不清是疲惫还是心疼的东西终于浮出来了。她不是在抱怨。她是在用19岁的身体，去托举一个比她更破碎的人的全部重量。</p>
+
+        <section class="story-section">
+          <div class="story-section-num">03</div>
+          <div class="sec-content">
+            <div class="sec-label">首尔的夜晚</div>
+            <div class="story-formula">世界好大 = 好难过</div>
+          </div>
+        </section>
+
+        <p>去年十二月，她第一次出国，去了韩国。</p>
+        <p>"那天是晚上，我站在首尔街头。有点像那种小镇子，是条小巷。周围的人都说韩语——那是我第一次在异国他乡听到周围人说的是韩剧电视剧上的语言。"</p>
+        <p>"然后那时候突然路过一个韩国老太太。我突然就特别难过。我说，我脚下踩的土地是人家生活一辈子的地方，然后我短暂地踏足了这，过两天我就走了。"</p>
+        <p>"我一直觉得生命好短，因为一辈子能干的事太少了。有一些人，这辈子都不会遇见。"</p>
+        <p>"世界好大，我就好难过。"</p>
+        <p>"我设身处地想了一下，发现其实没有什么韩国人、美国人，大家好像都是人。"</p>
+
+        <section class="story-section">
+          <div class="story-section-num">04</div>
+          <div class="sec-content">
+            <div class="sec-label">梦想是变小</div>
+            <div class="story-formula">长得好快，所以梦想是变小</div>
+          </div>
+        </section>
+
+        <p>"我爷爷最近住院了，就不太好。"</p>
+        <p>她是跟爷爷一起长大的。爷爷肾不好，肺也不好。"但是我爷爷不想那么痛苦。所以后来大家就说不治了，昨天把爷爷接回家了。"</p>
+        <p>"从此以后我们家少一个人。"</p>
+        <p>"这是我第一次真正感觉到自己长大了。以前这些是不需要我自己扛的。现在我需要有意识地去扛。"</p>
+        <p>"我一直的梦想是变小。"</p>
+        <p>她又一次咧嘴笑起来，然后迅速收住。</p>
+        <p>她长得太快了。那种快不是天赋，是被逼出来的。她在最该浪费时间的年纪，把时间花在了理解痛苦、消化混乱、重建自己上。</p>
+        <p>也许她不需要谁的希望。她已经用自己的方式证明了一件事：一个人可以在真空里存活，可以在没有任何外部确认的情况下，靠自己给自己建一套坐标系。这件事本身，就是她给自己最好的成人礼。</p>
+      </article>
+
+      <footer class="footer">
+        <p class="source">曲奇 · 19岁 · 北京</p>
+      </footer>
+    </main>
+  <audio id="bgAudio" loop>
+  <source src="audio/story-queqie.mp3" type="audio/mpeg">
+</audio>
+
+<button class="audio-btn" id="audioBtn" title="播放 / 暂停" aria-label="播放 / 暂停背景音乐">
+  <svg id="playIcon" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" fill="#2e2e2e"></circle>
+    <circle cx="12" cy="12" r="2.2" fill="#f7f3ee"></circle>
+    <path d="M10 8.6v6.8l5.2-3.4z" fill="#f7f3ee"></path>
+  </svg>
+  <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" fill="#2e2e2e"></circle>
+    <circle cx="12" cy="12" r="2.2" fill="#f7f3ee"></circle>
+    <rect x="9" y="8" width="2.2" height="8" rx="1" fill="#f7f3ee"></rect>
+    <rect x="12.8" y="8" width="2.2" height="8" rx="1" fill="#f7f3ee"></rect>
+  </svg>
+</button>
+
+<script>
+(function() {
+  const audio = document.getElementById('bgAudio');
+  const btn = document.getElementById('audioBtn');
+  const playIcon = document.getElementById('playIcon');
+  const pauseIcon = document.getElementById('pauseIcon');
+  audio.volume = 0.35;
+  audio.muted = true;
+  audio.play().catch(function() {});
+  var unmuted = false;
+  function unmute() {
+    if (!unmuted) {
+      audio.muted = false;
+      unmuted = true;
+      if (!audio.paused) {
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+        btn.classList.add('playing');
+      }
+    }
+    document.removeEventListener('click', unmute);
+    document.removeEventListener('touchstart', unmute);
+  }
+  document.addEventListener('click', unmute);
+  document.addEventListener('touchstart', unmute);
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    unmute();
+    if (audio.paused) {
+      audio.play();
+      playIcon.style.display = 'none';
+      pauseIcon.style.display = 'block';
+      btn.classList.add('playing');
+    } else {
+      audio.pause();
+      playIcon.style.display = 'block';
+      pauseIcon.style.display = 'none';
+      btn.classList.remove('playing');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

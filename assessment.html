@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>自我图鉴 | 女也 She Is</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Courier+Prime&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --bg: #f7f3ee;
+        --ink: #2e2e2e;
+        --body: #555;
+        --muted: #888;
+        --brand: #4A3073;
+        --brand-hover: #3D2565;
+        --brand-soft: rgba(74, 48, 115, 0.12);
+        --shadow: 0 4px 18px rgba(44, 32, 20, 0.08);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--body);
+        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+        line-height: 1.9;
+        position: relative;
+      }
+      .vi-glow {
+        position: fixed;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .vi-glow--top-left {
+        top: 0;
+        left: 0;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(ellipse at top left, rgba(74,48,115,0.15) 0%, transparent 60%);
+        filter: blur(50px);
+      }
+      .vi-glow--bottom-right {
+        right: 0;
+        bottom: 0;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(ellipse at bottom right, rgba(74,48,115,0.10) 0%, transparent 60%);
+        filter: blur(60px);
+      }
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 22px 20px 30px;
+      }
+      a,
+      button {
+        transition: color 0.3s ease, opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+      }
+      a:hover {
+        opacity: 0.85;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .page > * {
+        animation: fadeInUp 0.5s ease forwards;
+      }
+      .page > *:nth-child(1) { animation-delay: 0s; }
+      .page > *:nth-child(2) { animation-delay: 0.06s; }
+      .page > *:nth-child(3) { animation-delay: 0.12s; }
+      .page > *:nth-child(4) { animation-delay: 0.18s; }
+      .page > *:nth-child(5) { animation-delay: 0.24s; }
+      .back {
+        display: inline-block;
+        text-decoration: none;
+        color: var(--brand);
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+      .back:hover {
+        color: var(--brand-hover);
+      }
+      .page-pretitle {
+        margin: 0 0 4px;
+        font-family: 'Courier Prime', monospace;
+        font-size: 10px;
+        color: #bbb;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+      }
+      .title {
+        margin: 0;
+        font-family: "Noto Serif SC", "Cormorant Garamond", "Source Han Serif SC", serif;
+        font-size: 36px;
+        font-weight: 600;
+        color: var(--ink);
+        letter-spacing: 0.04em;
+      }
+      .subtitle {
+        margin: 8px 0 1.4em;
+        color: var(--body);
+        font-size: 15px;
+        font-weight: 300;
+        line-height: 1.9;
+      }
+      .section {
+        margin-bottom: 32px;
+      }
+      .tab-shell {
+        margin: 0 0 26px;
+      }
+      .tab-nav {
+        display: flex;
+        gap: 2rem;
+        border-bottom: 1px solid #e8e4df;
+        margin-bottom: 2rem;
+      }
+      .tab-btn {
+        position: relative;
+        padding: 0.5rem 0 0.75rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: 'Noto Serif SC', Georgia, serif;
+        font-size: 1rem;
+        font-weight: 400;
+        color: #bbb;
+        letter-spacing: 0.03em;
+        transition: color 0.2s ease;
+      }
+      .tab-btn::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #4A3073;
+        transform: scaleX(0);
+        transition: transform 0.25s ease;
+      }
+      .tab-btn.active {
+        color: #2a2a2a;
+        font-weight: 600;
+      }
+      .tab-btn.active::after {
+        transform: scaleX(1);
+      }
+      .tab-btn:hover:not(.active) {
+        color: #777;
+      }
+      .tab-btn .tab-sub {
+        display: block;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.62rem;
+        letter-spacing: 0.18em;
+        color: #ccc;
+        margin-top: 2px;
+        font-weight: 400;
+      }
+      .tab-btn.active .tab-sub {
+        color: #4A3073;
+      }
+      .tab-hint {
+        margin: 12px 4px 0;
+        color: #7f7871;
+        font-size: 0.82rem;
+        line-height: 1.7;
+      }
+      .tab-panel.hidden {
+        display: none;
+      }
+      .section[data-section-tests] {
+        position: relative;
+        margin-top: 3rem;
+        padding-top: 1.35rem;
+      }
+      .section[data-section-tests]::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: rgba(74, 48, 115, 0.16);
+      }
+      .section[data-section-tests]:first-of-type {
+        margin-top: 2.2rem;
+      }
+      .section[data-section-tests]:first-of-type::before {
+        display: none;
+      }
+      .section-label {
+        margin: 24px 0 12px;
+        font-family: 'Courier Prime', monospace;
+        font-size: 10px;
+        color: #aaa;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+      }
+      .section[data-section-tests] .section-label {
+        margin: 0;
+        font-family: "Noto Serif SC", "Source Han Serif SC", serif;
+        font-size: 1.18rem;
+        font-weight: 600;
+        color: var(--ink);
+        letter-spacing: 0.06em;
+        line-height: 1.4;
+        text-transform: none;
+      }
+      .section-kicker {
+        display: block;
+        margin-bottom: 0.35rem;
+        font-family: 'Courier Prime', monospace;
+        font-size: 10px;
+        color: #b7b1aa;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .section-heading {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+      .section-heading-copy {
+        flex: 1;
+        min-width: 0;
+      }
+      .section-note {
+        margin: 0 0 12px;
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-style: italic;
+        line-height: 1.8;
+      }
+      .section-note strong {
+        color: var(--ink);
+        font-style: normal;
+      }
+      .section-progress {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 52px;
+        padding: 4px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(44, 32, 20, 0.08);
+        background: rgba(46, 46, 46, 0.06);
+        color: #666;
+        font-family: 'Courier Prime', monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        line-height: 1.4;
+        white-space: nowrap;
+        transition: all 0.3s ease;
+      }
+      .section-progress.is-active {
+        color: var(--brand);
+        border-color: rgba(74, 48, 115, 0.2);
+        background: var(--brand-soft);
+      }
+      .section-progress.is-complete {
+        color: #fff;
+        border-color: rgba(74, 48, 115, 0.24);
+        background: var(--brand);
+      }
+      .cards {
+        display: grid;
+        gap: 16px;
+      }
+      .assessment-card {
+        background: #fff;
+        border-radius: 12px;
+        border-left: 3px solid transparent;
+        border: 0.5px solid rgba(44,32,20,0.07);
+        box-shadow: 0 1px 0 rgba(44,32,20,0.06), 0 2px 8px rgba(44,32,20,0.04);
+        min-height: 100px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .assessment-card.science {
+        border-left-color: var(--brand);
+      }
+      .assessment-card.light {
+        border-left-color: var(--brand);
+      }
+      .row {
+        display: flex;
+        gap: 10px;
+      }
+      .icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        flex-shrink: 0;
+      }
+      .name {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--ink);
+        letter-spacing: 0.12em;
+      }
+      .desc {
+        margin: 4px 0 1.4em;
+        color: var(--body);
+        font-size: 13px;
+        line-height: 1.9;
+      }
+      .time {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .start {
+        margin-top: 8px;
+        font-size: 12px;
+        color: var(--brand);
+      }
+      .card-link:hover .start,
+      .card-link:hover .back {
+        color: var(--brand-hover);
+      }
+      .card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+      .p1 { background: #f2a98a66; }
+      .p2 { background: #c8d9c088; }
+      .p3 { background: #c8c5de88; }
+      .p4 { background: #f7d8ba; }
+      .p5 { background: #d9e5d3; }
+      .p6 { background: #ddd8ec; }
+      .page-header { display: flex; justify-content: space-between; align-items: center; padding: 28px 24px 18px; }
+      .logo-block { text-align: right; }
+      .logo-cn { display: block; font-family: "Cormorant Garamond", serif; font-size: 28px; line-height: 1; font-weight: 600; color: #1c1c1c; letter-spacing: 0.12em; }
+      .logo-en { display: block; font-family: 'Courier Prime', monospace; font-size: 11px; color: #888; letter-spacing: 0.08em; margin-top: 2px; }
+      .tab-intro { font-size: 13px; color: #888; line-height: 1.8; letter-spacing: 0.04em; margin: 0 0 20px 0; font-family: "Noto Serif SC", Georgia, serif; }
+</style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/font-override.css" />
+</head>
+  <body>
+    <div class="vi-glow vi-glow--top-left" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom-right" aria-hidden="true"></div>
+    <main class="page">
+      <div class="page-header">
+        <a class="back" href="index.html">← 返回首页</a>
+        <div class="logo-block">
+          <span class="logo-cn">女也</span>
+          <span class="logo-en">she is ______.</span>
+        </div>
+      </div>
+      <div style="border-bottom: 0.5px solid #4A3073; margin: 0 24px;"></div>
+
+      <p class="page-pretitle">SELF ARCHIVE</p>
+      <h1 class="title">自我图鉴</h1>
+      <p class="subtitle">看见内在的自己</p>
+
+      <div class="tab-shell" aria-label="测试类型切换">
+        <div class="tab-nav" role="tablist" aria-label="自我图鉴测评分组">
+          <button class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="tab-panel-serious" id="tab-serious" data-tab-target="serious">
+            深潜自我
+            <span class="tab-sub">SERIOUS</span>
+          </button>
+          <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="tab-panel-fun" id="tab-fun" data-tab-target="fun">
+            轻松玩玩
+            <span class="tab-sub">FUN</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-panel-serious" role="tabpanel" aria-labelledby="tab-serious" data-tab-panel="serious">
+        <p class="tab-intro">这是一次认真的自我考古。每一个量表都经过心理学验证，回答时你只需要真实面对自己。结果会沉淀进你的五维画像，成为你真正读懂自己的起点。</p>
+        <section class="section" data-section-tests="cognitive,hsp">
+          <div class="section-heading">
+            <div class="section-heading-copy">
+              <span class="section-kicker">HOW YOU PERCEIVE</span>
+              <p class="section-label">特质层</p>
+            </div>
+            <span class="section-progress" data-progress>0/2</span>
+          </div>
+          <p class="section-note">你天生如何感知这个世界</p>
+          <div class="cards">
+            <a class="assessment-card science card-link" href="test-cognitive.html" data-module-id="cognitive">
+              <div class="row"><div class="icon" style="background:#b8a9d488"></div><div><h3 class="name">荣格认知功能</h3><p class="desc">你最常用的思维方式是哪一种？探索你的八维认知偏好。</p><p class="time">约10分钟 · 80题</p></div></div>
+              <div class="start">进入 →</div>
+            </a>
+            <a class="assessment-card science card-link" href="test-hsp.html" data-module-id="hsp">
+              <div class="row"><div class="icon p2"></div><div><h3 class="name">感受力有多细腻</h3><p class="desc">你的内心世界比别人看到的更丰富吗？</p><p class="time">一杯茶的时间</p></div></div>
+              <div class="start">进入 →</div>
+            </a>
+          </div>
+        </section>
+
+        <section class="section" data-section-tests="erq,today-mood">
+          <div class="section-heading">
+            <div class="section-heading-copy">
+              <span class="section-kicker">HOW YOU FEEL</span>
+              <p class="section-label">情绪层</p>
+            </div>
+            <span class="section-progress" data-progress>0/2</span>
+          </div>
+          <p class="section-note">你如何体验和处理情绪</p>
+          <div class="cards">
+            <a class="assessment-card science card-link" href="test-erq.html" data-module-id="erq">
+              <div class="row"><div class="icon p3"></div><div><h3 class="name">压力来的时候</h3><p class="desc">战斗、逃跑、还是假装没事？</p><p class="time">一杯茶的时间</p></div></div>
+              <div class="start">进入 →</div>
+            </a>
+            <a class="assessment-card light card-link" href="test-today-mood.html" data-module-id="today-mood">
+              <div class="row"><div class="icon p5"></div><div><h3 class="name">今日情绪地图</h3><p class="desc">轻轻看一眼，你今天更像在倦意、漂浮、紧绷还是在场里。</p><p class="time">约2分钟 · 8题</p></div></div>
+              <div class="start">进入 →</div>
+            </a>
+          </div>
+        </section>
+
+        <section class="section" data-section-tests="ecr,boundary-sense,relationship-role">
+          <div class="section-heading">
+            <div class="section-heading-copy">
+              <span class="section-kicker">HOW YOU CONNECT</span>
+              <p class="section-label">关系层</p>
+            </div>
+            <span class="section-progress" data-progress>0/3</span>
+          </div>
+          <p class="section-note">你在关系中如何运作</p>
+          <div class="cards">
+            <a class="assessment-card science card-link" href="test-ecr.html" data-module-id="ecr">
+              <div class="row"><div class="icon p1"></div><div><h3 class="name">依恋风格测评</h3><p class="desc">你在关系里，习惯靠近还是保持距离？</p><p class="time">一杯茶的时间</p></div></div>
+              <div class="start">进入 →</div>
+            </a>
+            <a class="assessment-card light card-link" href="test-boundary-sense.html" data-module-id="boundary-sense">
+              <div class="row"><div class="icon p6"></div><div><h3 class="name">你的边界感</h3><p class="desc">看看你更容易在哪类情境里，把自己的需要悄悄放到后面。</p><p class="time">约2分钟 · 8题</p></div></div>
+              <div class="start">进入 →</div>
+            </a>
+            <a class="assessment-card light card-link" href="test-relationship-role.html" data-module-id="relationship-role">
+              <div class="row"><div class="icon p4"></div><div><h3 class="name">关系中的你</h3><p class="desc">在靠近、沉默与安慰之间，你更常站在关系里的哪个位置？</p><p class="time">约3分钟 · 10题</p></div></div>
+              <div class="start">进入 →</div>
+            </a>
+          </div>
+        </section>
+
+        <section class="section" data-section-tests="fmps">
+          <div class="section-heading">
+            <div class="section-heading-copy">
+              <span class="section-kicker">HOW YOU TREAT YOURSELF</span>
+              <p class="section-label">自我层</p>
+            </div>
+            <span class="section-progress" data-progress>0/1</span>
+          </div>
+          <p class="section-note">你如何对待自己</p>
+          <div class="cards">
+            <a class="assessment-card science card-link" href="test-fmps.html" data-module-id="fmps">
+              <div class="row"><div class="icon p4"></div><div><h3 class="name">完美主义探索</h3><p class="desc">你对「做好」的标准有多高？</p><p class="time">约4分钟</p></div></div>
+              <div class="start">进入 →</div>
+            </a>
+          </div>
+        </section>
+      </div>
+
+      <div class="tab-panel hidden" id="tab-panel-fun" role="tabpanel" aria-labelledby="tab-fun" data-tab-panel="fun">
+        <p class="tab-intro">不需要准备，也没有正确答案。这里的测评更像一张小镜子——帮你在某个随机的下午，轻轻捕捉此刻的自己。</p>
+        <section class="section" data-section-tests="fun-abm" data-fun-section="true">
+          <div class="section-heading">
+            <div class="section-heading-copy">
+              <span class="section-kicker">LIGHT SELF EXPLORATION</span>
+              <p class="section-label">轻趣味测评 / FUN</p>
+            </div>
+            <span class="section-progress is-active">FUN</span>
+          </div>
+          <div class="cards">
+            <a class="assessment-card light card-link" href="test-abm-love-animal.html">
+              <div class="row"><div class="icon p6"></div><div><h3 class="name">ABM 恋爱动物性格</h3><p class="desc">12道轻测试，看看你在关系里的动物原型</p><p class="time">约3分钟 · 趣味结果单独保存</p></div></div>
+              <div class="start">进入 →</div>
+            </a>
+          </div>
+        </section>
+      </div>
+
+      <section class="section">
+        <p class="section-label">MORE — 更多</p>
+        <div class="cards">
+          <a href="assessment-more.html" class="card-link">
+            <article class="assessment-card light">
+              <div class="row"><div class="icon p6"></div><div><h3 class="name">更多测试</h3><p class="desc">查看全部量表与即将上线</p><p class="time">进入列表</p></div></div>
+              <div class="start">查看全部 →</div>
+            </article>
+          </a>
+        </div>
+      </section>
+      <section class="section">
+        <p class="section-label">PROFILE — 内在画像</p>
+        <div class="cards">
+          <a href="profile.html" class="card-link" id="profileEntry">
+            <article class="assessment-card science">
+              <div class="row"><div class="icon" style="background:linear-gradient(135deg,#f2a98a88,#c8c5de88)"></div><div><h3 class="name">查看我的画像</h3><p class="desc">把已完成的测评结果整合成一张可分享的内在模式画像。</p><p class="time" id="profileEntryHint">完成任意测评后，这里会点亮</p></div></div>
+              <div class="start" id="profileEntryCta">进入 →</div>
+            </article>
+          </a>
+        </div>
+      </section>
+    </main>
+    <script src="assets/profile-utils.js"></script>
+    <script>
+      (function () {
+        const entry = document.getElementById('profileEntry');
+        const hint = document.getElementById('profileEntryHint');
+        const cta = document.getElementById('profileEntryCta');
+        const prefix = window.SheProfileStore ? window.SheProfileStore.PREFIX : 'she_result_';
+
+        function hasModuleResult(moduleId) {
+          try {
+            return !!localStorage.getItem(prefix + moduleId);
+          } catch (error) {
+            console.warn('Failed to read section progress:', error);
+            return false;
+          }
+        }
+
+        document.querySelectorAll('[data-section-tests]').forEach(function (section) {
+          const progress = section.querySelector('[data-progress]');
+          const moduleIds = (section.dataset.sectionTests || '')
+            .split(',')
+            .map(function (item) { return item.trim(); })
+            .filter(Boolean);
+
+          const doneCount = moduleIds.filter(hasModuleResult).length;
+          const totalCount = moduleIds.length;
+
+          if (progress) {
+            progress.textContent = doneCount + '/' + totalCount;
+            progress.classList.toggle('is-active', doneCount > 0);
+            progress.classList.toggle('is-complete', totalCount > 0 && doneCount === totalCount);
+          }
+        });
+
+        const tabButtons = Array.from(document.querySelectorAll('[data-tab-target]'));
+        const tabPanels = Array.from(document.querySelectorAll('[data-tab-panel]'));
+
+        function setActiveTab(target) {
+          tabButtons.forEach(function (button) {
+            const isActive = button.dataset.tabTarget === target;
+            button.classList.toggle('active', isActive);
+            button.setAttribute('aria-selected', String(isActive));
+          });
+
+          tabPanels.forEach(function (panel) {
+            const shouldShow = panel.dataset.tabPanel === target;
+            panel.classList.toggle('hidden', !shouldShow);
+          });
+        }
+
+        tabButtons.forEach(function (button) {
+          button.addEventListener('click', function () {
+            setActiveTab(button.dataset.tabTarget);
+          });
+        });
+
+        setActiveTab('serious');
+
+        if (window.SheProfileStore && window.SheProfileStore.hasResults()) {
+          entry.querySelector('.assessment-card').style.borderLeftColor = '#4A3073';
+          entry.querySelector('.assessment-card').style.boxShadow = '0 6px 20px rgba(74,48,115,0.18)';
+          hint.textContent = '已有结果可查看，进入整合画像';
+          cta.textContent = '立即查看 →';
+        }
+      })();
+    </script>
+  </body>
+</html>

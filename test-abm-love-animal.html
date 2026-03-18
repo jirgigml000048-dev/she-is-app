@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ABM 恋爱动物性格 | 女也 She Is</title>
+    <style>
+      :root {
+        --bg: #f5f0eb;
+        --ink: #241c2f;
+        --rose: #4A3073;
+        --lavender: rgba(74,48,115,.18);
+        --line: rgba(74,48,115,.12);
+        --muted: rgba(74,48,115,.6);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: radial-gradient(circle at top left, rgba(74,48,115,.16), transparent 36%), radial-gradient(circle at bottom right, rgba(74,48,115,.08), transparent 34%), var(--bg);
+        line-height: 1.82;
+        color: var(--ink);
+        font-family: "Noto Serif SC", "Source Han Serif SC", serif;
+      }
+      .page { max-width: 680px; margin: 0 auto; min-height: 100vh; padding: 18px 18px 28px; }
+      .topline { height: 2px; background: var(--line); border-radius: 99px; overflow: hidden; }
+      .topline > span { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--rose), var(--lavender)); transition: width .3s ease; }
+      .meta { display:flex; justify-content:space-between; align-items:center; margin:10px 0 16px; font-size:12px; color:#6c6c6c; letter-spacing:.04em; }
+      .panel {
+        background:#fff;
+        border:1px solid #eee8de;
+        border-radius:18px;
+        padding:26px 20px;
+        box-shadow:0 10px 30px rgba(88,68,43,.06);
+        min-height:72vh;
+      }
+      .hidden { display:none; }
+      h1,h2,h3 { margin:0; color:var(--ink); }
+      .title { font-size:35px; letter-spacing:.04em; }
+      .subtitle { margin-top:10px; color:#6f6a64; font-size:14px; }
+      .desc { margin-top:18px; line-height:1.85; color:#46433f; font-size:15px; }
+      .primary, .ghost, .result-link {
+        border-radius:999px;
+        padding:11px 18px;
+        font-size:14px;
+        cursor:pointer;
+        text-decoration:none;
+        display:inline-block;
+      }
+      .primary {
+        margin-top:26px;
+        border:0;
+        color:#fff;
+        background:linear-gradient(135deg, var(--rose), var(--lavender));
+        box-shadow:0 6px 18px rgba(184,178,217,.28);
+      }
+      .ghost, .result-link {
+        border:1px solid #dad2c6;
+        background:transparent;
+        color:#5f5850;
+      }
+      .question-wrap { transition: opacity .3s ease, transform .3s ease; }
+      .question-wrap.fade-out { opacity:0; transform:translateY(12px); }
+      .question-id { font-size:12px; color:#8d867f; letter-spacing:.08em; }
+      .question-text { margin-top:10px; font-size:25px; line-height:1.45; }
+      .slider-card {
+        margin-top:22px;
+        padding:18px 16px 14px;
+        border-radius:18px;
+        border:1px solid #efe6db;
+        background:linear-gradient(180deg, #fffaf8 0%, #f8f3ef 100%);
+      }
+      .slider-header {
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:12px;
+        margin-bottom:14px;
+      }
+      .slider-caption { font-size:12px; color:var(--muted); letter-spacing:.06em; }
+      .slider-value {
+        min-width:68px;
+        text-align:center;
+        padding:6px 12px;
+        border-radius:999px;
+        background:rgba(74,48,115,.10);
+        color:#4A3073;
+        font-size:13px;
+      }
+      .scale-labels {
+        display:flex;
+        justify-content:space-between;
+        gap:12px;
+        margin-bottom:8px;
+        font-size:.78rem;
+        color:#777;
+        line-height:1.4;
+      }
+      .scale-labels span:last-child { text-align:right; }
+      .slider-wrap { min-width:0; }
+      .answer-slider {
+        width:100%;
+        margin:0;
+        accent-color:#4A3073;
+        -webkit-appearance:none;
+        appearance:none;
+        background:transparent;
+      }
+      .answer-slider::-webkit-slider-runnable-track {
+        height:10px;
+        border-radius:999px;
+        background:linear-gradient(90deg, rgba(74,48,115,.18) 0%, rgba(74,48,115,.38) 100%);
+      }
+      .answer-slider::-webkit-slider-thumb {
+        -webkit-appearance:none;
+        width:30px;
+        height:30px;
+        margin-top:-10px;
+        border-radius:50%;
+        background:#4A3073;
+        border:4px solid #fdfaf6;
+        box-shadow:0 4px 14px rgba(74,48,115,.22);
+      }
+      .answer-slider::-moz-range-track {
+        height:10px;
+        border-radius:999px;
+        background:linear-gradient(90deg, rgba(74,48,115,.18) 0%, rgba(74,48,115,.38) 100%);
+      }
+      .answer-slider::-moz-range-thumb {
+        width:30px;
+        height:30px;
+        border-radius:50%;
+        background:#4A3073;
+        border:4px solid #fdfaf6;
+        box-shadow:0 4px 14px rgba(74,48,115,.22);
+      }
+      .slider-ticks { display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); margin-top:8px; font-size:11px; color:#998f85; }
+      .slider-ticks span { text-align:center; }
+      .slider-card .slider-value { margin-top:10px; }
+      .actions { display:flex; justify-content:space-between; margin-top:24px; gap:10px; flex-wrap:wrap; }
+      .result-type { margin-top:8px; font-size:34px; }
+      .result-subtype { margin-top:8px; font-size:16px; color:#6f6a64; }
+      .result-badge-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+      .chip { padding:6px 10px; border-radius:999px; background:rgba(184,178,217,.16); color:#5f4d7a; font-size:12px; }
+      .result-block { margin-top:18px; padding:16px; border-radius:16px; background:#faf6f1; border:1px solid rgba(44,32,20,.06); }
+      .result-block h3 { font-size:16px; margin-bottom:8px; }
+      .note { margin-top:16px; font-size:12px; color:#999; line-height:1.7; }
+      .test-intro { padding:8px 0 24px; }
+      .test-intro-card { display:flex; background:#F7F3EE; border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(44,32,20,0.07); }
+      .test-intro-accent { width:4px; flex-shrink:0; background:linear-gradient(180deg, var(--rose), var(--lavender)); }
+      .test-intro-content { padding:28px 24px 28px 22px; flex:1; }
+      .test-intro-source { margin:0; font-family:'Courier Prime', monospace; font-size:11px; color:#888; letter-spacing:.08em; line-height:1.5; }
+      .test-intro-rule { height:.5px; background:#e0dbd4; margin:14px 0; }
+      .test-intro-scale { margin:0; font-family:'Cormorant Garamond', serif; font-size:36px; font-weight:600; color:#2e2e2e; line-height:1.1; letter-spacing:.08em; }
+      .test-intro-body { margin:0 0 12px; font-size:15px; line-height:1.9; color:#555; }
+      .test-intro-note { margin:0; font-size:12px; color:#999; line-height:1.6; }
+      .test-intro-btn { display:block; width:100%; padding:14px; background:linear-gradient(135deg, var(--rose), var(--lavender)); color:#fff; border:none; border-radius:30px; font-size:14px; letter-spacing:.15em; cursor:pointer; box-shadow:0 4px 16px rgba(216,155,139,.25); margin-top:32px; }
+      @media (max-width:540px) {
+        .title { font-size:30px; }
+        .question-text { font-size:21px; }
+        .panel { padding:22px 16px; }
+        .slider-card { padding:18px 14px 14px; }
+        .slider-header {
+          flex-direction:column;
+          align-items:flex-start;
+          gap:10px;
+        }
+        .slider-value { margin-top:2px; }
+        .scale-labels {
+          font-size:.76rem;
+          gap:10px;
+        }
+      }
+          .vi-glow {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(80px);
+          }
+          .vi-glow--top {
+            width: 340px;
+            height: 340px;
+            top: -100px;
+            right: -80px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+          }
+          .vi-glow--bottom {
+            width: 280px;
+            height: 280px;
+            bottom: -60px;
+            left: -60px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+          }
+        </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Courier+Prime:wght@400;700&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-override.css" />
+  </head>
+  <body>
+    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+    <div class="page">
+      <div class="test-intro">
+        <div class="test-intro-card">
+          <div class="test-intro-accent"></div>
+          <div class="test-intro-content">
+            <p class="test-intro-source">ABM · Animal Bond Map</p>
+            <div class="test-intro-rule"></div>
+            <h2 class="test-intro-scale">ABM 恋爱动物性格</h2>
+            <div class="test-intro-rule"></div>
+            <p class="test-intro-body">有些人像猫，先确认窗是否开着再靠近；有些人像犬，会把承诺一口口叼回窝里；也有人像狐或鹿，敏锐、迟疑、却很真。<br><br>这不是给你贴标签，而是一场轻巧的关系寓言——借四种动物的身影，照见你在亲密里怎样试探、停留、交付自己。</p>
+            <p class="test-intro-note">12 道题 · 7 级滑杆作答 · 结果不会进入五维雷达，只作为一张带情绪光泽的关系小像。</p>
+            <button class="test-intro-btn" id="startBtn">开始看看</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-body" id="testBody" style="display:none">
+        <div style="max-width:480px;margin:0 auto;padding:12px 20px 0"><a href="assessment.html" style="color:#888;font-size:14px;text-decoration:none;">← 返回测评</a></div>
+        <main class="page"><div style="padding:12px 0 4px"><a href="assessment.html" style="color:#888;font-size:14px;text-decoration:none;">← 返回测评</a></div>
+          <div class="topline"><span id="progressBar"></span></div>
+          <div class="meta"><span id="progressText">准备开始</span><span>ABM · 12题</span></div>
+
+          <section class="panel" id="intro">
+            <h1 class="title">你在关系里，会先露出哪一种动物本能？</h1>
+            <p class="subtitle">12题 · 约3分钟 · 轻趣味测评</p>
+            <p class="desc">别把它当作答题，更像沿着自己的关系直觉走一圈。请按第一反应滑动选择，让那只最像你的动物先出现。</p>
+            <button class="primary" id="beginQuizBtn">开始</button>
+          </section>
+
+          <section class="panel hidden" id="quiz">
+            <div class="question-wrap" id="questionWrap">
+              <div class="question-id" id="questionId"></div>
+              <h2 class="question-text" id="questionText"></h2>
+              <div class="slider-card">
+                <div class="slider-header">
+                  <span class="slider-caption">请在 1-7 之间滑动选择</span>
+                  <span class="slider-value" id="currentValue">当前选择：4</span>
+                </div>
+                <div class="slider-wrap">
+                  <div class="scale-labels"><span>非常不同意</span><span>非常同意</span></div>
+                  <input class="answer-slider" id="answerSlider" type="range" min="1" max="7" step="1" value="4" />
+                  <div class="slider-ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></div>
+                </div>
+              </div>
+              <div class="actions">
+                <button class="ghost" id="prevBtn">← 上一题</button>
+                <button class="ghost" id="nextBtn">确认本题</button>
+                <button class="ghost" id="restartBtn">重新开始</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel hidden" id="result"></section>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      const STORAGE_KEY = 'she_fun_abm_love_animal';
+      const ANIMALS = {
+        cat: {
+          label: '猫', emoji: '🐈',
+          subtitle: '独立边界型',
+          strengths: '你像会自己挑窗台的猫。你知道亲密不是时时贴在一起，而是在靠近时仍保有自己的体温与方向。你给关系带来的，是一种不喧哗却很高级的稳定感。',
+          pitfalls: '一旦察觉节奏被打乱，你容易先往后退，让沉默替你说话。对方看见的是距离，你心里其实是在保护那块还没准备好交出去的柔软。',
+          advice: '别只把门关上，也试着留一句门缝里的解释。你不必立刻靠近，但可以说：我需要一点空间，等我整理好会回来。'
+        },
+        dog: {
+          label: '犬', emoji: '🐶',
+          subtitle: '稳定忠诚型',
+          strengths: '你像会记得回家路线的犬。你重视兑现、照顾与陪伴，擅长把爱落实成日常：记住一句话、守住一个约定、在别人情绪落地前先伸手接住。',
+          pitfalls: '当你太想守住关系，容易默默多做一点、再多忍一点。久了，稳定会变成只有你一个人在撑的责任，而不是两个人共同维系的安全感。',
+          advice: '你可以继续可靠，但别只做那个不喊累的人。把需求说成具体的小请求，会比默默期待更容易被看见。'
+        },
+        fox: {
+          label: '狐', emoji: '🦊',
+          subtitle: '机敏试探型',
+          strengths: '你像夜里会先停下来闻风向的狐。你擅长读空气、辨细节、在别人还没察觉时先发现风险。你的敏锐不是多心，而是一种很难被训练出来的关系雷达。',
+          pitfalls: '如果每一步都要先确认安全，你会把很多想靠近的时刻活成无声侦查。你并不是不真诚，只是太怕交付后失去主动。',
+          advice: '试着把其中一次试探，换成一句直接而温柔的话。你不需要一次性全盘坦白，只要先让真实出现一点点。'
+        },
+        deer: {
+          label: '鹿', emoji: '🦌',
+          subtitle: '敏感共情型',
+          strengths: '你像林间抬头听风的鹿，能很快感到气氛的变化，也愿意先理解别人。你的柔软让人觉得自己被看见、被接住、被认真对待。',
+          pitfalls: '太会感受别人时，你也容易把别人的沉默、情绪和摇摆都收编成自己的责任。久而久之，你会忘记自己其实也需要被安顿。',
+          advice: '继续保留你的细腻，但把“我懂你”与“我要替你负责”分开。先确认自己站稳了，你的温柔才不会被耗尽。'
+        }
+      };
+      const QUESTIONS = [
+        { id: 1, text: '进入一段关系后，我依然需要大量属于自己的空间。', map: { cat: 1, dog: -0.2, fox: 0.2, deer: -0.4 } },
+        { id: 2, text: '我会很在意对方有没有稳定地回应、兑现承诺。', map: { dog: 1, deer: 0.2, fox: 0.1, cat: -0.2 } },
+        { id: 3, text: '我通常不会立刻袒露自己，而是先观察对方靠不靠谱。', map: { fox: 1, cat: 0.4, dog: -0.2, deer: -0.1 } },
+        { id: 4, text: '对方情绪一有变化，我往往很快就能感觉到。', map: { deer: 1, fox: 0.3, dog: 0.1, cat: -0.2 } },
+        { id: 5, text: '如果对方太快靠近，我会本能地想往后退一点。', map: { cat: 1, fox: 0.4, deer: -0.2, dog: -0.3 } },
+        { id: 6, text: '比起热烈起伏，我更相信长期一致的陪伴。', map: { dog: 1, deer: 0.2, cat: 0.1, fox: -0.2 } },
+        { id: 7, text: '我常常会先通过细节判断对方有没有隐藏的信息。', map: { fox: 1, deer: 0.2, cat: 0.2, dog: -0.3 } },
+        { id: 8, text: '关系里如果出现误会，我会先去体谅对方当时的情绪。', map: { deer: 1, dog: 0.3, fox: -0.2, cat: -0.2 } },
+        { id: 9, text: '我希望即使很亲密，我们也能各自保有自己的世界。', map: { cat: 1, fox: 0.1, dog: -0.2, deer: -0.2 } },
+        { id: 10, text: '我一旦认定关系，就会很愿意长期投入和守护。', map: { dog: 1, deer: 0.3, cat: -0.1, fox: -0.2 } },
+        { id: 11, text: '我会通过一点点试探，来确认自己在对方心里的位置。', map: { fox: 1, deer: 0.2, cat: 0.2, dog: -0.3 } },
+        { id: 12, text: '关系里只要气氛不对，我就容易把感受放在心上很久。', map: { deer: 1, fox: 0.2, dog: 0.1, cat: -0.3 } }
+      ];
+
+      const state = { index: -1, answers: Array(QUESTIONS.length).fill(null) };
+      const introEl = document.getElementById('intro');
+      const quizEl = document.getElementById('quiz');
+      const resultEl = document.getElementById('result');
+      const qWrap = document.getElementById('questionWrap');
+      const qId = document.getElementById('questionId');
+      const qText = document.getElementById('questionText');
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
+      const answerSlider = document.getElementById('answerSlider');
+      const currentValue = document.getElementById('currentValue');
+
+      function updateProgress() {
+        if (state.index < 0) {
+          progressBar.style.width = '0%';
+          progressText.textContent = '准备开始';
+          return;
+        }
+        const done = state.answers.filter(v => v !== null).length;
+        progressBar.style.width = `${(done / QUESTIONS.length) * 100}%`;
+        progressText.textContent = `${Math.min(state.index + 1, QUESTIONS.length)}/${QUESTIONS.length}`;
+      }
+
+      function syncSliderValue(value) {
+        currentValue.textContent = `当前选择：${value}`;
+        answerSlider.value = value;
+      }
+
+      function renderQuestion() {
+        const q = QUESTIONS[state.index];
+        qId.textContent = `第 ${q.id} 题`;
+        qText.textContent = q.text;
+        syncSliderValue(state.answers[state.index] || 4);
+        updateProgress();
+      }
+
+      function transition(next) {
+        qWrap.classList.add('fade-out');
+        setTimeout(() => {
+          next();
+          qWrap.classList.remove('fade-out');
+        }, 300);
+      }
+
+      function commitCurrentAnswer() {
+        state.answers[state.index] = Number(answerSlider.value);
+      }
+
+      function nextQuestion() {
+        commitCurrentAnswer();
+        if (state.index === QUESTIONS.length - 1) {
+          transition(showResult);
+        } else {
+          transition(() => { state.index += 1; renderQuestion(); });
+        }
+      }
+
+      function goPrev() {
+        if (state.index <= 0) return;
+        commitCurrentAnswer();
+        transition(() => { state.index -= 1; renderQuestion(); });
+      }
+
+      function calculateScores() {
+        const totals = { cat: 0, dog: 0, fox: 0, deer: 0 };
+        QUESTIONS.forEach((question, index) => {
+          const answer = state.answers[index];
+          const centered = answer - 4;
+          Object.keys(question.map).forEach((animal) => {
+            totals[animal] += centered * question.map[animal];
+          });
+        });
+        return totals;
+      }
+
+      function rankAnimals(scores) {
+        return Object.entries(scores).sort((a, b) => {
+          if (b[1] !== a[1]) return b[1] - a[1];
+          return a[0].localeCompare(b[0]);
+        });
+      }
+
+      function saveFunResult(payload) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        } catch (error) {
+          console.warn('Failed to save ABM result:', error);
+        }
+      }
+
+      function showResult() {
+        introEl.classList.add('hidden');
+        quizEl.classList.add('hidden');
+        resultEl.classList.remove('hidden');
+        progressBar.style.width = '100%';
+        progressText.textContent = '完成';
+
+        const scores = calculateScores();
+        const ranking = rankAnimals(scores);
+        const primaryKey = ranking[0][0];
+        const secondaryKey = ranking[1][0];
+        const primary = ANIMALS[primaryKey];
+        const secondary = ANIMALS[secondaryKey];
+
+        saveFunResult({
+          type: 'abm-love-animal',
+          completedAt: new Date().toISOString(),
+          primaryAnimal: primaryKey,
+          secondaryAnimal: secondaryKey,
+          scores,
+          answers: state.answers.slice()
+        });
+
+        const animalLineArt = {
+          cat: '<svg viewBox="0 0 180 140" width="100%" height="110" aria-hidden="true"><g fill="none" stroke="#4A3073" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M46 92c2-27 17-45 44-45s41 16 44 45"/><path d="M66 49 57 29l18 12"/><path d="M114 49 123 29l-18 12"/><path d="M79 87c6 4 16 4 22 0"/><path d="M87 73h.01M101 73h.01"/><path d="M45 89c-12 5-18 15-20 26"/><path d="M135 89c12 5 18 15 20 26"/></g></svg>',
+          dog: '<svg viewBox="0 0 180 140" width="100%" height="110" aria-hidden="true"><g fill="none" stroke="#4A3073" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M50 93c2-28 17-46 40-46 27 0 42 17 44 46"/><path d="M66 52c-10-10-17-11-24-6 2 9 6 17 16 21"/><path d="M114 52c10-10 17-11 24-6-2 9-6 17-16 21"/><path d="M79 86c5 5 17 5 22 0"/><path d="M86 72h.01M100 72h.01"/><path d="M136 92c11 2 17 8 20 18"/></g></svg>',
+          fox: '<svg viewBox="0 0 180 140" width="100%" height="110" aria-hidden="true"><g fill="none" stroke="#4A3073" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M48 95c3-30 18-48 42-48s39 18 42 48"/><path d="M69 50 60 24l22 18"/><path d="M111 50 120 24l-22 18"/><path d="M79 86c7 3 15 3 22 0"/><path d="M86 72h.01M100 72h.01"/><path d="M134 91c14 4 24 12 28 24"/></g></svg>',
+          deer: '<svg viewBox="0 0 180 140" width="100%" height="110" aria-hidden="true"><g fill="none" stroke="#4A3073" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M50 95c2-29 17-47 40-47 26 0 41 17 44 47"/><path d="M75 48c-2-17-7-28-14-34"/><path d="M75 48c-9-9-17-12-24-12"/><path d="M105 48c2-17 7-28 14-34"/><path d="M105 48c9-9 17-12 24-12"/><path d="M80 86c6 4 15 4 20 0"/><path d="M87 72h.01M100 72h.01"/></g></svg>'
+        };
+
+        resultEl.innerHTML = `
+          <div style="font-size:40px">${primary.emoji}</div>
+          <h2 class="result-type">${primary.label}型恋爱动物</h2>
+          <p class="result-subtype">主原型：${primary.subtitle} · 次原型：${secondary.emoji} ${secondary.label}</p>
+          <div style="margin-top:18px;padding:16px;border:1px solid rgba(74,48,115,.12);border-radius:20px;background:rgba(255,255,255,.7);box-shadow:0 14px 30px rgba(74,48,115,.06)">${animalLineArt[primaryKey]}</div>
+          <div class="result-badge-row">
+            <span class="chip">主动物：${primary.label}</span>
+            <span class="chip">次动物：${secondary.label}</span>
+            <span class="chip">ABM 不计入五维雷达</span>
+          </div>
+          <div class="result-block">
+            <h3>你带进关系里的光泽</h3>
+            <p>${primary.strengths}</p>
+          </div>
+          <div class="result-block">
+            <h3>你最容易被触发的地方</h3>
+            <p>${primary.pitfalls}</p>
+          </div>
+          <div class="result-block">
+            <h3>给这只动物的一句提醒</h3>
+            <p>${primary.advice}</p>
+          </div>
+          <p class="note">这是轻趣味结果，用于自我探索，不是心理诊断，也不会进入你的五维雷达画像。</p>
+          <div class="actions">
+            <button class="ghost" id="redoBtn">再测一次</button>
+            <a class="result-link" href="assessment.html">返回测评</a>
+            <a class="result-link" href="profile.html">查看我的画像（不计入雷达）</a>
+          </div>
+        `;
+        document.getElementById('redoBtn').onclick = restart;
+      }
+
+      function startQuiz() {
+        state.index = 0;
+        introEl.classList.add('hidden');
+        resultEl.classList.add('hidden');
+        quizEl.classList.remove('hidden');
+        renderQuestion();
+      }
+
+      function restart() {
+        state.index = -1;
+        state.answers = Array(QUESTIONS.length).fill(null);
+        resultEl.classList.add('hidden');
+        quizEl.classList.add('hidden');
+        introEl.classList.remove('hidden');
+        syncSliderValue(4);
+        updateProgress();
+      }
+
+      answerSlider.addEventListener('input', function () {
+        syncSliderValue(Number(this.value));
+      });
+      document.getElementById('startBtn').onclick = () => {
+        document.querySelector('.test-intro').style.display = 'none';
+        document.getElementById('testBody').style.display = 'block';
+      };
+      document.getElementById('beginQuizBtn').onclick = startQuiz;
+      document.getElementById('prevBtn').onclick = goPrev;
+      document.getElementById('nextBtn').onclick = nextQuestion;
+      document.getElementById('restartBtn').onclick = restart;
+      updateProgress();
+    </script>
+  </body>
+</html>

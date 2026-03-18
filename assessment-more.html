@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>更多测试 | 女也 She Is</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<style>
+      :root {
+        --bg: #f7f3ee;
+        --ink: #2e2e2e;
+        --body: #555;
+        --muted: #888;
+        --shadow: 0 4px 18px rgba(44, 32, 20, 0.08);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--body);
+        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+      }
+      .page {
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 22px 20px 30px;
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .back {
+        text-decoration: none;
+        color: var(--body);
+        font-size: 14px;
+      }
+      .logo {
+        margin: 0;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 1;
+        color: #1c1c1c;
+        letter-spacing: 0.12em;
+      }
+      .page-pretitle {
+        margin: 0 0 4px;
+        font-family: "Courier Prime", monospace;
+        font-size: 12px;
+        line-height: 1.4;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .title {
+        margin: 10px 0 0;
+        margin-top: 0;
+        font-family: "Noto Serif SC", "Cormorant Garamond", "Source Han Serif SC", serif;
+        font-size: 34px;
+        font-weight: 600;
+        color: var(--ink);
+        letter-spacing: 0.08em;
+      }
+      .subtitle {
+        margin: 8px 0 18px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .section-label {
+        margin: 20px 0 10px;
+        color: var(--muted);
+        font-size: 13px;
+        letter-spacing: 0.12em;
+      }
+      .cards {
+        display: grid;
+        gap: 10px;
+      }
+      .assessment-card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        background: #fff;
+        border-radius: 12px;
+        border-left: 3px solid transparent;
+        box-shadow: var(--shadow);
+        padding: 12px;
+      }
+      .assessment-card.science { border-left-color: #8faf8a; }
+      .assessment-card.light { border-left-color: #c8c5de; }
+      .head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .name {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--ink);
+        letter-spacing: 0.06em;
+      }
+      .desc {
+        margin: 4px 0 0;
+        color: var(--body);
+        font-size: 13px;
+        line-height: 1.35;
+      }
+      .meta {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .tags {
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .status {
+        font-size: 11px;
+        border-radius: 999px;
+        padding: 3px 8px;
+        white-space: nowrap;
+      }
+      .status.active { background: #dcead9; color: #2f5a35; }
+      .status.coming { background: #eceaf8; color: #4f4a7c; }
+      .status.draft { background: #f4ece3; color: #7f6248; }
+      .footnote {
+        margin: 18px 0 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+          .vi-glow {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(80px);
+          }
+          .vi-glow--top {
+            width: 340px;
+            height: 340px;
+            top: -100px;
+            right: -80px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+          }
+          .vi-glow--bottom {
+            width: 280px;
+            height: 280px;
+            bottom: -60px;
+            left: -60px;
+            background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+          }
+        </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/font-override.css" />
+</head>
+  <body>
+    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+    <main class="page">
+      <div class="topbar">
+        <a class="back" href="assessment.html">← back</a>
+        <h2 class="logo">女也</h2>
+      </div>
+
+      <p class="page-pretitle">ALL TESTS</p>
+      <h1 class="title">更多测试</h1>
+      <p class="subtitle">像翻看一组不同切面的自我底片，慢慢拼出你如何感受、靠近、要求自己。</p>
+
+      <section>
+        <p class="section-label">深度探索</p>
+        <div class="cards">
+          <a class="assessment-card science" href="test-ecr.html">
+            <div class="head">
+              <div>
+                <h3 class="name">ECR-36 依恋风格</h3>
+                <p class="desc">看见你在靠近与退后之间，最熟悉的那条旧路径。</p>
+              </div>
+              <span class="status active">可测试</span>
+            </div>
+            <p class="meta">36 题 · 约 8-12 分钟</p>
+            <p class="tags">#依恋 #关系模式</p>
+          </a>
+
+          <a class="assessment-card science" href="test-hsp.html">
+            <div class="head">
+              <div>
+                <h3 class="name">HSP-27 高敏感</h3>
+                <p class="desc">看见你如何比别人更早听见环境与情绪里的细微声响。</p>
+              </div>
+              <span class="status active">框架开放</span>
+            </div>
+            <p class="meta">27 题 · 约 8-10 分钟</p>
+            <p class="tags">#高敏感 #感官加工</p>
+          </a>
+
+          <a class="assessment-card science" href="test-erq.html">
+            <div class="head">
+              <div>
+                <h3 class="name">ERQ-10 情绪调节</h3>
+                <p class="desc">当情绪涌上来时，你更习惯重新理解它，还是先把它安静收好？</p>
+              </div>
+              <span class="status active">可测试</span>
+            </div>
+            <p class="meta">10 题 · 约 4-6 分钟</p>
+            <p class="tags">#情绪 #调节策略</p>
+          </a>
+
+          <a class="assessment-card science" href="test-fmps.html">
+            <div class="head">
+              <div>
+                <h3 class="name">FMPS-15 完美主义</h3>
+                <p class="desc">看看那个总想把事情再做得更好的自己，究竟在守护什么。</p>
+              </div>
+              <span class="status active">可测试</span>
+            </div>
+            <p class="meta">15 题 · 约 4-6 分钟</p>
+            <p class="tags">#完美主义 #自我标准</p>
+          </a>
+
+          <a class="assessment-card science" href="test-cognitive.html">
+            <div class="head">
+              <div>
+                <h3 class="name">认知功能 · 荣格八维</h3>
+                <p class="desc">像拆开一张脑内地图，看看你更依赖逻辑、直觉、经验还是洞察。</p>
+              </div>
+              <span class="status active">可测试</span>
+            </div>
+            <p class="meta">80 题 · 约 10-15 分钟</p>
+            <p class="tags">#认知功能 #思维方式 #八维</p>
+          </a>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">轻量趣味</p>
+        <div class="cards">
+          <a class="assessment-card light" href="test-relationship-role.html">
+            <div class="head">
+              <div>
+                <h3 class="name">关系中的你</h3>
+                <p class="desc">你习惯先接住别人、照顾别人，还是把真实的话说出口？</p>
+              </div>
+              <span class="status active">可测试</span>
+            </div>
+            <p class="meta">10 题 · 约 3-5 分钟</p>
+            <p class="tags">#关系 #角色 #倾听</p>
+          </a>
+
+          <a class="assessment-card light" href="test-boundary-sense.html">
+            <div class="head">
+              <div>
+                <h3 class="name">你的边界感</h3>
+                <p class="desc">那些说不出口的拒绝，常常不是软弱，而是边界还没被你听见。</p>
+              </div>
+              <span class="status active">可测试</span>
+            </div>
+            <p class="meta">8 题 · 约 2-3 分钟</p>
+            <p class="tags">#边界 #情感 #社交</p>
+          </a>
+
+          <a class="assessment-card light" href="test-today-mood.html">
+            <div class="head">
+              <div>
+                <h3 class="name">今日情绪地图</h3>
+                <p class="desc">给今天一个轻轻的坐标，看看你正处在倦意、漂浮、紧绷还是在场。</p>
+              </div>
+              <span class="status active">可测试</span>
+            </div>
+            <p class="meta">8 题 · 约 2 分钟</p>
+            <p class="tags">#情绪 #当下 #状态</p>
+          </a>
+        </div>
+      </section>
+
+      <p class="footnote">更多量表将持续加入。</p>
+    </main>
+  </body>
+</html>
