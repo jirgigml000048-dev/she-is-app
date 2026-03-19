@@ -191,7 +191,26 @@
             left: -60px;
             background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
           }
-        </style>
+        
+.story-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(74,48,115,0.95) 0%, rgba(74,48,115,0.85) 60%, transparent 100%);
+  padding: 24px 20px 16px;
+  display: none; align-items: center; justify-content: space-between;
+  gap: 12px;
+  z-index: 100;
+}
+.story-bar .text { flex: 1; }
+.story-bar .hint { font-size: 10px; color: rgba(255,255,255,0.6); margin-bottom: 3px; font-family: "Noto Serif SC", serif; }
+.story-bar .story-title { font-family: "Cormorant Garamond", serif; font-size: 16px; color: white; }
+.story-bar .go-btn {
+  font-family: "Noto Serif SC", serif; font-size: 11px;
+  color: #4A3073; background: white;
+  border: none; padding: 8px 14px; border-radius: 16px; cursor: pointer;
+  white-space: nowrap; text-decoration: none;
+}
+
+</style>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Courier+Prime:wght@400;700&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/font-override.css" />
   </head>
@@ -256,6 +275,11 @@
     </div>
 
     <script>
+      let storyBar;
+      window.addEventListener('DOMContentLoaded', () => {
+        storyBar = document.getElementById('storyBar');
+        if (storyBar) storyBar.style.display = 'none';
+      });
       const STORAGE_KEY = 'she_fun_abm_love_animal';
       const ANIMALS = {
         cat: {
@@ -335,7 +359,8 @@
         qId.textContent = `第 ${q.id} 题`;
         qText.textContent = q.text;
         syncSliderValue(state.answers[state.index] || 4);
-        updateProgress();
+        storyBar.style.display = 'none';
+      updateProgress();
       }
 
       function transition(next) {
@@ -396,6 +421,7 @@
         introEl.classList.add('hidden');
         quizEl.classList.add('hidden');
         resultEl.classList.remove('hidden');
+        storyBar.style.display = 'flex';
         progressBar.style.width = '100%';
         progressText.textContent = '完成';
 
@@ -445,11 +471,7 @@
             <p>${primary.advice}</p>
           </div>
           <p class="note">这是轻趣味结果，用于自我探索，不是心理诊断，也不会进入你的五维雷达画像。</p>
-          <div class="actions">
-            <button class="ghost" id="redoBtn">再测一次</button>
-            <a class="result-link" href="assessment.html">返回测评</a>
-            <a class="result-link" href="profile.html">查看我的画像（不计入雷达）</a>
-          </div>
+          <div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn" id="redoBtn" type="button">再做一次</button></div>
         `;
         document.getElementById('redoBtn').onclick = restart;
       }
@@ -458,7 +480,9 @@
         state.index = 0;
         introEl.classList.add('hidden');
         resultEl.classList.add('hidden');
+        storyBar.style.display = 'none';
         quizEl.classList.remove('hidden');
+        storyBar.style.display = 'none';
         renderQuestion();
       }
 
@@ -466,6 +490,7 @@
         state.index = -1;
         state.answers = Array(QUESTIONS.length).fill(null);
         resultEl.classList.add('hidden');
+        storyBar.style.display = 'none';
         quizEl.classList.add('hidden');
         introEl.classList.remove('hidden');
         syncSliderValue(4);
@@ -483,7 +508,57 @@
       document.getElementById('prevBtn').onclick = goPrev;
       document.getElementById('nextBtn').onclick = nextQuestion;
       document.getElementById('restartBtn').onclick = restart;
+
+
+      async function downloadResult() {
+        const capture = document.querySelector('#result .result-capture-card') || document.querySelector('.result-capture-card');
+        if (!capture || !capture.offsetParent) {
+          window.alert('未找到可保存的结果内容，请先完成测试。');
+          return;
+        }
+        if (typeof window.html2canvas !== 'function') {
+          window.alert('截图组件加载失败，请刷新后重试。');
+          return;
+        }
+        const button = document.getElementById('saveResultBtn');
+        const originalText = button ? button.textContent : '保存结果图片';
+        if (button) {
+          button.disabled = true;
+          button.textContent = '保存中…';
+        }
+        try {
+          const canvas = await window.html2canvas(capture, {
+            backgroundColor: null,
+            scale: Math.min(window.devicePixelRatio || 2, 3),
+            useCORS: true,
+            logging: false
+          });
+          const link = document.createElement('a');
+          link.download = 'she-is-恋爱脑动物-结果.png';
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+        } catch (error) {
+          console.error('Failed to export result image:', error);
+          window.alert('保存图片失败，请稍后重试。');
+        } finally {
+          if (button) {
+            button.disabled = false;
+            button.textContent = originalText;
+          }
+        }
+      }
+
+      window.downloadResult = downloadResult;
       updateProgress();
     </script>
-  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<div class="story-bar" id="storyBar">
+  <div class="text">
+    <div class="hint">你可能会有共鸣</div>
+    <div class="story-title">为你匹配的故事</div>
+  </div>
+  <a class="go-btn" href="story-detail.html">去看看</a>
+</div>
+</body>
 </html>

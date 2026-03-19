@@ -247,7 +247,26 @@
         .result-name { font-size: 34px; }
         .panel { padding: 24px 18px; }
       }
-    </style>
+    
+.story-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(74,48,115,0.95) 0%, rgba(74,48,115,0.85) 60%, transparent 100%);
+  padding: 24px 20px 16px;
+  display: none; align-items: center; justify-content: space-between;
+  gap: 12px;
+  z-index: 100;
+}
+.story-bar .text { flex: 1; }
+.story-bar .hint { font-size: 10px; color: rgba(255,255,255,0.6); margin-bottom: 3px; font-family: "Noto Serif SC", serif; }
+.story-bar .story-title { font-family: "Cormorant Garamond", serif; font-size: 16px; color: white; }
+.story-bar .go-btn {
+  font-family: "Noto Serif SC", serif; font-size: 11px;
+  color: #4A3073; background: white;
+  border: none; padding: 8px 14px; border-radius: 16px; cursor: pointer;
+  white-space: nowrap; text-decoration: none;
+}
+
+</style>
   </head>
   <body>
     <div class="glow top" aria-hidden="true"></div>
@@ -289,6 +308,11 @@
     </main>
 
     <script>
+      let storyBar;
+      window.addEventListener('DOMContentLoaded', () => {
+        storyBar = document.getElementById('storyBar');
+        if (storyBar) storyBar.style.display = 'none';
+      });
       const archetypes = {
         keeper: {
           name: '守灯',
@@ -469,14 +493,17 @@
 
         prevBtn.style.visibility = state.current === 0 ? 'hidden' : 'visible';
         nextBtn.textContent = state.current === questions.length - 1 ? '查看结果' : '下一题';
-        updateProgress();
+        storyBar.style.display = 'none';
+      updateProgress();
       }
 
       function startQuiz() {
         state.current = 0;
         introView.classList.add('hidden');
         resultView.classList.add('hidden');
+        storyBar.style.display = 'none';
         quizView.classList.remove('hidden');
+        storyBar.style.display = 'none';
         renderQuestion();
       }
 
@@ -499,6 +526,7 @@
 
         quizView.classList.add('hidden');
         resultView.classList.remove('hidden');
+        storyBar.style.display = 'flex';
         progressBar.style.width = '100%';
         progressText.textContent = 'RESULT';
 
@@ -510,16 +538,10 @@
           <div class="score-grid">
             ${orderedScores.map(([key, score]) => `<div class="score-item"><span>${archetypes[key].emoji} ${archetypes[key].name}</span><strong>${score} 分</strong></div>`).join('')}
           </div>
-          <div class="btn-row">
-            <button class="primary" id="retryBtn">再测一次</button>
-            <a class="link-btn" href="assessment.html">返回测评</a>
-          </div>
+          <div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn" id="redoBtn" type="button">再做一次</button></div>
         `;
 
-        const retryBtn = document.getElementById('retryBtn') || document.getElementById('restartBtn');
-        if (retryBtn) {
-          retryBtn.addEventListener('click', restartQuiz);
-        }
+        document.getElementById('redoBtn').onclick = restartQuiz;
       }
 
       function restartQuiz() {
@@ -527,7 +549,9 @@
         state.answers = new Array(questions.length).fill(null);
         quizView.classList.add('hidden');
         resultView.classList.add('hidden');
+        storyBar.style.display = 'none';
         introView.classList.remove('hidden');
+        storyBar.style.display = 'none';
         updateProgress();
       }
 
@@ -555,7 +579,57 @@
       resultView.addEventListener('click', (event) => {
         if (event.target && (event.target.id === 'retryBtn' || event.target.id === 'restartBtn')) restartQuiz();
       });
+
+
+      async function downloadResult() {
+        const capture = document.querySelector('#resultView .result-capture-card') || document.querySelector('.result-capture-card');
+        if (!capture || !capture.offsetParent) {
+          window.alert('未找到可保存的结果内容，请先完成测试。');
+          return;
+        }
+        if (typeof window.html2canvas !== 'function') {
+          window.alert('截图组件加载失败，请刷新后重试。');
+          return;
+        }
+        const button = document.getElementById('saveResultBtn');
+        const originalText = button ? button.textContent : '保存结果图片';
+        if (button) {
+          button.disabled = true;
+          button.textContent = '保存中…';
+        }
+        try {
+          const canvas = await window.html2canvas(capture, {
+            backgroundColor: null,
+            scale: Math.min(window.devicePixelRatio || 2, 3),
+            useCORS: true,
+            logging: false
+          });
+          const link = document.createElement('a');
+          link.download = 'she-is-理想男友原型-结果.png';
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+        } catch (error) {
+          console.error('Failed to export result image:', error);
+          window.alert('保存图片失败，请稍后重试。');
+        } finally {
+          if (button) {
+            button.disabled = false;
+            button.textContent = originalText;
+          }
+        }
+      }
+
+      window.downloadResult = downloadResult;
       updateProgress();
     </script>
-  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<div class="story-bar" id="storyBar">
+  <div class="text">
+    <div class="hint">你可能会有共鸣</div>
+    <div class="story-title">为你匹配的故事</div>
+  </div>
+  <a class="go-btn" href="story-detail.html">去看看</a>
+</div>
+</body>
 </html>
