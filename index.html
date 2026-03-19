@@ -677,13 +677,21 @@
   </script>
   <script>
     (async () => {
-      const user = await getUser();
       const el = document.getElementById('userGreet');
       if (!el) return;
+
+      const user = await getUser();
       if (user) {
-        const name = user.user_metadata?.name || user.email?.split('@')[0] || '你';
-        el.textContent = name;
-        el.onclick = signOut;
+        const name = user.user_metadata?.name || user.user_metadata?.full_name || user.email?.split('@')[0] || '你';
+        el.innerHTML = `
+          <span style="display:inline-flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+            <span>${name}</span>
+            <a href="profile.html" style="color:#4A3073; text-decoration:none; border-bottom:1px solid rgba(74,48,115,0.24);">我的测试</a>
+            <button type="button" id="signOutBtn" style="border:none; background:none; padding:0; color:#4A3073; font:inherit; cursor:pointer;">退出</button>
+          </span>
+        `;
+        const signOutBtn = document.getElementById('signOutBtn');
+        if (signOutBtn) signOutBtn.onclick = signOut;
       } else {
         el.textContent = '登录';
         el.onclick = openLoginModal;
