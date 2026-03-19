@@ -355,7 +355,8 @@
   try {
     generateResultCard({
       testName: '关系角色测评',
-      resultType: document.getElementById('resultTitle')?.textContent?.trim() || '测试结果',
+      resultType: document.getElementById('resultTitle')?.dataset?.cardType || document.getElementById('resultTitle')?.textContent?.trim() || '测试结果',
+      resultSubtitle: document.getElementById('resultTitle')?.dataset?.subtitle || '',
       quote: extractResultCardQuote(document.getElementById('resultDesc')?.textContent, '你是关系里那个先开口的人。'),
       score: document.getElementById('resultTag')?.textContent?.trim() || '',
       fileName: 'relationship-role-result'
@@ -589,14 +590,17 @@ window.downloadResult = downloadResult;
   "results": {
     "倾听者": {
       "title": "LISTENER — 你是关系里的倾听者",
+      "subtitle": "你是关系里的倾听者",
       "desc": "你在关系里最常待的位置，是对面那个人可以安全说话的地方。不急着评判，不忙着给方案，你就是在那里，带着一种让人放松的注意力。很多人跟你聊完会觉得好一些。但很少有人问过你今天过得怎么样。你不是不想说，是太擅长把空间让出去了。对话一开始你就自动切换到接收模式，等到对方终于说完、终于问到你的时候，你发现那个想说的东西已经缩回去了。或者你觉得自己的事没那么值得讲。你在关系里提供的那种安全感，你自己其实也需要。有时候你也需要一个不必先照顾别人就能开口的房间。一个你可以说到一半、还没整理好、甚至有点语无伦次的时候，对面那个人依然在的房间。"
     },
     "照顾者": {
       "title": "CAREGIVER — 你是关系里的照顾者",
+      "subtitle": "你是关系里的照顾者",
       "desc": "你在关系里的第一反应，几乎总是\"对方需要什么\"。你记得朋友随口提过的事，能提前感知到谁的状态不太对，照顾人的方式细致到连你自己都未必意识到。天冷了你会想到某个人还没买厚外套，有人说了一句丧气话你会记很久。但你很少被同等地照顾回来——你太少发出需要被照顾的信号了。甚至你生病的时候，发出去的消息可能还是在问别人怎么样。\"为别人做点什么\"已经成了你在关系里最自然的呼吸方式。只是偶尔你也会累。那种累不是身体的，是一个人撑了太久的。你心里大概有过一个很轻的念头：什么时候可以有人也这样对我。但这个念头你不太敢放大。"
     },
     "表达者": {
       "title": "EXPRESSOR — 你是关系里的表达者",
+      "subtitle": "你是关系里的表达者",
       "desc": "你是关系里那个先开口的人。有感受就想说出来，有想法就需要被听见——不说出来对你而言几乎等于没有发生。你在表达里确认自己的存在。那些在脑子里转了几圈的念头，只有说出口被另一个人接住了，才算真的落了地。但你也知道，不是所有人都能接得住你的密度。有时候你说了很多，对面的人安静了，你会突然觉得暴露了太多。那一刻会有一小阵后悔涌上来，像把一样东西递出去之后才开始犹豫该不该给。你一直在校准表达和暴露之间那条线。这件事本身就已经说明你比看起来更谨慎。你的坦诚不是冲动，是你选择的方式。代价你清楚。"
     }
   }
@@ -707,6 +711,8 @@ window.downloadResult = downloadResult;
         const result = testData.results[tag];
         resultTag.textContent = tag;
         resultTitle.textContent = result.title;
+        resultTitle.dataset.cardType = result.title.split(/\s+—\s+/)[0] || result.title;
+        resultTitle.dataset.subtitle = result.subtitle || result.title.split(/\s+—\s+/).slice(1).join(' — ') || '';
         resultDesc.innerHTML = formatParagraphs(result.desc + '\n这是你当下的模式，不是诊断，也不是定论。');
         renderViz(state.counts);
         if (window.SheProfileStore) {

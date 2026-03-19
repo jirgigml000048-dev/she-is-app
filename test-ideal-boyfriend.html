@@ -424,26 +424,31 @@
         keeper: {
           name: '守灯',
           emoji: '🕯️',
+          subtitle: '稳定发亮型',
           description: '你偏爱的不是轰烈，而是稳定发亮的人。他不一定最张扬，却会在深夜接住你的情绪，在日常里兑现承诺，让爱像一盏一直亮着的灯。'
         },
         wild: {
           name: '野风',
           emoji: '🌬️',
+          subtitle: '自由生命型',
           description: '你会被生命力和自由感吸引。理想中的他有一点不受驯，却愿意带你看更辽阔的世界；和他在一起，爱像空气流动，轻快、鲜活、有呼吸。'
         },
         mirror: {
           name: '对镜',
           emoji: '🪞',
+          subtitle: '深度理解型',
           description: '你需要的是一个真正看见你的人。他敏锐、会表达、愿意反思，也能把你的复杂情绪照得清楚而温柔。你想要的亲密，本质上是深度理解。'
         },
         nest: {
           name: '栖木',
           emoji: '🪺',
+          subtitle: '安心停靠型',
           description: '你理想中的关系像一棵能停靠的树。他给人踏实、温厚、可依赖的感觉，不急着侵入你的世界，却会稳稳腾出空间让你安心落脚。'
         },
         midnight: {
           name: '夜谈',
           emoji: '🌙',
+          subtitle: '灵魂对话型',
           description: '你容易被灵魂感和深夜对话吸引。理想中的他有思想、有故事，愿意陪你聊那些无法轻易说出口的部分。爱对你来说，是精神上的同频与并肩。'
         }
       };
@@ -664,7 +669,7 @@
         resultView.innerHTML = `
           <div id="result-capture" class="result-capture-card">
           <div class="result-viz">${buildVizRows(orderedScores)}</div>
-          <h2 class="r-type">${active.name}</h2>
+          <h2 class="r-type" data-subtitle="${active.subtitle || ''}">${active.name}</h2>
           <p class="r-score-line">最高匹配：${active.emoji} ${active.name}</p>
           <div class="r-divider"></div>
           <div class="r-desc">${formatParagraphs(active.description)}</div>
@@ -736,6 +741,7 @@
     generateResultCard({
       testName: '理想男友原型测评',
       resultType: document.querySelector('#result-capture .r-type')?.textContent?.trim() || '测试结果',
+      resultSubtitle: document.querySelector('#result-capture .r-type')?.dataset?.subtitle || '',
       quote: extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.textContent, '你在表达里确认自己的存在。'),
       score: topScore ? `最高匹配 ${topScore}` : '',
       fileName: 'ideal-boyfriend-result'

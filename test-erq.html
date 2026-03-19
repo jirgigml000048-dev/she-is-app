@@ -479,19 +479,19 @@
         ],
         results: {
           high_reappraisal_low_suppression: {
-            label: "思考派", emoji: "💡", tagline: "你习惯换个角度看事情",
+            label: "思考派", emoji: "💡", subtitle: "你习惯换个角度看事情", tagline: "你习惯换个角度看事情",
             desc: "你遇到情绪风暴时，更倾向于在脑子里重新理解发生了什么——'也许不是我想的那样'，'从长远看没那么严重'。这个特质的优势是：你不容易被情绪淹没，能在风浪里保持方向感。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
           },
           high_reappraisal_high_suppression: {
-            label: "双管派", emoji: "⚡", tagline: "你用很多方式管理自己的情绪",
+            label: "双管派", emoji: "⚡", subtitle: "你用很多方式管理自己的情绪", tagline: "你用很多方式管理自己的情绪",
             desc: "你既会调整思维框架，也会管控情绪的外在表达。这双重策略有时有效，有时会让你感觉内外都在用力。这个特质的优势是：你有丰富的情绪工具箱，适应力很强，面对复杂局面时不会只有一种反应方式。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
           },
           low_reappraisal_high_suppression: {
-            label: "压下去派", emoji: "🔒", tagline: "你更习惯把情绪藏起来",
+            label: "压下去派", emoji: "🔒", subtitle: "你更习惯把情绪藏起来", tagline: "你更习惯把情绪藏起来",
             desc: "你处理情绪的方式，更多是不让它们流出来。这样做能保持表面平静，但情绪本身还在。这个特质的优势是：你在高压场景里能稳住局面，给别人一种可靠感。长期来看，给情绪找一个出口会让你轻松一些。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
           },
           low_reappraisal_low_suppression: {
-            label: "随流派", emoji: "🌀", tagline: "你不太主动调节情绪，让它自然流动",
+            label: "随流派", emoji: "🌀", subtitle: "你不太主动调节情绪，让它自然流动", tagline: "你不太主动调节情绪，让它自然流动",
             desc: "你不太用力去管理情绪，更多是让它自己来、自己走。这个特质的优势是：你和情绪的关系比较自然、不拧巴，有一种本能的韧性和真实感。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
           }
         }
@@ -627,7 +627,7 @@ const storyRecommendations = {
         resultEl.innerHTML = `
           <div id="result-capture" class="result-capture-card">
           <div class="result-viz">${buildScoreRows(vizRows)}</div>
-          <h2 class="r-type">${r.label}</h2>
+          <h2 class="r-type" data-subtitle="${r.subtitle || r.tagline || ''}">${r.label}</h2>
           <p class="r-score-line">认知重评 ${rScore.toFixed(2)} ｜ 表达抑制 ${sScore.toFixed(2)}</p>
           <div class="r-divider"></div>
           <div class="r-desc">${formatParagraphs(r.desc)}<p>这是你当下的模式，不是诊断，也不是定论。</p></div>
@@ -692,6 +692,7 @@ const storyRecommendations = {
     generateResultCard({
       testName: '情绪调节测评 · ERQ',
       resultType: document.querySelector('#result-capture .r-type')?.textContent?.trim() || '测试结果',
+      resultSubtitle: document.querySelector('#result-capture .r-type')?.dataset?.subtitle || '',
       quote: extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.innerHTML, '你习惯换个角度看事情。'),
       score: document.querySelector('#result-capture .r-score-line')?.textContent?.trim() || '',
       fileName: 'erq-result'

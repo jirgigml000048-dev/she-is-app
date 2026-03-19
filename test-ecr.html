@@ -504,10 +504,10 @@
           { id: 36, text: "当恋人不花时间和我在一起时，我会感到怨恨", reverse: false }
         ],
         results: {
-          secure: { label: "安全型", emoji: "🌿", tagline: "你知道怎么爱，也知道怎么被爱", desc: "你在亲密关系中是安稳的那个人。靠近时不慌，拉开时也不追。遇到摩擦，你既不崩溃，也不关门。这份稳定是你的优势——它让身边的人感到安全，也给了你选择亲密节奏的自由。" },
-          fearful: { label: "恐惧型", emoji: "🌊", tagline: "你想靠近，但靠近本身让你害怕", desc: "你渴望亲密，又担心受伤。关系里的你有时进一步、退两步——不是不爱，是太在意了。这份在意也是你的优势：你对关系的觉察力比多数人更深，一旦感到安全，你的投入会非常真诚。" },
-          preoccupied: { label: "专注型", emoji: "🔥", tagline: "你爱得很用力，有时用力到把人吓跑", desc: "你对亲密关系的投入很深，深到会放大每一个信号，反复确认对方是否真的在乎。你不是太敏感，是太认真了。这份认真是你的优势——你愿意为关系全力以赴，这种热烈本身就是珍贵的。" },
-          dismissing: { label: "冷漠型", emoji: "🧊", tagline: "你习惯靠自己，但其实你也想被接住", desc: "你表面上对亲密关系不太上心，但这未必是冷漠——更可能是习惯了自己扛，忘了也可以让人进来。这份独立是你的优势：你不轻易依赖，有自己的节奏和空间感，关系里不容易失去自我。" }
+          secure: { label: "安全型", emoji: "🌿", subtitle: "你知道怎么爱，也知道怎么被爱", tagline: "你知道怎么爱，也知道怎么被爱", desc: "你在亲密关系中是安稳的那个人。靠近时不慌，拉开时也不追。遇到摩擦，你既不崩溃，也不关门。这份稳定是你的优势——它让身边的人感到安全，也给了你选择亲密节奏的自由。" },
+          fearful: { label: "恐惧型", emoji: "🌊", subtitle: "你想靠近，但靠近本身让你害怕", tagline: "你想靠近，但靠近本身让你害怕", desc: "你渴望亲密，又担心受伤。关系里的你有时进一步、退两步——不是不爱，是太在意了。这份在意也是你的优势：你对关系的觉察力比多数人更深，一旦感到安全，你的投入会非常真诚。" },
+          preoccupied: { label: "专注型", emoji: "🔥", subtitle: "你爱得很用力，有时用力到把人吓跑", tagline: "你爱得很用力，有时用力到把人吓跑", desc: "你对亲密关系的投入很深，深到会放大每一个信号，反复确认对方是否真的在乎。你不是太敏感，是太认真了。这份认真是你的优势——你愿意为关系全力以赴，这种热烈本身就是珍贵的。" },
+          dismissing: { label: "冷漠型", emoji: "🧊", subtitle: "你习惯靠自己，但其实你也想被接住", tagline: "你习惯靠自己，但其实你也想被接住", desc: "你表面上对亲密关系不太上心，但这未必是冷漠——更可能是习惯了自己扛，忘了也可以让人进来。这份独立是你的优势：你不轻易依赖，有自己的节奏和空间感，关系里不容易失去自我。" }
         }
       };
 
@@ -647,7 +647,7 @@
         resultEl.innerHTML = `
           <div id="result-capture" class="result-capture-card">
           <div class="result-viz">${buildScoreRows(matchRows)}</div>
-          <h2 class="r-type">${r.label}</h2>
+          <h2 class="r-type" data-subtitle="${r.subtitle || r.tagline || ''}">${r.label}</h2>
           <p class="r-score-line">回避 ${avoidance.toFixed(2)} ｜ 焦虑 ${anxiety.toFixed(2)}</p>
           <div class="r-divider"></div>
           <div class="r-desc">${formatParagraphs(r.desc)}<p>这是你当下的模式，不是诊断，也不是定论。</p></div>
@@ -712,6 +712,7 @@
     generateResultCard({
       testName: '依恋风格测评 · ECR',
       resultType: document.querySelector('#result-capture .r-type')?.textContent?.trim() || '测试结果',
+      resultSubtitle: document.querySelector('#result-capture .r-type')?.dataset?.subtitle || '',
       quote: extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.innerHTML, '你知道怎么爱，也知道怎么被爱。'),
       score: document.querySelector('#result-capture .r-score-line')?.textContent?.trim() || '',
       fileName: 'ecr-result'

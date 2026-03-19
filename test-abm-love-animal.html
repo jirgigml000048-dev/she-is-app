@@ -666,6 +666,7 @@
     generateResultCard({
       testName: '恋爱动物测评 · ABM',
       resultType: document.querySelector('#result-capture .r-type')?.textContent?.trim() || '测试结果',
+      resultSubtitle: document.querySelector('#result-capture .result-subtype')?.textContent?.trim() || '',
       quote: extractResultCardQuote(mainBlock, '你带进关系里的光泽，会先被别人感受到。'),
       score: document.querySelector('#result-capture .result-subtype')?.textContent?.trim() || '',
       fileName: 'abm-love-animal-result'

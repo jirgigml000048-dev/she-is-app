@@ -46,21 +46,33 @@
 
     const testName = escapeHtml(config.testName);
     const resultType = escapeHtml(config.resultType);
+    const resultSubtitle = escapeHtml(config.resultSubtitle);
     const quote = escapeHtml(config.quote);
     const score = config.score ? escapeHtml(config.score) : '';
 
     card.innerHTML = `
       <div style="position:absolute;top:-60px;left:-60px;width:280px;height:280px;background:radial-gradient(ellipse,rgba(74,48,115,0.13),transparent 70%);pointer-events:none;"></div>
       <div style="position:absolute;bottom:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(ellipse,rgba(74,48,115,0.10),transparent 70%);pointer-events:none;"></div>
-      <div style="font-size:10px;color:#888;letter-spacing:0.2em;text-transform:uppercase;position:relative;z-index:1;">${testName}</div>
+      
+      <div style="position:relative;z-index:1;">
+        <div style="font-size:12px;color:#4A3073;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px;">${testName}</div>
+        <div style="height:1px;background:rgba(74,48,115,0.15);margin-bottom:28px;"></div>
+      </div>
+      
       <div style="flex:1;"></div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:50px;font-weight:500;color:#4A3073;line-height:1.2;margin-bottom:16px;position:relative;z-index:1;">${resultType}</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;color:#555;line-height:1.6;margin-bottom:20px;position:relative;z-index:1;">${quote}</div>
-      ${score ? `<div style="font-size:11px;color:#888;margin-bottom:16px;position:relative;z-index:1;">${score}</div>` : ''}
+      
+      <div style="position:relative;z-index:1;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:600;color:#4A3073;line-height:1.1;margin-bottom:10px;">${resultType}</div>
+        ${resultSubtitle ? `<div style="font-family:'Noto Serif SC',serif;font-size:18px;color:#2e2e2e;line-height:1.5;margin-bottom:20px;">${resultSubtitle}</div>` : ''}
+        ${quote ? `<div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:#888;line-height:1.7;margin-bottom:16px;">${quote}</div>` : ''}
+        ${score ? `<div style="font-size:11px;color:#aaa;margin-top:4px;">${score}</div>` : ''}
+      </div>
+      
       <div style="flex:1;"></div>
+      
       <div style="display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:1;">
-        <span style="font-family:'Courier Prime',monospace;font-size:9px;color:#bbb;">she-is-app.netlify.app</span>
-        <span style="font-family:'Courier Prime',monospace;font-size:10px;color:#888;">she is ______.</span>
+        <span style="font-family:'Courier New',monospace;font-size:9px;color:#bbb;">she-is-app.netlify.app</span>
+        <span style="font-family:'Courier New',monospace;font-size:12px;color:#4A3073;letter-spacing:0.05em;">she is ______.</span>
       </div>
     `;
 

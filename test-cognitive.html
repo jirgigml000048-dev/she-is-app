@@ -1208,7 +1208,8 @@
     generateResultCard({
       testName: '认知功能测评',
       resultType: highlightTitle.replace(/^你用得最顺手的方式：/, '').trim() || highlightTitle,
-      quote: extractResultCardQuote(highlightDesc, '不是标签，而是你认知模式的入口。'),
+      resultSubtitle: highlightDesc || '',
+      quote: extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.textContent, '不是标签，而是你认知模式的入口。'),
       score: Array.from(document.querySelectorAll('#result-capture .result-card.top .result-score')).map((item) => item.textContent.trim()).join(' ｜ '),
       fileName: 'cognitive-result'
     });

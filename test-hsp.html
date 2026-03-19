@@ -450,14 +450,17 @@ const Qs = [
 const Rs = {
 high: {
 type: '高敏感人格',
+subtitle: '你接收到的世界，比大多数人更密、更深。',
 desc: '<p>你比大多数人接收到更多。声音、光线、别人语气里微妙的变化、一个房间里没有人说出口的紧张感。</p><p>超市的灯管嗡嗡作响，大多数人根本不会注意到，你已经开始不舒服了。朋友笑着说的一句话，你听到了笑底下那层勉强。</p><p>你的神经系统像一台增益开得很大的收音机，信号和噪音一起进来，你没法选择只收你想要的那部分。你拥有罕见的感知力和共情深度，但也比别人更容易被消耗。</p><p>你可能需要更多的独处时间、更安静的环境、更长的恢复周期。这些不是脆弱，是一个高精度系统正常的运转需求。</p><p>别人充电一小时能用一天，你可能需要整个下午把门关上才能缓过来。你感受世界的方式是昂贵的。也是珍贵的。</p>'
 },
 mid: {
 type: '中等感受力',
+subtitle: '你能感知细节，也保有不过载的弹性。',
 desc: '<p>你有敏感的时候，但不是对所有事都如此。有些场景你会被深深触动，有些你可以自然滑过去。</p><p>像一个会自动对焦的镜头，只在某些画面上变得锐利。一首歌可能突然让你鼻酸，但十分钟后你已经忘了它在放什么。</p><p>一个人的语气变化你接收到了，但你可以选择不跟进去。你能共情，但不至于被别人的情绪淹没；能感知氛围，但不会因此完全丢失自己的节奏。</p><p>大多数时候，你掌握着那个旋钮。你知道自己在哪些地方容易被击中，也慢慢学会了在被击中之前稍微侧一下身。</p><p>这个本能保护着你，让你可以在感受和消耗之间保持一个还算舒服的位置。</p>'
 },
 low: {
 type: '低敏感倾向',
+subtitle: '你和世界之间有一层让你稳定的缓冲。',
 desc: '<p>你的情绪系统波动不大，不容易被外界突然扰动。别人可能已经被一件事搅得心神不宁了，你还保持着自己的步调。</p><p>你不太会被环境的情绪裹挟，也不容易因为他人的反应失去判断。挺稳的。</p><p>有时候这让你成为乱局里最清醒的那个人，别人慌的时候你还在正常运转。但你可能偶尔也会困惑：为什么别人那么容易被影响？</p><p>一件你觉得没什么大不了的事，在另一个人那里却成了一整天的阴影。你不太理解那种被情绪卷走的失控感。</p><p>你跟世界之间有一层你自己也未必注意到的缓冲。它让你稳，也偶尔让你离某些体验远了一步。</p>'
 }
 };
@@ -523,6 +526,7 @@ const overstimAvg = dimAvg(dims.overstim);
 applyStoryRecommendation(level);
 if(window.SheProfileStore){window.SheProfileStore.saveResult({moduleId:'hsp',moduleName:'高敏感特质',summary,score:{sensitivity:mean},topDimension:'sensitivity'});}
 $('rType').textContent=r.type;
+$('rType').dataset.subtitle = r.subtitle || '';
 $('rDesc').innerHTML=r.desc;
 $('rScore').textContent=mean.toFixed(2);
 $('barSensory').style.width = toWidth(sensoryAvg);
@@ -559,6 +563,7 @@ try {
   generateResultCard({
     testName: '高敏感测评 · HSP',
     resultType: $('rType')?.textContent?.trim() || '测试结果',
+    resultSubtitle: $('rType')?.dataset?.subtitle || '',
     quote: extractResultCardQuote($('rDesc')?.innerHTML, '你的神经系统像一台增益开得很大的收音机，信号和噪音一起进来。'),
     score: `平均得分 ${$('rScore')?.textContent?.trim() || '--'} / 7`,
     fileName: 'hsp-result'

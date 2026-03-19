@@ -643,7 +643,7 @@
         resultEl.innerHTML = `
           <div id="result-capture" class="result-capture-card">
           <div class="result-viz">${buildVizRows(sortedDimensions)}</div>
-          <h2 class="r-type">${r.title}</h2>
+          <h2 class="r-type" data-subtitle="最突出维度：${top2.map(k => ({CM:'担心错误',OR:'条理性',PE:'父母期望',PS:'个人标准',DA:'行动疑虑'})[k]).join(' · ')}">${r.title}</h2>
           <p class="r-score-line">最突出维度：${top2.map(k => ({CM:'担心错误',OR:'条理性',PE:'父母期望',PS:'个人标准',DA:'行动疑虑'})[k]).join(' · ')}</p>
           <div class="r-divider"></div>
           <div class="r-desc">${formatParagraphs(r.body)}</div>
@@ -717,6 +717,7 @@
     generateResultCard({
       testName: '完美主义测评 · FMPS',
       resultType: document.querySelector('#result-capture .r-type')?.textContent?.trim() || '测试结果',
+      resultSubtitle: document.querySelector('#result-capture .r-type')?.dataset?.subtitle || '',
       quote: extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.innerHTML, '你太怕做错了。'),
       score: topScores,
       fileName: 'fmps-result'

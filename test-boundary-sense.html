@@ -355,7 +355,8 @@
   try {
     generateResultCard({
       testName: '边界感测评',
-      resultType: document.getElementById('resultTitle')?.textContent?.trim() || '测试结果',
+      resultType: document.getElementById('resultTitle')?.dataset?.cardType || document.getElementById('resultTitle')?.textContent?.trim() || '测试结果',
+      resultSubtitle: document.getElementById('resultTitle')?.dataset?.subtitle || '',
       quote: extractResultCardQuote(document.getElementById('resultDesc')?.innerHTML, '你更容易被“别让人失望”牵着走。'),
       score: document.getElementById('resultTag')?.textContent?.trim() || '',
       fileName: 'boundary-sense-result'
@@ -547,14 +548,17 @@ window.downloadResult = downloadResult;
   "results": {
     "情感型边界缺失": {
       "title": "EMOTIONAL — 你更容易被\"别让人失望\"牵着走",
+      "subtitle": "你更容易被\"别让人失望\"牵着走",
       "desc": "你总是先感受到别人的需要，然后才想起自己的。很少说\"不\"，因为你太清楚拒绝之后对方脸上会出现什么表情——那个画面比你自己的不舒服更重。帮人、迁就、主动退让，做这些的时候你甚至是真心的。只是事后会觉得累。一种说不清来源的累。比如聚餐结束回到家，门一关上，整个人突然卸下来，坐在玄关好一会儿都不想动。你说不上来刚才哪个瞬间越了界，但身体已经给了答案。你把太多感受力花在了维护关系的温度上，留给自己的，常常只剩愧疚和疲倦之间那个窄窄的缝隙。你其实隐约知道问题在哪——你太害怕成为那个让气氛变冷的人。温柔是你的天赋，但你大概也感觉到了，它也是你最容易丢失自己的入口。而最让你为难的是，你分不清哪些温柔是给别人的，哪些只是在安抚自己的不安。"
     },
     "社交型边界缺失": {
       "title": "SOCIAL — 你更容易在群体氛围里退让",
+      "subtitle": "你更容易在群体氛围里退让",
       "desc": "你有自己的判断，只是人多的时候会自动收起来。你对群体气氛的感知太灵敏了——谁不自在了、话题快冷场了、有人被忽略了——你全都接收得到。于是你习惯去补位、去圆场，哪怕这意味着你自己的声音一再被推迟。比如一桌人吃饭，你可能全程都在照顾对话的流向，确保没有人被晾在一边，回到家才发现自己一整晚其实没说过几句真正想说的话。一对一的时候你松弛得多。那才更接近你本来的样子。你在群体里承担的那个角色，尽责，但不一定是你选的。久了你甚至会分不清：是你喜欢这个位置，还是你只是太熟悉它了。那种自动运转的状态本身就值得停下来看一看。"
     },
     "自我型边界缺失": {
       "title": "INNER — 你有时还没来得及听见自己",
+      "subtitle": "你有时还没来得及听见自己",
       "desc": "你常常是做完了才意识到自己并不想那样做。答应得太快，反应得太即时，等情绪慢半拍到达的时候，事情已经发生了。比如随口答应了一个周末的邀约，挂掉电话才感觉到胃里一小团抗拒。但你不会取消。因为话已经说出去了，你觉得收回来比硬撑更难受。你跟自己的真实感受之间好像有一小段延迟——善意和本能总是跑在自我确认前面。你可能偶尔会对自己生气：为什么又这样？但那个\"又\"字里藏着的，是一个还在学习听见自己声音的人。你不缺边界感。你缺的是反应之前给自己留出的那几秒停顿。那几秒里住着你真正的答案，只是你还不太习惯等它出现。"
     }
   }
@@ -666,6 +670,8 @@ window.downloadResult = downloadResult;
         const result = testData.results[tag];
         resultTag.textContent = tag;
         resultTitle.textContent = result.title;
+        resultTitle.dataset.cardType = result.title.split(/\s+—\s+/)[0] || result.title;
+        resultTitle.dataset.subtitle = result.subtitle || result.title.split(/\s+—\s+/).slice(1).join(' — ') || '';
         resultDesc.innerHTML = formatParagraphs(result.desc + '\n这是你当下的模式，不是诊断，也不是定论。');
         renderViz(state.counts);
         if (window.SheProfileStore) {

@@ -352,7 +352,8 @@
   try {
     generateResultCard({
       testName: '今日情绪测评',
-      resultType: document.getElementById('resultTitle')?.textContent?.trim() || '测试结果',
+      resultType: document.getElementById('resultTitle')?.dataset?.cardType || document.getElementById('resultTitle')?.textContent?.trim() || '测试结果',
+      resultSubtitle: document.getElementById('resultTitle')?.dataset?.subtitle || '',
       quote: extractResultCardQuote(document.getElementById('resultDesc')?.textContent, '今天的你，带着一点倦意在坚持。'),
       score: document.getElementById('resultTag')?.textContent?.trim() || '',
       fileName: 'today-mood-result'
@@ -584,18 +585,22 @@ window.downloadResult = downloadResult;
   "results": {
     "TIRED — 倦意型": {
       "title": "今天的你，带着一点倦意在坚持",
+      "subtitle": "带着一点倦意在坚持",
       "desc": "今天的你像一部电量不够的手机，还开着，但每个操作都慢半拍。没发生什么特别糟糕的事，就是一种弥漫的、说不清来源的疲倦。可能是睡眠不够，可能是这几天消耗太多，也可能你在某个自己还没完全意识到的层面上，已经撑了很久了。什么都不想做但又没法彻底放松，卡在\"该休息\"和\"停不下来\"之间。你可能试着刷手机、吃点东西、找点什么来填，但那个倦不是无聊，用消遣填不住。它更像是一种整个人需要关机重启但找不到关机键的感觉。今天不需要解决什么问题。能让自己少运转一会儿，就够了。哪怕只是允许自己在床上多赖十分钟，不带任何愧疚地。"
     },
     "FLOATING — 漂浮型": {
       "title": "今天的你，有点轻轻地悬着",
+      "subtitle": "有点轻轻地悬着",
       "desc": "今天你有一种飘着的感觉。不是特别开心也不是特别难过，情绪不太着地，思绪也有点散。好像隔着一层什么在看自己的生活——该做的事在做，但投入感不太够。有点旁观自己的意思。走在路上你可能会突然停下来，忘了自己要去哪。或者打开一个 app 盯着看了几秒，想不起来要干嘛。不是健忘，是你的注意力今天没有锚点。这种状态容易被忽略，因为它不够强烈，不构成\"问题\"。但你知道你现在跟自己之间有一小段距离。漂浮不一定是坏事，有时候是身体在帮你暂时从过度运转里抽离出来。你只是暂时没有落脚的地方。等你准备好了，会自己降落的。"
     },
     "TENSE — 紧绷型": {
       "title": "今天的你，心里那根弦有点紧",
+      "subtitle": "心里那根弦有点紧",
       "desc": "今天你身体里有一根弦是绷着的。可能是某件还没处理的事悬在那里，可能是一段对话留下的余震，也可能没有明确原因——你就是感觉紧。呼吸浅一些，耐心少一些，容易被小事触发。有人碰了一下你的杯子，电梯门关太慢，消息提示音响了一声——平时不会在意的事今天都有了重量。你的身体比你的意识更早知道有什么东西在压着你。这种紧绷常常不是\"想太多\"，是感受太多还没来得及消化。它堆在肩膀上，堆在下颌骨上，堆在你自己都没注意到的握拳里。今天确实不轻松。不需要修复，承认就好。"
     },
     "PRESENT — 在场型": {
       "title": "今天的你，和当下有连接",
+      "subtitle": "和当下有连接",
       "desc": "今天你是在的。不是亢奋，不是刻意积极，就是一种比较安稳地待在此刻的感觉。情绪有流动但没有被卷走，你跟自己之间的连接挺通畅的。喝水的时候你尝得到水的温度，走路的时候你感觉得到脚掌踩下去的力度。这些平时都会被忽略的事，今天你能收到。这种状态不常有，你大概也知道它不会一直持续——但今天，踩在地上的感觉是实的。不需要做什么来配得上这种状态，也不需要担心它什么时候走。它在的时候，就在。记住这个时刻。你在这里。"
     }
   }
@@ -707,6 +712,8 @@ window.downloadResult = downloadResult;
         const result = testData.results[tag];
         resultTag.textContent = tag;
         resultTitle.textContent = result.title;
+        resultTitle.dataset.cardType = tag.split(/\s+—\s+/)[0] || tag;
+        resultTitle.dataset.subtitle = result.subtitle || result.title || '';
         resultDesc.innerHTML = formatParagraphs(result.desc + '\n这是你当下的模式，不是诊断，也不是定论。');
         renderViz(state.counts);
         if (window.SheProfileStore) {
