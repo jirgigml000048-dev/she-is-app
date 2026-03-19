@@ -9,3 +9,10 @@ assets/story-*.png
 illustrations/story-01.png
 illustrations/story-02.png
 illustrations/story-03.png
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
