@@ -29,18 +29,22 @@
         max-width: 480px;
         margin: 0 auto;
         min-height: 100vh;
+        padding-top: 56px;
         padding-bottom: 48px;
       }
 
       .site-header {
-        position: sticky;
+        position: fixed;
         top: 0;
-        z-index: 20;
+        left: 0;
+        right: 0;
+        z-index: 100;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 14px 24px;
-        margin: 0 24px;
+        max-width: 480px;
+        margin: 0 auto;
         border-bottom: 0.5px solid var(--secondary);
         background: rgba(250, 248, 245, 0.95);
         backdrop-filter: blur(6px);
@@ -55,6 +59,32 @@
       }
 
       .back-btn { color: #6f6763; }
+
+      .logo {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: auto;
+      }
+
+      .logo-cn {
+        display: block;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 18px;
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        color: var(--ink);
+      }
+
+      .logo-en {
+        display: block;
+        font-family: 'Courier Prime', monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        color: rgba(31, 27, 26, 0.62);
+        margin-top: 2px;
+      }
 
       .issue-tag {
         color: #c4775a;
@@ -316,7 +346,7 @@
     <main class="page">
       <header class="site-header">
         <a href="index.html" class="back-btn">← 返回</a>
-        <span class="issue-tag">第 001 期</span>
+        <div class="logo"><span class="logo-cn">女也</span><span class="logo-en">she is ______.</span></div>
       </header>
 
       <section class="character-card">

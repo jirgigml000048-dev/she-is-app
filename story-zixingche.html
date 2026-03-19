@@ -27,18 +27,22 @@
         max-width: 480px;
         margin: 0 auto;
         min-height: 100vh;
+        padding-top: 56px;
         padding-bottom: 48px;
       }
 
       .site-header {
-        position: sticky;
+        position: fixed;
         top: 0;
-        z-index: 20;
+        left: 0;
+        right: 0;
+        z-index: 100;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 14px 24px;
-        margin: 0 24px;
+        max-width: 480px;
+        margin: 0 auto;
         border-bottom: 1px solid rgba(122,146,72,0.2);
         background: rgba(244,240,228,0.95);
         backdrop-filter: blur(6px);
@@ -63,19 +67,23 @@
       }
 
       .logo {
-        margin: 0;
-        
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0 0 0 auto;
+      }
+
+      .logo-cn {
+        display: block;
         font-family: "Cormorant Garamond", serif;
         font-size: 18px;
+        line-height: 1;
         font-weight: 600;
         letter-spacing: 0.08em;
         color: var(--ink);
-      
-        margin-left: auto;
-        text-align: right;
       }
 
-      .logo small {
+      .logo-en {
         display: block;
         font-family: "Courier Prime", monospace;
         font-size: 10px;
@@ -298,7 +306,7 @@
     <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
     <main class="page"><header class="site-header page-header-row">
         <a href="stories.html" class="back-btn">← 故事</a>
-        <h2 class="logo">女也<small>She Is</small></h2>
+        <div class="logo"><span class="logo-cn">女也</span><span class="logo-en">she is ______.</span></div>
       </header>
 
       <section class="character-card">
