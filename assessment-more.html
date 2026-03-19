@@ -24,12 +24,13 @@
       .page {
         max-width: 480px;
         margin: 0 auto;
-        padding: 22px 20px 30px;
+        padding: 22px 24px 30px;
       }
       .topbar {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
+        gap: 16px;
         margin-bottom: 12px;
       }
       .back {
@@ -38,13 +39,28 @@
         font-size: 14px;
       }
       .logo {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: flex-end;
         margin: 0;
+        text-align: right;
+      }
+      .logo-cn {
+        display: block;
         font-family: "Cormorant Garamond", serif;
         font-size: 28px;
         font-weight: 600;
         line-height: 1;
         color: #1c1c1c;
         letter-spacing: 0.12em;
+      }
+      .logo-en {
+        display: block;
+        font-family: "Courier Prime", monospace;
+        font-size: 11px;
+        color: #888;
+        letter-spacing: 0.08em;
+        margin-top: 2px;
       }
       .page-pretitle {
         margin: 0 0 4px;
@@ -163,10 +179,13 @@
     <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
     <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
     <main class="page">
-      <div class="topbar">
+      <header class="topbar">
         <a class="back" href="assessment.html">← back</a>
-        <h2 class="logo">女也</h2>
-      </div>
+        <div class="logo" aria-label="女也 she is ______.">
+          <span class="logo-cn">女也</span>
+          <span class="logo-en">she is ______.</span>
+        </div>
+      </header>
 
       <p class="page-pretitle">ALL TESTS</p>
       <h1 class="title">更多测试</h1>

@@ -162,8 +162,8 @@
       .c4 .tag { background: rgba(68, 161, 148, 0.15); color: #2a6b64; }
       .c4 .tag { background: rgba(68, 161, 148, 0.15); color: #2a6b64; }
       .c4 .tag { background: rgba(68, 161, 148, 0.15); color: #2a6b64; }
-      .page-header { display: flex; justify-content: space-between; align-items: center; padding: 28px 0 18px; }
-      .logo-block { text-align: right; }
+      .page-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 28px 0 18px; }
+      .logo { display: inline-flex; flex-direction: column; align-items: flex-end; margin: 0; text-align: right; }
       .logo-cn { display: block; font-family: "Cormorant Garamond", serif; font-size: 28px; line-height: 1; font-weight: 600; color: #1c1c1c; letter-spacing: 0.12em; }
       .logo-en { display: block; font-family: 'Courier Prime', monospace; font-size: 11px; color: #888; letter-spacing: 0.08em; margin-top: 2px; }
       .vi-glow {
@@ -195,13 +195,13 @@
     <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
     <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
     <main class="page">
-      <div class="page-header">
+      <header class="page-header">
         <a class="back" href="index.html">← 返回首页</a>
-        <div class="logo-block">
+        <div class="logo" aria-label="女也 she is ______.">
           <span class="logo-cn">女也</span>
           <span class="logo-en">she is ______.</span>
         </div>
-      </div>
+      </header>
       <div style="border-bottom: 0.5px solid #4A3073; margin: 0;"></div>
 
       <p class="page-pretitle">100 GIRLS</p>
