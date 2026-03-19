@@ -221,6 +221,7 @@
         </style>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/font-override.css" />
+  <script src="assets/result-card.js"></script>
 </head>
   <body>
     <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
@@ -276,45 +277,30 @@
 <script>
 
 
-      async function downloadResult() {
-        const capture = document.querySelector('#resultView .result-capture-card') || document.querySelector('.result-capture-card');
-        if (!capture || !capture.offsetParent) {
-          window.alert('未找到可保存的结果内容，请先完成测试。');
-          return;
-        }
-        if (typeof window.html2canvas !== 'function') {
-          window.alert('截图组件加载失败，请刷新后重试。');
-          return;
-        }
-        const button = document.getElementById('saveResultBtn');
-        const originalText = button ? button.textContent : '保存结果图片';
-        if (button) {
-          button.disabled = true;
-          button.textContent = '保存中…';
-        }
-        try {
-          const canvas = await window.html2canvas(capture, {
-            backgroundColor: null,
-            scale: Math.min(window.devicePixelRatio || 2, 3),
-            useCORS: true,
-            logging: false
-          });
-          const link = document.createElement('a');
-          link.download = 'she-is-关系角色-结果.png';
-          link.href = canvas.toDataURL('image/png');
-          link.click();
-        } catch (error) {
-          console.error('Failed to export result image:', error);
-          window.alert('保存图片失败，请稍后重试。');
-        } finally {
-          if (button) {
-            button.disabled = false;
-            button.textContent = originalText;
-          }
-        }
-      }
+      function downloadResult() {
+  const button = document.getElementById('saveResultBtn');
+  const originalText = button ? button.textContent : '保存结果图片';
+  if (button) {
+    button.disabled = true;
+    button.textContent = '保存中…';
+  }
+  try {
+    generateResultCard({
+      testName: '关系角色测评',
+      resultType: document.getElementById('resultTitle')?.textContent?.trim() || '测试结果',
+      quote: extractResultCardQuote(document.getElementById('resultDesc')?.textContent, '你是关系里那个先开口的人。'),
+      score: document.getElementById('resultTag')?.textContent?.trim() || '',
+      fileName: 'relationship-role-result'
+    });
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  }
+}
 
-      window.downloadResult = downloadResult;
+window.downloadResult = downloadResult;
       const testData = {
   "id": "relationship-role",
   "title": "关系中的你",

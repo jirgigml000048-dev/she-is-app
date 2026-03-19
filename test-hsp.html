@@ -262,6 +262,7 @@
   <link rel="stylesheet" href="css/font-override.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/auth.js"></script>
+  <script src="assets/result-card.js"></script>
 </head>
 <body>
     <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
@@ -442,37 +443,26 @@ storyRec.style.display = 'none';
 render();
 }
 
-async function downloadResult(){
-const capture = document.querySelector('#resultPanel .result-capture-card');
-if (!capture || !capture.offsetParent) {
-  window.alert('未找到可保存的结果内容，请先完成测试。');
-  return;
-}
-if (typeof window.html2canvas !== 'function') {
-  window.alert('截图组件加载失败，请刷新后重试。');
-  return;
-}
+function downloadResult(){
 const button = $('saveResultBtn');
-const originalText = button.textContent;
-button.disabled = true;
-button.textContent = '保存中…';
+const originalText = button ? button.textContent : '保存结果图片';
+if (button) {
+  button.disabled = true;
+  button.textContent = '保存中…';
+}
 try {
-  const canvas = await window.html2canvas(capture, {
-    backgroundColor: null,
-    scale: Math.min(window.devicePixelRatio || 2, 3),
-    useCORS: true,
-    logging: false
+  generateResultCard({
+    testName: '高敏感测评 · HSP',
+    resultType: $('rType')?.textContent?.trim() || '测试结果',
+    quote: extractResultCardQuote($('rDesc')?.innerHTML, '你的神经系统像一台增益开得很大的收音机，信号和噪音一起进来。'),
+    score: `平均得分 ${$('rScore')?.textContent?.trim() || '--'} / 7`,
+    fileName: 'hsp-result'
   });
-  const link = document.createElement('a');
-  link.download = 'she-is-高敏感特质-结果.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
-} catch (error) {
-  console.error('Failed to export result image:', error);
-  window.alert('保存图片失败，请稍后重试。');
 } finally {
-  button.disabled = false;
-  button.textContent = originalText;
+  if (button) {
+    button.disabled = false;
+    button.textContent = originalText;
+  }
 }
 }
 

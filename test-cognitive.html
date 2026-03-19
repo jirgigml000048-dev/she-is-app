@@ -266,6 +266,7 @@
 </style>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/font-override.css" />
+  <script src="assets/result-card.js"></script>
 </head>
   <body>
     <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
@@ -1115,45 +1116,32 @@
       restartBtn.onclick = restart;
       loadData();
 
-      async function downloadResult() {
-        const capture = document.getElementById('result-capture');
-        if (!capture || !capture.offsetParent) {
-          window.alert('未找到可保存的结果内容，请先完成测试。');
-          return;
-        }
-        if (typeof window.html2canvas !== 'function') {
-          window.alert('截图组件加载失败，请刷新后重试。');
-          return;
-        }
-        const button = document.getElementById('saveResultBtn');
-        const originalText = button ? button.textContent : '保存结果图片';
-        if (button) {
-          button.disabled = true;
-          button.textContent = '保存中…';
-        }
-        try {
-          const canvas = await window.html2canvas(capture, {
-            backgroundColor: null,
-            scale: Math.min(window.devicePixelRatio || 2, 3),
-            useCORS: true,
-            logging: false
-          });
-          const link = document.createElement('a');
-          link.download = 'she-is-认知功能画像-结果.png';
-          link.href = canvas.toDataURL('image/png');
-          link.click();
-        } catch (error) {
-          console.error('Failed to export result image:', error);
-          window.alert('保存图片失败，请稍后重试。');
-        } finally {
-          if (button) {
-            button.disabled = false;
-            button.textContent = originalText;
-          }
-        }
-      }
+      function downloadResult() {
+  const button = document.getElementById('saveResultBtn');
+  const originalText = button ? button.textContent : '保存结果图片';
+  if (button) {
+    button.disabled = true;
+    button.textContent = '保存中…';
+  }
+  try {
+    const highlightTitle = document.querySelector('#result-capture .highlight strong')?.textContent?.trim() || '你的认知功能画像';
+    const highlightDesc = document.querySelector('#result-capture .highlight span')?.textContent?.trim() || '';
+    generateResultCard({
+      testName: '认知功能测评',
+      resultType: highlightTitle.replace(/^你用得最顺手的方式：/, '').trim() || highlightTitle,
+      quote: extractResultCardQuote(highlightDesc, '不是标签，而是你认知模式的入口。'),
+      score: Array.from(document.querySelectorAll('#result-capture .result-card.top .result-score')).map((item) => item.textContent.trim()).join(' ｜ '),
+      fileName: 'cognitive-result'
+    });
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  }
+}
 
-      window.downloadResult = downloadResult;
+window.downloadResult = downloadResult;
     </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 

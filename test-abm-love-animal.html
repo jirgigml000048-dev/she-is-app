@@ -252,7 +252,8 @@
 </style>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Courier+Prime:wght@400;700&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/font-override.css" />
-  </head>
+    <script src="assets/result-card.js"></script>
+</head>
   <body>
     <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
     <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
@@ -571,45 +572,31 @@
       document.getElementById('restartBtn').onclick = restart;
 
 
-      async function downloadResult() {
-        const capture = document.getElementById('result-capture');
-        if (!capture || !capture.offsetParent) {
-          window.alert('未找到可保存的结果内容，请先完成测试。');
-          return;
-        }
-        if (typeof window.html2canvas !== 'function') {
-          window.alert('截图组件加载失败，请刷新后重试。');
-          return;
-        }
-        const button = document.getElementById('saveResultBtn');
-        const originalText = button ? button.textContent : '保存结果图片';
-        if (button) {
-          button.disabled = true;
-          button.textContent = '保存中…';
-        }
-        try {
-          const canvas = await window.html2canvas(capture, {
-            backgroundColor: null,
-            scale: Math.min(window.devicePixelRatio || 2, 3),
-            useCORS: true,
-            logging: false
-          });
-          const link = document.createElement('a');
-          link.download = 'she-is-恋爱脑动物-结果.png';
-          link.href = canvas.toDataURL('image/png');
-          link.click();
-        } catch (error) {
-          console.error('Failed to export result image:', error);
-          window.alert('保存图片失败，请稍后重试。');
-        } finally {
-          if (button) {
-            button.disabled = false;
-            button.textContent = originalText;
-          }
-        }
-      }
+      function downloadResult() {
+  const button = document.getElementById('saveResultBtn');
+  const originalText = button ? button.textContent : '保存结果图片';
+  if (button) {
+    button.disabled = true;
+    button.textContent = '保存中…';
+  }
+  try {
+    const mainBlock = document.querySelector('#result-capture .result-block p')?.textContent?.trim() || '';
+    generateResultCard({
+      testName: '恋爱动物测评 · ABM',
+      resultType: document.querySelector('#result-capture .result-type')?.textContent?.trim() || '测试结果',
+      quote: extractResultCardQuote(mainBlock, '你带进关系里的光泽，会先被别人感受到。'),
+      score: document.querySelector('#result-capture .result-subtype')?.textContent?.trim() || '',
+      fileName: 'abm-love-animal-result'
+    });
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  }
+}
 
-      window.downloadResult = downloadResult;
+window.downloadResult = downloadResult;
       updateProgress();
     </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
