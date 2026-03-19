@@ -9,3 +9,6 @@ assets/story-*.png
 illustrations/story-01.png
 illustrations/story-02.png
 illustrations/story-03.png
+
+# Local Netlify folder
+.netlify

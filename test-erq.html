@@ -282,22 +282,49 @@
             background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
           }
         
-.story-bar {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  background: linear-gradient(to top, rgba(74,48,115,0.95) 0%, rgba(74,48,115,0.85) 60%, transparent 100%);
-  padding: 24px 20px 16px;
-  display: none; align-items: center; justify-content: space-between;
-  gap: 12px;
-  z-index: 100;
+.story-rec {
+  background: rgba(255,255,255,0.8);
+  border-radius: 16px;
+  border: 1px solid rgba(74,48,115,0.15);
+  overflow: hidden;
+  margin-bottom: 20px;
 }
-.story-bar .text { flex: 1; }
-.story-bar .hint { font-size: 10px; color: rgba(255,255,255,0.6); margin-bottom: 3px; font-family: "Noto Serif SC", serif; }
-.story-bar .story-title { font-family: "Cormorant Garamond", serif; font-size: 16px; color: white; }
-.story-bar .go-btn {
-  font-family: "Noto Serif SC", serif; font-size: 11px;
-  color: #4A3073; background: white;
-  border: none; padding: 8px 14px; border-radius: 16px; cursor: pointer;
-  white-space: nowrap; text-decoration: none;
+
+.story-rec-img {
+  width: 100%;
+  height: 100px;
+  background: radial-gradient(ellipse at center, rgba(74,48,115,0.18), rgba(74,48,115,0.05));
+}
+
+.story-rec-content {
+  padding: 16px 20px;
+}
+
+.story-rec-hint {
+  font-family: "Noto Serif SC", serif;
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.story-rec-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 20px;
+  color: #2e2e2e;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.story-rec-btn {
+  display: block;
+  text-align: center;
+  font-family: "Noto Serif SC", serif;
+  font-size: 12px;
+  color: #4A3073;
+  border: 1px solid rgba(74,48,115,0.3);
+  padding: 10px 0;
+  border-radius: 8px;
+  text-decoration: none;
 }
 
 </style>
@@ -364,10 +391,10 @@
     </div>
     <script src="assets/profile-utils.js"></script>
     <script>
-      let storyBar;
+      let storyRec;
       window.addEventListener('DOMContentLoaded', () => {
-        storyBar = document.getElementById('storyBar');
-        if (storyBar) storyBar.style.display = 'none';
+        storyRec = document.getElementById('storyRec');
+        if (storyRec) storyRec.style.display = 'none';
       });
       const DATA = {
         questions: [
@@ -435,7 +462,7 @@
         qId.textContent = `第 ${q.id} 题`;
         qText.textContent = q.text;
         syncSliderValue(state.answers[state.index] || 4);
-        storyBar.style.display = 'none';
+        storyRec.style.display = 'none';
       updateProgress();
       }
 
@@ -473,12 +500,12 @@ const storyRecommendations = {
       };
 
       function updateStoryBar(rec) {
-        const titleEl = document.querySelector('.story-bar .story-title');
-        const goBtn = document.querySelector('.story-bar .go-btn');
-        if (!storyBar || !titleEl || !goBtn || !rec) return;
+        const titleEl = document.querySelector('#storyRec .story-rec-title');
+        const goBtn = document.querySelector('#storyRec .story-rec-btn');
+        if (!storyRec || !titleEl || !goBtn || !rec) return;
         titleEl.textContent = rec.title;
         goBtn.href = rec.url;
-        storyBar.style.display = 'flex';
+        storyRec.style.display = 'block';
       }
 
       function showResult() {
@@ -521,7 +548,15 @@ const storyRecommendations = {
           <p class="score-row">认知重评：${rScore.toFixed(2)} ｜ 表达抑制：${sScore.toFixed(2)}</p>
           <p class="desc" style="font-size:12px;color:#999;margin-top:12px;">这是你当下的模式，不是诊断，也不是定论。</p>
           <p class="share-tip">把结果分享给朋友，看看你们各自在压力下的应对方式。</p>
-          <div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
+          <div class="story-rec" id="storyRec" style="display:none;">
+  <div class="story-rec-img"></div>
+  <div class="story-rec-content">
+    <p class="story-rec-hint">你可能会有共鸣</p>
+    <h3 class="story-rec-title">故事标题</h3>
+    <a class="story-rec-btn" href="#">读这个故事 →</a>
+  </div>
+</div>
+<div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
           </div>
         `;
 
@@ -533,9 +568,9 @@ const storyRecommendations = {
         state.index = 0;
         introEl.classList.add("hidden");
         resultEl.classList.add("hidden");
-        storyBar.style.display = 'none';
+        storyRec.style.display = 'none';
         quizEl.classList.remove("hidden");
-        storyBar.style.display = 'none';
+        storyRec.style.display = 'none';
         renderQuestion();
       }
 
@@ -543,7 +578,7 @@ const storyRecommendations = {
         state.index = -1;
         state.answers = Array(DATA.questions.length).fill(null);
         resultEl.classList.add("hidden");
-        storyBar.style.display = 'none';
+        storyRec.style.display = 'none';
         quizEl.classList.add("hidden");
         introEl.classList.remove("hidden");
         syncSliderValue(4);
@@ -606,12 +641,5 @@ const storyRecommendations = {
     </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-<div class="story-bar" id="storyBar">
-  <div class="text">
-    <div class="hint">你可能会有共鸣</div>
-    <div class="story-title">为你匹配的故事</div>
-  </div>
-  <a class="go-btn" href="story-detail.html">去看看</a>
-</div>
 </body>
 </html>

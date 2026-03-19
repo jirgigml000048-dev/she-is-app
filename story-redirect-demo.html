@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #f5f0eb; padding: 40px 24px; font-family: "Noto Serif SC", serif; }
+h2 { font-family: "Cormorant Garamond", serif; font-size: 13px; letter-spacing: 0.15em; color: #888; text-transform: uppercase; text-align: center; margin-bottom: 40px; }
+
+/* 公共结果卡片模拟 */
+.result-mock {
+  background: rgba(255,255,255,0.7);
+  border-radius: 16px;
+  padding: 28px 24px;
+  border: 1px solid rgba(44,32,20,0.08);
+  max-width: 480px;
+  margin: 0 auto 12px;
+}
+.result-mock .tag { font-size: 10px; letter-spacing: 0.15em; color: #4A3073; text-transform: uppercase; margin-bottom: 10px; }
+.result-mock .title { font-family: "Cormorant Garamond", serif; font-size: 24px; color: #2e2e2e; margin-bottom: 8px; }
+.result-mock .desc { font-size: 13px; color: #555; line-height: 1.8; }
+
+.section-label {
+  max-width: 480px; margin: 32px auto 16px;
+  font-size: 10px; letter-spacing: 0.2em; color: #4A3073; text-transform: uppercase;
+  font-family: "Cormorant Garamond", serif;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(74,48,115,0.15);
+}
+
+/* === 方案 A：卡片式，紫色左边框 + 按钮 === */
+.option-a {
+  max-width: 480px; margin: 0 auto;
+  background: rgba(74,48,115,0.05);
+  border-left: 3px solid #4A3073;
+  border-radius: 0 12px 12px 0;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.option-a .hint { font-size: 11px; color: #888; letter-spacing: 0.05em; }
+.option-a .story-title { font-family: "Cormorant Garamond", serif; font-size: 20px; color: #2e2e2e; line-height: 1.4; }
+.option-a .go-btn {
+  align-self: flex-start;
+  font-family: "Noto Serif SC", serif;
+  font-size: 12px;
+  color: white;
+  background: #4A3073;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+/* === 方案 B：独立推荐模块，大标题 + 图片占位 + 按钮 === */
+.option-b {
+  max-width: 480px; margin: 0 auto;
+  background: rgba(255,255,255,0.8);
+  border-radius: 16px;
+  border: 1px solid rgba(74,48,115,0.15);
+  overflow: hidden;
+}
+.option-b .img-placeholder {
+  width: 100%; height: 120px;
+  background: radial-gradient(ellipse at center, rgba(74,48,115,0.18), rgba(74,48,115,0.05));
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic; font-size: 13px; color: rgba(74,48,115,0.5);
+}
+.option-b .content { padding: 20px 22px; }
+.option-b .hint { font-size: 11px; color: #888; margin-bottom: 8px; }
+.option-b .story-title { font-family: "Cormorant Garamond", serif; font-size: 22px; color: #2e2e2e; line-height: 1.4; margin-bottom: 12px; }
+.option-b .go-btn {
+  display: block; text-align: center;
+  font-family: "Noto Serif SC", serif; font-size: 12px;
+  color: #4A3073; background: transparent;
+  border: 1px solid #4A3073;
+  padding: 10px 0; border-radius: 8px; cursor: pointer;
+  width: 100%;
+}
+
+/* === 方案 C：底部悬浮条 === */
+.option-c-wrapper {
+  max-width: 480px; margin: 0 auto;
+  position: relative; padding-bottom: 70px;
+}
+.option-c-mock-page {
+  background: rgba(255,255,255,0.5);
+  border-radius: 12px; padding: 20px;
+  font-size: 13px; color: #999; text-align: center;
+  font-style: italic;
+}
+.option-c-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: rgba(74,48,115,0.95);
+  border-radius: 12px;
+  padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+}
+.option-c-bar .text { flex: 1; }
+.option-c-bar .hint { font-size: 10px; color: rgba(255,255,255,0.6); margin-bottom: 3px; }
+.option-c-bar .story-title { font-family: "Cormorant Garamond", serif; font-size: 16px; color: white; }
+.option-c-bar .go-btn {
+  font-family: "Noto Serif SC", serif; font-size: 11px;
+  color: #4A3073; background: white;
+  border: none; padding: 8px 14px; border-radius: 16px; cursor: pointer;
+  white-space: nowrap;
+}
+</style>
+</head>
+<body>
+<h2>故事跳转引导 — 方案对比</h2>
+
+<!-- 模拟结果卡片 -->
+<div class="result-mock">
+  <div class="tag">测试结果</div>
+  <div class="title">你的感受力，极为细腻。</div>
+  <div class="desc">你不只是「想太多」，你是真的感知到了别人感知不到的东西。这是天赋，也是负担。</div>
+</div>
+
+<!-- 方案 A -->
+<div class="section-label">A · 卡片式（紫色边框 + 按钮）</div>
+<div class="option-a">
+  <div class="hint">你可能会有共鸣 →</div>
+  <div class="story-title">30岁却像15岁的赛博格</div>
+  <button class="go-btn">读这个故事</button>
+</div>
+
+<!-- 方案 B -->
+<div class="section-label">B · 独立推荐模块（图片 + 大标题）</div>
+<div class="option-b">
+  <div class="img-placeholder">插图占位</div>
+  <div class="content">
+    <div class="hint">你可能会有共鸣</div>
+    <div class="story-title">30岁却像15岁的赛博格</div>
+    <button class="go-btn">读这个故事 →</button>
+  </div>
+</div>
+
+<!-- 方案 C -->
+<div class="section-label">C · 底部悬浮条（始终可见）</div>
+<div class="option-c-wrapper">
+  <div class="option-c-mock-page">↑ 测试结果内容区域 ↑</div>
+  <div class="option-c-bar">
+    <div class="text">
+      <div class="hint">你可能会有共鸣</div>
+      <div class="story-title">30岁却像15岁的赛博格</div>
+    </div>
+    <button class="go-btn">去看看</button>
+  </div>
+</div>
+
+</body>
+</html>
