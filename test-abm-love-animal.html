@@ -192,6 +192,73 @@
             background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
           }
         
+
+    .result-viz {
+      margin-bottom: 28px;
+    }
+    .score-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .score-label {
+      font-family: "Noto Serif SC", serif;
+      font-size: 11px;
+      color: #888;
+      width: 60px;
+      flex-shrink: 0;
+    }
+    .score-bar-bg {
+      flex: 1;
+      height: 3px;
+      background: rgba(74,48,115,0.12);
+      border-radius: 2px;
+    }
+    .score-bar-fill {
+      width: 0;
+      height: 3px;
+      background: #4A3073;
+      border-radius: 2px;
+      transition: width 0.8s ease;
+    }
+    .score-val {
+      font-size: 11px;
+      color: #4A3073;
+      width: 36px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .r-type {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 28px;
+      color: #2e2e2e;
+      margin: 0 0 6px;
+      font-weight: 500;
+    }
+    .r-score-line {
+      font-size: 11px;
+      color: #4A3073;
+      letter-spacing: 0.08em;
+      margin: 0 0 18px;
+    }
+    .r-divider {
+      height: 1px;
+      background: rgba(74,48,115,0.1);
+      margin-bottom: 20px;
+    }
+    .r-desc {
+      font-size: 13px;
+      color: #555;
+      line-height: 2;
+    }
+    .r-desc p {
+      margin: 0 0 16px;
+    }
+    .r-desc p:last-child {
+      margin-bottom: 0;
+    }
+
 .story-rec {
   background: rgba(255,255,255,0.8);
   border-radius: 16px;
@@ -458,6 +525,19 @@
       }
 
 
+      function formatParagraphs(text) {
+        return String(text || '').split(/\n+/).filter(Boolean).map(item => `<p>${item.replace(/<[^>]+>/g, '')}</p>`).join('');
+      }
+      function buildVizRows(ranking) {
+        const total = ranking.reduce((sum, [, value]) => sum + value, 0) || 1;
+        return ranking.map(([key, value]) => `
+          <div class="score-row">
+            <span class="score-label">${ANIMALS[key].label}</span>
+            <div class="score-bar-bg"><div class="score-bar-fill" style="width:${(value / total * 100).toFixed(0)}%"></div></div>
+            <span class="score-val">${(value / total * 100).toFixed(0)}%</span>
+          </div>
+        `).join('');
+      }
       const defaultStoryRecommendation = { title: '曲奇：真空里的野蛮生长', url: 'story-detail.html' };
 
       function updateStoryBar(rec = defaultStoryRecommendation) {
@@ -501,15 +581,17 @@
 
         resultEl.innerHTML = `
           <div id="result-capture" class="result-capture-card">
-          <div style="font-size:40px">${primary.emoji}</div>
-          <h2 class="result-type">${primary.label}型恋爱动物</h2>
-          <p class="result-subtype">主原型：${primary.subtitle} · 次原型：${secondary.emoji} ${secondary.label}</p>
+          <div class="result-viz">${buildVizRows(ranking)}</div>
+          <h2 class="r-type">${primary.label}型恋爱动物</h2>
+          <p class="r-score-line">主原型：${primary.subtitle} · 次原型：${secondary.emoji} ${secondary.label}</p>
+          <div class="r-divider"></div>
           <div style="margin-top:18px;padding:16px;border:1px solid rgba(74,48,115,.12);border-radius:20px;background:rgba(255,255,255,.7);box-shadow:0 14px 30px rgba(74,48,115,.06)">${animalLineArt[primaryKey]}</div>
           <div class="result-badge-row">
             <span class="chip">主动物：${primary.label}</span>
             <span class="chip">次动物：${secondary.label}</span>
             <span class="chip">ABM 不计入五维雷达</span>
           </div>
+          <div class="r-desc">${formatParagraphs(`${primary.strengths}\n${primary.pitfalls}\n${primary.advice}`)}</div>
           <div class="result-block">
             <h3>你带进关系里的光泽</h3>
             <p>${primary.strengths}</p>
@@ -523,6 +605,7 @@
             <p>${primary.advice}</p>
           </div>
           <p class="note">这是轻趣味结果，用于自我探索，不是心理诊断，也不会进入你的五维雷达画像。</p>
+<div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
           <div class="story-rec" id="storyRec" style="display:none;">
   <div class="story-rec-img"></div>
   <div class="story-rec-content">
@@ -531,7 +614,6 @@
     <a class="story-rec-btn" href="#">读这个故事 →</a>
   </div>
 </div>
-<div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
           </div>
         `;
         updateStoryBar();
@@ -583,7 +665,7 @@
     const mainBlock = document.querySelector('#result-capture .result-block p')?.textContent?.trim() || '';
     generateResultCard({
       testName: '恋爱动物测评 · ABM',
-      resultType: document.querySelector('#result-capture .result-type')?.textContent?.trim() || '测试结果',
+      resultType: document.querySelector('#result-capture .r-type')?.textContent?.trim() || '测试结果',
       quote: extractResultCardQuote(mainBlock, '你带进关系里的光泽，会先被别人感受到。'),
       score: document.querySelector('#result-capture .result-subtype')?.textContent?.trim() || '',
       fileName: 'abm-love-animal-result'

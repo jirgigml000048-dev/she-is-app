@@ -173,6 +173,73 @@
       letter-spacing: 0.03em;
     }
 
+
+    .result-viz {
+      margin-bottom: 28px;
+    }
+    .score-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .score-label {
+      font-family: "Noto Serif SC", serif;
+      font-size: 11px;
+      color: #888;
+      width: 60px;
+      flex-shrink: 0;
+    }
+    .score-bar-bg {
+      flex: 1;
+      height: 3px;
+      background: rgba(74,48,115,0.12);
+      border-radius: 2px;
+    }
+    .score-bar-fill {
+      width: 0;
+      height: 3px;
+      background: #4A3073;
+      border-radius: 2px;
+      transition: width 0.8s ease;
+    }
+    .score-val {
+      font-size: 11px;
+      color: #4A3073;
+      width: 36px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .r-type {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 28px;
+      color: #2e2e2e;
+      margin: 0 0 6px;
+      font-weight: 500;
+    }
+    .r-score-line {
+      font-size: 11px;
+      color: #4A3073;
+      letter-spacing: 0.08em;
+      margin: 0 0 18px;
+    }
+    .r-divider {
+      height: 1px;
+      background: rgba(74,48,115,0.1);
+      margin-bottom: 20px;
+    }
+    .r-desc {
+      font-size: 13px;
+      color: #555;
+      line-height: 2;
+    }
+    .r-desc p {
+      margin: 0 0 16px;
+    }
+    .r-desc p:last-child {
+      margin-bottom: 0;
+    }
+
 .story-rec {
   background: rgba(255,255,255,0.8);
   border-radius: 16px;
@@ -250,10 +317,17 @@
         <p class="eyebrow">Result</p>
         <h1 class="title">测试完成</h1>
         <div class="result-card result-capture-card">
-          <div class="result-tag" id="resultTag"></div>
-          <h2 class="result-title" id="resultTitle"></h2>
-          <p class="result-desc" id="resultDesc"></p>
-          <p style="font-size:12px;color:#999;margin-top:12px;">这是你当下的模式，不是诊断，也不是定论。</p>
+          <div class="result-viz" id="resultViz"></div>
+          <div class="result-tag r-score-line" id="resultTag"></div>
+          <h2 class="result-title r-type" id="resultTitle"></h2>
+          <div class="r-divider"></div>
+          <div class="result-desc r-desc" id="resultDesc"></div>
+        </div>
+<div class="result-actions">
+          <button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button>
+          <p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p>
+          <a href="index.html" class="result-back-btn">返回首页</a>
+          <button class="result-retry-btn" id="restartBtn" type="button">再做一次</button>
         </div>
         <div class="story-rec" id="storyRec" style="display:none;">
   <div class="story-rec-img"></div>
@@ -263,12 +337,6 @@
     <a class="story-rec-btn" href="#">读这个故事 →</a>
   </div>
 </div>
-<div class="result-actions">
-          <button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button>
-          <p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p>
-          <a href="index.html" class="result-back-btn">返回首页</a>
-          <button class="result-retry-btn" id="restartBtn" type="button">再做一次</button>
-        </div>
       </section>
     </main>
 
@@ -580,13 +648,26 @@ window.downloadResult = downloadResult;
           .sort((a, b) => b[1] - a[1] || firstSeen.indexOf(a[0]) - firstSeen.indexOf(b[0]))[0][0];
       }
 
+      function formatParagraphs(text) {
+        return String(text || '').split(/\n+/).filter(Boolean).map(item => `<p>${item.replace(/<[^>]+>/g, '')}</p>`).join('');
+      }
+      function renderViz(counts) {
+        const total = Math.max(1, state.answers.length);
+        const order = ['情感型边界缺失','社交型边界缺失','自我型边界缺失'];
+        document.getElementById('resultViz').innerHTML = order.map((key) => {
+          const value = counts[key] || 0;
+          const label = key.replace('边界缺失', '');
+          return `<div class="score-row"><span class="score-label">${label}</span><div class="score-bar-bg"><div class="score-bar-fill" style="width:${(value / total * 100).toFixed(0)}%"></div></div><span class="score-val">${value}</span></div>`;
+        }).join('');
+      }
       function renderResult() {
         updateProgress();
         const tag = getTopTag();
         const result = testData.results[tag];
         resultTag.textContent = tag;
         resultTitle.textContent = result.title;
-        resultDesc.innerHTML = result.desc;
+        resultDesc.innerHTML = formatParagraphs(result.desc + '\n这是你当下的模式，不是诊断，也不是定论。');
+        renderViz(state.counts);
         if (window.SheProfileStore) {
           const counts = { ...state.counts };
           const topEntry = Object.entries(counts).sort((a, b) => b[1] - a[1])[0] || [tag, 0];

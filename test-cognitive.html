@@ -218,6 +218,73 @@
             background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
           }
         
+
+    .result-viz {
+      margin-bottom: 28px;
+    }
+    .score-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .score-label {
+      font-family: "Noto Serif SC", serif;
+      font-size: 11px;
+      color: #888;
+      width: 60px;
+      flex-shrink: 0;
+    }
+    .score-bar-bg {
+      flex: 1;
+      height: 3px;
+      background: rgba(74,48,115,0.12);
+      border-radius: 2px;
+    }
+    .score-bar-fill {
+      width: 0;
+      height: 3px;
+      background: #4A3073;
+      border-radius: 2px;
+      transition: width 0.8s ease;
+    }
+    .score-val {
+      font-size: 11px;
+      color: #4A3073;
+      width: 36px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .r-type {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 28px;
+      color: #2e2e2e;
+      margin: 0 0 6px;
+      font-weight: 500;
+    }
+    .r-score-line {
+      font-size: 11px;
+      color: #4A3073;
+      letter-spacing: 0.08em;
+      margin: 0 0 18px;
+    }
+    .r-divider {
+      height: 1px;
+      background: rgba(74,48,115,0.1);
+      margin-bottom: 20px;
+    }
+    .r-desc {
+      font-size: 13px;
+      color: #555;
+      line-height: 2;
+    }
+    .r-desc p {
+      margin: 0 0 16px;
+    }
+    .r-desc p:last-child {
+      margin-bottom: 0;
+    }
+
 .story-rec {
   background: rgba(255,255,255,0.8);
   border-radius: 16px;
@@ -1038,15 +1105,15 @@
           });
         }
 
+        const vizTop = scored.slice(0, 4);
         resultEl.innerHTML = `
           <div id="result-capture" class="result-capture-card">
-          <h2>你的认知功能画像</h2>
-          <p class="result-intro">以下是你在日常中用得更顺手的心理加工方式——不是标签，而是你认知模式的入口。</p>
+          <div class="result-viz">${buildVizRows(vizTop)}</div>
+          <h2 class="r-type">你的认知功能画像</h2>
+          <p class="r-score-line">最突出功能：${topSummary}</p>
+          <div class="r-divider"></div>
+          <div class="r-desc">${formatParagraphs(`以下是你在日常中用得更顺手的心理加工方式——不是标签，而是你认知模式的入口。\n你${topDimensions.map(item => item.description.replace(/^[关重擅倾追]/, s => s)).join(' ')}\n这是你当下的模式，不是诊断，也不是定论。`)}</div>
           <div class="highlight">
-            <strong>你用得最顺手的方式：${topSummary}</strong>
-            <span>你${topDimensions.map(item => item.description.replace(/^[关重擅倾追]/, s => s)).join(' ')}</span>
-            <span class="disclaimer-note">这是你当下的模式，不是诊断，也不是定论。</span>
-          </div>
           <div class="chart-wrap">
             <canvas id="radarChart"></canvas>
           </div>
@@ -1064,6 +1131,7 @@
           </div>
           <p class="footer-note">如果你想看更细的差异，可以留意第二高分与第三高分维度，它们往往一起构成你更具体的思考与决策风格。</p>
 
+<div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
           <div class="story-rec" id="storyRec" style="display:none;">
   <div class="story-rec-img"></div>
   <div class="story-rec-content">
@@ -1072,7 +1140,6 @@
     <a class="story-rec-btn" href="#">读这个故事 →</a>
   </div>
 </div>
-<div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
           </div>
         `;
 
@@ -1084,6 +1151,18 @@
         document.getElementById('redoBtn').onclick = restart;
       }
 
+      function formatParagraphs(text) {
+        return String(text || '').split(/\n+/).filter(Boolean).map(item => `<p>${item.replace(/<[^>]+>/g, '')}</p>`).join('');
+      }
+      function buildVizRows(items) {
+        return items.map((item) => `
+          <div class="score-row">
+            <span class="score-label">${item.name}</span>
+            <div class="score-bar-bg"><div class="score-bar-fill" style="width:${item.percent.toFixed(0)}%"></div></div>
+            <span class="score-val">${item.total}</span>
+          </div>
+        `).join('');
+      }
       function loadData() {
         try {
           state.data = testData;

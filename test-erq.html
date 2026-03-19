@@ -282,6 +282,73 @@
             background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
           }
         
+
+    .result-viz {
+      margin-bottom: 28px;
+    }
+    .score-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .score-label {
+      font-family: "Noto Serif SC", serif;
+      font-size: 11px;
+      color: #888;
+      width: 60px;
+      flex-shrink: 0;
+    }
+    .score-bar-bg {
+      flex: 1;
+      height: 3px;
+      background: rgba(74,48,115,0.12);
+      border-radius: 2px;
+    }
+    .score-bar-fill {
+      width: 0;
+      height: 3px;
+      background: #4A3073;
+      border-radius: 2px;
+      transition: width 0.8s ease;
+    }
+    .score-val {
+      font-size: 11px;
+      color: #4A3073;
+      width: 36px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .r-type {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 28px;
+      color: #2e2e2e;
+      margin: 0 0 6px;
+      font-weight: 500;
+    }
+    .r-score-line {
+      font-size: 11px;
+      color: #4A3073;
+      letter-spacing: 0.08em;
+      margin: 0 0 18px;
+    }
+    .r-divider {
+      height: 1px;
+      background: rgba(74,48,115,0.1);
+      margin-bottom: 20px;
+    }
+    .r-desc {
+      font-size: 13px;
+      color: #555;
+      line-height: 2;
+    }
+    .r-desc p {
+      margin: 0 0 16px;
+    }
+    .r-desc p:last-child {
+      margin-bottom: 0;
+    }
+
 .story-rec {
   background: rgba(255,255,255,0.8);
   border-radius: 16px;
@@ -492,6 +559,18 @@
       }
 
       function mean(scores) { return scores.reduce((a, b) => a + b, 0) / scores.length; }
+      function formatParagraphs(text) {
+        return String(text || '').replace(/<span[\s\S]*?<\/span>/g, '').split(/\n+/).filter(Boolean).map(item => `<p>${item.replace(/<[^>]+>/g, '')}</p>`).join('');
+      }
+      function buildScoreRows(items) {
+        return items.map((item) => `
+          <div class="score-row">
+            <span class="score-label">${item.label}</span>
+            <div class="score-bar-bg"><div class="score-bar-fill" style="width:${item.percent.toFixed(0)}%"></div></div>
+            <span class="score-val">${item.value.toFixed(1)}</span>
+          </div>
+        `).join('');
+      }
 
 const storyRecommendations = {
         high_reappraisal_low_suppression: { title: '曲奇：真空里的野蛮生长', url: 'story-detail.html' },
@@ -540,16 +619,21 @@ const storyRecommendations = {
           });
         }
 
+        const vizRows = [
+          { label: '认知重评', value: rScore, percent: ((rScore - 1) / 6) * 100 },
+          { label: '表达抑制', value: sScore, percent: ((sScore - 1) / 6) * 100 }
+        ];
+
         resultEl.innerHTML = `
           <div id="result-capture" class="result-capture-card">
-          <p class="result-emoji">${r.emoji}</p>
-          <h2 class="result-type">${r.label}</h2>
-          <p class="tagline">${r.tagline}</p>
-          <p class="desc">${r.desc}</p>
-          <p class="score-row">认知重评：${rScore.toFixed(2)} ｜ 表达抑制：${sScore.toFixed(2)}</p>
-          <p class="desc" style="font-size:12px;color:#999;margin-top:12px;">这是你当下的模式，不是诊断，也不是定论。</p>
-          <p class="share-tip">把结果分享给朋友，看看你们各自在压力下的应对方式。</p>
-          <div class="story-rec" id="storyRec" style="display:none;">
+          <div class="result-viz">${buildScoreRows(vizRows)}</div>
+          <h2 class="r-type">${r.label}</h2>
+          <p class="r-score-line">认知重评 ${rScore.toFixed(2)} ｜ 表达抑制 ${sScore.toFixed(2)}</p>
+          <div class="r-divider"></div>
+          <div class="r-desc">${formatParagraphs(r.desc)}<p>这是你当下的模式，不是诊断，也不是定论。</p></div>
+          </div>
+<div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
+<div class="story-rec" id="storyRec" style="display:none;">
   <div class="story-rec-img"></div>
   <div class="story-rec-content">
     <p class="story-rec-hint">你可能会有共鸣</p>
@@ -557,8 +641,6 @@ const storyRecommendations = {
     <a class="story-rec-btn" href="#">读这个故事 →</a>
   </div>
 </div>
-<div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
-          </div>
         `;
 
         updateStoryBar(rec);
@@ -609,9 +691,9 @@ const storyRecommendations = {
   try {
     generateResultCard({
       testName: '情绪调节测评 · ERQ',
-      resultType: document.querySelector('#result-capture .result-type')?.textContent?.trim() || '测试结果',
-      quote: extractResultCardQuote(document.querySelector('#result-capture .desc')?.innerHTML, '你习惯换个角度看事情。'),
-      score: document.querySelector('#result-capture .score-row')?.textContent?.trim() || '',
+      resultType: document.querySelector('#result-capture .r-type')?.textContent?.trim() || '测试结果',
+      quote: extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.innerHTML, '你习惯换个角度看事情。'),
+      score: document.querySelector('#result-capture .r-score-line')?.textContent?.trim() || '',
       fileName: 'erq-result'
     });
   } finally {
