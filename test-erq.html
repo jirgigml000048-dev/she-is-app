@@ -572,19 +572,34 @@
         `).join('');
       }
 
-const storyRecommendations = {
-        high_reappraisal_low_suppression: { title: '曲奇：真空里的野蛮生长', url: 'story-detail.html' },
-        high_reappraisal_high_suppression: { title: '小李：她决定在精密结构里，自己养一颗星星', url: 'story-xiaoli.html' },
-        low_reappraisal_high_suppression: { title: '自行车：30岁却像15岁的赛博格', url: 'story-zixingche.html' },
-        low_reappraisal_low_suppression: { title: '嗅嗅：在北京，允许不长大', url: 'story-xiuxiu.html' }
+const storyIllustrations = {
+        'story-detail.html': 'illustrations/story-queqie.png',
+        'story-tuanzi-v3.html': 'illustrations/story-tuanzi.png',
+        'story-xiaochen.html': 'illustrations/story-xiaochen.png',
+        'story-xiaoli.html': 'illustrations/story-xiaoli.png',
+        'story-xiuxiu.html': 'illustrations/story-xiuxiu.png',
+        'story-zixingche.html': 'illustrations/story-zixingche.png',
+        'story-bingbing.html': 'illustrations/story-bingbing.png'
+      };
+
+      const storyRecommendations = {
+        high_reappraisal_low_suppression: { title: '曲奇：真空里的野蛮生长', url: 'story-detail.html', img: 'illustrations/story-queqie.png' },
+        high_reappraisal_high_suppression: { title: '小李：她决定在精密结构里，自己养一颗星星', url: 'story-xiaoli.html', img: 'illustrations/story-xiaoli.png' },
+        low_reappraisal_high_suppression: { title: '自行车：30岁却像15岁的赛博格', url: 'story-zixingche.html', img: 'illustrations/story-zixingche.png' },
+        low_reappraisal_low_suppression: { title: '嗅嗅：在北京，允许不长大', url: 'story-xiuxiu.html', img: 'illustrations/story-xiuxiu.png' }
       };
 
       function updateStoryBar(rec) {
         const titleEl = document.querySelector('#storyRec .story-rec-title');
         const goBtn = document.querySelector('#storyRec .story-rec-btn');
         if (!storyRec || !titleEl || !goBtn || !rec) return;
+        const imgEl = document.querySelector('#storyRec .story-rec-img');
+        const illustrationPath = rec.img || storyIllustrations[rec.url];
         titleEl.textContent = rec.title;
         goBtn.href = rec.url;
+        if (imgEl && illustrationPath) {
+          imgEl.style.background = `url('${illustrationPath}') center/cover no-repeat`;
+        }
         storyRec.style.display = 'block';
       }
 

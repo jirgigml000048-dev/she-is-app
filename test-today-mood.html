@@ -621,17 +621,32 @@ window.downloadResult = downloadResult;
       const storyRec = document.getElementById('storyRec');
       const storyTitleEl = storyRec.querySelector('.story-rec-title');
       const storyLinkEl = storyRec.querySelector('.story-rec-btn');
+      const storyIllustrations = {
+        'story-detail.html': 'illustrations/story-queqie.png',
+        'story-tuanzi-v3.html': 'illustrations/story-tuanzi.png',
+        'story-xiaochen.html': 'illustrations/story-xiaochen.png',
+        'story-xiaoli.html': 'illustrations/story-xiaoli.png',
+        'story-xiuxiu.html': 'illustrations/story-xiuxiu.png',
+        'story-zixingche.html': 'illustrations/story-zixingche.png',
+        'story-bingbing.html': 'illustrations/story-bingbing.png'
+      };
+
       const storyRecommendations = {
-        'TIRED — 倦意型': { title: '在北京，允许不长大', url: 'story-xiuxiu.html' },
-        'FLOATING — 漂浮型': { title: '曲奇：真空里的野蛮生长', url: 'story-detail.html' },
-        'TENSE — 紧绷型': { title: '30岁却像15岁的赛博格', url: 'story-zixingche.html' },
-        'PRESENT — 在场型': { title: '穿百褶裙的机甲驾驶员', url: 'story-bingbing.html' }
+        'TIRED — 倦意型': { title: '在北京，允许不长大', url: 'story-xiuxiu.html', img: 'illustrations/story-xiuxiu.png' },
+        'FLOATING — 漂浮型': { title: '曲奇：真空里的野蛮生长', url: 'story-detail.html', img: 'illustrations/story-queqie.png' },
+        'TENSE — 紧绷型': { title: '30岁却像15岁的赛博格', url: 'story-zixingche.html', img: 'illustrations/story-zixingche.png' },
+        'PRESENT — 在场型': { title: '穿百褶裙的机甲驾驶员', url: 'story-bingbing.html', img: 'illustrations/story-bingbing.png' }
       };
 
       function applyStoryRecommendation(tag) {
         const rec = storyRecommendations[tag] || storyRecommendations['PRESENT — 在场型'];
+        const imgEl = document.querySelector('#storyRec .story-rec-img');
+        const illustrationPath = rec.img || storyIllustrations[rec.url];
         storyTitleEl.textContent = rec.title;
         storyLinkEl.href = rec.url;
+        if (imgEl && illustrationPath) {
+          imgEl.style.background = `url('${illustrationPath}') center/cover no-repeat`;
+        }
       }
 
       introDesc.textContent = `${testData.description} 共 ${testData.questions.length} 题。`;

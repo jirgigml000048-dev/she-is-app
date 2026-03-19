@@ -590,14 +590,29 @@
         `).join('');
       }
 
-      const defaultStoryRecommendation = { title: '她身体里住着一道错误的方程', url: 'story-tuanzi-v3.html' };
+      const storyIllustrations = {
+        'story-detail.html': 'illustrations/story-queqie.png',
+        'story-tuanzi-v3.html': 'illustrations/story-tuanzi.png',
+        'story-xiaochen.html': 'illustrations/story-xiaochen.png',
+        'story-xiaoli.html': 'illustrations/story-xiaoli.png',
+        'story-xiuxiu.html': 'illustrations/story-xiuxiu.png',
+        'story-zixingche.html': 'illustrations/story-zixingche.png',
+        'story-bingbing.html': 'illustrations/story-bingbing.png'
+      };
+
+      const defaultStoryRecommendation = { title: '她身体里住着一道错误的方程', url: 'story-tuanzi-v3.html', img: 'illustrations/story-tuanzi.png' };
 
       function updateStoryBar(rec = defaultStoryRecommendation) {
         const titleEl = document.querySelector('#storyRec .story-rec-title');
         const goBtn = document.querySelector('#storyRec .story-rec-btn');
         if (!storyRec || !titleEl || !goBtn || !rec) return;
+        const imgEl = document.querySelector('#storyRec .story-rec-img');
+        const illustrationPath = rec.img || storyIllustrations[rec.url];
         titleEl.textContent = rec.title;
         goBtn.href = rec.url;
+        if (imgEl && illustrationPath) {
+          imgEl.style.background = `url('${illustrationPath}') center/cover no-repeat`;
+        }
         storyRec.style.display = 'block';
       }
 

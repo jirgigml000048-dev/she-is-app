@@ -621,16 +621,31 @@ window.downloadResult = downloadResult;
       const storyRec = document.getElementById('storyRec');
       const storyTitleEl = storyRec.querySelector('.story-rec-title');
       const storyLinkEl = storyRec.querySelector('.story-rec-btn');
+      const storyIllustrations = {
+        'story-detail.html': 'illustrations/story-queqie.png',
+        'story-tuanzi-v3.html': 'illustrations/story-tuanzi.png',
+        'story-xiaochen.html': 'illustrations/story-xiaochen.png',
+        'story-xiaoli.html': 'illustrations/story-xiaoli.png',
+        'story-xiuxiu.html': 'illustrations/story-xiuxiu.png',
+        'story-zixingche.html': 'illustrations/story-zixingche.png',
+        'story-bingbing.html': 'illustrations/story-bingbing.png'
+      };
+
       const storyRecommendations = {
-        '倾听者': { title: '曲奇：真空里的野蛮生长', url: 'story-detail.html' },
-        '照顾者': { title: '在北京，允许不长大', url: 'story-xiuxiu.html' },
-        '表达者': { title: '世界需要"愤怒"的女孩', url: 'story-xiaochen.html' }
+        '倾听者': { title: '曲奇：真空里的野蛮生长', url: 'story-detail.html', img: 'illustrations/story-queqie.png' },
+        '照顾者': { title: '在北京，允许不长大', url: 'story-xiuxiu.html', img: 'illustrations/story-xiuxiu.png' },
+        '表达者': { title: '世界需要"愤怒"的女孩', url: 'story-xiaochen.html', img: 'illustrations/story-xiaochen.png' }
       };
 
       function applyStoryRecommendation(tag) {
         const rec = storyRecommendations[tag] || storyRecommendations['倾听者'];
+        const imgEl = document.querySelector('#storyRec .story-rec-img');
+        const illustrationPath = rec.img || storyIllustrations[rec.url];
         storyTitleEl.textContent = rec.title;
         storyLinkEl.href = rec.url;
+        if (imgEl && illustrationPath) {
+          imgEl.style.background = `url('${illustrationPath}') center/cover no-repeat`;
+        }
       }
 
       introDesc.textContent = `${testData.description} 共 ${testData.questions.length} 题。`;
