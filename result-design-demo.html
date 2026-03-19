@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #e8e3dd; padding: 40px 24px; font-family: "Noto Serif SC", serif; display: flex; flex-direction: column; align-items: center; gap: 48px; }
+h1 { font-family: "Cormorant Garamond", serif; font-size: 13px; letter-spacing: 0.2em; color: #888; text-transform: uppercase; }
+.label { font-size: 10px; letter-spacing: 0.2em; color: #4A3073; text-transform: uppercase; font-family: "Cormorant Garamond", serif; align-self: flex-start; max-width: 390px; width: 100%; padding-bottom: 8px; border-bottom: 1px solid rgba(74,48,115,0.15); }
+.card { width: 100%; max-width: 390px; background: rgba(255,255,255,0.75); border-radius: 16px; padding: 28px 24px; border: 1px solid rgba(44,32,20,0.08); }
+
+/* ── 方案 A：抽象几何 ── */
+.viz-a { display: flex; justify-content: center; margin-bottom: 24px; }
+.viz-a svg { width: 120px; height: 120px; }
+
+/* ── 方案 B：分数进度条 ── */
+.viz-b { margin-bottom: 24px; }
+.score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.score-label { font-size: 11px; color: #888; width: 72px; flex-shrink: 0; }
+.score-bar-bg { flex: 1; height: 4px; background: rgba(74,48,115,0.1); border-radius: 2px; }
+.score-bar-fill { height: 4px; background: #4A3073; border-radius: 2px; }
+.score-val { font-size: 11px; color: #4A3073; width: 28px; text-align: right; flex-shrink: 0; }
+
+/* ── 方案 C：情绪色块 ── */
+.viz-c { display: flex; gap: 8px; margin-bottom: 24px; }
+.color-block { flex: 1; height: 56px; border-radius: 8px; display: flex; align-items: flex-end; padding: 6px 8px; }
+.color-block span { font-size: 9px; color: rgba(255,255,255,0.85); letter-spacing: 0.05em; line-height: 1.3; }
+
+/* 公共文字 */
+.result-type { font-family: "Cormorant Garamond", serif; font-size: 26px; color: #2e2e2e; margin-bottom: 8px; }
+.result-sub { font-size: 11px; color: #4A3073; letter-spacing: 0.08em; margin-bottom: 16px; }
+.divider { height: 1px; background: rgba(74,48,115,0.1); margin-bottom: 16px; }
+.para { font-size: 13px; color: #555; line-height: 1.9; margin-bottom: 14px; }
+.para:last-of-type { margin-bottom: 0; }
+</style>
+</head>
+<body>
+<h1>测试结果页 — 视觉方案对比</h1>
+
+<!-- 方案 A -->
+<div class="label">A · 抽象几何（感知波纹）</div>
+<div class="card">
+  <div class="viz-a">
+    <svg viewBox="0 0 120 120" fill="none">
+      <circle cx="60" cy="60" r="8" fill="#4A3073" opacity="0.9"/>
+      <circle cx="60" cy="60" r="20" stroke="#4A3073" stroke-width="1.5" opacity="0.5"/>
+      <circle cx="60" cy="60" r="34" stroke="#4A3073" stroke-width="1" opacity="0.3"/>
+      <circle cx="60" cy="60" r="50" stroke="#4A3073" stroke-width="0.5" opacity="0.15"/>
+    </svg>
+  </div>
+  <div class="result-type">高敏感人格</div>
+  <div class="result-sub">平均得分 5.8 / 7 · HSP-27</div>
+  <div class="divider"></div>
+  <div class="para">你比大多数人接收到更多。声音、光线、别人语气里微妙的变化，你的神经系统像一台增益开得很大的收音机。</div>
+  <div class="para">这不是脆弱。是一个高精度系统正常的运转需求。你需要更多独处时间，更长的恢复周期——这些都是真实的需求，不是借口。</div>
+</div>
+
+<!-- 方案 B -->
+<div class="label">B · 数据可视化（维度分数条）</div>
+<div class="card">
+  <div class="result-type">高敏感人格</div>
+  <div class="result-sub">平均得分 5.8 / 7 · HSP-27</div>
+  <div class="divider"></div>
+  <div class="viz-b">
+    <div class="score-row">
+      <span class="score-label">感官敏感</span>
+      <div class="score-bar-bg"><div class="score-bar-fill" style="width:88%"></div></div>
+      <span class="score-val">6.2</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">情绪感染</span>
+      <div class="score-bar-bg"><div class="score-bar-fill" style="width:80%"></div></div>
+      <span class="score-val">5.6</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">美的感受</span>
+      <div class="score-bar-bg"><div class="score-bar-fill" style="width:92%"></div></div>
+      <span class="score-val">6.4</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">过度唤醒</span>
+      <div class="score-bar-bg"><div class="score-bar-fill" style="width:74%"></div></div>
+      <span class="score-val">5.2</span>
+    </div>
+  </div>
+  <div class="para">你比大多数人接收到更多。声音、光线、别人语气里微妙的变化，你的神经系统像一台增益开得很大的收音机。</div>
+</div>
+
+<!-- 方案 C -->
+<div class="label">C · 情绪色块（渐变状态可视化）</div>
+<div class="card">
+  <div class="viz-c">
+    <div class="color-block" style="background:linear-gradient(135deg,#4A3073,#6b4fa0);flex:2.2;">
+      <span>感官<br>敏感</span>
+    </div>
+    <div class="color-block" style="background:linear-gradient(135deg,#6b4fa0,#9b82cc);flex:1.8;">
+      <span>情绪<br>感染</span>
+    </div>
+    <div class="color-block" style="background:linear-gradient(135deg,#9b82cc,#c4b0e0);flex:1.4;">
+      <span>过度<br>唤醒</span>
+    </div>
+  </div>
+  <div class="result-type">高敏感人格</div>
+  <div class="result-sub">平均得分 5.8 / 7 · HSP-27</div>
+  <div class="divider"></div>
+  <div class="para">你比大多数人接收到更多。声音、光线、别人语气里微妙的变化，你的神经系统像一台增益开得很大的收音机。</div>
+  <div class="para">这不是脆弱。是一个高精度系统正常的运转需求。</div>
+</div>
+
+</body>
+</html>
