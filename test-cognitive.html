@@ -85,6 +85,17 @@
       .disclaimer-note { font-size: 0.78rem; color: #aaa; display: block; margin-top: 0.5rem; }
       .story-link-hint { margin-top: 1rem; font-size: 0.85rem; color: #888; display: flex; align-items: center; gap: 0.5rem; }
       .story-link-hint a { color: #555; text-decoration: underline; text-underline-offset: 3px; }
+      .result-actions { display: flex; flex-direction: column; align-items: stretch; gap: 12px; margin-top: 20px; }
+      .result-back-btn, .result-retry-btn { display: block; width: 100%; text-align: center; }
+      .result-retry-btn.ghost {
+        border: 1px solid rgba(187, 187, 187, .45);
+        background: transparent;
+        color: #bbb;
+        border-radius: 999px;
+        padding: 12px 18px;
+      }
+      .result-retry-btn.ghost:hover { color: #a6a6a6; border-color: rgba(166, 166, 166, .65); }
+
 
       .story-link-hint {
         margin-top: 1rem;
@@ -955,11 +966,21 @@
         });
       }
 
+      const defaultStoryRecommendation = { title: '穿百褶裙的机甲驾驶员', url: 'story-bingbing.html' };
+
+      function updateStoryBar(rec = defaultStoryRecommendation) {
+        const titleEl = document.querySelector('.story-bar .story-title');
+        const goBtn = document.querySelector('.story-bar .go-btn');
+        if (!storyBar || !titleEl || !goBtn || !rec) return;
+        titleEl.textContent = rec.title;
+        goBtn.href = rec.url;
+        storyBar.style.display = 'flex';
+      }
+
       function showResult() {
         introEl.classList.add('hidden');
         quizEl.classList.add('hidden');
         resultEl.classList.remove('hidden');
-        storyBar.style.display = 'flex';
         progressBar.style.width = '100%';
         progressText.textContent = '已完成';
 
@@ -990,6 +1011,7 @@
         }
 
         resultEl.innerHTML = `
+          <div id="result-capture" class="result-capture-card">
           <h2>你的认知功能画像</h2>
           <p class="result-intro">以下是你在日常中用得更顺手的心理加工方式——不是标签，而是你认知模式的入口。</p>
           <div class="highlight">
@@ -1014,10 +1036,7 @@
           </div>
           <p class="footer-note">如果你想看更细的差异，可以留意第二高分与第三高分维度，它们往往一起构成你更具体的思考与决策风格。</p>
 
-          <div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn" id="redoBtn" type="button">再做一次</button></div>
-          <div class="story-link-hint">
-            <span>你可能会有共鸣 →</span>
-            <a href="story-bingbing.html">穿百褶裙的机甲驾驶员</a>
+          <div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
           </div>
         `;
 
@@ -1025,6 +1044,7 @@
           const found = scored.find(item => item.id === dim.id);
           return { id: dim.id, average: found.average };
         }));
+        updateStoryBar();
         document.getElementById('redoBtn').onclick = restart;
       }
 
@@ -1061,7 +1081,7 @@
       loadData();
 
       async function downloadResult() {
-        const capture = document.querySelector('#result .result-capture-card') || document.querySelector('.result-capture-card');
+        const capture = document.getElementById('result-capture');
         if (!capture || !capture.offsetParent) {
           window.alert('未找到可保存的结果内容，请先完成测试。');
           return;

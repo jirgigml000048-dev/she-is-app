@@ -177,6 +177,17 @@
         text-decoration: underline;
         text-underline-offset: 3px;
       }
+      .result-actions { display: flex; flex-direction: column; align-items: stretch; gap: 12px; margin-top: 20px; }
+      .result-back-btn, .result-retry-btn { display: block; width: 100%; text-align: center; }
+      .result-retry-btn.ghost {
+        border: 1px solid rgba(187, 187, 187, .45);
+        background: transparent;
+        color: #bbb;
+        border-radius: 999px;
+        padding: 12px 18px;
+      }
+      .result-retry-btn.ghost:hover { color: #a6a6a6; border-color: rgba(166, 166, 166, .65); }
+
       .test-intro {
         padding: 8px 0 24px;
       }
@@ -454,11 +465,26 @@
 
       function mean(scores) { return scores.reduce((a, b) => a + b, 0) / scores.length; }
 
+const storyRecommendations = {
+        high_reappraisal_low_suppression: { title: '曲奇：真空里的野蛮生长', url: 'story-detail.html' },
+        high_reappraisal_high_suppression: { title: '小李：她决定在精密结构里，自己养一颗星星', url: 'story-xiaoli.html' },
+        low_reappraisal_high_suppression: { title: '自行车：30岁却像15岁的赛博格', url: 'story-zixingche.html' },
+        low_reappraisal_low_suppression: { title: '嗅嗅：在北京，允许不长大', url: 'story-xiuxiu.html' }
+      };
+
+      function updateStoryBar(rec) {
+        const titleEl = document.querySelector('.story-bar .story-title');
+        const goBtn = document.querySelector('.story-bar .go-btn');
+        if (!storyBar || !titleEl || !goBtn || !rec) return;
+        titleEl.textContent = rec.title;
+        goBtn.href = rec.url;
+        storyBar.style.display = 'flex';
+      }
+
       function showResult() {
         introEl.classList.add("hidden");
         quizEl.classList.add("hidden");
         resultEl.classList.remove("hidden");
-        storyBar.style.display = 'flex';
 
         const reappraisalItems = [1,3,5,7,8,10].map(id => state.answers[id - 1]);
         const suppressionItems = [2,4,6,9].map(id => state.answers[id - 1]);
@@ -470,6 +496,7 @@
         const key = `${highR ? "high" : "low"}_reappraisal_${highS ? "high" : "low"}_suppression`;
         const r = DATA.results[key];
         const summaryMap = { high_reappraisal_low_suppression: "思考派", high_reappraisal_high_suppression: "双管派", low_reappraisal_high_suppression: "压抑派", low_reappraisal_low_suppression: "随流派" };
+        const rec = storyRecommendations[key];
 
         progressBar.style.width = "100%";
         progressText.textContent = "完成";
@@ -486,6 +513,7 @@
         }
 
         resultEl.innerHTML = `
+          <div id="result-capture" class="result-capture-card">
           <p class="result-emoji">${r.emoji}</p>
           <h2 class="result-type">${r.label}</h2>
           <p class="tagline">${r.tagline}</p>
@@ -493,13 +521,11 @@
           <p class="score-row">认知重评：${rScore.toFixed(2)} ｜ 表达抑制：${sScore.toFixed(2)}</p>
           <p class="desc" style="font-size:12px;color:#999;margin-top:12px;">这是你当下的模式，不是诊断，也不是定论。</p>
           <p class="share-tip">把结果分享给朋友，看看你们各自在压力下的应对方式。</p>
-          <div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn" id="redoBtn" type="button">再做一次</button></div>
-          <div class="story-link-hint">
-            <span>你可能会有共鸣 →</span>
-            <a href="story-detail.html">真空里的野蛮生长</a>
+          <div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
           </div>
         `;
 
+        updateStoryBar(rec);
         document.getElementById("redoBtn").onclick = restart;
       }
 
@@ -538,7 +564,7 @@
 
 
       async function downloadResult() {
-        const capture = document.querySelector('#result .result-capture-card') || document.querySelector('.result-capture-card');
+        const capture = document.getElementById('result-capture');
         if (!capture || !capture.offsetParent) {
           window.alert('未找到可保存的结果内容，请先完成测试。');
           return;

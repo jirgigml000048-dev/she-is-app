@@ -103,6 +103,17 @@
         text-decoration: underline;
         text-underline-offset: 3px;
       }
+      .result-actions { display: flex; flex-direction: column; align-items: stretch; gap: 12px; margin-top: 20px; }
+      .result-back-btn, .result-retry-btn { display: block; width: 100%; text-align: center; }
+      .result-retry-btn.ghost {
+        border: 1px solid rgba(187, 187, 187, .45);
+        background: transparent;
+        color: #bbb;
+        border-radius: 999px;
+        padding: 12px 18px;
+      }
+      .result-retry-btn.ghost:hover { color: #a6a6a6; border-color: rgba(166, 166, 166, .65); }
+
 
       .test-intro {
         padding: 8px 0 24px;
@@ -486,11 +497,21 @@
         }).join("");
       }
 
+      const defaultStoryRecommendation = { title: '她决定在精密结构里，自己养一颗星星', url: 'story-xiaoli.html' };
+
+      function updateStoryBar(rec = defaultStoryRecommendation) {
+        const titleEl = document.querySelector('.story-bar .story-title');
+        const goBtn = document.querySelector('.story-bar .go-btn');
+        if (!storyBar || !titleEl || !goBtn || !rec) return;
+        titleEl.textContent = rec.title;
+        goBtn.href = rec.url;
+        storyBar.style.display = 'flex';
+      }
+
       function showResult() {
         introEl.classList.add("hidden");
         quizEl.classList.add("hidden");
         resultEl.classList.remove("hidden");
-        storyBar.style.display = 'flex';
 
         const scores = calcDimensionScores();
         const resultId = matchResult(scores);
@@ -512,6 +533,7 @@
         }
 
         resultEl.innerHTML = `
+          <div id="result-capture" class="result-capture-card">
           <h2 class="result-type">${r.title}</h2>
           <p class="tagline">${DATA.title}</p>
           <p class="desc">${r.body}</p>
@@ -524,13 +546,11 @@
 
           <p class="share-tip">你最高的两个维度已高亮，方便你快速识别最影响你的完美主义模式。</p>
 
-          <div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn" id="redoBtn" type="button">再做一次</button></div>
-          <div class="story-link-hint">
-            <span>你可能会有共鸣 →</span>
-            <a href="story-xiaoli.html">她决定在精密结构里，自己养一颗星星</a>
+          <div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
           </div>
         `;
 
+        updateStoryBar();
         document.getElementById("redoBtn").onclick = restart;
       }
 
@@ -564,7 +584,7 @@
 
 
       async function downloadResult() {
-        const capture = document.querySelector('#result .result-capture-card') || document.querySelector('.result-capture-card');
+        const capture = document.getElementById('result-capture');
         if (!capture || !capture.offsetParent) {
           window.alert('未找到可保存的结果内容，请先完成测试。');
           return;
