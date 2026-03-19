@@ -89,6 +89,10 @@
       .page > *:nth-child(5) { animation-delay: 0.24s; }
 
       .header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
         padding: 14px 24px 2px;
       }
 
@@ -97,6 +101,14 @@
         flex-direction: column;
         align-items: flex-start;
         margin: 0;
+      }
+
+      #userArea {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        min-height: 28px;
+        text-align: right;
       }
 
       .logo-cn {
@@ -385,6 +397,8 @@
     </style>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/font-override.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/auth.js"></script>
 </head>
   <body>
     <div class="bg-accent-orb bg-accent-orb--top" aria-hidden="true"></div>
@@ -396,6 +410,9 @@
         <div class="logo">
           <span class="logo-cn">女也</span>
           <span class="logo-en">she is ______.</span>
+        </div>
+        <div id="userArea" style="font-family:'Noto Serif SC',serif; font-size:12px; color:#4A3073; cursor:pointer;">
+          <span id="userGreet"></span>
         </div>
       </header>
       <div class="header-rule"></div>
@@ -656,6 +673,21 @@
         }
       }
       setTimeout(tick, 800);
+    })();
+  </script>
+  <script>
+    (async () => {
+      const user = await getUser();
+      const el = document.getElementById('userGreet');
+      if (!el) return;
+      if (user) {
+        const name = user.user_metadata?.name || user.email?.split('@')[0] || '你';
+        el.textContent = name;
+        el.onclick = signOut;
+      } else {
+        el.textContent = '登录';
+        el.onclick = openLoginModal;
+      }
     })();
   </script>
 </body>

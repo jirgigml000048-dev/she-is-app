@@ -260,6 +260,8 @@
         </style>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/font-override.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/auth.js"></script>
 </head>
 <body>
     <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
@@ -429,6 +431,7 @@ $('quizPanel').classList.add('hide');
 $('resultPanel').classList.add('show');
 storyRec.style.display = 'block';
 window.scrollTo(0,0);
+saveTestResult('hsp', level, { score: mean, level });
 }
 
 function retryQuiz(){
