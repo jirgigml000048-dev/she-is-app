@@ -445,6 +445,16 @@
       const answerSlider = document.getElementById('answerSlider');
       const currentValue = document.getElementById('currentValue');
 
+      function getStoryRec() {
+        storyRec = document.getElementById('storyRec');
+        return storyRec;
+      }
+
+      function setStoryRecDisplay(value) {
+        const el = getStoryRec();
+        if (el) el.style.display = value;
+      }
+
       function updateProgress() {
         if (state.index < 0) {
           progressBar.style.width = '0%';
@@ -466,8 +476,8 @@
         qId.textContent = `第 ${q.id} 题`;
         qText.textContent = q.text;
         syncSliderValue(state.answers[state.index] || 4);
-        storyRec.style.display = 'none';
-      updateProgress();
+        setStoryRecDisplay('none');
+        updateProgress();
       }
 
       function transition(next) {
@@ -541,12 +551,13 @@
       const defaultStoryRecommendation = { title: '曲奇：真空里的野蛮生长', url: 'story-detail.html' };
 
       function updateStoryBar(rec = defaultStoryRecommendation) {
+        const currentStoryRec = getStoryRec();
         const titleEl = document.querySelector('#storyRec .story-rec-title');
         const goBtn = document.querySelector('#storyRec .story-rec-btn');
-        if (!storyRec || !titleEl || !goBtn || !rec) return;
+        if (!currentStoryRec || !titleEl || !goBtn || !rec) return;
         titleEl.textContent = rec.title;
         goBtn.href = rec.url;
-        storyRec.style.display = 'block';
+        currentStoryRec.style.display = 'block';
       }
 
       function showResult() {
@@ -624,9 +635,9 @@
         state.index = 0;
         introEl.classList.add('hidden');
         resultEl.classList.add('hidden');
-        storyRec.style.display = 'none';
+        setStoryRecDisplay('none');
         quizEl.classList.remove('hidden');
-        storyRec.style.display = 'none';
+        setStoryRecDisplay('none');
         renderQuestion();
       }
 
@@ -634,7 +645,7 @@
         state.index = -1;
         state.answers = Array(QUESTIONS.length).fill(null);
         resultEl.classList.add('hidden');
-        storyRec.style.display = 'none';
+        setStoryRecDisplay('none');
         quizEl.classList.add('hidden');
         introEl.classList.remove('hidden');
         syncSliderValue(4);
@@ -647,6 +658,7 @@
       document.getElementById('startBtn').onclick = () => {
         document.querySelector('.test-intro').style.display = 'none';
         document.getElementById('testBody').style.display = 'block';
+        setStoryRecDisplay('none');
       };
       document.getElementById('beginQuizBtn').onclick = startQuiz;
       document.getElementById('prevBtn').onclick = goPrev;

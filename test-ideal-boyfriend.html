@@ -577,6 +577,16 @@
         progressText.textContent = 'Q ' + (state.current + 1) + ' / ' + questions.length;
       }
 
+      function getStoryRec() {
+        storyRec = document.getElementById('storyRec');
+        return storyRec;
+      }
+
+      function setStoryRecDisplay(value) {
+        const el = getStoryRec();
+        if (el) el.style.display = value;
+      }
+
       function renderQuestion() {
         const question = questions[state.current];
         questionNo.textContent = 'QUESTION ' + (state.current + 1);
@@ -605,17 +615,17 @@
 
         prevBtn.style.visibility = state.current === 0 ? 'hidden' : 'visible';
         nextBtn.textContent = state.current === questions.length - 1 ? '查看结果' : '下一题';
-        storyRec.style.display = 'none';
-      updateProgress();
+        setStoryRecDisplay('none');
+        updateProgress();
       }
 
       function startQuiz() {
         state.current = 0;
         introView.classList.add('hidden');
         resultView.classList.add('hidden');
-        storyRec.style.display = 'none';
+        setStoryRecDisplay('none');
         quizView.classList.remove('hidden');
-        storyRec.style.display = 'none';
+        setStoryRecDisplay('none');
         renderQuestion();
       }
 
@@ -648,12 +658,13 @@
       const defaultStoryRecommendation = { title: '曲奇：真空里的野蛮生长', url: 'story-detail.html' };
 
       function updateStoryBar(rec = defaultStoryRecommendation) {
+        const currentStoryRec = getStoryRec();
         const titleEl = document.querySelector('#storyRec .story-rec-title');
         const goBtn = document.querySelector('#storyRec .story-rec-btn');
-        if (!storyRec || !titleEl || !goBtn || !rec) return;
+        if (!currentStoryRec || !titleEl || !goBtn || !rec) return;
         titleEl.textContent = rec.title;
         goBtn.href = rec.url;
-        storyRec.style.display = 'block';
+        currentStoryRec.style.display = 'block';
       }
 
       function showResult() {
@@ -697,9 +708,9 @@
         state.answers = new Array(questions.length).fill(null);
         quizView.classList.add('hidden');
         resultView.classList.add('hidden');
-        storyRec.style.display = 'none';
+        setStoryRecDisplay('none');
         introView.classList.remove('hidden');
-        storyRec.style.display = 'none';
+        setStoryRecDisplay('none');
         updateProgress();
       }
 

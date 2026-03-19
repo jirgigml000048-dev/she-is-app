@@ -875,6 +875,16 @@
       const nextBtn = document.getElementById('nextBtn');
       const restartBtn = document.getElementById('restartBtn');
 
+      function getStoryRec() {
+        storyRec = document.getElementById('storyRec');
+        return storyRec;
+      }
+
+      function setStoryRecDisplay(value) {
+        const el = getStoryRec();
+        if (el) el.style.display = value;
+      }
+
       function getPageCount() {
         return state.data ? state.data.dimensions.length : 0;
       }
@@ -941,8 +951,8 @@
         prevBtn.disabled = state.page === 0;
         prevBtn.style.opacity = state.page === 0 ? '.45' : '1';
         nextBtn.textContent = state.page === getPageCount() - 1 ? '翻开这一页' : '下一页 →';
-        storyRec.style.display = 'none';
-      updateProgress();
+        setStoryRecDisplay('none');
+        updateProgress();
       }
 
       function transition(next) {
@@ -980,7 +990,7 @@
         state.page = -1;
         state.answers = Array(state.data.total).fill(null);
         resultEl.classList.add('hidden');
-        storyRec.style.display = 'none';
+        setStoryRecDisplay('none');
         quizEl.classList.add('hidden');
         introEl.classList.remove('hidden');
         updateProgress();
@@ -1064,12 +1074,13 @@
       const defaultStoryRecommendation = { title: '穿百褶裙的机甲驾驶员', url: 'story-bingbing.html' };
 
       function updateStoryBar(rec = defaultStoryRecommendation) {
+        const currentStoryRec = getStoryRec();
         const titleEl = document.querySelector('#storyRec .story-rec-title');
         const goBtn = document.querySelector('#storyRec .story-rec-btn');
-        if (!storyRec || !titleEl || !goBtn || !rec) return;
+        if (!currentStoryRec || !titleEl || !goBtn || !rec) return;
         titleEl.textContent = rec.title;
         goBtn.href = rec.url;
-        storyRec.style.display = 'block';
+        currentStoryRec.style.display = 'block';
       }
 
       function showResult() {
@@ -1185,9 +1196,9 @@
         state.page = 0;
         introEl.classList.add('hidden');
         resultEl.classList.add('hidden');
-        storyRec.style.display = 'none';
+        setStoryRecDisplay('none');
         quizEl.classList.remove('hidden');
-        storyRec.style.display = 'none';
+        setStoryRecDisplay('none');
         renderPage();
       };
       prevBtn.onclick = goPrev;
