@@ -256,26 +256,29 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
+    .score-row:last-child { margin-bottom: 0; }
     .score-label {
-      font-family: "Noto Serif SC", serif;
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
       font-size: 11px;
-      color: #888;
-      width: 60px;
+      color: rgba(47,42,38,0.72);
+      width: 64px;
       flex-shrink: 0;
     }
     .score-bar-bg {
       flex: 1;
-      height: 3px;
-      background: rgba(74,48,115,0.12);
-      border-radius: 2px;
+      height: 10px;
+      background: rgba(74,48,115,0.1);
+      border-radius: 999px;
+      overflow: hidden;
     }
     .score-bar-fill {
       width: 0;
-      height: 3px;
+      height: 100%;
       background: #4A3073;
-      border-radius: 2px;
+      border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(74,48,115,0.22);
       transition: width 0.8s ease;
     }
     .score-val {
@@ -285,31 +288,93 @@
       text-align: right;
       flex-shrink: 0;
     }
+    .r-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .r-head::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #4A3073;
+      transform: translateY(-2px);
+      flex-shrink: 0;
+    }
     .r-type {
-      font-family: "Cormorant Garamond", serif;
-      font-size: 28px;
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-size: 30px;
       color: #2e2e2e;
-      margin: 0 0 6px;
+      margin: 0;
       font-weight: 500;
+      letter-spacing: 0.04em;
     }
     .r-score-line {
+      position: relative;
+      z-index: 1;
       font-size: 11px;
       color: #4A3073;
       letter-spacing: 0.08em;
-      margin: 0 0 18px;
+      margin: 0 0 16px;
+    }
+    .result-tags {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 20px;
+      padding: 0;
+      list-style: none;
+    }
+    .result-tags:empty { display: none; }
+    .result-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(74,48,115,0.35);
+      background: rgba(245,240,235,0.96);
+      color: #4A3073;
+      font-size: 12px;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: 0.02em;
     }
     .r-divider {
       height: 1px;
-      background: rgba(74,48,115,0.1);
+      background: rgba(74,48,115,0.15);
       margin-bottom: 20px;
     }
+    .r-quote {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 20px;
+      padding: 16px 18px;
+      border-left: 3px solid #4A3073;
+      background: rgba(74,48,115,0.06);
+      color: #3d3158;
+      line-height: 1.9;
+      font-size: 14px;
+    }
+    .r-quote:empty { display: none; }
     .r-desc {
-      font-size: 13px;
-      color: #555;
-      line-height: 2;
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+      color: #554c47;
+      line-height: 1.9;
+      padding: 24px;
+      background: rgba(255,255,255,0.45);
+      border-radius: 20px;
     }
     .r-desc p {
-      margin: 0 0 16px;
+      margin: 0 0 1.4em;
     }
     .r-desc p:last-child {
       margin-bottom: 0;
@@ -425,31 +490,31 @@
           name: '守灯',
           emoji: '🕯️',
           subtitle: '稳定发亮型',
-          description: '你偏爱的不是轰烈，而是稳定发亮的人。他不一定最张扬，却会在深夜接住你的情绪，在日常里兑现承诺，让爱像一盏一直亮着的灯。'
+          description: "<p>你心里想要的那个人，是一个让你安心的存在。你不需要惊天动地的浪漫，你需要的是稳稳地在那里。每次你回头，他都在。</p><p>你渴望的是一种可以信赖的长期感。他的承诺有分量，他的陪伴有耐心，他不会因为一次吵架就消失，也不会因为新鲜感消退就走远。他选了你，就会一直选你。</p><p>安全感对你来说，是爱情里最重要的基础设施。你见过太多不确定，太多说走就走。你想要的那种关系，是可以放心把未来交出去的关系。</p><p>你值得那种踏实。那种\"明天、后天、很久以后，他都会在\"的踏实。这是你的爱情底线，也是你最深的需要。</p>"
         },
         wild: {
           name: '野风',
           emoji: '🌬️',
           subtitle: '自由生命型',
-          description: '你会被生命力和自由感吸引。理想中的他有一点不受驯，却愿意带你看更辽阔的世界；和他在一起，爱像空气流动，轻快、鲜活、有呼吸。'
+          description: "<p>吸引你的，从来都是那种带风的人。自由、不可预测、活着的感觉。和他在一起，你永远不知道下一秒会发生什么，而你喜欢这种感觉。</p><p>你在规则和秩序里待了太久。所以在爱情里，你渴望的是一个打破规则的人，一种让你觉得活过来的能量。你要的是真实的、有温度的、会烫手的东西。</p><p>你喜欢那种心跳加速的感觉。一段让你紧张的对话、一次说走就走的旅行、一个永远让你猜不透的眼神。你要的是炽热的、活着的关系。</p><p>你知道这种偏好有风险。野生的能量很难被驯服，自由的人很难被留住。但你宁愿要这样的，也不想要温吞却无趣的日子。</p><p>你要的那个人，能带你去你自己不敢去的地方。</p>"
         },
         mirror: {
           name: '对镜',
           emoji: '🪞',
           subtitle: '深度理解型',
-          description: '你需要的是一个真正看见你的人。他敏锐、会表达、愿意反思，也能把你的复杂情绪照得清楚而温柔。你想要的亲密，本质上是深度理解。'
+          description: "<p>你想要的那个人，最重要的能力只有一个：看见你。真正地看见——你说了一半的话，他能接住后一半。你还没有开口的情绪，他已经感觉到了。</p><p>你渴望被理解到一种很深的程度。那种不用解释、他就已经懂了的默契，对你来说是真实的需要，比心动更性感。</p><p>你可能经历过太多\"看不到你\"的关系——对方爱的是一个想象中的你，或者一个你表演出来的你。那种错位让你很累，也让你很孤独。</p><p>所以你在等一面镜子。一个人站在你面前，让你从他的眼睛里看到自己真实的样子——包括你的好、你的暗面、你自己都不太敢看的那些部分。</p><p>这种深度的看见，是你能想象到的最亲密的事情。比拥抱更近，比说\"我爱你\"更有分量。</p>"
         },
         nest: {
           name: '栖木',
           emoji: '🪺',
           subtitle: '安心停靠型',
-          description: '你理想中的关系像一棵能停靠的树。他给人踏实、温厚、可依赖的感觉，不急着侵入你的世界，却会稳稳腾出空间让你安心落脚。'
+          description: "<p>你心里有一种很深的渴望——被包裹。你想要的那个人，能给你一种回家的感觉。不是一栋房子，是一种温度，一种让你可以把所有的坚强都放下的安全。</p><p>你在外面已经撑得够多了。独立、能干、什么都能处理。但那些在别人看来\"很厉害\"的时刻，你心里经常有一个声音：好想有个人接住我。</p><p>你想要的照顾很具体：一碗热的东西、一个不需要解释的拥抱、一个替你做了决定让你不用想的晚上。你需要有人把你照顾好，像你一直照顾别人那样。</p><p>需要温暖不是软弱，它是你最诚实的心声。你值得一个巢。一个让你可以蜷缩进去、不设防、完全放松的地方。</p>"
         },
         midnight: {
           name: '夜谈',
           emoji: '🌙',
           subtitle: '灵魂对话型',
-          description: '你容易被灵魂感和深夜对话吸引。理想中的他有思想、有故事，愿意陪你聊那些无法轻易说出口的部分。爱对你来说，是精神上的同频与并肩。'
+          description: "<p>你被深度吸引。那种白天不太会出现的对话、那种安静房间里才会有的眼神、那种需要剥开很多层才能触到的灵魂——这些才是让你心动的东西。</p><p>你想要的那个人身上有一种暗色调的质感。他有故事，有伤疤，有被生活打磨过的痕迹。他更像午夜电台的声音——低沉、有层次、让你想靠近去听。</p><p>你在明亮的、轻松的关系里反而觉得浅。你需要一种强度，一种让你在情感上被拉到很深的地方的力量。你要的不是陪你看日落的人，是陪你在黑暗里坐着也不害怕的人。</p><p>你对神秘感的迷恋里，有一部分是你自己的投射——你自己也有那些不太拿出来给人看的、深沉的、复杂的部分。你想要一个能和你共享那个深度的人。</p><p>午夜是所有面具都放下的时刻。你要的爱情，也是这样的。</p>"
         }
       };
 
@@ -695,10 +760,12 @@
         resultView.innerHTML = `
           <div id="result-capture" class="result-capture-card">
           <div class="result-viz">${buildVizRows(orderedScores)}</div>
-          <h2 class="r-type" data-subtitle="${active.subtitle || ''}">${active.name}</h2>
+          <div class="r-head"><h2 class="r-type" data-subtitle="${active.subtitle || ''}">${active.name}</h2></div>
           <p class="r-score-line">最高匹配：${active.emoji} ${active.name}</p>
+          <ul class="result-tags"><li class="result-tag">${active.subtitle}</li><li class="result-tag">理想型男友</li><li class="result-tag">12 QUESTIONS</li></ul>
+          <div class="r-quote">${active.subtitle || active.name}</div>
           <div class="r-divider"></div>
-          <div class="r-desc">${formatParagraphs(active.description)}</div>
+          <div class="r-desc">${active.description}</div>
           <div class="score-grid">
             ${orderedScores.map(([key, score]) => `<div class="score-item"><span>${archetypes[key].emoji} ${archetypes[key].name}</span><strong>${score} 分</strong></div>`).join('')}
           </div>

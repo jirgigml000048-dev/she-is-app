@@ -226,26 +226,29 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
+    .score-row:last-child { margin-bottom: 0; }
     .score-label {
-      font-family: "Noto Serif SC", serif;
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
       font-size: 11px;
-      color: #888;
-      width: 60px;
+      color: rgba(47,42,38,0.72);
+      width: 64px;
       flex-shrink: 0;
     }
     .score-bar-bg {
       flex: 1;
-      height: 3px;
-      background: rgba(74,48,115,0.12);
-      border-radius: 2px;
+      height: 10px;
+      background: rgba(74,48,115,0.1);
+      border-radius: 999px;
+      overflow: hidden;
     }
     .score-bar-fill {
       width: 0;
-      height: 3px;
+      height: 100%;
       background: #4A3073;
-      border-radius: 2px;
+      border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(74,48,115,0.22);
       transition: width 0.8s ease;
     }
     .score-val {
@@ -255,31 +258,93 @@
       text-align: right;
       flex-shrink: 0;
     }
+    .r-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .r-head::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #4A3073;
+      transform: translateY(-2px);
+      flex-shrink: 0;
+    }
     .r-type {
-      font-family: "Cormorant Garamond", serif;
-      font-size: 28px;
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-size: 30px;
       color: #2e2e2e;
-      margin: 0 0 6px;
+      margin: 0;
       font-weight: 500;
+      letter-spacing: 0.04em;
     }
     .r-score-line {
+      position: relative;
+      z-index: 1;
       font-size: 11px;
       color: #4A3073;
       letter-spacing: 0.08em;
-      margin: 0 0 18px;
+      margin: 0 0 16px;
+    }
+    .result-tags {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 20px;
+      padding: 0;
+      list-style: none;
+    }
+    .result-tags:empty { display: none; }
+    .result-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(74,48,115,0.35);
+      background: rgba(245,240,235,0.96);
+      color: #4A3073;
+      font-size: 12px;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: 0.02em;
     }
     .r-divider {
       height: 1px;
-      background: rgba(74,48,115,0.1);
+      background: rgba(74,48,115,0.15);
       margin-bottom: 20px;
     }
+    .r-quote {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 20px;
+      padding: 16px 18px;
+      border-left: 3px solid #4A3073;
+      background: rgba(74,48,115,0.06);
+      color: #3d3158;
+      line-height: 1.9;
+      font-size: 14px;
+    }
+    .r-quote:empty { display: none; }
     .r-desc {
-      font-size: 13px;
-      color: #555;
-      line-height: 2;
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+      color: #554c47;
+      line-height: 1.9;
+      padding: 24px;
+      background: rgba(255,255,255,0.45);
+      border-radius: 20px;
     }
     .r-desc p {
-      margin: 0 0 16px;
+      margin: 0 0 1.4em;
     }
     .r-desc p:last-child {
       margin-bottom: 0;
@@ -856,6 +921,17 @@
             }
       ]
 };
+const cognitiveLongDesc = {
+  "Se": "<p>你的感官是打开的。颜色、声音、触感、温度——你对当下正在发生的一切有一种天然的敏锐。别人可能在想事情的时候走神，你在感受事情的时候全然在场。</p><p>你享受真实的、物理的体验。一道好的光线、一首歌的鼓点、运动时身体的发力感——这些对你来说就是生活本身。你通过感官来理解世界。</p><p>你的反应很快，行动力也强。你更倾向于"先做再说"，在实践中找到方向。你和这个世界之间没有太多滤镜，你看到什么就是什么，你感受到什么就去回应。</p><p>你身上有一种让人觉得很"活"的能量。你在的地方，气氛会更生动一点。这种对当下的热爱，是你最真实的力量。</p>",
+  "Si": "<p>你的记忆里存着很多细节——某个场景的光线、某次对话的语气、某种食物在某个季节的味道。过去对你来说不是模糊的，它是有质感的、可以随时被调出来的。</p><p>你重视经验。做过的事、走过的路、犯过的错——这些在你心里形成了一套可靠的参照系。你做决定的方式，很大程度上是基于"之前什么管用、什么不管用"。</p><p>你喜欢熟悉的东西。一家常去的餐厅、一个用了很久的方法、一种已经被验证过的安排——稳定和可预测让你安心。你的细致和可靠让人信任。</p><p>你和世界的关系，是通过一层层积累起来的经验建立的。每一段记忆都在你的内在地图上标了一个点。你走得越久，这张地图就越详细、越可靠。</p>",
+  "Ne": "<p>你的脑子里永远不止一个想法在跑。一个话题可以带出五个方向，一个问题可以长出十种可能。你的思维像一张不断扩展的网，每个节点都连着新的节点。</p><p>你对"可能性"有一种天然的兴奋。新的想法、新的连接、新的"如果……会怎样"——这些让你的眼睛亮起来。你最享受的时刻，是两个看似无关的东西突然在你脑子里接上了。</p><p>你的创造力很强，启动速度也快。但你可能会发现，你开始的项目比完成的多。因为每一个新的可能性都比正在做的事情更诱人。</p><p>你看到的世界，比大多数人看到的更丰富。那些闪闪发光的想法需要一个着陆的地方——挑一个，扎下去，让它真正长出来。</p>",
+  "Ni": "<p>你的思维天然地越过表面，朝更深的地方走。别人还在处理眼前的信息时，你已经在感知某种尚未成形的趋势，某种即将浮现的轮廓。</p><p>这种对本质的专注，让你在复杂局面中拥有一种安静的笃定。你常常说不清楚"为什么觉得会这样"，但事后回看，那些直觉往往指向了真实的方向。</p><p>你习惯在内心反复推演，把碎片拼成完整的图景。这个过程有时漫长，有时像闪电——突然之间，答案就在那里了。</p><p>深度思考是你最自然的状态，也是你最强大的武器。你看见的东西，很多人要很久以后才能看见。这份远见值得信任。</p>",
+  "Te": "<p>你的大脑里有一套高效运转的操作系统。面对任务，你本能地开始拆解结构、排列优先级、寻找最短路径。目标清晰的时候，你的执行力惊人。</p><p>组织和推进对你来说几乎是呼吸级别的能力。你天然地知道资源该怎么分配，流程该怎么跑，哪些环节可以压缩，哪些必须守住。</p><p>你重视结果，也尊重过程中的秩序感。混乱让你不舒服——你总会想办法把它理清，变成可以操作的东西。</p><p>这种系统化的思维方式，让你在团队中常常成为那个"让事情真正发生"的人。你把想法变成现实的能力，是一种稀缺的力量。</p>",
+  "Ti": "<p>你的内心有一座精密的逻辑实验室。每一个概念进来，都会被拆开、检验、重新组装，直到它在你的理解体系里找到准确的位置。</p><p>你对"差不多"没有耐心。一个论证如果有漏洞，一个定义如果不够精确，你会一直追问下去，直到它真正站得住脚。这种对精准的执着，是你思维品质的底色。</p><p>你喜欢建立自己的分析框架，而且这些框架往往比外界现成的更细致、更严谨。独立思考对你来说是默认模式。你信任自己推导出的结论，因为你知道每一步都经过了检验。</p><p>这份思维的诚实，让你的判断格外可靠。</p>",
+  "Fe": "<p>你走进一个房间，就能感知到空气里的情绪温度。谁不自在，谁在勉强，谁需要被看见——这些信号对你来说清晰而自然。</p><p>你天然地在意人与人之间的和谐。当氛围出现裂痕，你会本能地去弥合；当有人被忽略，你会悄悄地把注意力引过去。这些动作常常不被察觉，但它们在托住整个场域。</p><p>你的情绪有感染力。你的热情能点燃一群人，你的温柔能让紧绷的人放松下来。照顾他人的感受对你来说毫不费力，几乎是本能。</p><p>记得也把这份敏感留一些给自己——你的感受同样重要，同样值得被照顾。</p>",
+  "Fi": "<p>你的内心有一套深刻而稳定的价值坐标。什么是对的，什么是真的，什么值得坚持——这些问题你很早就开始认真对待，并且从未停止。</p><p>你的情感像地下河，表面平静，底下丰沛。你很少把内心的波澜全部展示出来，但那些感受的深度和质感，比大多数人想象的要丰富得多。</p><p>对真实性的要求是你最核心的标准。虚假的东西让你本能地退缩——无论是一段关系、一句话，还是一个选择。你宁可沉默，也不愿意说出自己不相信的东西。</p><p>你做决定的依据，最终都会回到内在的那个声音。它安静，但清晰。当外界嘈杂的时候，它是你最可靠的锚点。</p>"
+};
+
       const state = { data: null, page: -1, answers: [] };
       const introEl = document.getElementById('intro');
       const quizEl = document.getElementById('quiz');
@@ -1151,7 +1227,7 @@
                   <div class="result-score">${item.total}/50 · 均分 ${item.average.toFixed(1)}</div>
                 </div>
                 <div class="result-bar"><span style="width:${item.percent}%"></span></div>
-                <div>你${item.description}<span class="disclaimer-note">这是你当下的模式，不是诊断，也不是定论。</span></div>
+                <div>${cognitiveLongDesc[item.id] || `<p>你${item.description}</p>`}<span class="disclaimer-note">这是你当下的模式，不是诊断，也不是定论。</span></div>
               </article>
             `).join('')}
           </div>

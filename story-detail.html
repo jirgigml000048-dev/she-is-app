@@ -414,10 +414,22 @@
 
 <script>
 (function() {
+  const MUSIC_START_OFFSET = 18;
   const audio = document.getElementById('bgAudio');
   const btn = document.getElementById('audioBtn');
   const playIcon = document.getElementById('playIcon');
   const pauseIcon = document.getElementById('pauseIcon');
+  let musicOffsetApplied = false;
+
+  function applyMusicStartOffset() {
+    if (musicOffsetApplied) return;
+    if (Number.isFinite(audio.duration) && audio.duration > MUSIC_START_OFFSET) {
+      audio.currentTime = MUSIC_START_OFFSET;
+      musicOffsetApplied = true;
+    }
+  }
+
+  audio.addEventListener('canplay', applyMusicStartOffset, { once: true });
   audio.volume = 0.35;
   audio.muted = true;
   audio.play().catch(function() {});

@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>ERQ-10 情绪调节测评 | 女也 She Is</title>
+    <title>ECR-36 依恋风格测评 | 女也 She Is</title>
     <style>
       :root {
-        --bg: #faf9f7;
-        --ink: #2c2c2c;
-        --gold: #c4a882;
-        --line: #e9e3da;
+        --bg: #f5f0eb;
+        --ink: #2f2a26;
+        --gold: #4A3073;
+        --line: #e7dfd6;
       }
       * { box-sizing: border-box; }
       body {
@@ -147,9 +147,8 @@
       .result-type { margin-top: 8px; font-size: 34px; }
       .tagline { margin-top: 8px; font-size: 18px; color: #4f4a45; }
       .share-tip { margin-top: 20px; padding-top: 16px; border-top: 1px dashed #ddcfbc; font-size: 14px; color: #6b6258; }
-      .score-row { margin-top: 12px; font-size: 13px; color: #7a7470; }
       @media (max-width: 540px) {
-        .title { font-size: 28px; }
+        .title { font-size: 30px; }
         .question-text { font-size: 21px; }
         .panel { padding: 22px 16px; }
         .slider-card { padding: 18px 14px 14px; }
@@ -177,17 +176,6 @@
         text-decoration: underline;
         text-underline-offset: 3px;
       }
-      .result-actions { display: flex; flex-direction: column; align-items: stretch; gap: 12px; margin-top: 20px; }
-      .result-back-btn, .result-retry-btn { display: block; width: 100%; text-align: center; }
-      .result-retry-btn.ghost {
-        border: 1px solid rgba(187, 187, 187, .45);
-        background: transparent;
-        color: #bbb;
-        border-radius: 999px;
-        padding: 12px 18px;
-      }
-      .result-retry-btn.ghost:hover { color: #a6a6a6; border-color: rgba(166, 166, 166, .65); }
-
       .test-intro {
         padding: 8px 0 24px;
       }
@@ -201,7 +189,7 @@
       .test-intro-accent {
         width: 4px;
         flex-shrink: 0;
-        background: #C8C5DE;
+        background: #F2A98A;
         border-radius: 0;
       }
       .test-intro-content {
@@ -283,6 +271,13 @@
           }
         
 
+    .result-capture-card {
+      background: #fffdfa;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 14px;
+      box-shadow: 0 6px 20px rgba(48,35,23,.06);
+    }
     .result-viz {
       margin-bottom: 28px;
     }
@@ -290,128 +285,121 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
-    .score-row:last-child { margin-bottom: 0; }
     .score-label {
-      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-family: "Noto Serif SC", serif;
       font-size: 11px;
-      color: rgba(47,42,38,0.72);
-      width: 64px;
+      color: #888;
+      width: 60px;
       flex-shrink: 0;
     }
     .score-bar-bg {
       flex: 1;
-      height: 10px;
-      background: rgba(74,48,115,0.1);
-      border-radius: 999px;
-      overflow: hidden;
+      height: 3px;
+      background: rgba(74,48,115,0.12);
+      border-radius: 2px;
     }
     .score-bar-fill {
       width: 0;
-      height: 100%;
+      height: 3px;
       background: #4A3073;
-      border-radius: 999px;
-      box-shadow: 0 4px 12px rgba(74,48,115,0.22);
+      border-radius: 2px;
       transition: width 0.8s ease;
     }
     .score-val {
       font-size: 11px;
       color: #4A3073;
-      width: 36px;
+      width: 28px;
       text-align: right;
       flex-shrink: 0;
     }
-    .r-head {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .r-head::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #4A3073;
-      transform: translateY(-2px);
-      flex-shrink: 0;
-    }
     .r-type {
-      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
-      font-size: 30px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 28px;
       color: #2e2e2e;
-      margin: 0;
+      margin: 0 0 6px;
       font-weight: 500;
-      letter-spacing: 0.04em;
     }
     .r-score-line {
-      position: relative;
-      z-index: 1;
+      font-family: "Noto Serif SC", serif;
       font-size: 11px;
       color: #4A3073;
       letter-spacing: 0.08em;
-      margin: 0 0 16px;
-    }
-    .result-tags {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 0 0 20px;
-      padding: 0;
-      list-style: none;
-    }
-    .result-tags:empty { display: none; }
-    .result-tag {
-      display: inline-flex;
-      align-items: center;
-      min-height: 30px;
-      padding: 0 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(74,48,115,0.35);
-      background: rgba(245,240,235,0.96);
-      color: #4A3073;
-      font-size: 12px;
-      line-height: 1;
-      text-transform: none;
-      letter-spacing: 0.02em;
+      margin: 0 0 18px;
     }
     .r-divider {
       height: 1px;
-      background: rgba(74,48,115,0.15);
+      background: rgba(74,48,115,0.1);
       margin-bottom: 20px;
     }
-    .r-quote {
-      position: relative;
-      z-index: 1;
-      margin: 0 0 20px;
-      padding: 16px 18px;
-      border-left: 3px solid #4A3073;
-      background: rgba(74,48,115,0.06);
-      color: #3d3158;
-      line-height: 1.9;
-      font-size: 14px;
-    }
-    .r-quote:empty { display: none; }
     .r-desc {
-      position: relative;
-      z-index: 1;
-      font-size: 14px;
-      color: #554c47;
-      line-height: 1.9;
-      padding: 24px;
-      background: rgba(255,255,255,0.45);
-      border-radius: 20px;
+      font-family: "Noto Serif SC", serif;
+      font-size: 13px;
+      color: #555;
+      line-height: 2;
     }
     .r-desc p {
-      margin: 0 0 1.4em;
+      margin: 0 0 16px;
     }
     .r-desc p:last-child {
       margin-bottom: 0;
+    }
+    .result-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 0;
+    }
+    .result-save-btn {
+      width: 100%;
+      font-family: "Noto Serif SC", serif;
+      font-size: 12px;
+      color: #4A3073;
+      background: transparent;
+      border: 1px solid rgba(74,48,115,0.25);
+      padding: 11px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+    }
+    .result-guide {
+      font-family: "Noto Serif SC", serif;
+      font-size: 11px;
+      color: #aaa;
+      text-align: center;
+      line-height: 1.6;
+      padding: 4px 0;
+      margin: 0;
+    }
+    .result-guide a { color: #4A3073; text-decoration: underline; text-underline-offset: 2px; }
+    .result-back-btn {
+      display: block;
+      width: 100%;
+      font-family: "Noto Serif SC", serif;
+      font-size: 13px;
+      color: white;
+      background: #4A3073;
+      border: none;
+      padding: 13px 0;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+    }
+    .result-back-btn:hover {
+      background: #3D2565;
+    }
+    .result-retry-btn {
+      font-family: "Noto Serif SC", serif;
+      font-size: 11px;
+      color: #bbb;
+      background: transparent;
+      border: none;
+      padding: 4px 0;
+      cursor: pointer;
+      letter-spacing: 0.03em;
     }
 
 .story-rec {
@@ -472,26 +460,25 @@
         <div class="test-intro-card">
           <div class="test-intro-accent"></div>
           <div class="test-intro-content">
-            <p class="test-intro-source">基于 Gross &amp; John (2003) 情绪调节问卷（Emotion Regulation Questionnaire）</p>
+            <p class="test-intro-source">基于 Brennan, Clark &amp; Shaver (1998) 亲密关系经历量表</p>
             <div class="test-intro-rule"></div>
-            <h2 class="test-intro-scale">ERQ-10<br>情绪调节策略</h2>
+            <h2 class="test-intro-scale">ECR-36<br>依恋风格测评</h2>
             <div class="test-intro-rule"></div>
-            <p class="test-intro-body">难过的时候，你是会试着换个角度想，还是先把情绪压下去、等一个人的时候再说？<br><br>没有哪一种方式天生更高级，但它们会决定：你是把情绪变成可以理解的语言，还是把它悄悄锁进身体。你和情绪相处的方法，多半很早就学会了，只是很少有人陪你认真看一眼。</p>
-            <p class="test-intro-note">这份测评只有 10 道题，测量你最常使用的两种情绪策略：认知重评（重新理解事情）和表达抑制（把感受藏起来）。</p>
+            <p class="test-intro-body">在关系里，你是那种靠近了又害怕被淹没的人，还是总担心对方会悄悄离开？<br><br>依恋风格不是性格缺陷，而是我们学会爱与被爱的方式。它在很早的时候就开始形成，也可以慢慢被看见、被改写。</p>
+            <p class="test-intro-note">这份测评包含 36 道题，帮你了解你在亲密关系中的两个核心维度：焦虑（害怕被抛弃）和回避（害怕太亲密）。</p>
             <button class="test-intro-btn" id="startBtn">准备好了</button>
           </div>
         </div>
       </div>
       <div class="test-body" id="testBody" style="display:none">
-        <div style="max-width:480px;margin:0 auto;padding:12px 20px 0"><a href="assessment-more.html" style="color:#888;font-size:14px;text-decoration:none;">← 测评</a></div>
-        <main class="page"><div style="padding:12px 0 4px"><a href="assessment-more.html" style="color:#888;font-size:14px;text-decoration:none;">← 测评</a></div>
+        <main><div style="padding:12px 0 4px"><a href="assessment-more.html" style="color:#888;font-size:14px;text-decoration:none;">← 测评</a></div>
           <div class="topline"><span id="progressBar"></span></div>
-          <div class="meta"><span id="progressText">准备开始</span><span>ERQ-10</span></div>
+          <div class="meta"><span id="progressText">准备开始</span><span>ECR-36</span></div>
 
           <section class="panel" id="intro">
-            <h1 class="title">压力来的时候，你怎么办</h1>
-            <p class="subtitle">10题 · 约3分钟 · 情绪调节探索</p>
-            <p class="desc">像翻看自己在压力里的旧习惯。请按第一反应作答，不必美化，也不必纠正。</p>
+            <h1 class="title">你和亲密关系的方式</h1>
+            <p class="subtitle">36题 · 约8分钟 · 依恋风格探索</p>
+            <p class="desc">不用表现成熟，也不用证明自己没事。只要诚实地回答：当爱靠近时，你的身体和心，通常会往哪里走。</p>
             <button class="primary" id="beginQuizBtn">开始</button>
           </section>
 
@@ -530,35 +517,50 @@
         if (storyRec) storyRec.style.display = 'none';
       });
       const DATA = {
+        id: "ecr-36",
         questions: [
-          { id: 1, text: "当我想感受一些积极的情绪（如快乐或高兴）时，我会改变自己思考问题的角度", dimension: "reappraisal" },
-          { id: 2, text: "我不会表露自己的情绪", dimension: "suppression" },
-          { id: 3, text: "当我想少感受一些消极的情绪（如悲伤或愤怒）时，我会改变自己思考问题的角度", dimension: "reappraisal" },
-          { id: 4, text: "当感受到积极情绪时，我会很小心地不让它们表露出来", dimension: "suppression" },
-          { id: 5, text: "在面对压力情境时，我会使自己以一种有助于保持平静的方式来考虑它", dimension: "reappraisal" },
-          { id: 6, text: "我控制自己情绪的方式是不表达它们", dimension: "suppression" },
-          { id: 7, text: "当我想多感受一些积极的情绪时，我会改变自己对情境的考虑方式", dimension: "reappraisal" },
-          { id: 8, text: "我会通过改变对情境的考虑方式来控制自己的情绪", dimension: "reappraisal" },
-          { id: 9, text: "当感受到消极的情绪时，我确定不会表露它们", dimension: "suppression" },
-          { id: 10, text: "当我想少感受一些消极的情绪时，我会改变自己对情境的考虑方式", dimension: "reappraisal" }
+          { id: 1, text: "总的来说，我不喜欢让恋人知道自己内心深处的感觉", reverse: false },
+          { id: 2, text: "我担心我会被抛弃", reverse: false },
+          { id: 3, text: "我觉得跟恋人亲近是一件惬意的事情", reverse: true },
+          { id: 4, text: "我很担心我的恋爱关系", reverse: false },
+          { id: 5, text: "当恋人开始要跟我亲近时，我发现我自己在退缩", reverse: false },
+          { id: 6, text: "我担心恋人不会像我关心他/她那样地关心我", reverse: false },
+          { id: 7, text: "当恋人希望跟我非常亲近时，我会觉得不自在", reverse: false },
+          { id: 8, text: "我有点担心会失去恋人", reverse: false },
+          { id: 9, text: "我觉得对恋人开诚布公，不是一件很舒服的事情", reverse: false },
+          { id: 10, text: "我常常希望恋人对我的感情和我对恋人的感情一样强烈", reverse: false },
+          { id: 11, text: "我想与恋人亲近，但我又总是会退缩不前", reverse: false },
+          { id: 12, text: "我常常想与恋人形影不离，但有时这样会把恋人吓跑", reverse: false },
+          { id: 13, text: "当恋人跟我过分亲密的时候，我会感到内心紧张", reverse: false },
+          { id: 14, text: "我担心一个人独处", reverse: false },
+          { id: 15, text: "我愿意把我内心的想法和感觉告诉恋人，我觉得这是一件自在的事情", reverse: true },
+          { id: 16, text: "我想跟恋人非常亲密的愿望，有时会把恋人吓跑", reverse: false },
+          { id: 17, text: "我试图避免与恋人变得太亲近", reverse: false },
+          { id: 18, text: "我需要我的恋人一再地保证他/她是爱我的", reverse: false },
+          { id: 19, text: "我觉得我比较容易与恋人亲近", reverse: true },
+          { id: 20, text: "我觉得自己在要求恋人把更多的感觉，以及对恋爱关系的投入程度表现出来", reverse: false },
+          { id: 21, text: "我发现让我依赖恋人，是一件困难的事情", reverse: false },
+          { id: 22, text: "我并不是常常担心被恋人抛弃", reverse: true },
+          { id: 23, text: "我倾向于不跟恋人过分亲密", reverse: false },
+          { id: 24, text: "如果我无法得到恋人的注意和关心，我会心烦意乱或者生气", reverse: false },
+          { id: 25, text: "我跟恋人什么事情都讲", reverse: true },
+          { id: 26, text: "我发现恋人并不愿意像我所想的那样跟我亲近", reverse: false },
+          { id: 27, text: "我经常与恋人讨论我所遇到的问题以及我关心的事情", reverse: true },
+          { id: 28, text: "如果我还没有恋人的话，我会感到有点焦虑和不安", reverse: false },
+          { id: 29, text: "我觉得依赖恋人是很自在的事情", reverse: true },
+          { id: 30, text: "如果恋人不能像我所希望的那样在我身边时，我会感到灰心丧气", reverse: false },
+          { id: 31, text: "我并不在意从恋人那里寻找安慰、听取劝告、得到帮助", reverse: true },
+          { id: 32, text: "如果在我需要的时候，恋人却不在我身边，我会感到沮丧", reverse: false },
+          { id: 33, text: "在需要的时候，我向恋人求助，是很有用的", reverse: true },
+          { id: 34, text: "当恋人不赞同我时，我觉得确实是我不好", reverse: false },
+          { id: 35, text: "我会在很多事情上向恋人求助，包括寻求安慰和得到承诺", reverse: true },
+          { id: 36, text: "当恋人不花时间和我在一起时，我会感到怨恨", reverse: false }
         ],
         results: {
-          high_reappraisal_low_suppression: {
-            label: "思考派", emoji: "💡", subtitle: "你习惯换个角度看事情", tagline: "你习惯换个角度看事情",
-            desc: "<p>情绪来的时候，你有一种本能——去看看它的另一面。难过的事情发生了，你会试着理解它，给它一个新的位置。这种能力让你在风浪里依然保持某种清醒。</p><p>更难得的是，你很少把感受硬生生按下去。眼泪该流就流，愤怒来了你也允许它在。你和情绪之间有一种比较坦诚的关系，彼此不回避。</p><p>这让你的内在有一种流动感。情绪经过你，被你看见、被你消化，然后真的过去了。很少有什么东西会在你心里淤积太久。</p><p>身边的人可能会觉得你情绪稳定。但你知道，那份稳定来自你愿意面对，愿意去拆解，愿意和自己的感受待在一起。</p><p>这是一种你练出来的柔韧。不是没有波澜，是你学会了在波澜里游泳。</p>"
-          },
-          high_reappraisal_high_suppression: {
-            label: "双管派", emoji: "⚡", subtitle: "你用很多方式管理自己的情绪", tagline: "你用很多方式管理自己的情绪",
-            desc: "<p>你的内心有一套很强的翻译系统。当情绪涌上来，你会迅速找到另一个角度去理解它——换个框架，换个故事，让它变得可以承受。</p><p>但与此同时，你也在用力地压着什么。表面上你已经想通了，身体里却还有一团没有被释放的东西。你的理解走在了感受的前面。</p><p>这种状态有点像一边在疗愈，一边在封锁。头脑说\"我懂了\"，心里说\"我还没好\"。两股力量同时运转，让你有时候觉得累，却说不清累在哪里。</p><p>你可能已经习惯了这种方式——先讲道理给自己听，再把剩下的情绪悄悄收好。你做得很好，好到别人根本看不出你还在消化。</p><p>只是偶尔，给那个\"还没好\"的部分一点时间。它不需要被解释，只需要被允许存在一会儿。</p>"
-          },
-          low_reappraisal_high_suppression: {
-            label: "压下去派", emoji: "🔒", subtitle: "你更习惯把情绪藏起来", tagline: "你更习惯把情绪藏起来",
-            desc: "<p>你处理情绪的方式，更像是把它们压进一个很深的抽屉。感受来了，你的第一反应是收住、忍住、撑住。让自己看起来没事，让生活继续运转。</p><p>你很少去拆解那些情绪——去想它为什么来、它在告诉你什么、换个角度会不会不一样。对你来说，情绪更像是一种需要被管理的麻烦，而不是需要被听见的信号。</p><p>这让你在外面显得很能扛。但你心里清楚，那些被压下去的东西并没有消失。它们在某个角落慢慢积累，偶尔在某个深夜、某句话、某个瞬间突然涌出来。</p><p>那种突然的溃堤感可能让你困惑——明明已经忍过去了，怎么还在。因为忍过去和真的过去，是两件事。</p><p>你值得学一种更轻的方式来和情绪相处。那些感受不会因为被看见就失控，它们反而会因为被看见而安静下来。</p>"
-          },
-          low_reappraisal_low_suppression: {
-            label: "随流派", emoji: "🌀", subtitle: "你不太主动调节情绪，让它自然流动", tagline: "你不太主动调节情绪，让它自然流动",
-            desc: "<p>情绪在你身上来去得很自然。你不太会刻意去压制它，也不太会去分析它、给它换一个角度。它来了，你感受到了，然后它就走了。</p><p>这种方式有一种原始的诚实。你和自己的感受之间没有太多滤镜，没有太多加工。开心就是开心，难过就是难过，不需要包装成别的东西。</p><p>但有时候你可能会觉得，情绪像天气一样不断变换，却很少留下什么。你经历了很多感受，却不太确定自己从中带走了什么。</p><p>少了那一步\"停下来看看它\"的过程，情绪的来去可能显得有些散漫。像读了很多页书，却没有画过一条线。</p><p>试着偶尔在一种感受面前停久一点。不用分析它，只是看看它。那些反复出现的情绪里，可能藏着你还没听见的话。</p>"
-          }
+          secure: { label: "安全型", emoji: "🌿", subtitle: "你知道怎么爱，也知道怎么被爱", tagline: "你知道怎么爱，也知道怎么被爱", desc: "<p>在关系里，你有一种很少被打扰的安定。别人靠近的时候，你不会本能地后退；别人需要空间的时候，你也不会觉得那是一种遗弃。这种稳定感长在身体里，不需要反复确认。</p><p>你能说出自己的需要，也能听见对方的。这件事听起来简单，做到的人很少。情感在你这里有来有回，像呼吸一样自然——不用屏住，不用加速。</p><p>当亲密关系遇到冲突，你的第一反应很少是逃走或抓紧。你倾向于留在那里，看看发生了什么，试着理解。这种留下来的能力，是你身上最安静也最有力量的东西。</p><p>你对爱的信任不是盲目的乐观。你见过关系里的复杂，也经历过失望和修复。正因为这些经历没有摧毁你对连接的信心，这份信任才格外扎实。</p><p>和你在一起的人，常常会觉得被接住了。你给出的安全感不是承诺，是一种日常的、不戏剧化的在场。这是一种很深的能力，你可能自己都没有意识到它有多珍贵。</p>" },
+          fearful: { label: "恐惧型", emoji: "🌊", subtitle: "你想靠近，但靠近本身让你害怕", tagline: "你想靠近，但靠近本身让你害怕", desc: "<p>你心里同时住着两种力量：一种拼命想靠近，一种拼命想逃开。它们同时存在，同时拉扯，让你在关系里常常感到一种深层的撕裂感。这两个需要都是真实的。</p><p>靠近一个人的时候，你能感受到温暖，也几乎同时感受到危险。亲密让你放松的那一刻，某种警报就会响起——好像太近了，好像要受伤了，好像应该退回去了。</p><p>你对被拒绝有很深的恐惧，但你害怕的不只是被拒绝。你也害怕被接受之后的脆弱，害怕打开自己之后发现那个人终究会走。所以你学会了一种特殊的距离感：看起来在，但没有完全交出自己。</p><p>关系里的你，常常陷入一种循环——靠近、感到不安、退后、感到孤独、再靠近。每一轮都消耗巨大的情绪能量，每一轮都让你对自己多一点怀疑。</p><p>你对爱的感受比大多数人都浓烈，也比大多数人都复杂。那些矛盾是你的情感系统在用它知道的唯一方式保护你。你值得一种不需要时刻自我保护的亲密。</p>" },
+          preoccupied: { label: "专注型", emoji: "🔥", subtitle: "你爱得很用力，有时用力到把人吓跑", tagline: "你爱得很用力，有时用力到把人吓跑", desc: "<p>你爱一个人的时候，全部感官都会打开。对方的一个表情、一句语气的变化、一条消息的回复速度——你都能接收到信号。这种敏锐让你在关系里活得很用力，也很累。</p><p>内心深处有一个声音反复在问：我够好吗？你还在吗？你会留下来吗？这些问题是你情感系统里最真实的运转方式。你需要确认，需要回应，需要被看见的证据。</p><p>你给出爱的方式往往是加倍付出——更多的关心、更密的联系、更主动的靠近。你以为只要自己做得足够多，对方就不会离开。这个逻辑让你精疲力竭，但你很难停下来。</p><p>分离，哪怕是很短暂的情感断联，都会在你体内引发强烈的不安。这种不安有身体反应——心跳加速、注意力被锁死、无法集中在别的事情上。</p><p>你对爱的渴望是真实的，你的投入也是真实的。那些焦虑的背后，藏着一颗极其认真对待关系的心。你需要学会的，是在没有回应的间隙里，依然相信自己值得被留下。</p>" },
+          dismissing: { label: "冷漠型", emoji: "🧊", subtitle: "你习惯靠自己，但其实你也想被接住", tagline: "你习惯靠自己，但其实你也想被接住", desc: "<p>你习惯了靠自己。遇到问题的时候，第一反应是内部消化，而不是找人倾诉。这种独立是你真正信赖的生存方式，是你很早就学会的事情。</p><p>当关系变得太近、对方的需要变得太多，你会感到一种本能的压迫感。你需要空间，需要退后一步才能呼吸。这个退后的动作，常常被误读为冷漠。</p><p>情绪在你这里是被管理的。你很少让自己陷入强烈的情感波动，也很少让别人看到你脆弱的部分。你知道脆弱存在，但你不觉得展示它是安全的，或者有用的。</p><p>求助对你来说是一件很难的事。你能帮别人，但让别人帮你，会让你有一种失控感。在你的系统里，需要别人约等于一种风险，一种可能被辜负的敞口。</p><p>你内心的情感需求从来没有消失过，它们只是被放在了一个很深、很安静的地方。你擅长的是运转，是解决问题，是让一切看起来没什么大不了。但偶尔，在某个不设防的瞬间，你也能感觉到那些需求在那里，完好无损地等着你。</p>" }
         }
       };
 
@@ -601,7 +603,10 @@
 
       function transition(next) {
         qWrap.classList.add("fade-out");
-        setTimeout(() => { next(); qWrap.classList.remove("fade-out"); }, 300);
+        setTimeout(() => {
+          next();
+          qWrap.classList.remove("fade-out");
+        }, 300);
       }
 
       function commitCurrentAnswer() {
@@ -610,7 +615,8 @@
 
       function nextQuestion() {
         commitCurrentAnswer();
-        if (state.index === DATA.questions.length - 1) {
+        const isLast = state.index === DATA.questions.length - 1;
+        if (isLast) {
           transition(showResult);
         } else {
           transition(() => { state.index += 1; renderQuestion(); });
@@ -623,21 +629,24 @@
         transition(() => { state.index -= 1; renderQuestion(); });
       }
 
-      function mean(scores) { return scores.reduce((a, b) => a + b, 0) / scores.length; }
+      function mean(list) { return list.reduce((a, b) => a + b, 0) / list.length; }
       function formatParagraphs(text) {
-        return String(text || '').replace(/<span[\s\S]*?<\/span>/g, '').split(/\n+/).filter(Boolean).map(item => `<p>${item.replace(/<[^>]+>/g, '')}</p>`).join('');
+        const raw = String(text || '').trim();
+        if (!raw) return '';
+        if (/<p[\s>]/i.test(raw)) return raw;
+        return raw.split(/\n+/).filter(Boolean).map(item => `<p>${item.replace(/<[^>]+>/g, '')}</p>`).join('');
       }
       function buildScoreRows(items) {
         return items.map((item) => `
           <div class="score-row">
             <span class="score-label">${item.label}</span>
             <div class="score-bar-bg"><div class="score-bar-fill" style="width:${item.percent.toFixed(0)}%"></div></div>
-            <span class="score-val">${item.value.toFixed(1)}</span>
+            <span class="score-val">${item.percent.toFixed(0)}%</span>
           </div>
         `).join('');
       }
 
-const storyIllustrations = {
+      const storyIllustrations = {
         'story-detail.html': 'illustrations/story-queqie.png',
         'story-tuanzi-v3.html': 'illustrations/story-tuanzi.png',
         'story-xiaochen.html': 'illustrations/story-xiaochen.png',
@@ -647,14 +656,9 @@ const storyIllustrations = {
         'story-bingbing.html': 'illustrations/story-bingbing.png'
       };
 
-      const storyRecommendations = {
-        high_reappraisal_low_suppression: { title: '曲奇：真空里的野蛮生长', url: 'story-detail.html', img: 'illustrations/story-queqie.png' },
-        high_reappraisal_high_suppression: { title: '小李：她决定在精密结构里，自己养一颗星星', url: 'story-xiaoli.html', img: 'illustrations/story-xiaoli.png' },
-        low_reappraisal_high_suppression: { title: '自行车：30岁却像15岁的赛博格', url: 'story-zixingche.html', img: 'illustrations/story-zixingche.png' },
-        low_reappraisal_low_suppression: { title: '嗅嗅：在北京，允许不长大', url: 'story-xiuxiu.html', img: 'illustrations/story-xiuxiu.png' }
-      };
+      const defaultStoryRecommendation = { title: '她身体里住着一道错误的方程', url: 'story-tuanzi-v3.html', img: 'illustrations/story-tuanzi.png' };
 
-      function updateStoryBar(rec) {
+      function updateStoryBar(rec = defaultStoryRecommendation) {
         const titleEl = document.querySelector('#storyRec .story-rec-title');
         const goBtn = document.querySelector('#storyRec .story-rec-btn');
         if (!storyRec || !titleEl || !goBtn || !rec) return;
@@ -673,48 +677,53 @@ const storyIllustrations = {
         quizEl.classList.add("hidden");
         resultEl.classList.remove("hidden");
 
-        const reappraisalItems = [1,3,5,7,8,10].map(id => state.answers[id - 1]);
-        const suppressionItems = [2,4,6,9].map(id => state.answers[id - 1]);
-        const rScore = mean(reappraisalItems);
-        const sScore = mean(suppressionItems);
+        const scored = DATA.questions.map((q, idx) => q.reverse ? 8 - state.answers[idx] : state.answers[idx]);
+        const odd = scored.filter((_, idx) => (idx + 1) % 2 === 1);
+        const even = scored.filter((_, idx) => (idx + 1) % 2 === 0);
+        const avoidance = mean(odd);
+        const anxiety = mean(even);
 
-        const highR = rScore >= 4.5;
-        const highS = sScore >= 4.5;
-        const key = `${highR ? "high" : "low"}_reappraisal_${highS ? "high" : "low"}_suppression`;
-        const r = DATA.results[key];
-        const summaryMap = { high_reappraisal_low_suppression: "思考派", high_reappraisal_high_suppression: "双管派", low_reappraisal_high_suppression: "压抑派", low_reappraisal_low_suppression: "随流派" };
-        const rec = storyRecommendations[key];
+        const typeScores = {
+          secure: avoidance * 3.2893296 + anxiety * 5.4725318 - 11.5307833,
+          fearful: avoidance * 7.2371075 + anxiety * 8.1776448 - 32.3553266,
+          preoccupied: avoidance * 3.9246754 + anxiety * 9.7102446 - 28.457322,
+          dismissing: avoidance * 7.3654621 + anxiety * 4.9392039 - 22.2281088
+        };
+
+        const orderedTypes = Object.entries(typeScores).sort((a, b) => b[1] - a[1]);
+        const winner = orderedTypes[0][0];
+        const r = DATA.results[winner];
+        const summaryMap = { secure: "安全型", fearful: "恐惧型", preoccupied: "专注型", dismissing: "冷漠型" };
+        const minScore = orderedTypes[orderedTypes.length - 1][1];
+        const maxScore = orderedTypes[0][1];
+        const matchRows = orderedTypes.map(([key, score]) => ({
+          label: summaryMap[key],
+          percent: maxScore === minScore ? 100 : ((score - minScore) / (maxScore - minScore)) * 100
+        }));
 
         progressBar.style.width = "100%";
         progressText.textContent = "完成";
 
         if (window.SheProfileStore) {
-          const regulation = Math.max(0, Math.min(5, rScore - (sScore - 1) * 0.35));
+          const dominant = anxiety >= avoidance ? "anxiety" : "avoidance";
           window.SheProfileStore.saveResult({
-            moduleId: "erq",
-            moduleName: "情绪调节",
-            summary: summaryMap[key] || r.label,
-            score: { reappraisal: rScore, suppression: sScore, regulation },
-            topDimension: rScore >= sScore ? "reappraisal" : "suppression"
+            moduleId: "ecr",
+            moduleName: "依恋风格",
+            summary: summaryMap[winner] || r.label,
+            score: { anxiety, avoidance, security: ((8 - anxiety) + (8 - avoidance)) / 2 },
+            topDimension: dominant
           });
         }
 
-        const vizRows = [
-          { label: '认知重评', value: rScore, percent: ((rScore - 1) / 6) * 100 },
-          { label: '表达抑制', value: sScore, percent: ((sScore - 1) / 6) * 100 }
-        ];
-
         resultEl.innerHTML = `
           <div id="result-capture" class="result-capture-card">
-          <div class="result-viz">${buildScoreRows(vizRows)}</div>
-          <div class="r-head"><h2 class="r-type" data-subtitle="${r.subtitle || r.tagline || ''}">${r.label}</h2></div>
-          <p class="r-score-line">认知重评 ${rScore.toFixed(2)} ｜ 表达抑制 ${sScore.toFixed(2)}</p>
-          <ul class="result-tags"><li class="result-tag">认知重评</li><li class="result-tag">表达抑制</li><li class="result-tag">ERQ-10</li></ul>
-          <div class="r-quote">${r.subtitle || r.tagline || ''}</div>
+          <div class="result-viz">${buildScoreRows(matchRows)}</div>
+          <h2 class="r-type" data-subtitle="${r.subtitle || r.tagline || ''}">${r.label}</h2>
+          <p class="r-score-line">回避 ${avoidance.toFixed(2)} ｜ 焦虑 ${anxiety.toFixed(2)}</p>
           <div class="r-divider"></div>
-          <div class="r-desc">${r.desc}<p>这是你当下的模式，不是诊断，也不是定论。</p></div>
+          <div class="r-desc">${formatParagraphs(r.desc)}<p>这是你当下的模式，不是诊断，也不是定论。</p></div>
           </div>
-<div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
+<div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn" id="redoBtn" type="button">再做一次</button></div>
 <div class="story-rec" id="storyRec" style="display:none;">
   <div class="story-rec-img"></div>
   <div class="story-rec-content">
@@ -725,7 +734,7 @@ const storyIllustrations = {
 </div>
         `;
 
-        updateStoryBar(rec);
+        updateStoryBar();
         document.getElementById("redoBtn").onclick = restart;
       }
 
@@ -753,9 +762,9 @@ const storyIllustrations = {
       answerSlider.addEventListener("input", function () {
         syncSliderValue(Number(this.value));
       });
-      document.getElementById('startBtn').onclick = () => {
-        document.querySelector('.test-intro').style.display = 'none';
-        document.getElementById('testBody').style.display = 'block';
+      document.getElementById("startBtn").onclick = () => {
+        document.querySelector(".test-intro").style.display = "none";
+        document.getElementById("testBody").style.display = "block";
       };
       document.getElementById("beginQuizBtn").onclick = startQuiz;
       document.getElementById("prevBtn").onclick = goPrev;
@@ -772,12 +781,12 @@ const storyIllustrations = {
   }
   try {
     generateResultCard({
-      testName: '情绪调节测评 · ERQ',
+      testName: '依恋风格测评 · ECR',
       resultType: document.querySelector('#result-capture .r-type')?.textContent?.trim() || '测试结果',
       resultSubtitle: document.querySelector('#result-capture .r-type')?.dataset?.subtitle || '',
-      quote: extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.innerHTML, '你习惯换个角度看事情。'),
+      quote: extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.innerHTML, '你知道怎么爱，也知道怎么被爱。'),
       score: document.querySelector('#result-capture .r-score-line')?.textContent?.trim() || '',
-      fileName: 'erq-result'
+      fileName: 'ecr-result'
     });
   } finally {
     if (button) {
@@ -792,5 +801,14 @@ window.downloadResult = downloadResult;
     </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
+
+<script>
+window.addEventListener('load', () => {
+  state.answers = DATA.questions.map((q) => q.reverse ? 7 : 1);
+  showResult();
+  window.scrollTo(0, 0);
+});
+</script>
 </body>
+
 </html>

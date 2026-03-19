@@ -28,33 +28,78 @@
     .result-panel{display:none;padding:8px 0}
     .result-panel.show{display:block}
     .quiz-panel.hide{display:none}
+    .result-capture-card {
+      background: #f5f0eb;
+      border: 1px solid rgba(74,48,115,0.12);
+      border-radius: 24px;
+      padding: 28px 24px 26px;
+      box-shadow: 0 14px 36px rgba(74,48,115,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .result-capture-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.28), transparent 24%);
+      pointer-events: none;
+    }
+    .result-kicker {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 16px;
+      color: #4A3073;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .result-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #4A3073;
+      box-shadow: 0 0 0 5px rgba(74,48,115,0.08);
+    }
     .result-viz {
-      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 26px;
+      padding: 18px 18px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.42);
+      border: 1px solid rgba(74,48,115,0.08);
     }
     .score-row {
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
+    .score-row:last-child { margin-bottom: 0; }
     .score-label {
-      font-family: "Noto Serif SC", serif;
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
       font-size: 11px;
-      color: #888;
-      width: 60px;
+      color: rgba(47,42,38,0.72);
+      width: 64px;
       flex-shrink: 0;
     }
     .score-bar-bg {
       flex: 1;
-      height: 3px;
-      background: rgba(74,48,115,0.12);
-      border-radius: 2px;
+      height: 10px;
+      background: rgba(74,48,115,0.1);
+      border-radius: 999px;
+      overflow: hidden;
     }
     .score-bar-fill {
       width: 0;
-      height: 3px;
+      height: 100%;
       background: #4A3073;
-      border-radius: 2px;
+      border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(74,48,115,0.22);
       transition: width 0.8s ease;
     }
     .score-val {
@@ -64,34 +109,95 @@
       text-align: right;
       flex-shrink: 0;
     }
+    .r-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .r-head::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #4A3073;
+      transform: translateY(-2px);
+      flex-shrink: 0;
+    }
     .r-type {
-      font-family: "Cormorant Garamond", serif;
-      font-size: 28px;
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-size: 30px;
       color: #2e2e2e;
-      margin: 0 0 6px;
+      margin: 0;
       font-weight: 500;
+      letter-spacing: 0.04em;
     }
     .r-score-line {
+      position: relative;
+      z-index: 1;
       font-size: 11px;
       color: #4A3073;
       letter-spacing: 0.08em;
-      margin: 0 0 18px;
+      margin: 0 0 16px;
+    }
+    .result-tags {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 20px;
+      padding: 0;
+      list-style: none;
+    }
+    .result-tags:empty { display: none; }
+    .result-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(74,48,115,0.35);
+      background: rgba(245,240,235,0.96);
+      color: #4A3073;
+      font-size: 12px;
+      line-height: 1;
     }
     .r-divider {
       height: 1px;
-      background: rgba(74,48,115,0.1);
+      background: rgba(74,48,115,0.15);
       margin-bottom: 20px;
     }
+    .r-quote {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 20px;
+      padding: 16px 18px;
+      border-left: 3px solid #4A3073;
+      background: rgba(74,48,115,0.06);
+      color: #3d3158;
+      line-height: 1.9;
+      font-size: 14px;
+    }
+    .r-quote:empty { display: none; }
     .r-desc {
-      font-size: 13px;
-      color: #555;
-      line-height: 2;
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+      color: #554c47;
+      line-height: 1.9;
     }
     .r-desc p {
-      margin: 0 0 16px;
+      margin: 0 0 1.4em;
+      padding-bottom: 1.4em;
+      border-bottom: 1px solid rgba(74,48,115,0.15);
     }
     .r-desc p:last-child {
       margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
     }
     .result-actions {
       display: flex;
@@ -102,47 +208,53 @@
     }
     .result-save-btn {
       width: 100%;
-      font-family: "Noto Serif SC", serif;
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
       font-size: 12px;
       color: #4A3073;
       background: transparent;
-      border: 1px solid rgba(74,48,115,0.25);
-      padding: 11px 0;
-      border-radius: 8px;
+      border: 1px solid rgba(74,48,115,0.28);
+      padding: 12px 0;
+      border-radius: 10px;
       cursor: pointer;
       letter-spacing: 0.05em;
+      transition: background .2s ease, color .2s ease, border-color .2s ease;
+    }
+    .result-save-btn:hover {
+      background: rgba(74,48,115,0.08);
+      border-color: #4A3073;
     }
     .result-guide {
-      font-family: "Noto Serif SC", serif;
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
       font-size: 11px;
-      color: #aaa;
+      color: #91867d;
       text-align: center;
-      line-height: 1.6;
+      line-height: 1.9;
       padding: 4px 0;
       margin: 0;
     }
     .result-guide a { color: #4A3073; text-decoration: underline; text-underline-offset: 2px; }
     .result-back-btn {
-  display: block;
-  width: 100%;
-  font-family: "Noto Serif SC", serif;
-  font-size: 13px;
-  color: white;
-  background: #4A3073;
-  border: none;
-  padding: 13px 0;
-  border-radius: 10px;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-}
-.result-back-btn:hover {
-  background: #3D2565;
-}
+      display: block;
+      width: 100%;
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-size: 13px;
+      color: white;
+      background: #4A3073;
+      border: none;
+      padding: 13px 0;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: background .2s ease;
+    }
+    .result-back-btn:hover {
+      background: #3D2565;
+    }
     .result-retry-btn {
-      font-family: "Noto Serif SC", serif;
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
       font-size: 11px;
-      color: #bbb;
+      color: #4A3073;
       background: transparent;
       border: none;
       padding: 4px 0;
@@ -369,6 +481,7 @@
 
   <div id="resultPanel" class="result-panel">
     <div class="card result-capture-card">
+      <p class="result-kicker">Result Profile</p>
       <div class="result-viz">
         <div class="score-row">
           <span class="score-label">感官敏感</span>
@@ -391,8 +504,12 @@
           <span class="score-val" id="valOverstim"></span>
         </div>
       </div>
-      <h2 class="r-type" id="rType"></h2>
+      <div class="r-head">
+        <h2 class="r-type" id="rType"></h2>
+      </div>
       <p class="r-score-line">平均得分 <span id="rScore"></span> / 7</p>
+      <ul class="result-tags" id="resultTags"></ul>
+      <div class="r-quote" id="rQuote"></div>
       <div class="r-divider"></div>
       <div class="r-desc" id="rDesc"></div>
     </div>
@@ -451,16 +568,22 @@ const Rs = {
 high: {
 type: '高敏感人格',
 subtitle: '你接收到的世界，比大多数人更密、更深。',
+tags: ['高感知', '高共情', '深度处理', '细节雷达'],
+quote: '你的神经系统像一台增益开得很大的收音机，信号和噪音一起进来。',
 desc: '<p>你比大多数人接收到更多。声音、光线、别人语气里微妙的变化、一个房间里没有人说出口的紧张感。</p><p>超市的灯管嗡嗡作响，大多数人根本不会注意到，你已经开始不舒服了。朋友笑着说的一句话，你听到了笑底下那层勉强。</p><p>你的神经系统像一台增益开得很大的收音机，信号和噪音一起进来，你没法选择只收你想要的那部分。你拥有罕见的感知力和共情深度，但也比别人更容易被消耗。</p><p>你可能需要更多的独处时间、更安静的环境、更长的恢复周期。这些不是脆弱，是一个高精度系统正常的运转需求。</p><p>别人充电一小时能用一天，你可能需要整个下午把门关上才能缓过来。你感受世界的方式是昂贵的。也是珍贵的。</p>'
 },
 mid: {
 type: '中等感受力',
 subtitle: '你能感知细节，也保有不过载的弹性。',
+tags: ['有感知力', '有边界感', '情绪弹性', '不过载'],
+quote: '你像一个会自动对焦的镜头，只在重要画面上变得锐利。',
 desc: '<p>你有敏感的时候，但不是对所有事都如此。有些场景你会被深深触动，有些你可以自然滑过去。</p><p>像一个会自动对焦的镜头，只在某些画面上变得锐利。一首歌可能突然让你鼻酸，但十分钟后你已经忘了它在放什么。</p><p>一个人的语气变化你接收到了，但你可以选择不跟进去。你能共情，但不至于被别人的情绪淹没；能感知氛围，但不会因此完全丢失自己的节奏。</p><p>大多数时候，你掌握着那个旋钮。你知道自己在哪些地方容易被击中，也慢慢学会了在被击中之前稍微侧一下身。</p><p>这个本能保护着你，让你可以在感受和消耗之间保持一个还算舒服的位置。</p>'
 },
 low: {
 type: '低敏感倾向',
 subtitle: '你和世界之间有一层让你稳定的缓冲。',
+tags: ['稳定缓冲', '情绪稳态', '不易卷入', '节奏感'],
+quote: '你和世界之间有一层稳定的缓冲，让你不轻易被外界搅乱。',
 desc: '<p>你的情绪系统波动不大，不容易被外界突然扰动。别人可能已经被一件事搅得心神不宁了，你还保持着自己的步调。</p><p>你不太会被环境的情绪裹挟，也不容易因为他人的反应失去判断。挺稳的。</p><p>有时候这让你成为乱局里最清醒的那个人，别人慌的时候你还在正常运转。但你可能偶尔也会困惑：为什么别人那么容易被影响？</p><p>一件你觉得没什么大不了的事，在另一个人那里却成了一整天的阴影。你不太理解那种被情绪卷走的失控感。</p><p>你跟世界之间有一层你自己也未必注意到的缓冲。它让你稳，也偶尔让你离某些体验远了一步。</p>'
 }
 };
@@ -543,6 +666,8 @@ if(window.SheProfileStore){window.SheProfileStore.saveResult({moduleId:'hsp',mod
 $('rType').textContent=r.type;
 $('rType').dataset.subtitle = r.subtitle || '';
 $('rDesc').innerHTML=r.desc;
+$('rQuote').textContent = r.quote || '';
+$('resultTags').innerHTML = (r.tags || []).map(tag => `<li class="result-tag">${tag}</li>`).join('');
 $('rScore').textContent=mean.toFixed(2);
 $('barSensory').style.width = toWidth(sensoryAvg);
 $('valSensory').textContent = sensoryAvg.toFixed(1);

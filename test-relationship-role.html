@@ -181,26 +181,29 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
+    .score-row:last-child { margin-bottom: 0; }
     .score-label {
-      font-family: "Noto Serif SC", serif;
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
       font-size: 11px;
-      color: #888;
-      width: 60px;
+      color: rgba(47,42,38,0.72);
+      width: 64px;
       flex-shrink: 0;
     }
     .score-bar-bg {
       flex: 1;
-      height: 3px;
-      background: rgba(74,48,115,0.12);
-      border-radius: 2px;
+      height: 10px;
+      background: rgba(74,48,115,0.1);
+      border-radius: 999px;
+      overflow: hidden;
     }
     .score-bar-fill {
       width: 0;
-      height: 3px;
+      height: 100%;
       background: #4A3073;
-      border-radius: 2px;
+      border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(74,48,115,0.22);
       transition: width 0.8s ease;
     }
     .score-val {
@@ -210,31 +213,93 @@
       text-align: right;
       flex-shrink: 0;
     }
+    .r-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .r-head::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #4A3073;
+      transform: translateY(-2px);
+      flex-shrink: 0;
+    }
     .r-type {
-      font-family: "Cormorant Garamond", serif;
-      font-size: 28px;
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-size: 30px;
       color: #2e2e2e;
-      margin: 0 0 6px;
+      margin: 0;
       font-weight: 500;
+      letter-spacing: 0.04em;
     }
     .r-score-line {
+      position: relative;
+      z-index: 1;
       font-size: 11px;
       color: #4A3073;
       letter-spacing: 0.08em;
-      margin: 0 0 18px;
+      margin: 0 0 16px;
+    }
+    .result-tags {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 20px;
+      padding: 0;
+      list-style: none;
+    }
+    .result-tags:empty { display: none; }
+    .result-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(74,48,115,0.35);
+      background: rgba(245,240,235,0.96);
+      color: #4A3073;
+      font-size: 12px;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: 0.02em;
     }
     .r-divider {
       height: 1px;
-      background: rgba(74,48,115,0.1);
+      background: rgba(74,48,115,0.15);
       margin-bottom: 20px;
     }
+    .r-quote {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 20px;
+      padding: 16px 18px;
+      border-left: 3px solid #4A3073;
+      background: rgba(74,48,115,0.06);
+      color: #3d3158;
+      line-height: 1.9;
+      font-size: 14px;
+    }
+    .r-quote:empty { display: none; }
     .r-desc {
-      font-size: 13px;
-      color: #555;
-      line-height: 2;
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+      color: #554c47;
+      line-height: 1.9;
+      padding: 24px;
+      background: rgba(255,255,255,0.45);
+      border-radius: 20px;
     }
     .r-desc p {
-      margin: 0 0 16px;
+      margin: 0 0 1.4em;
     }
     .r-desc p:last-child {
       margin-bottom: 0;
@@ -319,7 +384,9 @@
         <div class="result-card result-capture-card">
           <div class="result-viz" id="resultViz"></div>
           <div class="result-tag r-score-line" id="resultTag"></div>
-          <h2 class="result-title r-type" id="resultTitle"></h2>
+          <div class="r-head"><h2 class="result-title r-type" id="resultTitle"></h2></div>
+          <ul class="result-tags" id="resultTags"></ul>
+          <div class="r-quote" id="resultQuote"></div>
           <div class="r-divider"></div>
           <div class="result-desc r-desc" id="resultDesc"></div>
         </div>
@@ -591,17 +658,17 @@ window.downloadResult = downloadResult;
     "倾听者": {
       "title": "LISTENER — 你是关系里的倾听者",
       "subtitle": "你是关系里的倾听者",
-      "desc": "你在关系里最常待的位置，是对面那个人可以安全说话的地方。不急着评判，不忙着给方案，你就是在那里，带着一种让人放松的注意力。很多人跟你聊完会觉得好一些。但很少有人问过你今天过得怎么样。你不是不想说，是太擅长把空间让出去了。对话一开始你就自动切换到接收模式，等到对方终于说完、终于问到你的时候，你发现那个想说的东西已经缩回去了。或者你觉得自己的事没那么值得讲。你在关系里提供的那种安全感，你自己其实也需要。有时候你也需要一个不必先照顾别人就能开口的房间。一个你可以说到一半、还没整理好、甚至有点语无伦次的时候，对面那个人依然在的房间。"
+      "desc": "<p>在关系里，你总是先听。别人说话的时候，你在的方式很完整——你的眼神、你的沉默、你偶尔的回应，都在说\"我在这里，你说\"。</p><p>你有一种让人放心开口的气场。很多人在你面前会说出他们不会对别人说的话。你接住了那些沉重的、脆弱的、凌乱的东西，而且你接得很稳。</p><p>你的倾听不是被动的。你在听的时候，脑子里在理解、在感受、在整理。你给出的空间，是你主动创造的，是你选择的慷慨。</p><p>只是有时候，你给了别人太多说话的空间，自己的声音就被挤到了很后面。你的故事、你的感受、你的需要——它们也值得被同样用心地接住。</p><p>下一次当你又习惯性地把话筒递出去的时候，试试留一小段给自己。你也值得被听见。</p>"
     },
     "照顾者": {
       "title": "CAREGIVER — 你是关系里的照顾者",
       "subtitle": "你是关系里的照顾者",
-      "desc": "你在关系里的第一反应，几乎总是\"对方需要什么\"。你记得朋友随口提过的事，能提前感知到谁的状态不太对，照顾人的方式细致到连你自己都未必意识到。天冷了你会想到某个人还没买厚外套，有人说了一句丧气话你会记很久。但你很少被同等地照顾回来——你太少发出需要被照顾的信号了。甚至你生病的时候，发出去的消息可能还是在问别人怎么样。\"为别人做点什么\"已经成了你在关系里最自然的呼吸方式。只是偶尔你也会累。那种累不是身体的，是一个人撑了太久的。你心里大概有过一个很轻的念头：什么时候可以有人也这样对我。但这个念头你不太敢放大。"
+      "desc": "<p>你在关系里的第一反应，通常是看见对方需要什么。一个眼神、一句话、一个微妙的变化——你就已经在行动了。倒水、安排、调整计划、替对方想到他们还没想到的事。</p><p>你照顾人的方式很细致，细致到对方可能都没有完全意识到你做了多少。你把付出织进了日常的纹理里，安静、自然、不求回报。</p><p>这种照顾的本能里有温柔，也有力量。你能扛住很多——情绪的、实际的、别人可能扛不动的。你的肩膀一直都是可以靠的，而且你几乎从不抱怨这件事。</p><p>但你有没有发现，你很少让别人照顾你？接受关心对你来说，比给出关心要难得多。你习惯了做那个给予的人，以至于当角色反转时，你会感到不安。</p><p>你照顾了所有人。现在，轮到你问问自己：谁在照顾我？这个问题的答案，也可以是你自己。</p>"
     },
     "表达者": {
       "title": "EXPRESSOR — 你是关系里的表达者",
       "subtitle": "你是关系里的表达者",
-      "desc": "你是关系里那个先开口的人。有感受就想说出来，有想法就需要被听见——不说出来对你而言几乎等于没有发生。你在表达里确认自己的存在。那些在脑子里转了几圈的念头，只有说出口被另一个人接住了，才算真的落了地。但你也知道，不是所有人都能接得住你的密度。有时候你说了很多，对面的人安静了，你会突然觉得暴露了太多。那一刻会有一小阵后悔涌上来，像把一样东西递出去之后才开始犹豫该不该给。你一直在校准表达和暴露之间那条线。这件事本身就已经说明你比看起来更谨慎。你的坦诚不是冲动，是你选择的方式。代价你清楚。"
+      "desc": "<p>在关系里，你是那个先开口的人。你的感受、你的想法、你对这段关系的期待——你愿意把它们说出来，放到两个人之间。</p><p>你的表达不是为了争夺什么，是为了让连接真实地发生。你知道如果什么都不说，关系就会停在表面。你选择了更勇敢的方式——去推动、去靠近、去让对方看到你。</p><p>这种主动性里有一种罕见的诚实。你愿意暴露自己——你的需要、你的脆弱、你的不确定。在一个大多数人都在等对方先开口的世界里，你总是先把手伸出来。</p><p>有时候这也让你受伤。你说了，对方没接住。你敞开了，对方往后退了。那种落差比沉默更痛，因为你已经把自己摆在了那里。</p><p>但你还是会继续说。因为对你来说，真实的连接值得冒这个险。这份勇气，是你在关系里最珍贵的东西。</p>"
     }
   }
 };
@@ -618,6 +685,8 @@ window.downloadResult = downloadResult;
       const resultTag = document.getElementById('resultTag');
       const resultTitle = document.getElementById('resultTitle');
       const resultDesc = document.getElementById('resultDesc');
+      const resultTags = document.getElementById('resultTags');
+      const resultQuote = document.getElementById('resultQuote');
       const storyRec = document.getElementById('storyRec');
       const storyTitleEl = storyRec.querySelector('.story-rec-title');
       const storyLinkEl = storyRec.querySelector('.story-rec-btn');
@@ -725,6 +794,8 @@ window.downloadResult = downloadResult;
         const tag = getTopTag();
         const result = testData.results[tag];
         resultTag.textContent = tag;
+        if (resultTags) resultTags.innerHTML = [tag, '结果画像', 'She Is'].map(item => `<li class="result-tag">${item}</li>`).join('');
+        if (resultQuote) resultQuote.textContent = result.subtitle || result.title || tag;
         resultTitle.textContent = result.title;
         resultTitle.dataset.cardType = result.title.split(/\s+—\s+/)[0] || result.title;
         resultTitle.dataset.subtitle = result.subtitle || result.title.split(/\s+—\s+/).slice(1).join(' — ') || '';

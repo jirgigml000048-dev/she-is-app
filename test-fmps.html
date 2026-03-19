@@ -230,26 +230,29 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
+    .score-row:last-child { margin-bottom: 0; }
     .score-label {
-      font-family: "Noto Serif SC", serif;
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
       font-size: 11px;
-      color: #888;
-      width: 60px;
+      color: rgba(47,42,38,0.72);
+      width: 64px;
       flex-shrink: 0;
     }
     .score-bar-bg {
       flex: 1;
-      height: 3px;
-      background: rgba(74,48,115,0.12);
-      border-radius: 2px;
+      height: 10px;
+      background: rgba(74,48,115,0.1);
+      border-radius: 999px;
+      overflow: hidden;
     }
     .score-bar-fill {
       width: 0;
-      height: 3px;
+      height: 100%;
       background: #4A3073;
-      border-radius: 2px;
+      border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(74,48,115,0.22);
       transition: width 0.8s ease;
     }
     .score-val {
@@ -259,31 +262,93 @@
       text-align: right;
       flex-shrink: 0;
     }
+    .r-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .r-head::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #4A3073;
+      transform: translateY(-2px);
+      flex-shrink: 0;
+    }
     .r-type {
-      font-family: "Cormorant Garamond", serif;
-      font-size: 28px;
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-size: 30px;
       color: #2e2e2e;
-      margin: 0 0 6px;
+      margin: 0;
       font-weight: 500;
+      letter-spacing: 0.04em;
     }
     .r-score-line {
+      position: relative;
+      z-index: 1;
       font-size: 11px;
       color: #4A3073;
       letter-spacing: 0.08em;
-      margin: 0 0 18px;
+      margin: 0 0 16px;
+    }
+    .result-tags {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 20px;
+      padding: 0;
+      list-style: none;
+    }
+    .result-tags:empty { display: none; }
+    .result-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(74,48,115,0.35);
+      background: rgba(245,240,235,0.96);
+      color: #4A3073;
+      font-size: 12px;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: 0.02em;
     }
     .r-divider {
       height: 1px;
-      background: rgba(74,48,115,0.1);
+      background: rgba(74,48,115,0.15);
       margin-bottom: 20px;
     }
+    .r-quote {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 20px;
+      padding: 16px 18px;
+      border-left: 3px solid #4A3073;
+      background: rgba(74,48,115,0.06);
+      color: #3d3158;
+      line-height: 1.9;
+      font-size: 14px;
+    }
+    .r-quote:empty { display: none; }
     .r-desc {
-      font-size: 13px;
-      color: #555;
-      line-height: 2;
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+      color: #554c47;
+      line-height: 1.9;
+      padding: 24px;
+      background: rgba(255,255,255,0.45);
+      border-radius: 20px;
     }
     .r-desc p {
-      margin: 0 0 16px;
+      margin: 0 0 1.4em;
     }
     .r-desc p:last-child {
       margin-bottom: 0;
@@ -426,27 +491,27 @@
         results: {
           high_cm_da: {
             title: "你太怕做错了",
-            body: "你对犯错有很强的恐惧，同时开始一件事之前会反复犹豫——不是不想做，是太怕做错。这个特质的优势是：这份认真让你做出来的东西，往往比大多数人更经得起挑剔。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
+            body: "<p>每一次开始之前，你的脑子里已经放过了一遍所有可能出错的画面。那些还没发生的失败，对你来说已经有了重量。</p><p>你做事的时候，身体里有一根弦一直绷着。不是怕做不好，是怕搞砸、怕犯错、怕那个最糟糕的版本真的发生。这种恐惧很具体，具体到你能描述每一种失败的样子。</p><p>即使做完了，你也很难松下来。心里总有一个声音在问：真的没问题吗？是不是漏了什么？这种疑虑不会因为完成而消失，反而在完成之后变得更清晰。</p><p>你的认真和负责，很多人看得到。但他们看不到的是，你为每一个决定付出的内耗，远远超过了决定本身。</p><p>你需要的也许不是更多确认，而是允许自己做一个\"还行\"的版本。世界不会因为一次不完美就塌下来。</p>"
           },
           high_ps_low_cm: {
             title: "你对自己有很高的要求，但不会被它压垮",
-            body: "你给自己设定的标准比多数人高，但不会因为没达到就觉得自己失败。这是适应性完美主义——推动你前进，而不是拖住你。这个特质的优势是：高标准驱动高质量，而你又足够灵活，不会为追求完美而瘫痪。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
+            body: "<p>你对自己有很高的要求，而且你清楚那个标准是什么样的。你追求的东西很具体——做到某个程度、达到某种质量、成为某种状态。</p><p>难得的是，这种高标准没有绑着恐惧。你不是因为怕犯错才努力，你是真的想把事情做好。那种驱动力里有热情，有骄傲，有对自己的期待。</p><p>这让你在很多事情上都能走得很远。你有方向感，有执行力，有一种安静的自信——知道自己要什么，也愿意为它付出。</p><p>别人可能觉得你很卷，但你心里清楚，那些标准是你自己想要的，不是被谁逼出来的。你享受那种接近目标时的感觉。</p><p>只是偶尔记得，休息也是高标准生活的一部分。你值得在\"做得好\"之外，也允许自己\"什么都不做\"。</p>"
           },
           high_pe: {
             title: "你内化了很多来自父母的标准",
-            body: "你感受到父母对你有很高的期待，这些期待已经成了你评价自己的一把尺子。有时你可能分不清，哪些标准是真正属于自己的。这个特质的优势是：这份早早被激活的进取心，让你在很多领域都能把事情做得扎实。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
+            body: "<p>你心里有一套标准，很高、很清晰、很难动摇。但如果诚实地回头看，那套标准最初的声音，听起来更像是别人的。父母的期待、家庭的目光、那些\"你应该\"的话。</p><p>你在很小的时候就学会了读懂别人想要什么，然后把自己调整成那个方向。成绩、表现、选择——很多事情在你真正想清楚之前，就已经被设定好了。</p><p>后来你长大了，有了自己的生活。但那些期待并没有离开，它们搬进了你的内心，变成了你对自己的要求。你已经分不清哪些是你真的想要的，哪些是你觉得\"应该\"想要的。</p><p>你做到了很多，也为此付出了很多——包括一些你可能还没意识到的、属于你自己的东西。那些被搁置的偏好、被压低的声音、被推迟的选择。</p><p>现在，你可以慢慢地去辨认：在那些\"应该\"的底下，你自己真正想要的是什么。那个声音一直在，只是被盖住了很久。</p>"
           },
           high_da_low_cm: {
             title: "开始对你来说是最难的那一步",
-            body: "你不太担心犯错本身，但「做完了是不是真的对」会困住你。为了做好一件事，你往往需要比别人更长的准备时间。这个特质的优势是：你交出去的东西几乎不会有明显漏洞，因为你已经在心里检查过很多遍了。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
+            body: "<p>你做事的过程其实还好，没有太多恐惧和犹豫。你能开始，也能完成。真正困难的部分在后面——做完了，你开始怀疑。</p><p>那种感觉很微妙。不是觉得自己会犯错，是完成之后依然不确定：这样对吗？够好吗？是不是还可以再改一下？一种持续的模糊感，让你很难真正放下一件事。</p><p>别人可能已经觉得很好了，你心里还在翻来覆去。这种疑虑不是对能力的否定，更像是一种无法落地的感觉——事情做完了，心没有完。</p><p>你活在一种微妙的悬浮状态里：永远觉得还差一点，却说不清差在哪里。那种\"可以了\"的笃定感，对你来说格外稀缺。</p><p>也许你需要练习的是一种结束的能力。在某个版本前停下来，告诉自己：到这里，就够了。</p>"
           },
           high_or: {
             title: "你喜欢秩序，但不焦虑",
-            body: "整洁和条理对你很重要，但这更像是一种偏好，而不是强迫。你的完美主义是轻量的。这个特质的优势是：你能在复杂环境中保持清晰，帮助你和周围的人都保持效率。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
+            body: "<p>你需要秩序。日程、空间、步骤、流程——当这些东西各就各位，你才能安心地运转。整洁和条理对你来说，更像是呼吸的方式。</p><p>混乱让你不安。物品乱了、计划变了、流程打断了——这些在别人看来很小的事，会在你心里产生真实的噪音。你需要把它们归位，才能重新集中。</p><p>你做事有自己的一套系统，而且这套系统通常很管用。你的条理让你高效、可靠、让人放心。很多人依赖你的组织能力，即使他们没有明说。</p><p>但这种对秩序的需要有时候也是一种负担。当生活不按你的系统来，当意外打破了安排，你承受的压力比看起来要大得多。</p><p>秩序是你的安全感来源。偶尔试试在一小块混乱里待一会儿，你会发现自己比想象中更能适应。</p>"
           },
           balanced: {
             title: "你在「够好」和「更好」之间找到了某种平衡",
-            body: "你的完美主义各维度都不特别突出，说明你对「做好」这件事的态度比较灵活。不同情境下你会调整自己的标准。这个特质的优势是：这种弹性让你能随机应变，而不是被一套固定标准困住。<span class=\"disclaimer-note\" style=\"font-size:0.78rem;color:#aaa;display:block;margin-top:0.5rem\">这是你当下的模式，不是诊断，也不是定论。</span>"
+            body: "<p>你心里有标准，也有弹性。你知道自己想做到什么程度，但你也知道世界不会永远配合你的计划。这种平衡感，很多人花了很久才学到。</p><p>你会努力，会认真，会对自己有要求。但当结果不完美的时候，你不会陷在里面太久。你有一种消化不完美的能力，让它成为经验的一部分，而不是自我否定的证据。</p><p>这让你在很多场景里都显得从容。你能投入，也能抽离；能追求，也能接受。身边的人在你旁边会觉得松弛，因为你不制造紧张。</p><p>你的内在有一种温和的秩序感。事情该做好就做好，做不到的地方，你知道怎么和自己和解。</p><p>这份平衡不是天生的，是你一路走来慢慢长出来的。它值得被看见。</p>"
           }
         }
       };
@@ -658,10 +723,12 @@
         resultEl.innerHTML = `
           <div id="result-capture" class="result-capture-card">
           <div class="result-viz">${buildVizRows(sortedDimensions)}</div>
-          <h2 class="r-type" data-subtitle="最突出维度：${top2.map(k => ({CM:'担心错误',OR:'条理性',PE:'父母期望',PS:'个人标准',DA:'行动疑虑'})[k]).join(' · ')}">${r.title}</h2>
+          <div class="r-head"><h2 class="r-type" data-subtitle="最突出维度：${top2.map(k => ({CM:'担心错误',OR:'条理性',PE:'父母期望',PS:'个人标准',DA:'行动疑虑'})[k]).join(' · ')}">${r.title}</h2></div>
           <p class="r-score-line">最突出维度：${top2.map(k => ({CM:'担心错误',OR:'条理性',PE:'父母期望',PS:'个人标准',DA:'行动疑虑'})[k]).join(' · ')}</p>
+          <ul class="result-tags"><li class="result-tag">FMPS-15</li><li class="result-tag">完美主义</li><li class="result-tag">心理画像</li></ul>
+          <div class="r-quote">${r.title}</div>
           <div class="r-divider"></div>
-          <div class="r-desc">${formatParagraphs(r.body)}</div>
+          <div class="r-desc">${r.body}</div>
 
           <div class="chart-wrap">
             ${buildRadar(scores)}

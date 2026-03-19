@@ -6,10 +6,10 @@
     <title>ECR-36 依恋风格测评 | 女也 She Is</title>
     <style>
       :root {
-        --bg: #faf9f7;
-        --ink: #2c2c2c;
-        --gold: #c4a882;
-        --line: #e9e3da;
+        --bg: #f5f0eb;
+        --ink: #2f2a26;
+        --gold: #4A3073;
+        --line: #e7dfd6;
       }
       * { box-sizing: border-box; }
       body {
@@ -176,17 +176,6 @@
         text-decoration: underline;
         text-underline-offset: 3px;
       }
-      .result-actions { display: flex; flex-direction: column; align-items: stretch; gap: 12px; margin-top: 20px; }
-      .result-back-btn, .result-retry-btn { display: block; width: 100%; text-align: center; }
-      .result-retry-btn.ghost {
-        border: 1px solid rgba(187, 187, 187, .45);
-        background: transparent;
-        color: #bbb;
-        border-radius: 999px;
-        padding: 12px 18px;
-      }
-      .result-retry-btn.ghost:hover { color: #a6a6a6; border-color: rgba(166, 166, 166, .65); }
-
       .test-intro {
         padding: 8px 0 24px;
       }
@@ -282,6 +271,13 @@
           }
         
 
+    .result-capture-card {
+      background: #fffdfa;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 14px;
+      box-shadow: 0 6px 20px rgba(48,35,23,.06);
+    }
     .result-viz {
       margin-bottom: 28px;
     }
@@ -314,7 +310,7 @@
     .score-val {
       font-size: 11px;
       color: #4A3073;
-      width: 36px;
+      width: 28px;
       text-align: right;
       flex-shrink: 0;
     }
@@ -326,6 +322,7 @@
       font-weight: 500;
     }
     .r-score-line {
+      font-family: "Noto Serif SC", serif;
       font-size: 11px;
       color: #4A3073;
       letter-spacing: 0.08em;
@@ -337,6 +334,7 @@
       margin-bottom: 20px;
     }
     .r-desc {
+      font-family: "Noto Serif SC", serif;
       font-size: 13px;
       color: #555;
       line-height: 2;
@@ -346,6 +344,62 @@
     }
     .r-desc p:last-child {
       margin-bottom: 0;
+    }
+    .result-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 0;
+    }
+    .result-save-btn {
+      width: 100%;
+      font-family: "Noto Serif SC", serif;
+      font-size: 12px;
+      color: #4A3073;
+      background: transparent;
+      border: 1px solid rgba(74,48,115,0.25);
+      padding: 11px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+    }
+    .result-guide {
+      font-family: "Noto Serif SC", serif;
+      font-size: 11px;
+      color: #aaa;
+      text-align: center;
+      line-height: 1.6;
+      padding: 4px 0;
+      margin: 0;
+    }
+    .result-guide a { color: #4A3073; text-decoration: underline; text-underline-offset: 2px; }
+    .result-back-btn {
+      display: block;
+      width: 100%;
+      font-family: "Noto Serif SC", serif;
+      font-size: 13px;
+      color: white;
+      background: #4A3073;
+      border: none;
+      padding: 13px 0;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+    }
+    .result-back-btn:hover {
+      background: #3D2565;
+    }
+    .result-retry-btn {
+      font-family: "Noto Serif SC", serif;
+      font-size: 11px;
+      color: #bbb;
+      background: transparent;
+      border: none;
+      padding: 4px 0;
+      cursor: pointer;
+      letter-spacing: 0.03em;
     }
 
 .story-rec {
@@ -417,8 +471,7 @@
         </div>
       </div>
       <div class="test-body" id="testBody" style="display:none">
-        <div style="max-width:480px;margin:0 auto;padding:12px 20px 0"><a href="assessment-more.html" style="color:#888;font-size:14px;text-decoration:none;">← 测评</a></div>
-        <main class="page"><div style="padding:12px 0 4px"><a href="assessment-more.html" style="color:#888;font-size:14px;text-decoration:none;">← 测评</a></div>
+        <main><div style="padding:12px 0 4px"><a href="assessment-more.html" style="color:#888;font-size:14px;text-decoration:none;">← 测评</a></div>
           <div class="topline"><span id="progressBar"></span></div>
           <div class="meta"><span id="progressText">准备开始</span><span>ECR-36</span></div>
 
@@ -504,10 +557,10 @@
           { id: 36, text: "当恋人不花时间和我在一起时，我会感到怨恨", reverse: false }
         ],
         results: {
-          secure: { label: "安全型", emoji: "🌿", subtitle: "你知道怎么爱，也知道怎么被爱", tagline: "你知道怎么爱，也知道怎么被爱", desc: "你在亲密关系中是安稳的那个人。靠近时不慌，拉开时也不追。遇到摩擦，你既不崩溃，也不关门。这份稳定是你的优势——它让身边的人感到安全，也给了你选择亲密节奏的自由。" },
-          fearful: { label: "恐惧型", emoji: "🌊", subtitle: "你想靠近，但靠近本身让你害怕", tagline: "你想靠近，但靠近本身让你害怕", desc: "你渴望亲密，又担心受伤。关系里的你有时进一步、退两步——不是不爱，是太在意了。这份在意也是你的优势：你对关系的觉察力比多数人更深，一旦感到安全，你的投入会非常真诚。" },
-          preoccupied: { label: "专注型", emoji: "🔥", subtitle: "你爱得很用力，有时用力到把人吓跑", tagline: "你爱得很用力，有时用力到把人吓跑", desc: "你对亲密关系的投入很深，深到会放大每一个信号，反复确认对方是否真的在乎。你不是太敏感，是太认真了。这份认真是你的优势——你愿意为关系全力以赴，这种热烈本身就是珍贵的。" },
-          dismissing: { label: "冷漠型", emoji: "🧊", subtitle: "你习惯靠自己，但其实你也想被接住", tagline: "你习惯靠自己，但其实你也想被接住", desc: "你表面上对亲密关系不太上心，但这未必是冷漠——更可能是习惯了自己扛，忘了也可以让人进来。这份独立是你的优势：你不轻易依赖，有自己的节奏和空间感，关系里不容易失去自我。" }
+          secure: { label: "安全型", emoji: "🌿", subtitle: "你知道怎么爱，也知道怎么被爱", tagline: "你知道怎么爱，也知道怎么被爱", desc: "<p>在关系里，你有一种很少被打扰的安定。别人靠近的时候，你不会本能地后退；别人需要空间的时候，你也不会觉得那是一种遗弃。这种稳定感长在身体里，不需要反复确认。</p><p>你能说出自己的需要，也能听见对方的。这件事听起来简单，做到的人很少。情感在你这里有来有回，像呼吸一样自然——不用屏住，不用加速。</p><p>当亲密关系遇到冲突，你的第一反应很少是逃走或抓紧。你倾向于留在那里，看看发生了什么，试着理解。这种留下来的能力，是你身上最安静也最有力量的东西。</p><p>你对爱的信任不是盲目的乐观。你见过关系里的复杂，也经历过失望和修复。正因为这些经历没有摧毁你对连接的信心，这份信任才格外扎实。</p><p>和你在一起的人，常常会觉得被接住了。你给出的安全感不是承诺，是一种日常的、不戏剧化的在场。这是一种很深的能力，你可能自己都没有意识到它有多珍贵。</p>" },
+          fearful: { label: "恐惧型", emoji: "🌊", subtitle: "你想靠近，但靠近本身让你害怕", tagline: "你想靠近，但靠近本身让你害怕", desc: "<p>你心里同时住着两种力量：一种拼命想靠近，一种拼命想逃开。它们同时存在，同时拉扯，让你在关系里常常感到一种深层的撕裂感。这两个需要都是真实的。</p><p>靠近一个人的时候，你能感受到温暖，也几乎同时感受到危险。亲密让你放松的那一刻，某种警报就会响起——好像太近了，好像要受伤了，好像应该退回去了。</p><p>你对被拒绝有很深的恐惧，但你害怕的不只是被拒绝。你也害怕被接受之后的脆弱，害怕打开自己之后发现那个人终究会走。所以你学会了一种特殊的距离感：看起来在，但没有完全交出自己。</p><p>关系里的你，常常陷入一种循环——靠近、感到不安、退后、感到孤独、再靠近。每一轮都消耗巨大的情绪能量，每一轮都让你对自己多一点怀疑。</p><p>你对爱的感受比大多数人都浓烈，也比大多数人都复杂。那些矛盾是你的情感系统在用它知道的唯一方式保护你。你值得一种不需要时刻自我保护的亲密。</p>" },
+          preoccupied: { label: "专注型", emoji: "🔥", subtitle: "你爱得很用力，有时用力到把人吓跑", tagline: "你爱得很用力，有时用力到把人吓跑", desc: "<p>你爱一个人的时候，全部感官都会打开。对方的一个表情、一句语气的变化、一条消息的回复速度——你都能接收到信号。这种敏锐让你在关系里活得很用力，也很累。</p><p>内心深处有一个声音反复在问：我够好吗？你还在吗？你会留下来吗？这些问题是你情感系统里最真实的运转方式。你需要确认，需要回应，需要被看见的证据。</p><p>你给出爱的方式往往是加倍付出——更多的关心、更密的联系、更主动的靠近。你以为只要自己做得足够多，对方就不会离开。这个逻辑让你精疲力竭，但你很难停下来。</p><p>分离，哪怕是很短暂的情感断联，都会在你体内引发强烈的不安。这种不安有身体反应——心跳加速、注意力被锁死、无法集中在别的事情上。</p><p>你对爱的渴望是真实的，你的投入也是真实的。那些焦虑的背后，藏着一颗极其认真对待关系的心。你需要学会的，是在没有回应的间隙里，依然相信自己值得被留下。</p>" },
+          dismissing: { label: "冷漠型", emoji: "🧊", subtitle: "你习惯靠自己，但其实你也想被接住", tagline: "你习惯靠自己，但其实你也想被接住", desc: "<p>你习惯了靠自己。遇到问题的时候，第一反应是内部消化，而不是找人倾诉。这种独立是你真正信赖的生存方式，是你很早就学会的事情。</p><p>当关系变得太近、对方的需要变得太多，你会感到一种本能的压迫感。你需要空间，需要退后一步才能呼吸。这个退后的动作，常常被误读为冷漠。</p><p>情绪在你这里是被管理的。你很少让自己陷入强烈的情感波动，也很少让别人看到你脆弱的部分。你知道脆弱存在，但你不觉得展示它是安全的，或者有用的。</p><p>求助对你来说是一件很难的事。你能帮别人，但让别人帮你，会让你有一种失控感。在你的系统里，需要别人约等于一种风险，一种可能被辜负的敞口。</p><p>你内心的情感需求从来没有消失过，它们只是被放在了一个很深、很安静的地方。你擅长的是运转，是解决问题，是让一切看起来没什么大不了。但偶尔，在某个不设防的瞬间，你也能感觉到那些需求在那里，完好无损地等着你。</p>" }
         }
       };
 
@@ -578,7 +631,10 @@
 
       function mean(list) { return list.reduce((a, b) => a + b, 0) / list.length; }
       function formatParagraphs(text) {
-        return String(text || '').split(/\n+/).filter(Boolean).map(item => `<p>${item.replace(/<[^>]+>/g, '')}</p>`).join('');
+        const raw = String(text || '').trim();
+        if (!raw) return '';
+        if (/<p[\s>]/i.test(raw)) return raw;
+        return raw.split(/\n+/).filter(Boolean).map(item => `<p>${item.replace(/<[^>]+>/g, '')}</p>`).join('');
       }
       function buildScoreRows(items) {
         return items.map((item) => `
@@ -667,7 +723,7 @@
           <div class="r-divider"></div>
           <div class="r-desc">${formatParagraphs(r.desc)}<p>这是你当下的模式，不是诊断，也不是定论。</p></div>
           </div>
-<div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
+<div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn" id="redoBtn" type="button">再做一次</button></div>
 <div class="story-rec" id="storyRec" style="display:none;">
   <div class="story-rec-img"></div>
   <div class="story-rec-content">
