@@ -219,61 +219,24 @@
           }
         
 
-    .result-viz {
-      margin-bottom: 28px;
+    .result-capture-card {
+      background: rgba(255,253,248,0.94);
+      border-radius: 30px;
+      padding: 28px 20px 24px;
+      box-shadow: 0 18px 50px rgba(74,48,115,0.08);
     }
-    .score-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
+    .result-section {
+      padding: 18px 0;
     }
-    .score-row:last-child { margin-bottom: 0; }
-    .score-label {
-      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+    .result-section + .result-section {
+      border-top: 1px solid rgba(74,48,115,0.10);
+    }
+    .result-eyebrow {
+      margin: 0 0 8px;
       font-size: 11px;
-      color: rgba(47,42,38,0.72);
-      width: 64px;
-      flex-shrink: 0;
-    }
-    .score-bar-bg {
-      flex: 1;
-      height: 10px;
-      background: rgba(74,48,115,0.1);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-    .score-bar-fill {
-      width: 0;
-      height: 100%;
-      background: #4A3073;
-      border-radius: 999px;
-      box-shadow: 0 4px 12px rgba(74,48,115,0.22);
-      transition: width 0.8s ease;
-    }
-    .score-val {
-      font-size: 11px;
-      color: #4A3073;
-      width: 36px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-    .r-head {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .r-head::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #4A3073;
-      transform: translateY(-2px);
-      flex-shrink: 0;
+      letter-spacing: 0.12em;
+      color: rgba(74,48,115,0.7);
+      text-transform: uppercase;
     }
     .r-type {
       font-family: "Noto Serif SC", "Cormorant Garamond", serif;
@@ -284,78 +247,121 @@
       letter-spacing: 0.04em;
     }
     .r-score-line {
-      position: relative;
-      z-index: 1;
-      font-size: 11px;
+      font-size: 12px;
       color: #4A3073;
-      letter-spacing: 0.08em;
-      margin: 0 0 16px;
+      letter-spacing: 0.06em;
+      margin: 10px 0 0;
     }
-    .result-tags {
-      position: relative;
-      z-index: 1;
+    .top-functions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .top-function {
+      background: rgba(74,48,115,0.06);
+      border-radius: 22px;
+      padding: 16px 14px;
+      min-height: 136px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .top-function-rank {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: rgba(74,48,115,0.68);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .top-function-name {
+      font-size: 22px;
+      line-height: 1.3;
+      color: #4A3073;
+    }
+    .top-function-tag {
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #5b4f71;
+    }
+    .result-viz {
+      display: grid;
+      gap: 12px;
+    }
+    .score-row {
+      display: grid;
+      grid-template-columns: 70px minmax(0, 1fr) 42px;
+      align-items: center;
+      gap: 12px;
+    }
+    .score-label {
+      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-size: 12px;
+      color: rgba(47,42,38,0.72);
+    }
+    .score-bar-bg {
+      height: 10px;
+      background: rgba(74,48,115,0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .score-bar-fill {
+      width: 0;
+      height: 100%;
+      background: #4A3073;
+      border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(74,48,115,0.18);
+      transition: width 0.8s ease;
+    }
+    .score-val {
+      font-size: 12px;
+      color: #4A3073;
+      text-align: right;
+    }
+    .mbti-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin: 0 0 20px;
-      padding: 0;
-      list-style: none;
+      gap: 10px;
+      margin-top: 14px;
     }
-    .result-tags:empty { display: none; }
-    .result-tag {
+    .mbti-pill {
       display: inline-flex;
       align-items: center;
-      min-height: 30px;
-      padding: 0 12px;
+      padding: 8px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(74,48,115,0.35);
-      background: rgba(245,240,235,0.96);
+      background: rgba(74,48,115,0.08);
       color: #4A3073;
-      font-size: 12px;
-      line-height: 1;
-      text-transform: none;
-      letter-spacing: 0.02em;
-    }
-    .r-divider {
-      height: 1px;
-      background: rgba(74,48,115,0.15);
-      margin-bottom: 20px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
     }
     .r-quote {
-      position: relative;
-      z-index: 1;
-      margin: 0 0 20px;
-      padding: 16px 18px;
-      border-left: 3px solid #4A3073;
+      margin: 0 0 16px;
+      padding: 14px 16px;
       background: rgba(74,48,115,0.06);
       color: #3d3158;
       line-height: 1.9;
       font-size: 14px;
+      border-radius: 18px;
     }
     .r-quote:empty { display: none; }
     .r-desc {
-      position: relative;
-      z-index: 1;
       font-size: 14px;
       color: #554c47;
       line-height: 1.9;
-      padding: 24px;
-      background: rgba(255,255,255,0.45);
-      border-radius: 20px;
     }
     .r-desc p {
-      margin: 0 0 1.4em;
+      margin: 0 0 1.2em;
     }
     .r-desc p:last-child {
       margin-bottom: 0;
     }
 
 .story-rec {
-  background: rgba(255,255,255,0.8);
-  border-radius: 16px;
-  border: 1px solid rgba(74,48,115,0.15);
+  background: rgba(74,48,115,0.05);
+  border-radius: 18px;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-top: 18px;
 }
 
 .story-rec-img {
@@ -922,12 +928,12 @@
       ]
 };
 const cognitiveLongDesc = {
-  "Se": "<p>你的感官是打开的。颜色、声音、触感、温度——你对当下正在发生的一切有一种天然的敏锐。别人可能在想事情的时候走神，你在感受事情的时候全然在场。</p><p>你享受真实的、物理的体验。一道好的光线、一首歌的鼓点、运动时身体的发力感——这些对你来说就是生活本身。你通过感官来理解世界。</p><p>你的反应很快，行动力也强。你更倾向于"先做再说"，在实践中找到方向。你和这个世界之间没有太多滤镜，你看到什么就是什么，你感受到什么就去回应。</p><p>你身上有一种让人觉得很"活"的能量。你在的地方，气氛会更生动一点。这种对当下的热爱，是你最真实的力量。</p>",
-  "Si": "<p>你的记忆里存着很多细节——某个场景的光线、某次对话的语气、某种食物在某个季节的味道。过去对你来说不是模糊的，它是有质感的、可以随时被调出来的。</p><p>你重视经验。做过的事、走过的路、犯过的错——这些在你心里形成了一套可靠的参照系。你做决定的方式，很大程度上是基于"之前什么管用、什么不管用"。</p><p>你喜欢熟悉的东西。一家常去的餐厅、一个用了很久的方法、一种已经被验证过的安排——稳定和可预测让你安心。你的细致和可靠让人信任。</p><p>你和世界的关系，是通过一层层积累起来的经验建立的。每一段记忆都在你的内在地图上标了一个点。你走得越久，这张地图就越详细、越可靠。</p>",
-  "Ne": "<p>你的脑子里永远不止一个想法在跑。一个话题可以带出五个方向，一个问题可以长出十种可能。你的思维像一张不断扩展的网，每个节点都连着新的节点。</p><p>你对"可能性"有一种天然的兴奋。新的想法、新的连接、新的"如果……会怎样"——这些让你的眼睛亮起来。你最享受的时刻，是两个看似无关的东西突然在你脑子里接上了。</p><p>你的创造力很强，启动速度也快。但你可能会发现，你开始的项目比完成的多。因为每一个新的可能性都比正在做的事情更诱人。</p><p>你看到的世界，比大多数人看到的更丰富。那些闪闪发光的想法需要一个着陆的地方——挑一个，扎下去，让它真正长出来。</p>",
-  "Ni": "<p>你的思维天然地越过表面，朝更深的地方走。别人还在处理眼前的信息时，你已经在感知某种尚未成形的趋势，某种即将浮现的轮廓。</p><p>这种对本质的专注，让你在复杂局面中拥有一种安静的笃定。你常常说不清楚"为什么觉得会这样"，但事后回看，那些直觉往往指向了真实的方向。</p><p>你习惯在内心反复推演，把碎片拼成完整的图景。这个过程有时漫长，有时像闪电——突然之间，答案就在那里了。</p><p>深度思考是你最自然的状态，也是你最强大的武器。你看见的东西，很多人要很久以后才能看见。这份远见值得信任。</p>",
-  "Te": "<p>你的大脑里有一套高效运转的操作系统。面对任务，你本能地开始拆解结构、排列优先级、寻找最短路径。目标清晰的时候，你的执行力惊人。</p><p>组织和推进对你来说几乎是呼吸级别的能力。你天然地知道资源该怎么分配，流程该怎么跑，哪些环节可以压缩，哪些必须守住。</p><p>你重视结果，也尊重过程中的秩序感。混乱让你不舒服——你总会想办法把它理清，变成可以操作的东西。</p><p>这种系统化的思维方式，让你在团队中常常成为那个"让事情真正发生"的人。你把想法变成现实的能力，是一种稀缺的力量。</p>",
-  "Ti": "<p>你的内心有一座精密的逻辑实验室。每一个概念进来，都会被拆开、检验、重新组装，直到它在你的理解体系里找到准确的位置。</p><p>你对"差不多"没有耐心。一个论证如果有漏洞，一个定义如果不够精确，你会一直追问下去，直到它真正站得住脚。这种对精准的执着，是你思维品质的底色。</p><p>你喜欢建立自己的分析框架，而且这些框架往往比外界现成的更细致、更严谨。独立思考对你来说是默认模式。你信任自己推导出的结论，因为你知道每一步都经过了检验。</p><p>这份思维的诚实，让你的判断格外可靠。</p>",
+  "Se": "<p>你的感官是打开的。颜色、声音、触感、温度——你对当下正在发生的一切有一种天然的敏锐。别人可能在想事情的时候走神，你在感受事情的时候全然在场。</p><p>你享受真实的、物理的体验。一道好的光线、一首歌的鼓点、运动时身体的发力感——这些对你来说就是生活本身。你通过感官来理解世界。</p><p>你的反应很快，行动力也强。你更倾向于“先做再说”，在实践中找到方向。你和这个世界之间没有太多滤镜，你看到什么就是什么，你感受到什么就去回应。</p><p>你身上有一种让人觉得很“活”的能量。你在的地方，气氛会更生动一点。这种对当下的热爱，是你最真实的力量。</p>",
+  "Si": "<p>你的记忆里存着很多细节——某个场景的光线、某次对话的语气、某种食物在某个季节的味道。过去对你来说不是模糊的，它是有质感的、可以随时被调出来的。</p><p>你重视经验。做过的事、走过的路、犯过的错——这些在你心里形成了一套可靠的参照系。你做决定的方式，很大程度上是基于“之前什么管用、什么不管用”。</p><p>你喜欢熟悉的东西。一家常去的餐厅、一个用了很久的方法、一种已经被验证过的安排——稳定和可预测让你安心。你的细致和可靠让人信任。</p><p>你和世界的关系，是通过一层层积累起来的经验建立的。每一段记忆都在你的内在地图上标了一个点。你走得越久，这张地图就越详细、越可靠。</p>",
+  "Ne": "<p>你的脑子里永远不止一个想法在跑。一个话题可以带出五个方向，一个问题可以长出十种可能。你的思维像一张不断扩展的网，每个节点都连着新的节点。</p><p>你对“可能性”有一种天然的兴奋。新的想法、新的连接、新的“如果……会怎样”——这些让你的眼睛亮起来。你最享受的时刻，是两个看似无关的东西突然在你脑子里接上了。</p><p>你的创造力很强，启动速度也快。但你可能会发现，你开始的项目比完成的多。因为每一个新的可能性都比正在做的事情更诱人。</p><p>你看到的世界，比大多数人看到的更丰富。那些闪闪发光的想法需要一个着陆的地方——挑一个，扎下去，让它真正长出来。</p>",
+  "Ni": "<p>你的思维天然地越过表面，朝更深的地方走。别人还在处理眼前的信息时，你已经在感知某种尚未成形的趋势，某种即将浮现的轮廓。</p><p>这种对本质的专注，让你在复杂局面中拥有一种安静的笃定。你常常说不清楚“为什么觉得会这样”，但事后回看，那些直觉往往指向了真实的方向。</p><p>你习惯在内心反复推演，把碎片拼成完整的图景。这个过程有时漫长，有时像闪电——突然之间，答案就在那里了。</p><p>深度思考是你最自然的状态，也是你最强大的武器。你看见的东西，很多人要很久以后才能看见。这份远见值得信任。</p>",
+  "Te": "<p>你的大脑里有一套高效运转的操作系统。面对任务，你本能地开始拆解结构、排列优先级、寻找最短路径。目标清晰的时候，你的执行力惊人。</p><p>组织和推进对你来说几乎是呼吸级别的能力。你天然地知道资源该怎么分配，流程该怎么跑，哪些环节可以压缩，哪些必须守住。</p><p>你重视结果，也尊重过程中的秩序感。混乱让你不舒服——你总会想办法把它理清，变成可以操作的东西。</p><p>这种系统化的思维方式，让你在团队中常常成为那个“让事情真正发生”的人。你把想法变成现实的能力，是一种稀缺的力量。</p>",
+  "Ti": "<p>你的内心有一座精密的逻辑实验室。每一个概念进来，都会被拆开、检验、重新组装，直到它在你的理解体系里找到准确的位置。</p><p>你对“差不多”没有耐心。一个论证如果有漏洞，一个定义如果不够精确，你会一直追问下去，直到它真正站得住脚。这种对精准的执着，是你思维品质的底色。</p><p>你喜欢建立自己的分析框架，而且这些框架往往比外界现成的更细致、更严谨。独立思考对你来说是默认模式。你信任自己推导出的结论，因为你知道每一步都经过了检验。</p><p>这份思维的诚实，让你的判断格外可靠。</p>",
   "Fe": "<p>你走进一个房间，就能感知到空气里的情绪温度。谁不自在，谁在勉强，谁需要被看见——这些信号对你来说清晰而自然。</p><p>你天然地在意人与人之间的和谐。当氛围出现裂痕，你会本能地去弥合；当有人被忽略，你会悄悄地把注意力引过去。这些动作常常不被察觉，但它们在托住整个场域。</p><p>你的情绪有感染力。你的热情能点燃一群人，你的温柔能让紧绷的人放松下来。照顾他人的感受对你来说毫不费力，几乎是本能。</p><p>记得也把这份敏感留一些给自己——你的感受同样重要，同样值得被照顾。</p>",
   "Fi": "<p>你的内心有一套深刻而稳定的价值坐标。什么是对的，什么是真的，什么值得坚持——这些问题你很早就开始认真对待，并且从未停止。</p><p>你的情感像地下河，表面平静，底下丰沛。你很少把内心的波澜全部展示出来，但那些感受的深度和质感，比大多数人想象的要丰富得多。</p><p>对真实性的要求是你最核心的标准。虚假的东西让你本能地退缩——无论是一段关系、一句话，还是一个选择。你宁可沉默，也不愿意说出自己不相信的东西。</p><p>你做决定的依据，最终都会回到内在的那个声音。它安静，但清晰。当外界嘈杂的时候，它是你最可靠的锚点。</p>"
 };
@@ -1207,48 +1213,58 @@ const cognitiveLongDesc = {
           });
         }
 
-        const vizTop = scored.slice(0, 4);
+        const topTwo = scored.slice(0, 2);
+        const mbtiSuggestions = getPossibleMbti(scored);
+        const quoteText = getCognitiveQuote(topTwo);
+        const detailText = [
+          `以下是你在日常中更顺手的心理加工方式——不是标签，而是你理解世界的入口。`,
+          `你${topTwo.map(item => item.description).join(' 同时也')}。`,
+          `当${scored[2]?.name || '第三功能'}也保持较高活跃时，你会在不同场景里切换节奏：该发散时发散，该收束时收束。`,
+          `这是你当下的模式，不是诊断，也不是定论。`
+        ].join('\n');
+
         resultEl.innerHTML = `
           <div id="result-capture" class="result-capture-card">
-          <div class="result-viz">${buildVizRows(vizTop)}</div>
-          <h2 class="r-type">你的认知功能画像</h2>
-          <p class="r-score-line">最突出功能：${topSummary}</p>
-          <div class="r-divider"></div>
-          <div class="r-desc">${formatParagraphs(`以下是你在日常中用得更顺手的心理加工方式——不是标签，而是你认知模式的入口。\n你${topDimensions.map(item => item.description.replace(/^[关重擅倾追]/, s => s)).join(' ')}\n这是你当下的模式，不是诊断，也不是定论。`)}</div>
-          <div class="highlight">
-          <div class="chart-wrap">
-            <canvas id="radarChart"></canvas>
-          </div>
-          <div class="result-list">
-            ${scored.map(item => `
-              <article class="result-card${item.total === topScore ? ' top' : ''}">
-                <div class="result-head">
-                  <div class="result-name">${item.name}${item.total === topScore ? ' · 最高分' : ''}</div>
-                  <div class="result-score">${item.total}/50 · 均分 ${item.average.toFixed(1)}</div>
+            <section class="result-section">
+              <p class="result-eyebrow">Cognitive Functions Result</p>
+              <h2 class="r-type">你的认知功能画像</h2>
+              <p class="r-score-line">最突出功能：${topSummary}</p>
+              <div class="top-functions">
+                ${topTwo.map((item, index) => `
+                  <article class="top-function">
+                    <div>
+                      <div class="top-function-rank">Top ${index + 1}</div>
+                      <h3 class="top-function-name">${item.name}</h3>
+                    </div>
+                    <p class="top-function-tag">${getFunctionTag(item.id)}</p>
+                  </article>
+                `).join('')}
+              </div>
+            </section>
+            <section class="result-section">
+              <p class="result-eyebrow">8 功能分数</p>
+              <div class="result-viz">${buildVizRows(scored)}</div>
+            </section>
+            <section class="result-section">
+              <p class="result-eyebrow">可能的 MBTI 倾向</p>
+              <div class="mbti-list">${mbtiSuggestions.map(item => `<span class="mbti-pill">${item}</span>`).join('')}</div>
+            </section>
+            <section class="result-section">
+              <p class="r-quote">${quoteText}</p>
+              <div class="r-desc">${formatParagraphs(detailText + '\n\n' + topTwo.map(item => cognitiveLongDesc[item.id] || `你${item.description}`).join('\n'))}</div>
+              <div class="story-rec" id="storyRec" style="display:none;">
+                <div class="story-rec-img"></div>
+                <div class="story-rec-content">
+                  <p class="story-rec-hint">你可能会有共鸣</p>
+                  <h3 class="story-rec-title">故事标题</h3>
+                  <a class="story-rec-btn" href="#">读这个故事 →</a>
                 </div>
-                <div class="result-bar"><span style="width:${item.percent}%"></span></div>
-                <div>${cognitiveLongDesc[item.id] || `<p>你${item.description}</p>`}<span class="disclaimer-note">这是你当下的模式，不是诊断，也不是定论。</span></div>
-              </article>
-            `).join('')}
+              </div>
+            </section>
           </div>
-          <p class="footer-note">如果你想看更细的差异，可以留意第二高分与第三高分维度，它们往往一起构成你更具体的思考与决策风格。</p>
-
-<div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
-          <div class="story-rec" id="storyRec" style="display:none;">
-  <div class="story-rec-img"></div>
-  <div class="story-rec-content">
-    <p class="story-rec-hint">你可能会有共鸣</p>
-    <h3 class="story-rec-title">故事标题</h3>
-    <a class="story-rec-btn" href="#">读这个故事 →</a>
-  </div>
-</div>
-          </div>
+          <div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
         `;
 
-        drawRadarChart(document.getElementById('radarChart'), state.data.dimensions.map(dim => {
-          const found = scored.find(item => item.id === dim.id);
-          return { id: dim.id, average: found.average };
-        }));
         updateStoryBar();
         document.getElementById('redoBtn').onclick = restart;
       }
@@ -1264,6 +1280,52 @@ const cognitiveLongDesc = {
             <span class="score-val">${item.total}</span>
           </div>
         `).join('');
+      }
+      function getFunctionTag(id) {
+        return {
+          Se: '当下感强 · 现场反应快',
+          Si: '经验校准 · 稳定感优先',
+          Ne: '灵感发散 · 可能性捕手',
+          Ni: '模式洞察 · 趋势预判',
+          Te: '结果导向 · 擅长推进',
+          Ti: '逻辑拆解 · 定义清晰',
+          Fe: '关系敏锐 · 氛围协调',
+          Fi: '价值内核 · 真实感受优先'
+        }[id] || '你的高频认知方式';
+      }
+      function getCognitiveQuote(items) {
+        const first = items[0]?.name || '核心功能';
+        const second = items[1]?.name || '辅助功能';
+        return `你不是被一种功能定义，而是由 ${first} 与 ${second} 的联动，慢慢长出自己的理解路径。`;
+      }
+      function getPossibleMbti(scored) {
+        const rank = Object.fromEntries(scored.map((item, index) => [item.id, index]));
+        const mbtiRankings = {
+          INTJ: ['Ni', 'Te', 'Fi', 'Se'],
+          INFJ: ['Ni', 'Fe', 'Ti', 'Se'],
+          ENTJ: ['Te', 'Ni', 'Se', 'Fi'],
+          ENFJ: ['Fe', 'Ni', 'Se', 'Ti'],
+          INTP: ['Ti', 'Ne', 'Si', 'Fe'],
+          INFP: ['Fi', 'Ne', 'Si', 'Te'],
+          ENTP: ['Ne', 'Ti', 'Fe', 'Si'],
+          ENFP: ['Ne', 'Fi', 'Te', 'Si'],
+          ISTJ: ['Si', 'Te', 'Fi', 'Ne'],
+          ISFJ: ['Si', 'Fe', 'Ti', 'Ne'],
+          ESTJ: ['Te', 'Si', 'Ne', 'Fi'],
+          ESFJ: ['Fe', 'Si', 'Ne', 'Ti'],
+          ISTP: ['Ti', 'Se', 'Ni', 'Fe'],
+          ISFP: ['Fi', 'Se', 'Ni', 'Te'],
+          ESTP: ['Se', 'Ti', 'Fe', 'Ni'],
+          ESFP: ['Se', 'Fi', 'Te', 'Ni']
+        };
+        return Object.entries(mbtiRankings)
+          .map(([type, stack]) => ({
+            type,
+            score: stack.reduce((sum, id, idx) => sum + ((scored.length - (rank[id] ?? scored.length)) * (stack.length - idx)), 0)
+          }))
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 3)
+          .map(item => item.type);
       }
       function loadData() {
         try {
@@ -1305,14 +1367,15 @@ const cognitiveLongDesc = {
     button.textContent = '保存中…';
   }
   try {
-    const highlightTitle = document.querySelector('#result-capture .highlight strong')?.textContent?.trim() || '你的认知功能画像';
-    const highlightDesc = document.querySelector('#result-capture .highlight span')?.textContent?.trim() || '';
+    const primaryTitles = Array.from(document.querySelectorAll('#result-capture .top-function-name')).map((item) => item.textContent.trim());
+    const highlightTitle = primaryTitles.join(' / ') || '你的认知功能画像';
+    const highlightDesc = Array.from(document.querySelectorAll('#result-capture .top-function-tag')).map((item) => item.textContent.trim()).join(' ｜ ');
     generateResultCard({
       testName: '认知功能测评',
-      resultType: highlightTitle.replace(/^你用得最顺手的方式：/, '').trim() || highlightTitle,
+      resultType: highlightTitle,
       resultSubtitle: highlightDesc || '',
       quote: extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.textContent, '不是标签，而是你认知模式的入口。'),
-      score: Array.from(document.querySelectorAll('#result-capture .result-card.top .result-score')).map((item) => item.textContent.trim()).join(' ｜ '),
+      score: document.querySelector('#result-capture .r-score-line')?.textContent?.trim() || '',
       fileName: 'cognitive-result'
     });
   } finally {
