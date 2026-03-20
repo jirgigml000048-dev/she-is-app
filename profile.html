@@ -11,6 +11,17 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/auth.js"></script>
     <style>
+      /* 防止孤字 */
+      h1, h2, h3, h4,
+      .r-type, .r-quote, .r-desc p,
+      .result-type, .result-quote,
+      .card-title, .section-title, .hero-title {
+        text-wrap: balance;
+      }
+
+      p {
+        text-wrap: pretty;
+      }
       :root {
         --bg: #f5f0eb;
         --surface: rgba(255, 255, 255, 0.92);
@@ -128,6 +139,8 @@
       .section {
         margin-top: 32px;
       }
+
+      #radarSection .section-title { margin-bottom: 14px; }
 
       .panel {
         border: 1px solid var(--line);
@@ -373,10 +386,150 @@
       function normalizeResults(results) {
         const resultMap = new Map();
         (results || []).forEach((item) => {
-          if (!item || !item.test_name || resultMap.has(item.test_name)) return;
-          resultMap.set(item.test_name, item);
+          if (!item || !item.test_name) return;
+          const existing = resultMap.get(item.test_name);
+          const existingTime = existing?.completed_at ? new Date(existing.completed_at).getTime() : 0;
+          const currentTime = item.completed_at ? new Date(item.completed_at).getTime() : 0;
+          if (!existing || currentTime >= existingTime) {
+            resultMap.set(item.test_name, item);
+          }
         });
         return resultMap;
+      }
+
+      function clampRadarScore(value) {
+        if (typeof value !== 'number' || Number.isNaN(value)) return null;
+        return Math.max(0, Math.min(5, Number(value.toFixed(2))));
+      }
+
+      function averageScores(values) {
+        const valid = (values || []).filter((value) => typeof value === 'number' && !Number.isNaN(value));
+        if (!valid.length) return null;
+        return valid.reduce((sum, value) => sum + value, 0) / valid.length;
+      }
+
+      function buildRadarDimensions(results) {
+        const resultMap = normalizeResults(results);
+        const hspScore = resultMap.get('hsp')?.result_data?.score;
+        const erqScore = resultMap.get('erq')?.result_data?.score || {};
+        const ecrScore = resultMap.get('ecr')?.result_data?.score || {};
+        const boundaryScore = resultMap.get('boundary-sense')?.result_data?.score || {};
+        const fmpsScore = resultMap.get('fmps')?.result_data?.score || {};
+        const boundaryValues = Object.values(boundaryScore).filter((value) => typeof value === 'number' && !Number.isNaN(value));
+        const fmpsAverage = averageScores([fmpsScore.CM, fmpsScore.PS, fmpsScore.DA]);
+        const ecrSecurity = typeof ecrScore.security === 'number' && !Number.isNaN(ecrScore.security)
+          ? ecrScore.security
+          : (typeof ecrScore.anxiety === 'number' && typeof ecrScore.avoidance === 'number'
+            ? 8 - averageScores([ecrScore.anxiety, ecrScore.avoidance])
+            : null);
+
+        return [
+          {
+            label: '敏感度',
+            description: '你对外界信号的接收强度',
+            score: clampRadarScore(typeof hspScore === 'number' ? hspScore / 7 * 5 : null)
+          },
+          {
+            label: '情绪调节力',
+            description: '你消化和转化情绪的资源储备',
+            score: clampRadarScore(typeof erqScore.reappraisal === 'number' ? erqScore.reappraisal / 7 * 5 : null)
+          },
+          {
+            label: '关系安全感',
+            description: '你在亲密关系中感受到的稳定程度',
+            score: clampRadarScore(typeof ecrSecurity === 'number' ? ecrSecurity / 7 * 5 : null)
+          },
+          {
+            label: '边界稳定性',
+            description: '你区分“我的”和“别人的”时有多清晰',
+            score: clampRadarScore(boundaryValues.length ? Math.max(...boundaryValues) / 4 * 5 : null)
+          },
+          {
+            label: '自我慈悲度',
+            description: '你对自己犯错或不够好时的温和程度',
+            score: clampRadarScore(
+              fmpsAverage !== null
+                ? 6 - fmpsAverage
+                : (typeof fmpsScore.selfCompassion === 'number' ? fmpsScore.selfCompassion : null)
+            )
+          }
+        ];
+      }
+
+      function drawRadar(dimensions) {
+        if (!dimensions.some((item) => item.score !== null)) return;
+        const canvas = document.getElementById('radarCanvas');
+        const legend = document.getElementById('radarLegend');
+        if (!canvas || !legend) return;
+
+        const ctx = canvas.getContext('2d');
+        const cx = 160, cy = 160, radius = 110;
+        const count = dimensions.length;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let ring = 1; ring <= 5; ring += 1) {
+          ctx.beginPath();
+          dimensions.forEach((_, index) => {
+            const angle = -Math.PI / 2 + (Math.PI * 2 * index / count);
+            const x = cx + Math.cos(angle) * radius * (ring / 5);
+            const y = cy + Math.sin(angle) * radius * (ring / 5);
+            if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          });
+          ctx.closePath();
+          ctx.strokeStyle = 'rgba(44,32,20,.12)';
+          ctx.stroke();
+        }
+
+        dimensions.forEach((item, index) => {
+          const angle = -Math.PI / 2 + (Math.PI * 2 * index / count);
+          const x = cx + Math.cos(angle) * radius;
+          const y = cy + Math.sin(angle) * radius;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(x, y);
+          ctx.strokeStyle = 'rgba(44,32,20,.12)';
+          ctx.stroke();
+
+          const tx = cx + Math.cos(angle) * (radius + 22);
+          const ty = cy + Math.sin(angle) * (radius + 22);
+          ctx.fillStyle = '#7a6f64';
+          ctx.font = '12px Noto Serif SC';
+          ctx.textAlign = 'center';
+          ctx.fillText(item.label, tx, ty);
+        });
+
+        ctx.beginPath();
+        dimensions.forEach((item, index) => {
+          const angle = -Math.PI / 2 + (Math.PI * 2 * index / count);
+          const score = item.score === null ? 0 : item.score;
+          const x = cx + Math.cos(angle) * radius * (score / 5);
+          const y = cy + Math.sin(angle) * radius * (score / 5);
+          if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        });
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(74,48,115,0.2)';
+        ctx.strokeStyle = '#4A3073';
+        ctx.lineWidth = 2;
+        ctx.fill();
+        ctx.stroke();
+
+        dimensions.forEach((item, index) => {
+          const angle = -Math.PI / 2 + (Math.PI * 2 * index / count);
+          const score = item.score === null ? 0 : item.score;
+          const x = cx + Math.cos(angle) * radius * (score / 5);
+          const y = cy + Math.sin(angle) * radius * (score / 5);
+          ctx.beginPath();
+          ctx.arc(x, y, 4, 0, Math.PI * 2);
+          ctx.fillStyle = '#4A3073';
+          ctx.fill();
+        });
+
+        legend.innerHTML = dimensions.map((item) => `
+          <div style="padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.72);border:1px solid rgba(74,48,115,.08);">
+            <strong style="display:block;color:#2e2e2e;font-size:14px;">${item.label}${item.score !== null ? ` · ${item.score.toFixed(1)}` : ''}</strong>
+            <span style="font-size:12px;color:#8e857f;">${item.description}</span>
+          </div>
+        `).join('');
       }
 
       function renderLoginPrompt() {
@@ -394,6 +547,17 @@
 
       function renderProfile(user, results) {
         const resultMap = normalizeResults(results);
+        const dimensions = buildRadarDimensions(results);
+        const hasRadarResults = (results || []).length > 0 && dimensions.some((item) => item.score !== null);
+        const radarSection = hasRadarResults ? `
+          <section class="section" id="radarSection">
+            <h2 class="section-title">五维内在雷达</h2>
+            <div style="display:grid;place-items:center;gap:10px;margin-bottom:16px;">
+              <canvas id="radarCanvas" width="320" height="320" style="max-width:100%;height:auto;" aria-label="五维雷达图"></canvas>
+              <div id="radarLegend" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;width:100%;"></div>
+            </div>
+          </section>
+        ` : '';
         const cards = orderedTestNames.map((testName) => {
           const result = resultMap.get(testName);
           const href = testFileMap[testName] || '#';
@@ -438,6 +602,8 @@
             </div>
           </section>
 
+          ${radarSection}
+
           <section class="section">
             <h2 class="section-title">我的测试结果</h2>
             <p class="section-copy">白色卡片表示你已经完成，灰色卡片表示还没开始。所有入口都可以直接继续。</p>
@@ -445,6 +611,7 @@
           </section>
         `;
 
+        if (hasRadarResults) drawRadar(dimensions);
         document.getElementById('logoutBtn').addEventListener('click', signOut);
       }
 

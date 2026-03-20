@@ -20,7 +20,7 @@
     const text = extractPlainText(value);
     if (!text) return fallback || '';
     const pieces = text.match(/[^。！？!?]+[。！？!?]?/g) || [text];
-    return pieces.slice(0, 2).join('').trim() || fallback || text;
+    return pieces.join('').trim() || fallback || text;
   }
 
   function removeExistingCard() {
@@ -81,16 +81,14 @@
     html2canvas(card, {
       width: 390,
       height: 693,
-      scale: 2,
+      scale: Math.min(window.devicePixelRatio * 2, 4),
       backgroundColor: '#f5f0eb',
       useCORS: true,
       logging: false
     }).then(canvas => {
-      const link = document.createElement('a');
-      link.download = `she-is-${config.fileName || 'result'}.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
+      const dataUrl = canvas.toDataURL('image/png');
       card.remove();
+      showShareModal(dataUrl);
     }).catch(err => {
       console.error('生成图片失败', err);
       card.remove();
@@ -98,6 +96,156 @@
     });
   }
 
+  async function generateLongCard(config) {
+    const sourceEl = document.querySelector(config.captureSelector);
+    if (!sourceEl) {
+      alert('未找到结果内容，请先完成测试。');
+      return;
+    }
+
+    const existing = document.getElementById('__long-card-wrapper__');
+    if (existing) existing.remove();
+
+    const wrapper = document.createElement('div');
+    wrapper.id = '__long-card-wrapper__';
+    wrapper.style.cssText = `
+      position: fixed;
+      top: -9999px;
+      left: -9999px;
+      width: 390px;
+      background: #f5f0eb;
+      font-family: "Noto Serif SC", serif;
+      box-sizing: border-box;
+      padding: 0;
+      overflow: hidden;
+    `;
+
+    const header = document.createElement('div');
+    header.style.cssText = `
+      padding: 28px 28px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+    `;
+    header.innerHTML = `
+      <div style="position:absolute;top:-40px;left:-40px;width:200px;height:200px;background:radial-gradient(ellipse,rgba(74,48,115,0.12),transparent 70%);pointer-events:none;"></div>
+      <span style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:#1c1c1c;letter-spacing:0.1em;line-height:1;">女也</span>
+      <span style="font-size:10px;color:#888;letter-spacing:0.1em;margin-top:2px;">she is ______.</span>
+      <div style="margin-top:14px;font-size:11px;color:#4A3073;letter-spacing:0.18em;text-transform:uppercase;">${config.testName || ''}</div>
+      <div style="height:1px;background:rgba(74,48,115,0.15);width:100%;margin-top:10px;"></div>
+    `;
+
+    const contentClone = sourceEl.cloneNode(true);
+    contentClone.style.cssText = `
+      padding: 16px 28px 8px;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      width: 100%;
+      box-sizing: border-box;
+    `;
+
+    ['#result-actions', '.result-actions', '#storyRec', '.story-rec', '#storyRecSection'].forEach((sel) => {
+      try {
+        contentClone.querySelectorAll(sel).forEach((el) => el.remove());
+      } catch (e) {}
+    });
+
+    const footer = document.createElement('div');
+    footer.style.cssText = `
+      padding: 16px 28px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    `;
+    footer.innerHTML = `
+      <div style="height:1px;background:rgba(74,48,115,0.12);position:absolute;top:0;left:28px;right:28px;"></div>
+      <span style="font-family:'Courier New',monospace;font-size:9px;color:#bbb;">she-is-app.vercel.app</span>
+      <span style="font-family:'Cormorant Garamond',serif;font-size:11px;color:#4A3073;letter-spacing:0.05em;">she is ______.</span>
+    `;
+
+    wrapper.appendChild(header);
+    wrapper.appendChild(contentClone);
+    wrapper.appendChild(footer);
+    document.body.appendChild(wrapper);
+
+    try {
+      const canvas = await html2canvas(wrapper, {
+        width: 390,
+        backgroundColor: '#f5f0eb',
+        scale: Math.min(window.devicePixelRatio * 2, 4),
+        useCORS: true,
+        logging: false,
+        windowWidth: 390
+      });
+      const dataUrl = canvas.toDataURL('image/png');
+      wrapper.remove();
+      showShareModal(dataUrl);
+    } catch (err) {
+      console.error('长图生成失败', err);
+      wrapper.remove();
+      alert('生成图片时出现问题，请重试');
+    }
+  }
+
+  function showShareModal(dataUrl) {
+    let modal = document.getElementById('__share-modal__');
+    if (modal) modal.remove();
+
+    const isDesktop = window.innerWidth > 600;
+
+    modal = document.createElement('div');
+    modal.id = '__share-modal__';
+    modal.style.cssText = `
+      position:fixed;inset:0;z-index:9999;
+      background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      padding:24px;box-sizing:border-box;
+    `;
+
+    modal.innerHTML = `
+      <div style="position:relative;max-width:360px;width:100%;text-align:center;">
+        <img src="${dataUrl}" style="
+          width:100%;border-radius:16px;
+          box-shadow:0 20px 60px rgba(0,0,0,0.45);
+          display:block;
+        " />
+        <p style="
+          margin:16px 0 0;color:rgba(255,255,255,0.82);
+          font-size:13px;line-height:1.7;
+          font-family:'Noto Serif SC',serif;
+        ">${isDesktop ? '右键图片另存为，或点击下方下载' : '长按图片保存到相册'}</p>
+        ${isDesktop ? `<a href="${dataUrl}" download="she-is-result.png" style="
+          display:block;margin:12px 0 0;
+          padding:11px;border-radius:10px;
+          background:rgba(74,48,115,0.8);color:white;
+          font-family:'Noto Serif SC',serif;font-size:13px;
+          text-decoration:none;
+        ">点击下载图片</a>` : ''}
+        <button id="__share-modal-close__" style="
+          display:block;width:100%;margin-top:12px;
+          background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);
+          color:white;border-radius:10px;padding:12px;
+          font-family:'Noto Serif SC',serif;font-size:13px;cursor:pointer;
+        ">关闭</button>
+      </div>
+    `;
+
+    modal.querySelector('#__share-modal-close__').addEventListener('click', function() {
+      modal.remove();
+    });
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) modal.remove();
+    });
+
+    document.body.appendChild(modal);
+  }
+
   window.generateResultCard = generateResultCard;
+  window.generateLongCard = generateLongCard;
   window.extractResultCardQuote = extractQuote;
 })();

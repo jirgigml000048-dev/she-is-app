@@ -52,6 +52,18 @@ h3 {
   margin: 0;
 }
 
+/* 防止孤字 */
+h1, h2, h3, h4,
+.r-type, .r-quote, .r-desc p,
+.result-type, .result-quote,
+.card-title, .section-title, .hero-title {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
 a {
   color: inherit;
   text-decoration: none;

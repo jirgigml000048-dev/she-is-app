@@ -277,6 +277,9 @@
       margin-bottom: 20px;
     }
     .r-quote {
+      border-left: 2px solid rgba(74, 48, 115, 0.45);
+      padding-left: 10px;
+      margin-bottom: 4px;
       position: relative;
       z-index: 1;
       margin: 0 0 20px;
@@ -288,6 +291,12 @@
       font-size: 14px;
     }
     .r-quote:empty { display: none; }
+    .share-caption {
+      font-size: 11px;
+      color: rgba(74, 48, 115, 0.55);
+      margin: 0 0 12px;
+      letter-spacing: 0.04em;
+    }
     .r-desc {
       position: relative;
       z-index: 1;
@@ -304,6 +313,42 @@
     .r-desc p:last-child {
       margin-bottom: 0;
     }
+
+
+.share-btn-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.share-btn-row .result-save-btn,
+.share-btn-row .result-share-long-btn {
+  flex: 1;
+}
+.result-share-long-btn {
+  display: block;
+  width: 100%;
+  appearance: none;
+  font-family: "Noto Serif SC", serif;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #fff;
+  background: #4A3073;
+  border: 1px solid #4A3073;
+  padding: 10px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  letter-spacing: 0.02em;
+  transition: background-color .2s ease, opacity .2s ease;
+}
+.result-share-long-btn:hover {
+  background: #3D2565;
+  border-color: #3D2565;
+}
+.result-share-long-btn:disabled {
+  opacity: 0.58;
+  cursor: wait;
+}
 
 .story-rec {
   background: rgba(255,255,255,0.8);
@@ -391,7 +436,7 @@
           <div class="result-desc r-desc" id="resultDesc"></div>
         </div>
 <div class="result-actions">
-          <button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button>
+          <div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div>
           <p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p>
           <a href="index.html" class="result-back-btn">返回首页</a>
           <button class="result-retry-btn" id="restartBtn" type="button">再做一次</button>
@@ -414,7 +459,7 @@
 
       function downloadResult() {
   const button = document.getElementById('saveResultBtn');
-  const originalText = button ? button.textContent : '保存结果图片';
+  const originalText = button ? button.textContent : '分享结果';
   if (button) {
     button.disabled = true;
     button.textContent = '保存中…';
@@ -424,7 +469,7 @@
       testName: '关系角色测评',
       resultType: document.getElementById('resultTitle')?.dataset?.cardType || document.getElementById('resultTitle')?.textContent?.trim() || '测试结果',
       resultSubtitle: document.getElementById('resultTitle')?.dataset?.subtitle || '',
-      quote: extractResultCardQuote(document.getElementById('resultDesc')?.textContent, '你是关系里那个先开口的人。'),
+      quote: document.getElementById('resultQuote')?.textContent?.trim() || extractResultCardQuote(document.getElementById('resultDesc')?.textContent, '你是关系里那个先开口的人。'),
       score: document.getElementById('resultTag')?.textContent?.trim() || '',
       fileName: 'relationship-role-result'
     });
@@ -437,6 +482,27 @@
 }
 
 window.downloadResult = downloadResult;
+
+function shareLongImage() {
+  const button = document.getElementById('shareLongBtn');
+  if (button) {
+    button.disabled = true;
+    button.textContent = '生成中…';
+  }
+  generateLongCard({
+    captureSelector: '#resultView',
+    testName: '关系角色测评',
+    fileName: 'relationship-role-long'
+  }).finally(() => {
+    if (button) {
+      button.disabled = false;
+      button.textContent = '结果长图';
+    }
+  });
+}
+
+window.shareLongImage = shareLongImage;
+
       const testData = {
   "id": "relationship-role",
   "title": "关系中的你",
@@ -794,8 +860,15 @@ window.downloadResult = downloadResult;
         const tag = getTopTag();
         const result = testData.results[tag];
         resultTag.textContent = tag;
-        if (resultTags) resultTags.innerHTML = [tag, '结果画像', 'She Is'].map(item => `<li class="result-tag">${item}</li>`).join('');
+        if (resultTags) resultTags.innerHTML = ['结果画像', 'She Is'].map(item => `<li class="result-tag">${item}</li>`).join('');
         if (resultQuote) resultQuote.textContent = result.subtitle || result.title || tag;
+        let captionEl = document.querySelector('.share-caption');
+        if (!captionEl && resultQuote) {
+          captionEl = document.createElement('p');
+          captionEl.className = 'share-caption';
+          captionEl.textContent = '↑ 分享卡片中会显示这句话';
+          resultQuote.after(captionEl);
+        }
         resultTitle.textContent = result.title;
         resultTitle.dataset.cardType = result.title.split(/\s+—\s+/)[0] || result.title;
         resultTitle.dataset.subtitle = result.subtitle || result.title.split(/\s+—\s+/).slice(1).join(' — ') || '';

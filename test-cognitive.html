@@ -336,6 +336,9 @@
       letter-spacing: 0.08em;
     }
     .r-quote {
+      border-left: 2px solid rgba(74, 48, 115, 0.45);
+      padding-left: 10px;
+      margin-bottom: 4px;
       margin: 0 0 16px;
       padding: 14px 16px;
       background: rgba(74,48,115,0.06);
@@ -345,6 +348,12 @@
       border-radius: 18px;
     }
     .r-quote:empty { display: none; }
+    .share-caption {
+      font-size: 11px;
+      color: rgba(74, 48, 115, 0.55);
+      margin: 0 0 12px;
+      letter-spacing: 0.04em;
+    }
     .r-desc {
       font-size: 14px;
       color: #554c47;
@@ -356,6 +365,42 @@
     .r-desc p:last-child {
       margin-bottom: 0;
     }
+
+
+.share-btn-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.share-btn-row .result-save-btn,
+.share-btn-row .result-share-long-btn {
+  flex: 1;
+}
+.result-share-long-btn {
+  display: block;
+  width: 100%;
+  appearance: none;
+  font-family: "Noto Serif SC", serif;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #fff;
+  background: #4A3073;
+  border: 1px solid #4A3073;
+  padding: 10px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  letter-spacing: 0.02em;
+  transition: background-color .2s ease, opacity .2s ease;
+}
+.result-share-long-btn:hover {
+  background: #3D2565;
+  border-color: #3D2565;
+}
+.result-share-long-btn:disabled {
+  opacity: 0.58;
+  cursor: wait;
+}
 
 .story-rec {
   background: rgba(74,48,115,0.05);
@@ -1250,7 +1295,7 @@ const cognitiveLongDesc = {
               <div class="mbti-list">${mbtiSuggestions.map(item => `<span class="mbti-pill">${item}</span>`).join('')}</div>
             </section>
             <section class="result-section">
-              <p class="r-quote">${quoteText}</p>
+              <p class="r-quote" id="rQuote">${quoteText}</p>
               <div class="r-desc">${formatParagraphs(detailText + '\n\n' + topTwo.map(item => cognitiveLongDesc[item.id] || `你${item.description}`).join('\n'))}</div>
               <div class="story-rec" id="storyRec" style="display:none;">
                 <div class="story-rec-img"></div>
@@ -1262,7 +1307,7 @@ const cognitiveLongDesc = {
               </div>
             </section>
           </div>
-          <div class="result-actions"><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">保存结果图片</button><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
+          <div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
         `;
 
         updateStoryBar();
@@ -1361,7 +1406,7 @@ const cognitiveLongDesc = {
 
       function downloadResult() {
   const button = document.getElementById('saveResultBtn');
-  const originalText = button ? button.textContent : '保存结果图片';
+  const originalText = button ? button.textContent : '分享结果';
   if (button) {
     button.disabled = true;
     button.textContent = '保存中…';
@@ -1374,7 +1419,7 @@ const cognitiveLongDesc = {
       testName: '认知功能测评',
       resultType: highlightTitle,
       resultSubtitle: highlightDesc || '',
-      quote: extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.textContent, '不是标签，而是你认知模式的入口。'),
+      quote: document.getElementById('rQuote')?.textContent?.trim() || extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.textContent, '不是标签，而是你认知模式的入口。'),
       score: document.querySelector('#result-capture .r-score-line')?.textContent?.trim() || '',
       fileName: 'cognitive-result'
     });
@@ -1387,6 +1432,27 @@ const cognitiveLongDesc = {
 }
 
 window.downloadResult = downloadResult;
+
+function shareLongImage() {
+  const button = document.getElementById('shareLongBtn');
+  if (button) {
+    button.disabled = true;
+    button.textContent = '生成中…';
+  }
+  generateLongCard({
+    captureSelector: '#result-capture',
+    testName: '认知功能测评',
+    fileName: 'cognitive-long'
+  }).finally(() => {
+    if (button) {
+      button.disabled = false;
+      button.textContent = '结果长图';
+    }
+  });
+}
+
+window.shareLongImage = shareLongImage;
+
     </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
