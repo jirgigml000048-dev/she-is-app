@@ -651,8 +651,8 @@
         qId.textContent = `第 ${q.id} 题`;
         qText.textContent = q.text;
         syncSliderValue(state.answers[state.index] || 4);
-        storyRec.style.display = 'none';
-      updateProgress();
+        if (storyRec) storyRec.style.display = 'none';
+        updateProgress();
       }
 
       function transition(next) {
@@ -721,7 +721,7 @@ const storyIllustrations = {
         if (imgEl && illustrationPath) {
           imgEl.style.background = `url('${illustrationPath}') center/cover no-repeat`;
         }
-        storyRec.style.display = 'block';
+        if (storyRec) storyRec.style.display = 'block';
       }
 
       function showResult() {
@@ -789,9 +789,9 @@ const storyIllustrations = {
         state.index = 0;
         introEl.classList.add("hidden");
         resultEl.classList.add("hidden");
-        storyRec.style.display = 'none';
+        if (storyRec) storyRec.style.display = 'none';
         quizEl.classList.remove("hidden");
-        storyRec.style.display = 'none';
+        if (storyRec) storyRec.style.display = 'none';
         renderQuestion();
       }
 
@@ -799,7 +799,7 @@ const storyIllustrations = {
         state.index = -1;
         state.answers = Array(DATA.questions.length).fill(null);
         resultEl.classList.add("hidden");
-        storyRec.style.display = 'none';
+        if (storyRec) storyRec.style.display = 'none';
         quizEl.classList.add("hidden");
         introEl.classList.remove("hidden");
         syncSliderValue(4);
@@ -811,7 +811,11 @@ const storyIllustrations = {
       });
       document.getElementById('startBtn').onclick = () => {
         document.querySelector('.test-intro').style.display = 'none';
-        document.getElementById('testBody').style.display = 'block';
+        const testBody = document.getElementById('testBody');
+        testBody.style.display = 'block';
+        testBody.getBoundingClientRect();
+        testBody.style.opacity = '0.99';
+        setTimeout(() => { testBody.style.opacity = ''; }, 20);
       };
       document.getElementById("beginQuizBtn").onclick = startQuiz;
       document.getElementById("prevBtn").onclick = goPrev;
