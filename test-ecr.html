@@ -356,6 +356,45 @@
     .r-desc p:last-child {
       margin-bottom: 0;
     }
+    .r-axis-section,
+    .r-pattern-section,
+    .r-question-section {
+      margin-bottom: 4px;
+    }
+    .r-axis-title {
+      font-family: "Noto Serif SC", serif;
+      font-size: 11px;
+      color: #4A3073;
+      letter-spacing: 0.1em;
+      margin: 0 0 12px;
+    }
+    .r-axis-block {
+      margin-bottom: 14px;
+    }
+    .r-axis-label {
+      display: inline-block;
+      font-family: "Noto Serif SC", serif;
+      font-size: 11px;
+      color: #888;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .r-axis-text {
+      font-family: "Noto Serif SC", serif;
+      font-size: 13px;
+      color: #555;
+      line-height: 2;
+      margin: 0 0 10px;
+    }
+    .r-question-text {
+      font-family: "Noto Serif SC", serif;
+      font-size: 14px;
+      color: #3d3158;
+      line-height: 1.9;
+      margin: 0;
+      border-left: 2px solid rgba(74, 48, 115, 0.45);
+      padding-left: 10px;
+    }
     .r-quote {
       border-left: 2px solid rgba(74, 48, 115, 0.45);
       padding-left: 10px;
@@ -755,6 +794,41 @@
         const orderedTypes = Object.entries(typeScores).sort((a, b) => b[1] - a[1]);
         const winner = orderedTypes[0][0];
         const r = DATA.results[winner];
+        const axisTexts = {
+          preoccupied: {
+            anxiety: '当关系里出现一点点不确定，你的内心会自动启动一套运算：对方为什么还没回？刚才那句话是不是说错了？他是不是在慢慢疏远？这些念头不是你刻意制造的，它们自动出现，而且停不下来。',
+            avoidance: '靠近对你来说不是问题。难的是靠近之后——你不知道对方是不是和你同等在意这段关系。',
+            pattern1: '你对关系里的信号高度敏感：对方比平时晚回一条消息，你会注意到；语气稍微冷一点，你会察觉。这种感知力是真实的能力，但它也会让你在没有危险的时候持续处于戒备。',
+            pattern2: '你投入一段关系的方式，往往是尽可能多地付出——更多联系，更多关心，更多确认。你以为只要自己做得足够多，就能让对方留下来。这个逻辑让你越来越累，但你很难停。',
+            question: '如果对方今天完全沉默，你能独自撑住多久——不推测，不发消息，只是等？'
+          },
+          fearful: {
+            anxiety: '你对失去有一种隐约的预感，不需要真实发生什么，它就在那里。对方发了一条消息，你秒回了，然后等了十分钟，没有动静。你开始想：是不是说错什么了？是不是他今天不想聊了？再等五分钟，还是没有。你刷新了两次，关掉手机，又打开。这种等待的感觉，比等待本身更累。',
+            avoidance: '当一个人真正靠近你，你会感到一种奇怪的不安。太想要了，反而让你觉得危险。有时你会突然想缩一下——找个借口不见面，或者回消息的速度不知不觉慢下来。太想要了，让你本能地想先退一步，看看对方会不会继续往前走。',
+            pattern1: '你同时体验着两种相反的力量：想靠近，又想退后。结果是你在关系里总保持一种微妙的距离——看起来在，但没有完全进去。',
+            pattern2: '当对方主动靠近时，你有时会找理由拉开；当对方距离远了，你又开始担心他是否真的还在。这个循环消耗巨大，却很难停下来。',
+            question: '你最害怕别人在你身上看见什么？'
+          },
+          dismissing: {
+            anxiety: '关系里出现一点距离，你不会马上往最坏的方向想。对方今天话少，你会注意到，但不会因此推演出一整套故事。这种安静是真实的——你在感情上不太需要密度，也不太需要对方的反复确认。',
+            avoidance: '一个人靠得太近，你会感到一种说不清楚的压迫感。你需要一扇可以自己关上的门。',
+            pattern1: '你帮人解决问题很在行，但别人想反过来帮你的时候，你会觉得别扭。把自己的事交出去，感觉像是失去了什么。',
+            pattern2: '有时候你意识到，自己跟一个人相处了很久，却从来没有真正说过自己哪里不好受。那个开口的时机，好像一直没有出现过。',
+            question: '你上一次让别人看到你脆弱，是什么时候？'
+          },
+          secure: {
+            anxiety: '关系里出现一点距离，你不会马上往最坏的方向想。对方今天话少，你会注意到，但不会因此推演出一整套故事。这种安静来自真实的稳定——你不太需要反复确认对方是否还在。',
+            avoidance: '当一个人靠近你，你能感觉到温暖，也能接住它。你不会在亲密到来的时候本能地退后，也不需要给自己留一扇一直开着的逃生门。',
+            pattern1: '遇到摩擦的时候，你的第一反应很少是关门或者逃跑。你会有情绪，但通常能把情绪和事情分开来处理。吵完了，关系还在那里。',
+            pattern2: '你能说出自己需要什么，也能听见对方在说什么。这件事听起来简单，做到的人其实不多。',
+            question: '你信任的底气，是从哪里来的？'
+          }
+        };
+        const axisAnxietyText = axisTexts[winner]?.anxiety || '';
+        const axisAvoidanceText = axisTexts[winner]?.avoidance || '';
+        const patternText1 = axisTexts[winner]?.pattern1 || '';
+        const patternText2 = axisTexts[winner]?.pattern2 || '';
+        const questionText = axisTexts[winner]?.question || '';
         const summaryMap = { secure: "安全型", fearful: "恐惧型", preoccupied: "专注型", dismissing: "冷漠型" };
         const minScore = orderedTypes[orderedTypes.length - 1][1];
         const maxScore = orderedTypes[0][1];
@@ -785,6 +859,29 @@
           <div class="r-quote" id="rQuote">${r.subtitle || r.tagline || ""}</div>
           <div class="r-divider"></div>
           <div class="r-desc">${formatParagraphs(r.desc)}<p>这是你当下的模式，不是诊断，也不是定论。</p></div>
+          <div class="r-divider"></div>
+          <div class="r-axis-section">
+            <p class="r-axis-title">你的两轴解读</p>
+            <div class="r-axis-block">
+              <span class="r-axis-label">焦虑</span>
+              <p class="r-axis-text">${axisAnxietyText}</p>
+            </div>
+            <div class="r-axis-block">
+              <span class="r-axis-label">回避</span>
+              <p class="r-axis-text">${axisAvoidanceText}</p>
+            </div>
+          </div>
+          <div class="r-divider"></div>
+          <div class="r-pattern-section">
+            <p class="r-axis-title">在关系里，你可能会……</p>
+            <p class="r-axis-text">${patternText1}</p>
+            <p class="r-axis-text">${patternText2}</p>
+          </div>
+          <div class="r-divider"></div>
+          <div class="r-question-section">
+            <p class="r-axis-title">值得想一想</p>
+            <p class="r-question-text">${questionText}</p>
+          </div>
           </div>
 <div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn" id="redoBtn" type="button">再做一次</button></div>
 <div class="story-rec" id="storyRec" style="display:none;">
