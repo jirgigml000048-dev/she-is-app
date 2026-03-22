@@ -796,6 +796,7 @@
         const r = DATA.results[winner];
         const axisTexts = {
           preoccupied: {
+            quote: '你爱得很认真。认真到有时候忘了，你的感知力是一种能力，而不只是一种焦虑。那些停不下来的念头，是你对关系在意的证据，不是你的错。',
             anxiety: '当关系里出现一点点不确定，你的内心会自动启动一套运算：对方为什么还没回？刚才那句话是不是说错了？他是不是在慢慢疏远？这些念头不是你刻意制造的，它们自动出现，而且停不下来。',
             avoidance: '靠近对你来说不是问题。难的是靠近之后——你不知道对方是不是和你同等在意这段关系。',
             pattern1: '你对关系里的信号高度敏感：对方比平时晚回一条消息，你会注意到；语气稍微冷一点，你会察觉。这种感知力是真实的能力，但它也会让你在没有危险的时候持续处于戒备。',
@@ -803,6 +804,7 @@
             question: '如果对方今天完全沉默，你能独自撑住多久——不推测，不发消息，只是等？'
           },
           fearful: {
+            quote: '你想要的和你害怕的，恰好是同一件事。靠近让你感到温暖，也让你感到危险。这两种感受都是真的，它们不矛盾，只是都需要被看见。',
             anxiety: '你对失去有一种隐约的预感，不需要真实发生什么，它就在那里。对方发了一条消息，你秒回了，然后等了十分钟，没有动静。你开始想：是不是说错什么了？是不是他今天不想聊了？再等五分钟，还是没有。你刷新了两次，关掉手机，又打开。这种等待的感觉，比等待本身更累。',
             avoidance: '当一个人真正靠近你，你会感到一种奇怪的不安。太想要了，反而让你觉得危险。有时你会突然想缩一下——找个借口不见面，或者回消息的速度不知不觉慢下来。太想要了，让你本能地想先退一步，看看对方会不会继续往前走。',
             pattern1: '你同时体验着两种相反的力量：想靠近，又想退后。结果是你在关系里总保持一种微妙的距离——看起来在，但没有完全进去。',
@@ -810,6 +812,7 @@
             question: '你最害怕别人在你身上看见什么？'
           },
           dismissing: {
+            quote: '你习惯靠自己解决，包括情绪。这让你很可靠，但有时候也很重。你不是不需要别人——只是很久没有练习开口了。',
             anxiety: '关系里出现一点距离，你不会马上往最坏的方向想。对方今天话少，你会注意到，但不会因此推演出一整套故事。这种安静是真实的——你在感情上不太需要密度，也不太需要对方的反复确认。',
             avoidance: '一个人靠得太近，你会感到一种说不清楚的压迫感。你需要一扇可以自己关上的门。',
             pattern1: '你帮人解决问题很在行，但别人想反过来帮你的时候，你会觉得别扭。把自己的事交出去，感觉像是失去了什么。',
@@ -817,6 +820,7 @@
             question: '你上一次让别人看到你脆弱，是什么时候？'
           },
           secure: {
+            quote: '你在关系里很少处于戒备。别人靠近的时候，你能接住；别人需要距离的时候，你不会因此动摇。这种稳定不是运气，是真实发生过的事情慢慢累积出来的。',
             anxiety: '关系里出现一点距离，你不会马上往最坏的方向想。对方今天话少，你会注意到，但不会因此推演出一整套故事。这种安静来自真实的稳定——你不太需要反复确认对方是否还在。',
             avoidance: '当一个人靠近你，你能感觉到温暖，也能接住它。你不会在亲密到来的时候本能地退后，也不需要给自己留一扇一直开着的逃生门。',
             pattern1: '遇到摩擦的时候，你的第一反应很少是关门或者逃跑。你会有情绪，但通常能把情绪和事情分开来处理。吵完了，关系还在那里。',
@@ -824,6 +828,8 @@
             question: '你信任的底气，是从哪里来的？'
           }
         };
+        const quoteText = axisTexts[winner]?.quote || r.tagline || '';
+        window._ecrQuote = quoteText;
         const axisAnxietyText = axisTexts[winner]?.anxiety || '';
         const axisAvoidanceText = axisTexts[winner]?.avoidance || '';
         const patternText1 = axisTexts[winner]?.pattern1 || '';
@@ -856,7 +862,7 @@
           <div class="result-viz">${buildScoreRows(matchRows)}</div>
           <h2 class="r-type" data-subtitle="${r.subtitle || r.tagline || ''}">${r.label}</h2>
           <p class="r-score-line">回避 ${avoidance.toFixed(2)} ｜ 焦虑 ${anxiety.toFixed(2)}</p>
-          <div class="r-quote" id="rQuote">${r.subtitle || r.tagline || ""}</div>
+          <div class="r-quote" id="rQuote"></div>
           <div class="r-divider"></div>
           <div class="r-desc">${formatParagraphs(r.desc)}<p>这是你当下的模式，不是诊断，也不是定论。</p></div>
           <div class="r-divider"></div>
@@ -949,7 +955,7 @@
       testName: '依恋风格测评 · ECR',
       resultType: document.querySelector('#result-capture .r-type')?.textContent?.trim() || '测试结果',
       resultSubtitle: document.querySelector('#result-capture .r-type')?.dataset?.subtitle || '',
-      quote: document.getElementById('rQuote')?.textContent?.trim() || extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.innerHTML, '你知道怎么爱，也知道怎么被爱。'),
+      quote: window._ecrQuote || '',
       score: document.querySelector('#result-capture .r-score-line')?.textContent?.trim() || '',
       fileName: 'ecr-result'
     });
