@@ -1297,17 +1297,9 @@ const cognitiveLongDesc = {
             <section class="result-section">
               <p class="r-quote" id="rQuote">${quoteText}</p>
               <div class="r-desc">${formatParagraphs(detailText + '\n\n' + topTwo.map(item => cognitiveLongDesc[item.id] || `你${item.description}`).join('\n'))}</div>
-              <div class="story-rec" id="storyRec" style="display:none;">
-                <div class="story-rec-img"></div>
-                <div class="story-rec-content">
-                  <p class="story-rec-hint">你可能会有共鸣</p>
-                  <h3 class="story-rec-title">故事标题</h3>
-                  <a class="story-rec-btn" href="#">读这个故事 →</a>
-                </div>
-              </div>
             </section>
           </div>
-          <div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
+          <div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><div class="story-rec" id="storyRec" style="display:none;"><div class="story-rec-img"></div><div class="story-rec-content"><p class="story-rec-hint">你可能会有共鸣</p><h3 class="story-rec-title">故事标题</h3><a class="story-rec-btn" href="#">读这个故事 →</a></div></div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
         `;
 
         updateStoryBar();

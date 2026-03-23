@@ -611,6 +611,15 @@
         DA: { name: "行动疑虑", en: "Doubts about Actions", desc: "做完了之后你还会继续怀疑多久" }
       };
 
+      const RESULT_TYPE_NAMES = {
+        high_cm_da: '你太怕做错了',
+        high_ps_low_cm: '高标准不焦虑型',
+        high_pe: '父母期望型',
+        high_da_low_cm: '行动疑虑型',
+        high_or: '秩序感型',
+        balanced: '平衡型'
+      };
+
       const DATA = {
         id: "fmps-15",
         title: "你对「做好」的标准有多高",
@@ -935,6 +944,7 @@
         const scores = calcDimensionScores();
         const resultId = matchResult(scores);
         const r = DATA.results[resultId];
+        const resultTypeName = RESULT_TYPE_NAMES[resultId] || r.title;
         const sortedDimensions = Object.entries(scores).sort((a, b) => b[1] - a[1]);
         const top2 = sortedDimensions.slice(0, 2).map(([k]) => DIMENSION_META[k].name);
 
@@ -953,7 +963,8 @@
 
         resultEl.innerHTML = `
           <div id="result-capture" class="result-capture-card">
-            <div class="r-head"><h2 class="r-type" data-subtitle="最突出维度：${top2.join(' · ')}">${r.title}</h2></div>
+            <div class="r-head"><h2 class="r-type" data-subtitle="最突出维度：${top2.join(' · ')}">${resultTypeName}</h2></div>
+            <p class="tagline">${r.title}</p>
             <p class="r-score-line">最突出维度：${top2.join(' · ')}</p>
             <ul class="result-tags"><li class="result-tag">FMPS-15</li><li class="result-tag">完美主义</li><li class="result-tag">心理画像</li></ul>
             <div class="r-quote" id="rQuote">${r.quote}</div>
@@ -974,16 +985,8 @@
               <div class="section-title">${r.reflectionTitle}</div>
               <p class="reflection">${r.reflection}</p>
             </section>
-            <div class="story-rec" id="storyRec" style="display:none;">
-              <div class="story-rec-img"></div>
-              <div class="story-rec-content">
-                <p class="story-rec-hint">你可能会有共鸣</p>
-                <h3 class="story-rec-title">故事标题</h3>
-                <a class="story-rec-btn" href="#">读这个故事 →</a>
-              </div>
-            </div>
           </div>
-          <div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
+          <div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><div class="story-rec" id="storyRec" style="display:none;"><div class="story-rec-img"></div><div class="story-rec-content"><p class="story-rec-hint">你可能会有共鸣</p><h3 class="story-rec-title">故事标题</h3><a class="story-rec-btn" href="#">读这个故事 →</a></div></div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
         `;
 
         storyRec = document.getElementById('storyRec');

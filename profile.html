@@ -428,6 +428,39 @@
       .result-footer-note { margin:0; font-size:13px; color:var(--brand); font-style:italic; line-height:1.7; }
       .result-footer-url { margin:10px 0 0; font-size:11px; color:#aaa; }
 
+      .share-preview-modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(45, 34, 56, 0.5);
+        z-index: 999;
+      }
+      .share-preview-modal.is-open { display: flex; }
+      .share-preview-dialog {
+        width: min(100%, 430px);
+        max-height: 88vh;
+        overflow: auto;
+        padding: 16px;
+        border-radius: 24px;
+        background: rgba(255,255,255,0.96);
+        box-shadow: 0 18px 48px rgba(45, 34, 56, 0.18);
+      }
+      .share-preview-image {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 18px;
+      }
+      .share-preview-tip {
+        font-size: 12px;
+        color: #999;
+        text-align: center;
+        margin-top: 8px;
+      }
+
       @media (max-width: 360px) {
         .result-grid { grid-template-columns: 1fr; }
         .share-btn-row { grid-template-columns: 1fr; }
@@ -453,6 +486,12 @@
     </main>
 
     <div id="captureStage" class="capture-stage"></div>
+    <div id="sharePreviewModal" class="share-preview-modal" aria-hidden="true">
+      <div class="share-preview-dialog">
+        <img id="sharePreviewImage" class="share-preview-image" alt="分享预览图" />
+        <p class="share-preview-tip">长按图片保存</p>
+      </div>
+    </div>
 
     <script>
       const TEST_META = {
@@ -505,6 +544,8 @@
       const headerUser = document.getElementById('headerUser');
       const logoutBtn = document.getElementById('logoutBtn');
       const captureStage = document.getElementById('captureStage');
+      const sharePreviewModal = document.getElementById('sharePreviewModal');
+      const sharePreviewImage = document.getElementById('sharePreviewImage');
 
       function escapeHtml(value) {
         return String(value || '')
@@ -864,11 +905,15 @@
           captureStage.innerHTML = type === 'long' ? buildLongShareHTML(data) : buildResultShareHTML(data);
           if (type === 'long') drawRadar(data.axes, 'shareRadarCanvas', true);
           const node = captureStage.firstElementChild;
-          const canvas = await html2canvas(node, { backgroundColor: '#f5f0eb', scale: 2, useCORS: true });
+          const canvas = await html2canvas(node, { backgroundColor: '#f5f0eb', scale: Math.min(window.devicePixelRatio * 3, 4), useCORS: true });
+          const imageUrl = canvas.toDataURL('image/png');
           const link = document.createElement('a');
           link.download = type === 'long' ? 'profile-long.png' : 'profile-result-card.png';
-          link.href = canvas.toDataURL('image/png');
+          link.href = imageUrl;
           link.click();
+          sharePreviewImage.src = imageUrl;
+          sharePreviewModal.classList.add('is-open');
+          sharePreviewModal.setAttribute('aria-hidden', 'false');
           captureStage.innerHTML = '';
         } catch (error) {
           console.error('share failed', error);
@@ -894,6 +939,14 @@
           profileRoot.innerHTML = `<section class="login-card"><h2 class="login-title">结果暂时没有加载出来</h2><p class="login-copy">请刷新页面再试一次。如果你刚完成登录，等几秒再回来通常就能同步成功。</p></section>`;
         }
       }
+
+      sharePreviewModal.addEventListener('click', (event) => {
+        if (event.target === sharePreviewModal) {
+          sharePreviewModal.classList.remove('is-open');
+          sharePreviewModal.setAttribute('aria-hidden', 'true');
+          sharePreviewImage.removeAttribute('src');
+        }
+      });
 
       logoutBtn.addEventListener('click', signOut);
       initProfilePage();
