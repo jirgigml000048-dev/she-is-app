@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>你的边界感 | 女也 She Is</title>
+    <title>边界感测评 | 女也 She Is</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <style>
@@ -421,7 +421,7 @@
 
       <section class="panel view" id="introView">
         <p class="eyebrow">Light Quiz</p>
-        <h1 class="title">你的边界感</h1>
+        <h1 class="title">边界感测评</h1>
         <p class="subtitle" id="introDesc"></p>
         <div class="intro-note">一题一页，像把手电筒一格一格打在自己身上。别急着做对，只选那个让你心里轻轻点头的答案。</div>
         <button class="primary" id="startBtn">准备好了</button>
@@ -516,8 +516,8 @@ window.shareLongImage = shareLongImage;
 
       const testData = {
   "id": "boundary-sense",
-  "title": "你的边界感",
-  "description": "有些\"好啊\"，其实是心里那句\"不想\"还没来得及被自己听见。你可能是在怕别人失望，怕气氛冷掉，也可能只是太习惯先照顾外面，再回头问自己。这个小测试想陪你辨认：你的边界，最常在哪里先变得模糊。",
+  "title": "边界感测评",
+  "description": "知道你在哪些地方说「好」其实是说不出「不」，以及为什么",
   "type": "choice",
   "questions": [
     {
@@ -870,6 +870,15 @@ window.shareLongImage = shareLongImage;
       }
 
       document.getElementById('startBtn').addEventListener('click', startQuiz);
+      document.getElementById('restartBtn').addEventListener('click', startQuiz);
+      storyRec.style.display = 'none';
+
+      updateProgress();
+    </script>
+
+</body>
+</html>
+click', startQuiz);
       document.getElementById('restartBtn').addEventListener('click', startQuiz);
       storyRec.style.display = 'none';
 

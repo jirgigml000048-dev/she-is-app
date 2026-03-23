@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile Share Demo</title>
+  <style>
+    :root {
+      --page-bg: #f0ede8;
+      --card-bg: #f5f0eb;
+      --brand: #4A3073;
+      --text: #2f2440;
+      --muted: #7a7284;
+      --soft: #999;
+      --line: rgba(74, 48, 115, 0.14);
+      --line-strong: rgba(74, 48, 115, 0.22);
+      --chip-bg: rgba(74, 48, 115, 0.07);
+      --chip-pending-bg: rgba(128, 121, 138, 0.08);
+      --chip-pending-text: #918997;
+      --shadow: 0 22px 60px rgba(74, 48, 115, 0.12);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--page-bg);
+      color: var(--text);
+      font-family: "Noto Serif SC", Georgia, serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 20px 64px;
+    }
+
+    .page-title {
+      margin: 0 0 10px;
+      font-size: 28px;
+      color: var(--brand);
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+
+    .page-subtitle {
+      margin: 0 0 36px;
+      text-align: center;
+      color: #8b8493;
+      font-size: 14px;
+      letter-spacing: 0.03em;
+    }
+
+    .demo-section + .demo-section {
+      margin-top: 44px;
+    }
+
+    .section-heading {
+      margin: 0 0 18px;
+      font-size: 20px;
+      color: var(--brand);
+      letter-spacing: 0.03em;
+    }
+
+    .phone-shot {
+      width: 390px;
+      max-width: 100%;
+      background: var(--card-bg);
+      border-radius: 34px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.72);
+      overflow: hidden;
+    }
+
+    .share-sheet {
+      padding: 24px 24px 28px;
+    }
+
+    .brand-block {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .brand-mark {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: rgba(74, 48, 115, 0.82);
+      text-transform: uppercase;
+    }
+
+    .brand-line {
+      width: 100%;
+      height: 1px;
+      margin-top: 14px;
+      background: linear-gradient(90deg, rgba(74,48,115,0), rgba(74,48,115,0.24), rgba(74,48,115,0));
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .intro h2 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.38;
+      color: var(--brand);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .intro p {
+      margin: 10px 0 0;
+      font-size: 13px;
+      color: var(--soft);
+      font-style: italic;
+      letter-spacing: 0.02em;
+    }
+
+    .radar-panel {
+      margin-bottom: 22px;
+      padding: 16px 12px 12px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.45);
+      border: 1px solid rgba(74, 48, 115, 0.08);
+    }
+
+    .radar-canvas {
+      display: block;
+      width: 240px;
+      height: 220px;
+      margin: 0 auto;
+    }
+
+    .radar-legend {
+      margin-top: 6px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      font-size: 11px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .axis-summary {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .axis-row {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(74, 48, 115, 0.08);
+    }
+
+    .axis-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .axis-tag {
+      margin-bottom: 8px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--brand);
+      letter-spacing: 0.04em;
+    }
+
+    .axis-list {
+      display: grid;
+      gap: 6px;
+    }
+
+    .axis-item {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .axis-item-name {
+      color: var(--text);
+    }
+
+    .axis-item-value {
+      flex-shrink: 0;
+      color: var(--brand);
+      white-space: nowrap;
+    }
+
+    .axis-item.pending .axis-item-name,
+    .axis-item.pending .axis-item-value {
+      color: var(--chip-pending-text);
+    }
+
+    .portrait-copy {
+      margin: 0 0 26px;
+      padding: 18px 0 0;
+      border-top: 1px solid rgba(74, 48, 115, 0.1);
+      font-size: 15px;
+      line-height: 2;
+      color: #4b4454;
+      text-align: left;
+    }
+
+    .share-footer {
+      text-align: center;
+    }
+
+    .share-footer .url {
+      margin: 0;
+      font-size: 11px;
+      color: #8e8793;
+      letter-spacing: 0.08em;
+    }
+
+    .share-footer .sign {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: #b0a9b5;
+    }
+
+    .result-card .share-sheet {
+      padding: 24px 24px 24px;
+    }
+
+    .result-card .brand-block {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .result-title {
+      margin: 0 0 20px;
+      font-size: 18px;
+      color: var(--brand);
+      font-weight: 600;
+    }
+
+    .result-list {
+      margin-bottom: 22px;
+      border-top: 1px solid rgba(74, 48, 115, 0.1);
+    }
+
+    .result-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(74, 48, 115, 0.1);
+    }
+
+    .result-name {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .result-badge {
+      flex-shrink: 0;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--chip-bg);
+      color: var(--brand);
+      font-size: 12px;
+      border: 1px solid rgba(74, 48, 115, 0.08);
+      white-space: nowrap;
+    }
+
+    .result-row.pending .result-name {
+      color: #9e97a5;
+    }
+
+    .result-row.pending .result-badge {
+      background: var(--chip-pending-bg);
+      color: var(--chip-pending-text);
+      border-style: dashed;
+    }
+
+    .result-footer-note {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    .result-footer-url {
+      margin: 10px 0 0;
+      font-size: 11px;
+      color: #999;
+      letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 480px) {
+      .page {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .intro h2 {
+        font-size: 26px;
+      }
+
+      .axis-item {
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1 class="page-title">我的画像 · 分享长图 Demo</h1>
+    <p class="page-subtitle">两种分享图排版对比，模拟手机截图展示</p>
+
+    <section class="demo-section">
+      <h2 class="section-heading">分享图 1 — 整体画像</h2>
+      <div class="phone-shot profile-card">
+        <div class="share-sheet">
+          <div class="brand-block">
+            <div class="brand-mark">女也 she is ______.</div>
+            <div class="brand-line"></div>
+          </div>
+
+          <header class="intro">
+            <h2>你不是一个单一的类型。</h2>
+            <p>这四个维度加在一起，才接近真实的你。</p>
+          </header>
+
+          <section class="radar-panel" aria-label="四轴雷达图面板">
+            <canvas id="radarCanvas" class="radar-canvas" width="240" height="220" aria-label="四轴雷达图"></canvas>
+            <div class="radar-legend">
+              <div>特质</div>
+              <div>情绪</div>
+              <div>行为</div>
+              <div>动机</div>
+            </div>
+          </section>
+
+          <section class="axis-summary" aria-label="四轴摘要卡片">
+            <div class="axis-row">
+              <div class="axis-tag">特质轴</div>
+              <div class="axis-list">
+                <div class="axis-item">
+                  <span class="axis-item-name">荣格八维认知功能</span>
+                  <span class="axis-item-value">INFJ</span>
+                </div>
+              </div>
+            </div>
+            <div class="axis-row">
+              <div class="axis-tag">情绪轴</div>
+              <div class="axis-list">
+                <div class="axis-item">
+                  <span class="axis-item-name">高敏感测评</span>
+                  <span class="axis-item-value">高敏感人格</span>
+                </div>
+                <div class="axis-item">
+                  <span class="axis-item-name">情绪调节测评</span>
+                  <span class="axis-item-value">思考派</span>
+                </div>
+                <div class="axis-item">
+                  <span class="axis-item-name">依恋风格测评</span>
+                  <span class="axis-item-value">专注型</span>
+                </div>
+              </div>
+            </div>
+            <div class="axis-row">
+              <div class="axis-tag">行为轴</div>
+              <div class="axis-list">
+                <div class="axis-item">
+                  <span class="axis-item-name">完美主义测评</span>
+                  <span class="axis-item-value">中等完美主义</span>
+                </div>
+                <div class="axis-item">
+                  <span class="axis-item-name">边界感测评</span>
+                  <span class="axis-item-value">边界探索者</span>
+                </div>
+                <div class="axis-item pending">
+                  <span class="axis-item-name">DISC</span>
+                  <span class="axis-item-value">待解锁</span>
+                </div>
+              </div>
+            </div>
+            <div class="axis-row">
+              <div class="axis-tag">动机轴</div>
+              <div class="axis-list">
+                <div class="axis-item pending">
+                  <span class="axis-item-name">九型人格</span>
+                  <span class="axis-item-value">待解锁</span>
+                </div>
+                <div class="axis-item pending">
+                  <span class="axis-item-name">霍兰德</span>
+                  <span class="axis-item-value">待解锁</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <p class="portrait-copy">
+            你有很强的感知力，习惯在情绪来时先换一个角度看它。关系里你渴望靠近，同时也在默默确认对方是否还在。你对自己的标准不算苛刻，但边界意识还在摸索中。
+          </p>
+
+          <footer class="share-footer">
+            <p class="url">she-is-app.netlify.app</p>
+            <p class="sign">她的测评 · 女也</p>
+          </footer>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="section-heading">分享图 2 — 测评结果</h2>
+      <div class="phone-shot result-card">
+        <div class="share-sheet">
+          <div class="brand-block">
+            <div class="brand-mark">女也 she is ______.</div>
+          </div>
+
+          <h2 class="result-title">我做了这些测评</h2>
+
+          <section class="result-list" aria-label="测评结果列表">
+            <div class="result-row">
+              <div class="result-name">荣格八维认知功能</div>
+              <div class="result-badge">INFJ</div>
+            </div>
+            <div class="result-row">
+              <div class="result-name">高敏感测评</div>
+              <div class="result-badge">高敏感人格</div>
+            </div>
+            <div class="result-row">
+              <div class="result-name">情绪调节测评</div>
+              <div class="result-badge">思考派</div>
+            </div>
+            <div class="result-row">
+              <div class="result-name">依恋风格测评</div>
+              <div class="result-badge">专注型</div>
+            </div>
+            <div class="result-row">
+              <div class="result-name">完美主义测评</div>
+              <div class="result-badge">中等完美主义</div>
+            </div>
+            <div class="result-row">
+              <div class="result-name">边界感测评</div>
+              <div class="result-badge">边界探索者</div>
+            </div>
+            <div class="result-row pending">
+              <div class="result-name">关系角色测评</div>
+              <div class="result-badge">未完成</div>
+            </div>
+            <div class="result-row pending">
+              <div class="result-name">今日情绪地图</div>
+              <div class="result-badge">未完成</div>
+            </div>
+          </section>
+
+          <footer>
+            <p class="result-footer-note">这是我目前的内在轮廓。</p>
+            <p class="result-footer-url">she-is-app.netlify.app</p>
+          </footer>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function drawRadar() {
+      const canvas = document.getElementById('radarCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const ratio = window.devicePixelRatio || 1;
+      const cssWidth = 240;
+      const cssHeight = 220;
+      canvas.width = cssWidth * ratio;
+      canvas.height = cssHeight * ratio;
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      ctx.clearRect(0, 0, cssWidth, cssHeight);
+
+      const cx = cssWidth / 2;
+      const cy = 106;
+      const radius = 72;
+      const levels = 4;
+      const angles = [-Math.PI / 2, 0, Math.PI / 2, Math.PI];
+      const values = [0.86, 0.79, 0.68, 0.24];
+      const ready = [true, true, true, false];
+      const labels = ['特质', '情绪', '行为', '动机'];
+
+      ctx.strokeStyle = 'rgba(74, 48, 115, 0.12)';
+      ctx.lineWidth = 1;
+      for (let level = 1; level <= levels; level++) {
+        const r = radius * (level / levels);
+        ctx.beginPath();
+        angles.forEach((angle, index) => {
+          const x = cx + Math.cos(angle) * r;
+          const y = cy + Math.sin(angle) * r;
+          index === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        });
+        ctx.closePath();
+        ctx.stroke();
+      }
+
+      angles.forEach((angle, index) => {
+        const x = cx + Math.cos(angle) * radius;
+        const y = cy + Math.sin(angle) * radius;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(x, y);
+        ctx.strokeStyle = ready[index] ? 'rgba(74, 48, 115, 0.17)' : 'rgba(122, 114, 132, 0.26)';
+        ctx.setLineDash(ready[index] ? [] : [4, 4]);
+        ctx.stroke();
+      });
+      ctx.setLineDash([]);
+
+      ctx.beginPath();
+      angles.forEach((angle, index) => {
+        const r = radius * values[index];
+        const x = cx + Math.cos(angle) * r;
+        const y = cy + Math.sin(angle) * r;
+        index === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      });
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(74, 48, 115, 0.11)';
+      ctx.strokeStyle = '#4A3073';
+      ctx.lineWidth = 1.5;
+      ctx.fill();
+      ctx.stroke();
+
+      angles.forEach((angle, index) => {
+        const r = radius * values[index];
+        const x = cx + Math.cos(angle) * r;
+        const y = cy + Math.sin(angle) * r;
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = ready[index] ? '#4A3073' : '#b8b0bf';
+        ctx.fill();
+      });
+
+      angles.forEach((angle, index) => {
+        const x = cx + Math.cos(angle) * (radius + 20);
+        const y = cy + Math.sin(angle) * (radius + 20);
+        ctx.fillStyle = ready[index] ? '#4A3073' : '#7a7284';
+        ctx.font = '12px "Noto Serif SC", Georgia, serif';
+        ctx.textAlign = index === 1 ? 'left' : index === 3 ? 'right' : 'center';
+        ctx.textBaseline = index === 0 ? 'bottom' : index === 2 ? 'top' : 'middle';
+        ctx.fillText(labels[index], x, y);
+      });
+    }
+
+    drawRadar();
+    window.addEventListener('resize', drawRadar);
+  </script>
+</body>
+</html>

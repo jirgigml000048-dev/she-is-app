@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>关系中的你 | 女也 She Is</title>
+    <title>关系角色测评 | 女也 She Is</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <style>
@@ -410,7 +410,7 @@
 
       <section class="panel view" id="introView">
         <p class="eyebrow">Light Quiz</p>
-        <h1 class="title">关系中的你</h1>
+        <h1 class="title">关系角色测评</h1>
         <p class="subtitle" id="introDesc"></p>
         <div class="intro-note">一题一页，像把手电筒一格一格打在自己身上。别急着做对，只选那个让你心里轻轻点头的答案。</div>
         <button class="primary" id="startBtn">准备好了</button>
@@ -505,8 +505,8 @@ window.shareLongImage = shareLongImage;
 
       const testData = {
   "id": "relationship-role",
-  "title": "关系中的你",
-  "description": "在关系里，我们很少是空白地出现。有人先接住别人，有人先照顾场面，有人先把真实说出来。这个小测试想陪你看见：当别人靠近、失落、沉默或需要你时，你最自然会站到哪个位置。",
+  "title": "关系角色测评",
+  "description": "看见你在一段关系里习惯扮演什么角色，那个角色是你选的还是被推上去的",
   "type": "choice",
   "questions": [
     {
@@ -901,6 +901,14 @@ window.shareLongImage = shareLongImage;
 
       document.getElementById('startBtn').addEventListener('click', startQuiz);
       document.getElementById('restartBtn').addEventListener('click', startQuiz);
+      storyRec.style.display = 'none';
+
+      updateProgress();
+    </script>
+
+</body>
+</html>
+Id('restartBtn').addEventListener('click', startQuiz);
       storyRec.style.display = 'none';
 
       updateProgress();
