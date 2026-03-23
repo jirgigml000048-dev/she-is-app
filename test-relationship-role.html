@@ -465,14 +465,7 @@
     button.textContent = '保存中…';
   }
   try {
-    generateResultCard({
-      testName: '关系角色测评',
-      resultType: document.getElementById('resultTitle')?.dataset?.cardType || document.getElementById('resultTitle')?.textContent?.trim() || '测试结果',
-      resultSubtitle: document.getElementById('resultTitle')?.dataset?.subtitle || '',
-      quote: document.getElementById('resultQuote')?.textContent?.trim() || extractResultCardQuote(document.getElementById('resultDesc')?.textContent, '你是关系里那个先开口的人。'),
-      score: document.getElementById('resultTag')?.textContent?.trim() || '',
-      fileName: 'relationship-role-result'
-    });
+    generateResultCard();
   } finally {
     if (button) {
       button.disabled = false;
@@ -503,239 +496,61 @@ function shareLongImage() {
 
 window.shareLongImage = shareLongImage;
 
+
+function generateResultCard() {
+  const existing = document.getElementById('__relationship-result-card__');
+  if (existing) existing.remove();
+  const card = document.createElement('div');
+  card.id = '__relationship-result-card__';
+  card.style.cssText = `
+    position: fixed; top: -9999px; left: -9999px;
+    width: 390px; height: 693px;
+    background: #f5f0eb; overflow: hidden; display: flex; flex-direction: column;
+    padding: 48px 36px; font-family: "Noto Serif SC", serif; box-sizing: border-box;
+  `;
+  card.innerHTML = `
+    <div style="position:absolute;top:-60px;left:-60px;width:280px;height:280px;background:radial-gradient(ellipse,rgba(74,48,115,0.13),transparent 70%);pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(ellipse,rgba(74,48,115,0.10),transparent 70%);pointer-events:none;"></div>
+    <div style="position:relative;z-index:1;">
+      <div style="font-size:12px;color:#4A3073;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px;">关系角色测评</div>
+      <div style="height:1px;background:rgba(74,48,115,0.15);margin-bottom:28px;"></div>
+    </div>
+    <div style="flex:1;"></div>
+    <div style="position:relative;z-index:1;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:600;color:#4A3073;line-height:1.1;margin-bottom:10px;">${document.getElementById('resultTitle')?.dataset?.subtitle || document.getElementById('resultTitle')?.textContent?.trim() || ''}</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:#888;line-height:1.7;margin-bottom:16px;">${document.getElementById('resultQuote')?.textContent?.trim() || ''}</div>
+    </div>
+    <div style="flex:1;"></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:1;">
+      <span style="font-family:'Courier New',monospace;font-size:9px;color:#bbb;">she-is-app.netlify.app</span>
+      <span style="font-family:'Courier New',monospace;font-size:12px;color:#4A3073;letter-spacing:0.05em;">she is ______.</span>
+    </div>
+  `;
+  document.body.appendChild(card);
+  return exportNodeAsImage(card, 'relationship-role-result').finally(() => card.remove());
+}
+
       const testData = {
   "id": "relationship-role",
   "title": "关系角色测评",
   "description": "看见你在一段关系里习惯扮演什么角色，那个角色是你选的还是被推上去的",
   "type": "choice",
   "questions": [
-    {
-      "id": 1,
-      "text": "朋友深夜突然发来一长串消息，说自己快撑不住了。你更像会：",
-      "options": [
-        {
-          "value": "A",
-          "text": "先认真看完，一边安慰一边陪她把情绪说出来",
-          "tag": "倾听者"
-        },
-        {
-          "value": "B",
-          "text": "马上问她在哪、要不要吃点东西，开始想怎么照顾她",
-          "tag": "照顾者"
-        },
-        {
-          "value": "C",
-          "text": "直接说出你的担心和想法，也会分享你类似的经历",
-          "tag": "表达者"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "text": "伴侣看起来明显心情不好，但只说\"没事\"。你通常会：",
-      "options": [
-        {
-          "value": "A",
-          "text": "不逼问，陪在旁边等他愿意开口",
-          "tag": "倾听者"
-        },
-        {
-          "value": "B",
-          "text": "给他倒水、点外卖、把气氛先照顾好",
-          "tag": "照顾者"
-        },
-        {
-          "value": "C",
-          "text": "主动说\"我感觉你不太对劲，我们聊聊吧\"",
-          "tag": "表达者"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "text": "聚会上你注意到有个人一直被冷落。你更可能：",
-      "options": [
-        {
-          "value": "A",
-          "text": "走过去陪她聊几句，听听她现在的感受",
-          "tag": "倾听者"
-        },
-        {
-          "value": "B",
-          "text": "拉她一起去拿吃的、换个位置，让她没那么尴尬",
-          "tag": "照顾者"
-        },
-        {
-          "value": "C",
-          "text": "直接把她介绍给大家，主动把话题带起来",
-          "tag": "表达者"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "text": "你和很亲近的人起了小误会，对方开始变冷淡。你的第一反应通常是：",
-      "options": [
-        {
-          "value": "A",
-          "text": "先回想是不是她最近也有别的压力，不急着追问",
-          "tag": "倾听者"
-        },
-        {
-          "value": "B",
-          "text": "想着怎么补救、怎么让关系重新舒服一点",
-          "tag": "照顾者"
-        },
-        {
-          "value": "C",
-          "text": "忍不住先把自己的委屈和想法说清楚",
-          "tag": "表达者"
-        }
-      ]
-    },
-    {
-      "id": 5,
-      "text": "朋友失恋后反复讲同一件事，已经说了很多遍。你更像会：",
-      "options": [
-        {
-          "value": "A",
-          "text": "继续听她说，哪怕内容重复，也知道她还没过去",
-          "tag": "倾听者"
-        },
-        {
-          "value": "B",
-          "text": "带她出门、陪她吃饭，想办法让她好受一点",
-          "tag": "照顾者"
-        },
-        {
-          "value": "C",
-          "text": "温和但直接地说出你的判断，希望她早点走出来",
-          "tag": "表达者"
-        }
-      ]
-    },
-    {
-      "id": 6,
-      "text": "有人问你\"你最近怎么样\"，你心里其实有很多事。你通常会：",
-      "options": [
-        {
-          "value": "A",
-          "text": "笑笑带过，反而顺势问对方最近怎么样",
-          "tag": "倾听者"
-        },
-        {
-          "value": "B",
-          "text": "先说自己还好，担心一说出来会让别人也跟着累",
-          "tag": "照顾者"
-        },
-        {
-          "value": "C",
-          "text": "停一下，挑几件真实的事讲出来",
-          "tag": "表达者"
-        }
-      ]
-    },
-    {
-      "id": 7,
-      "text": "你发现一位朋友总是在关系里受委屈，却不太反抗。你多半会：",
-      "options": [
-        {
-          "value": "A",
-          "text": "先听她讲完，不急着替她做判断",
-          "tag": "倾听者"
-        },
-        {
-          "value": "B",
-          "text": "替她操心，开始想能怎么帮她脱离那个处境",
-          "tag": "照顾者"
-        },
-        {
-          "value": "C",
-          "text": "直接说出你看到的问题，劝她别再忍了",
-          "tag": "表达者"
-        }
-      ]
-    },
-    {
-      "id": 8,
-      "text": "一段关系里出现沉默期，对方不主动，你也难受。你更可能：",
-      "options": [
-        {
-          "value": "A",
-          "text": "等一等，觉得也许他需要空间",
-          "tag": "倾听者"
-        },
-        {
-          "value": "B",
-          "text": "还是会关心他有没有吃饭、最近忙不忙",
-          "tag": "照顾者"
-        },
-        {
-          "value": "C",
-          "text": "先发消息把话题挑开，不想一直猜",
-          "tag": "表达者"
-        }
-      ]
-    },
-    {
-      "id": 9,
-      "text": "朋友来找你，多半不是为了要建议，而是想被接住。你通常会：",
-      "options": [
-        {
-          "value": "A",
-          "text": "很自然地进入\"听她说\"的状态",
-          "tag": "倾听者"
-        },
-        {
-          "value": "B",
-          "text": "一边听一边照顾细节，比如递纸巾、点热饮、安排后续",
-          "tag": "照顾者"
-        },
-        {
-          "value": "C",
-          "text": "会先回应她，也会把自己的感觉和理解说出来",
-          "tag": "表达者"
-        }
-      ]
-    },
-    {
-      "id": 10,
-      "text": "回想重要关系里的你，最常出现的遗憾是：",
-      "options": [
-        {
-          "value": "A",
-          "text": "听了很多，却很少让别人真正知道我的感受",
-          "tag": "倾听者"
-        },
-        {
-          "value": "B",
-          "text": "总顾着对方舒不舒服，后来才发现自己也有点累",
-          "tag": "照顾者"
-        },
-        {
-          "value": "C",
-          "text": "当下说得太快太满，事后又反复回想是不是说多了",
-          "tag": "表达者"
-        }
-      ]
-    }
+    {"id":1,"text":"朋友深夜突然发来一长串消息，说自己快撑不住了。你更像会：","options":[{"value":"A","text":"先认真看完，一边安慰一边陪她把情绪说出来","tag":"倾听者"},{"value":"B","text":"马上问她在哪、要不要吃点东西，开始想怎么照顾她","tag":"照顾者"},{"value":"C","text":"直接说出你的担心和想法，也会分享你类似的经历","tag":"表达者"}]},
+    {"id":2,"text":"伴侣看起来明显心情不好，但只说「没事」。你通常会：","options":[{"value":"A","text":"不逼问，陪在旁边等他愿意开口","tag":"倾听者"},{"value":"B","text":"给他倒水、点外卖、把气氛先照顾好","tag":"照顾者"},{"value":"C","text":"主动说「我感觉你不太对劲，我们聊聊吧」","tag":"表达者"}]},
+    {"id":3,"text":"你发现对方有点不对劲，但他什么都没说。你通常会：","options":[{"value":"A","text":"先陪着，等他自己想说的时候再说","tag":"倾听者"},{"value":"B","text":"想办法让他舒服一点，比如做点什么、照顾一下状态","tag":"照顾者"},{"value":"C","text":"直接问他是不是发生了什么，不想一直猜","tag":"表达者"}]},
+    {"id":4,"text":"你和很亲近的人起了小误会，对方开始变冷淡。你的第一反应通常是：","options":[{"value":"A","text":"先回想是不是她最近也有别的压力，不急着追问","tag":"倾听者"},{"value":"B","text":"想着怎么补救、怎么让关系重新舒服一点","tag":"照顾者"},{"value":"C","text":"忍不住先把自己的委屈和想法说清楚","tag":"表达者"}]},
+    {"id":5,"text":"朋友失恋后反复讲同一件事，已经说了很多遍。你更像会：","options":[{"value":"A","text":"继续听她说，哪怕内容重复，也知道她还没过去","tag":"倾听者"},{"value":"B","text":"带她出门、陪她吃饭，想办法让她好受一点","tag":"照顾者"},{"value":"C","text":"温和但直接地说出你的判断，希望她早点走出来","tag":"表达者"}]},
+    {"id":6,"text":"有人问你「你最近怎么样」，你心里其实有很多事。你通常会：","options":[{"value":"A","text":"笑笑带过，反而顺势问对方最近怎么样","tag":"倾听者"},{"value":"B","text":"先说自己还好，担心一说出来会让别人也跟着累","tag":"照顾者"},{"value":"C","text":"停一下，挑几件真实的事讲出来","tag":"表达者"}]},
+    {"id":7,"text":"关系里出现卡住的时刻，你更常做的是：","options":[{"value":"A","text":"先听对方怎么说，再慢慢判断自己想回应什么","tag":"倾听者"},{"value":"B","text":"先去修补气氛，让彼此别那么难受","tag":"照顾者"},{"value":"C","text":"先把问题摊开，不想让误会一直悬着","tag":"表达者"}]},
+    {"id":8,"text":"一段关系里出现沉默期，对方不主动，你也难受。你更可能：","options":[{"value":"A","text":"等一等，觉得也许他需要空间","tag":"倾听者"},{"value":"B","text":"还是会关心他有没有吃饭、最近忙不忙","tag":"照顾者"},{"value":"C","text":"先发消息把话题挑开，不想一直猜","tag":"表达者"}]},
+    {"id":9,"text":"朋友来找你，多半不是为了要建议，而是想被接住。你通常会：","options":[{"value":"A","text":"很自然地进入「听她说」的状态","tag":"倾听者"},{"value":"B","text":"一边听一边照顾细节，比如递纸巾、点热饮、安排后续","tag":"照顾者"},{"value":"C","text":"会先回应她，也会把自己的感觉和理解说出来","tag":"表达者"}]},
+    {"id":10,"text":"回想重要关系里的你，最常出现的遗憾是：","options":[{"value":"A","text":"听了很多，却很少让别人真正知道我的感受","tag":"倾听者"},{"value":"B","text":"总顾着对方舒不舒服，后来才发现自己也有点累","tag":"照顾者"},{"value":"C","text":"当下说得太快太满，事后又反复回想是不是说多了","tag":"表达者"}]}
   ],
   "results": {
-    "倾听者": {
-      "title": "LISTENER — 你是关系里的倾听者",
-      "subtitle": "你是关系里的倾听者",
-      "desc": "<p>在关系里，你总是先听。别人说话的时候，你在的方式很完整——你的眼神、你的沉默、你偶尔的回应，都在说\"我在这里，你说\"。</p><p>你有一种让人放心开口的气场。很多人在你面前会说出他们不会对别人说的话。你接住了那些沉重的、脆弱的、凌乱的东西，而且你接得很稳。</p><p>你的倾听不是被动的。你在听的时候，脑子里在理解、在感受、在整理。你给出的空间，是你主动创造的，是你选择的慷慨。</p><p>只是有时候，你给了别人太多说话的空间，自己的声音就被挤到了很后面。你的故事、你的感受、你的需要——它们也值得被同样用心地接住。</p><p>下一次当你又习惯性地把话筒递出去的时候，试试留一小段给自己。你也值得被听见。</p>"
-    },
-    "照顾者": {
-      "title": "CAREGIVER — 你是关系里的照顾者",
-      "subtitle": "你是关系里的照顾者",
-      "desc": "<p>你在关系里的第一反应，通常是看见对方需要什么。一个眼神、一句话、一个微妙的变化——你就已经在行动了。倒水、安排、调整计划、替对方想到他们还没想到的事。</p><p>你照顾人的方式很细致，细致到对方可能都没有完全意识到你做了多少。你把付出织进了日常的纹理里，安静、自然、不求回报。</p><p>这种照顾的本能里有温柔，也有力量。你能扛住很多——情绪的、实际的、别人可能扛不动的。你的肩膀一直都是可以靠的，而且你几乎从不抱怨这件事。</p><p>但你有没有发现，你很少让别人照顾你？接受关心对你来说，比给出关心要难得多。你习惯了做那个给予的人，以至于当角色反转时，你会感到不安。</p><p>你照顾了所有人。现在，轮到你问问自己：谁在照顾我？这个问题的答案，也可以是你自己。</p>"
-    },
-    "表达者": {
-      "title": "EXPRESSOR — 你是关系里的表达者",
-      "subtitle": "你是关系里的表达者",
-      "desc": "<p>在关系里，你是那个先开口的人。你的感受、你的想法、你对这段关系的期待——你愿意把它们说出来，放到两个人之间。</p><p>你的表达不是为了争夺什么，是为了让连接真实地发生。你知道如果什么都不说，关系就会停在表面。你选择了更勇敢的方式——去推动、去靠近、去让对方看到你。</p><p>这种主动性里有一种罕见的诚实。你愿意暴露自己——你的需要、你的脆弱、你的不确定。在一个大多数人都在等对方先开口的世界里，你总是先把手伸出来。</p><p>有时候这也让你受伤。你说了，对方没接住。你敞开了，对方往后退了。那种落差比沉默更痛，因为你已经把自己摆在了那里。</p><p>但你还是会继续说。因为对你来说，真实的连接值得冒这个险。这份勇气，是你在关系里最珍贵的东西。</p>"
-    }
+    "倾听者": {"title":"LISTENER — 倾听者","subtitle":"你给了别人完整的空间。但你的声音，被挤到了很后面。","quote":"你给了别人完整的空间。但你的声音，被挤到了很后面。","desc":"在关系里，你总是先听。别人说话的时候，你在的方式很完整——你的眼神、你的沉默、你偶尔的回应，都在说「我在这里，你说」。\\n\\n你有一种让人放心开口的气场。很多人在你面前会说出他们不会对别人说的话。你接住了那些沉重的、脆弱的、凌乱的东西，而且你接得很稳。\\n\\n你的倾听不是被动的。你在听的时候，脑子里在理解、在感受、在整理。你给出的空间，是你主动创造的，是你选择的慷慨。\\n\\n只是有时候，你给了别人太多说话的空间，自己的声音就被挤到了很后面。","mode":"你在的方式很完整——眼神、沉默、偶尔的回应，都在告诉对方「你说，我在」。你有一种让人放心开口的气场，接住了很多沉重的、凌乱的东西。只是这种「接住别人」的能力，用在自己身上时，你不太会。","relationship":["你是很多人的树洞。但当你需要说的时候，你往往先想的是：会不会给别人添麻烦？","你习惯了做那个听的人，以至于当角色反转、有人想认真听你说话时，你反而不知道说什么了。"],"reflect":"你上一次认真说出自己的感受，是对谁说的？"},
+    "照顾者": {"title":"CAREGIVER — 照顾者","subtitle":"你照顾了所有人。现在轮到你问自己：谁在照顾我？","quote":"你照顾了所有人。现在轮到你问自己：谁在照顾我？","desc":"在关系里，你的第一反应是看见对方需要什么。一个眼神、一句话、一个微妙的变化——你就已经在行动了。倒水、安排、调整计划、替对方想到他们还没想到的事。\n\n你照顾人的方式很细致，细致到对方可能都没有完全意识到你做了多少。你把付出织进了日常的纹理里，安静、自然、不求回报。\n\n你能扛住很多——情绪的、实际的、别人可能扛不动的。你的肩膀一直都是可以靠的，而且你几乎从不抱怨这件事。\n\n但你有没有发现，你很少让别人照顾你？接受关心对你来说，比给出关心要难得多。","mode":"你的第一反应总是看见对方需要什么，然后去做。细致到对方可能都没有意识到你做了多少。你把付出织进了日常里，安静、自然、不求回报。","relationship":["你照顾别人的时候是自然的，但接受别人照顾的时候，你会觉得不安——像是欠了什么，或者失去了什么。","有时候你会发现自己很累，但说不出为什么——因为你做的每一件事单独看都很小，但加在一起是很重的。"],"reflect":"你最近有没有让别人照顾过你——哪怕只是一件小事？"},
+    "表达者": {"title":"EXPRESSOR — 表达者","subtitle":"你总是先把手伸出来。在一个大家都在等对方先开口的世界里，这很稀缺。","quote":"你总是先把手伸出来。在一个大家都在等对方先开口的世界里，这很稀缺。","desc":"在关系里，你是那个先开口的人。你的感受、你的想法、你对这段关系的期待——你愿意把它们说出来，放到两个人之间。\\n\\n你的表达不是为了争夺什么，是为了让连接真实地发生。你知道如果什么都不说，关系就会停在表面。你选择了更勇敢的方式——去推动、去靠近、去让对方看到你。\\n\\n这种主动性里有一种罕见的诚实。你愿意暴露自己——你的需要、你的脆弱、你的不确定。\\n\\n有时候这也让你受伤。你说了，对方没接住。那种落差比沉默更痛，因为你已经把自己摆在了那里。","mode":"你愿意把感受、期待、需要说出来，放到两个人之间。你知道如果什么都不说，关系就会停在表面。所以你选择了更勇敢的方式：先开口，先靠近，先把手伸出去。","relationship":["你说了，对方没接住——这种落差比沉默更痛，因为你已经把自己摆在了那里。你受过这种伤，但你还是继续说。","有时候你也会想，是不是说太多了？对方会不会觉得压力大？但那个犹豫通常不会阻止你。"],"reflect":"在你说出的那些话里，有没有哪一句，你其实还在等一个回应？"}
   }
 };
       const state = { index: -1, answers: [], counts: {} };
@@ -838,10 +653,12 @@ window.shareLongImage = shareLongImage;
       }
 
       function getTopTag() {
-        const firstSeen = [];
-        state.answers.forEach((tag) => { if (!firstSeen.includes(tag)) firstSeen.push(tag); });
-        return Object.entries(state.counts)
-          .sort((a, b) => b[1] - a[1] || firstSeen.indexOf(a[0]) - firstSeen.indexOf(b[0]))[0][0];
+        const priority = ['倾听者', '照顾者', '表达者'];
+        return priority.reduce((best, current) => {
+          const bestCount = state.counts[best] || 0;
+          const currentCount = state.counts[current] || 0;
+          return currentCount > bestCount ? current : best;
+        }, priority[0]);
       }
 
       function formatParagraphs(text) {
@@ -861,7 +678,7 @@ window.shareLongImage = shareLongImage;
         const result = testData.results[tag];
         resultTag.textContent = tag;
         if (resultTags) resultTags.innerHTML = ['结果画像', 'She Is'].map(item => `<li class="result-tag">${item}</li>`).join('');
-        if (resultQuote) resultQuote.textContent = result.subtitle || result.title || tag;
+        if (resultQuote) resultQuote.textContent = result.quote || result.subtitle || result.title || tag;
         let captionEl = document.querySelector('.share-caption');
         if (!captionEl && resultQuote) {
           captionEl = document.createElement('p');
@@ -872,7 +689,13 @@ window.shareLongImage = shareLongImage;
         resultTitle.textContent = result.title;
         resultTitle.dataset.cardType = result.title.split(/\s+—\s+/)[0] || result.title;
         resultTitle.dataset.subtitle = result.subtitle || result.title.split(/\s+—\s+/).slice(1).join(' — ') || '';
-        resultDesc.innerHTML = formatParagraphs(result.desc + '\n这是你当下的模式，不是诊断，也不是定论。');
+        resultDesc.innerHTML = `
+          ${formatParagraphs(result.desc)}
+          <div class="section"><h3 class="section-title">你的角色模式</h3><div class="section-content"><p>${result.mode || ''}</p></div></div>
+          <div class="section"><h3 class="section-title">在关系里</h3><div class="section-content"><ul class="list">${(result.relationship || []).map(item => `<li>${item}</li>`).join('')}</ul></div></div>
+          <div class="section"><h3 class="section-title">值得想一想</h3><div class="section-content"><p>${result.reflect || ''}</p></div></div>
+          <p>这是你当下的模式，不是诊断，也不是定论。</p>
+        `;
         renderViz(state.counts);
         if (window.SheProfileStore) {
           const counts = { ...state.counts };
@@ -901,14 +724,6 @@ window.shareLongImage = shareLongImage;
 
       document.getElementById('startBtn').addEventListener('click', startQuiz);
       document.getElementById('restartBtn').addEventListener('click', startQuiz);
-      storyRec.style.display = 'none';
-
-      updateProgress();
-    </script>
-
-</body>
-</html>
-Id('restartBtn').addEventListener('click', startQuiz);
       storyRec.style.display = 'none';
 
       updateProgress();
