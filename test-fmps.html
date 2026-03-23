@@ -1020,6 +1020,7 @@
       document.getElementById("beginQuizBtn").onclick = startQuiz;
       document.getElementById("prevBtn").onclick = goPrev;
       document.getElementById("restartBtn").onclick = restart;
+      maybeRestoreSavedResult();
 
 
       function downloadResult() {
@@ -1052,6 +1053,36 @@
 }
 
 window.downloadResult = downloadResult;
+
+function renderStoredResult(record) {
+  if (!record) return false;
+  const summary = record.summary || '平衡型';
+  const resultId = Object.entries(DATA.results).find(([, value]) => value.title.includes(summary))?.[0] || 'balanced';
+  const r = DATA.results[resultId];
+  const scores = record.score || {};
+  const sortedDimensions = Object.entries(scores).filter(([key]) => DIMENSION_META[key]).sort((a, b) => b[1] - a[1]);
+  const top2 = sortedDimensions.slice(0, 2).map(([k]) => DIMENSION_META[k].name);
+  progressBar.style.width = '100%'; progressText.textContent = '完成';
+  resultEl.innerHTML = `<div id="result-capture" class="result-capture-card"><div class="r-head"><h2 class="r-type" data-subtitle="最突出维度：${top2.join(' · ')}">${RESULT_TYPE_NAMES[resultId] || r.title}</h2></div><p class="tagline">${r.title}</p><p class="r-score-line">最突出维度：${top2.join(' · ')}</p><ul class="result-tags"><li class="result-tag">FMPS-15</li><li class="result-tag">完美主义</li><li class="result-tag">心理画像</li></ul><div class="r-quote" id="rQuote">${r.quote}</div><div class="result-section"><div class="section-title">五维度解读</div><div class="dimension-list">${buildDimensionRows(scores)}</div></div><div class="r-desc">${r.body}</div><section class="result-section"><div class="section-title">${r.modeTitle}</div><p class="mode-copy">${r.mode}</p></section><section class="result-section"><div class="section-title">${r.dailyTitle}</div><div class="daily-list">${r.daily.map(item => `<div class="daily-item">${item}</div>`).join('')}</div></section><section class="result-section"><div class="section-title">${r.reflectionTitle}</div><p class="reflection">${r.reflection}</p></section></div><div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><div class="story-rec" id="storyRec" style="display:none;"><div class="story-rec-img"></div><div class="story-rec-content"><p class="story-rec-hint">你可能会有共鸣</p><h3 class="story-rec-title">故事标题</h3><a class="story-rec-btn" href="#">读这个故事 →</a></div></div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>`;
+  storyRec = document.getElementById('storyRec');
+  document.getElementById('redoBtn').onclick = startQuiz;
+  document.querySelector('.test-intro').style.display = 'none'; document.getElementById('testBody').style.display = 'block'; introEl.classList.add('hidden'); quizEl.classList.add('hidden'); resultEl.classList.remove('hidden');
+  return true;
+}
+
+function maybeRestoreSavedResult() {
+  if (!window.SheProfileStore) return;
+  const record = window.SheProfileStore.getResult('fmps');
+  if (!record) return;
+  const startBtn = document.getElementById('startBtn');
+  if (startBtn && !document.getElementById('viewLastResultBtn')) {
+    const btn = document.createElement('button');
+    btn.id = 'viewLastResultBtn'; btn.type = 'button'; btn.className = 'ghost'; btn.textContent = '查看上次结果';
+    btn.onclick = () => renderStoredResult(record);
+    startBtn.insertAdjacentElement('afterend', btn);
+  }
+  if (window.SheProfileStore.wantsResultView()) renderStoredResult(record);
+}
 
 function shareLongImage() {
   const button = document.getElementById('shareLongBtn');

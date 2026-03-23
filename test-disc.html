@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="assets/profile-utils.js"></script>
   <style>
     :root {
       --bg: #f5f0eb;
@@ -1091,6 +1092,58 @@
       showScreen('intro');
     }
 
+    function renderStoredResult(record) {
+      if (!record) return false;
+      const typeKey = record.resultType || 'D';
+      const content = RESULTS[typeKey] || RESULTS.D;
+      const scores = record.score || { D: 0, I: 0, S: 0, C: 0 };
+      const topScore = Math.max(...Object.values(scores));
+      window._currentQuote = content.quote;
+      window._currentTypeName = content.title;
+      const dimensionHtml = ['D', 'I', 'S', 'C'].map(key => {
+        const info = DIMENSIONS[key];
+        const val = scores[key] || 0;
+        const isTop = val === topScore;
+        return `
+          <div class="dimension-item ${isTop ? 'is-top' : ''}">
+            <div class="dimension-top">
+              <div class="dimension-name"><strong>${key} — ${info.en}</strong><span>${info.zh}</span></div>
+              <div class="dimension-score">${val}/12</div>
+            </div>
+            <div class="bar"><div class="bar-fill" style="width:${(val / 12) * 100}%"></div></div>
+          </div>`;
+      }).join('');
+      resultCapture.innerHTML = `
+        <div class="result-header"><div class="brand"><div class="brand-mark">女也</div><div class="brand-sub">she is ______.</div></div></div>
+        <div class="dimension-list">${dimensionHtml}</div>
+        <h1 class="result-type">${content.title}</h1>
+        <div class="quote-block">${content.quote}</div>
+        <div class="body-copy">${content.body.map(p => `<p>${p}</p>`).join('')}</div>
+        <div><div class="section-title">你的行为风格</div><div class="section-copy">${content.style}</div></div>
+        <div><div class="section-title">在日常里</div><div class="daily-list">${content.daily.map(item => `<div class="daily-item">— ${item}</div>`).join('')}</div></div>
+        <div><div class="section-title">值得想一想</div><div class="reflective">${content.reflect}</div></div>`;
+      progressFill.style.width = '100%';
+      showScreen('result');
+      return true;
+    }
+
+    function maybeRestoreSavedResult() {
+      if (!window.SheProfileStore) return;
+      const record = window.SheProfileStore.getResult('disc');
+      if (!record) return;
+      const startBtn = document.getElementById('startBtn');
+      if (startBtn && !document.getElementById('viewLastResultBtn')) {
+        const btn = document.createElement('button');
+        btn.id = 'viewLastResultBtn';
+        btn.type = 'button';
+        btn.className = 'secondary-btn';
+        btn.textContent = '查看上次结果';
+        btn.addEventListener('click', () => renderStoredResult(record));
+        startBtn.insertAdjacentElement('afterend', btn);
+      }
+      if (window.SheProfileStore.wantsResultView()) renderStoredResult(record);
+    }
+
     async function captureElement(el) {
       const canvas = await html2canvas(el, {
         backgroundColor: '#f5f0eb',
@@ -1198,6 +1251,7 @@
 
     window.shareLongImage = shareLongImage;
     window.generateResultCard = generateResultCard;
+    maybeRestoreSavedResult();
   </script>
 </body>
 </html>

@@ -878,6 +878,54 @@ window.shareLongImage = shareLongImage;
 
 window.retryQuiz = retryQuiz;
 
+function renderStoredResult(record) {
+  if (!record) return false;
+  const summary = record.summary || '高敏感';
+  const score = Number(record?.score?.sensitivity || 0);
+  const level = summary === '高敏感' ? 'high' : summary === '低敏感' ? 'low' : 'mid';
+  const r = Rs[level] || Rs.mid;
+  $('rType').textContent = r.type;
+  $('rType').dataset.subtitle = r.subtitle || '';
+  $('rDesc').innerHTML = r.desc;
+  $('resultSections').innerHTML = buildResultSections(r);
+  $('rQuote').textContent = r.quote || '';
+  $('resultTags').innerHTML = [...new Set(r.tags || [])].map(tag => `<li class="result-tag">${tag}</li>`).join('');
+  $('rScore').textContent = score ? score.toFixed(2) : '--';
+  $('barSensory').style.width = '0%';
+  $('valSensory').textContent = '--';
+  $('barEmotion').style.width = '0%';
+  $('valEmotion').textContent = '--';
+  $('barAesthetic').style.width = '0%';
+  $('valAesthetic').textContent = '--';
+  $('barOverstim').style.width = '0%';
+  $('valOverstim').textContent = '--';
+  document.querySelector('.test-intro').style.display = 'none';
+  document.getElementById('testBody').style.display = 'block';
+  $('quizPanel').classList.add('hide');
+  $('resultPanel').classList.add('show');
+  progressText.textContent = '已完成';
+  progressBar.style.width = '100%';
+  storyRec.style.display = 'none';
+  return true;
+}
+
+function maybeRestoreSavedResult() {
+  if (!window.SheProfileStore) return;
+  const record = window.SheProfileStore.getResult('hsp');
+  if (!record) return;
+  const startBtn = document.getElementById('startBtn');
+  if (startBtn && !document.getElementById('viewLastResultBtn')) {
+    const btn = document.createElement('button');
+    btn.id = 'viewLastResultBtn';
+    btn.type = 'button';
+    btn.className = 'secondary-btn';
+    btn.textContent = '查看上次结果';
+    btn.addEventListener('click', () => renderStoredResult(record));
+    startBtn.insertAdjacentElement('afterend', btn);
+  }
+  if (window.SheProfileStore.wantsResultView()) renderStoredResult(record);
+}
+
 $('submitBtn').onclick=showResult;
 document.getElementById('startBtn').addEventListener('click', function() {
   document.querySelector('.test-intro').style.display = 'none';
@@ -886,6 +934,7 @@ document.getElementById('startBtn').addEventListener('click', function() {
 storyRec.style.display = 'none';
 
 render();
+maybeRestoreSavedResult();
 </script>
 </body>
 </html>

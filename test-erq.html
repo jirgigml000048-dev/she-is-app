@@ -950,6 +950,7 @@ const storyIllustrations = {
       document.getElementById("prevBtn").onclick = goPrev;
       document.getElementById("nextBtn").onclick = nextQuestion;
       document.getElementById("restartBtn").onclick = restart;
+      maybeRestoreSavedResult();
 
 
       function downloadResult() {
@@ -977,6 +978,53 @@ const storyIllustrations = {
 }
 
 window.downloadResult = downloadResult;
+
+function renderStoredResult(record) {
+  if (!record) return false;
+  const keyMap = { '思考派': 'high_reappraisal_low_suppression', '双管派': 'high_reappraisal_high_suppression', '压下去派': 'low_reappraisal_high_suppression', '随流派': 'low_reappraisal_low_suppression' };
+  const key = keyMap[record.summary] || 'high_reappraisal_low_suppression';
+  const r = DATA.results[key];
+  const rScore = Number(record?.score?.reappraisal || 0);
+  const sScore = Number(record?.score?.suppression || 0);
+  resultEl.innerHTML = `
+    <div id="result-capture" class="result-capture-card">
+    <div class="result-viz"></div>
+    <div class="r-head"><h2 class="r-type" data-subtitle="${r.subtitle || r.tagline || ''}">${r.label}</h2></div>
+    <p class="r-score-line">认知重评 ${rScore ? rScore.toFixed(2) : '--'} ｜ 表达抑制 ${sScore ? sScore.toFixed(2) : '--'}</p>
+    <ul class="result-tags"><li class="result-tag">认知重评</li><li class="result-tag">表达抑制</li><li class="result-tag">ERQ-10</li></ul>
+    <div class="r-quote" id="rQuote">${r.subtitle || r.tagline || ''}</div>
+    <div class="r-divider"></div>
+    <div class="r-desc">${formatParagraphs(r.desc)}<p>这是你上次保存的结果详情。</p></div>
+    <div class="r-divider"></div>
+    <div class="r-pattern-section"><p class="r-axis-title">你的调节方式</p><p class="r-axis-text">${r.regulation}</p></div>
+    <div class="r-divider"></div>
+    <div class="r-pattern-section"><p class="r-axis-title">在日常里</p>${formatListParagraphs(r.daily)}</div>
+    <div class="r-divider"></div>
+    <div class="r-question-section"><p class="r-axis-title">值得想一想</p><p class="r-question-text">${r.question}</p></div>
+    </div>
+<div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><div class="story-rec" id="storyRec" style="display:none;"><div class="story-rec-img"></div><div class="story-rec-content"><p class="story-rec-hint">你可能会有共鸣</p><h3 class="story-rec-title">故事标题</h3><a class="story-rec-btn" href="#">读这个故事 →</a></div></div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>`;
+  document.getElementById('redoBtn').onclick = startQuiz;
+  document.querySelector('.test-intro').style.display = 'none';
+  document.getElementById('testBody').style.display = 'block';
+  introEl.classList.add('hidden'); quizEl.classList.add('hidden'); resultEl.classList.remove('hidden');
+  if (storyRec) storyRec.style.display = 'none';
+  progressBar.style.width = '100%'; progressText.textContent = '完成';
+  return true;
+}
+
+function maybeRestoreSavedResult() {
+  if (!window.SheProfileStore) return;
+  const record = window.SheProfileStore.getResult('erq');
+  if (!record) return;
+  const startBtn = document.getElementById('startBtn');
+  if (startBtn && !document.getElementById('viewLastResultBtn')) {
+    const btn = document.createElement('button');
+    btn.id = 'viewLastResultBtn'; btn.type = 'button'; btn.className = 'ghost'; btn.textContent = '查看上次结果';
+    btn.onclick = () => renderStoredResult(record);
+    startBtn.insertAdjacentElement('afterend', btn);
+  }
+  if (window.SheProfileStore.wantsResultView()) renderStoredResult(record);
+}
 
 function shareLongImage() {
   const button = document.getElementById('shareLongBtn');

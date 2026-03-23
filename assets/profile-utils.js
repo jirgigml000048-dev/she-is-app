@@ -22,18 +22,28 @@
     }
   }
 
+  function getResult(moduleId) {
+    if (!moduleId) return null;
+    try {
+      const raw = localStorage.getItem(PREFIX + moduleId);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      return parsed && parsed.moduleId ? parsed : null;
+    } catch (error) {
+      console.warn('Failed to read profile result:', moduleId, error);
+      return null;
+    }
+  }
+
   function readAllResults() {
     const items = [];
     try {
       for (let i = 0; i < localStorage.length; i += 1) {
         const key = localStorage.key(i);
         if (!key || !key.startsWith(PREFIX)) continue;
-        try {
-          const parsed = JSON.parse(localStorage.getItem(key));
-          if (parsed && parsed.moduleId) items.push(parsed);
-        } catch (error) {
-          console.warn('Invalid stored result:', key, error);
-        }
+        const moduleId = key.slice(PREFIX.length);
+        const parsed = getResult(moduleId);
+        if (parsed) items.push(parsed);
       }
     } catch (error) {
       console.warn('Failed to read profile results:', error);
@@ -45,6 +55,15 @@
     return readAllResults().length > 0;
   }
 
+  function wantsResultView() {
+    try {
+      const params = new URLSearchParams(window.location.search || '');
+      return params.get('view') === 'result';
+    } catch (error) {
+      return false;
+    }
+  }
+
   function normalizeToFive(value, inputMax) {
     if (typeof value !== 'number' || Number.isNaN(value)) return null;
     return clamp((value / inputMax) * 5, 0, 5);
@@ -54,8 +73,10 @@
     PREFIX,
     clamp,
     saveResult,
+    getResult,
     readAllResults,
     hasResults,
+    wantsResultView,
     normalizeToFive
   };
 })();

@@ -729,7 +729,7 @@
                   <div class="result-grid">
                     ${axis.items.map((item) => {
                       if (item.state === 'done') {
-                        return `<a class="chip chip-ready" href="${item.href}"><span class="chip-label">${item.label}</span><span class="chip-value">${escapeHtml(item.value)}</span></a>`;
+                        return `<a class="chip chip-ready" href="${item.href}?view=result"><span class="chip-label">${item.label}</span><span class="chip-value">${escapeHtml(item.value)}</span></a>`;
                       }
                       if (item.state === 'todo') {
                         return `<a class="chip chip-todo" href="${item.href}"><span class="chip-label">${item.label}</span><span class="chip-value">去做 →</span></a>`;

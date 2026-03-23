@@ -722,11 +722,43 @@ function generateResultCard() {
         renderQuestion();
       }
 
+      function renderStoredResult(record) {
+        if (!record) return false;
+        const tag = record.topDimension || record.summary || '倾听者';
+        const result = testData.results[tag] || testData.results['倾听者'];
+        resultTag.textContent = tag;
+        if (resultTags) resultTags.innerHTML = ['结果画像', 'She Is'].map(item => `<li class="result-tag">${item}</li>`).join('');
+        if (resultQuote) resultQuote.textContent = result.quote || result.subtitle || result.title || tag;
+        resultTitle.textContent = result.title;
+        resultTitle.dataset.cardType = result.title.split(/\s+—\s+/)[0] || result.title;
+        resultTitle.dataset.subtitle = result.subtitle || result.title.split(/\s+—\s+/).slice(1).join(' — ') || '';
+        resultDesc.innerHTML = `${formatParagraphs(result.desc)}<div class="section"><h3 class="section-title">你的角色模式</h3><div class="section-content"><p>${result.mode || ''}</p></div></div><div class="section"><h3 class="section-title">在关系里</h3><div class="section-content"><ul class="list">${(result.relationship || []).map(item => `<li>${item}</li>`).join('')}</ul></div></div><div class="section"><h3 class="section-title">值得想一想</h3><div class="section-content"><p>${result.reflect || ''}</p></div></div><p>这是你上次保存的结果详情。</p>`;
+        renderViz(record.score || {});
+        setView(resultView);
+        storyRec.style.display = 'none';
+        return true;
+      }
+
+      function maybeRestoreSavedResult() {
+        if (!window.SheProfileStore) return;
+        const record = window.SheProfileStore.getResult('relationship-role');
+        if (!record) return;
+        const startBtn = document.getElementById('startBtn');
+        if (startBtn && !document.getElementById('viewLastResultBtn')) {
+          const btn = document.createElement('button');
+          btn.id = 'viewLastResultBtn'; btn.type = 'button'; btn.className = 'secondary'; btn.textContent = '查看上次结果';
+          btn.addEventListener('click', () => renderStoredResult(record));
+          startBtn.insertAdjacentElement('afterend', btn);
+        }
+        if (window.SheProfileStore.wantsResultView()) renderStoredResult(record);
+      }
+
       document.getElementById('startBtn').addEventListener('click', startQuiz);
       document.getElementById('restartBtn').addEventListener('click', startQuiz);
       storyRec.style.display = 'none';
 
       updateProgress();
+      maybeRestoreSavedResult();
     </script>
 
 </body>

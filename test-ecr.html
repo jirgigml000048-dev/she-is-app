@@ -972,6 +972,7 @@
       document.getElementById("prevBtn").onclick = goPrev;
       document.getElementById("nextBtn").onclick = nextQuestion;
       document.getElementById("restartBtn").onclick = restart;
+      maybeRestoreSavedResult();
 
 
       function downloadResult() {
@@ -999,6 +1000,66 @@
 }
 
 window.downloadResult = downloadResult;
+
+function renderStoredResult(record) {
+  if (!record) return false;
+  const summary = record.summary || '安全型';
+  const summaryMap = { '安全型': 'secure', '恐惧型': 'fearful', '专注型': 'preoccupied', '冷漠型': 'dismissing' };
+  const winner = summaryMap[summary] || 'secure';
+  const r = DATA.results[winner];
+  const anxiety = Number(record?.score?.anxiety || 0);
+  const avoidance = Number(record?.score?.avoidance || 0);
+  const axisTexts = {
+    preoccupied: { anxiety: '你会对关系里的不确定格外敏感，容易反复确认对方是否还在。', avoidance: '你并不抗拒靠近，真正让你辛苦的是靠近之后的不安。', pattern1: '你会不断读取关系里的细微信号。', pattern2: '很多用力，都是为了确保关系不会松掉。', question: '如果对方今天完全沉默，你能否先稳住自己？' },
+    fearful: { anxiety: '你很容易提前感知到关系里的风险。', avoidance: '真正靠近时，你也会本能想退后一步。', pattern1: '想靠近与想逃开常常同时发生。', pattern2: '你在关系里容易忽近忽远。', question: '你最害怕别人看见你什么？' },
+    dismissing: { anxiety: '你较少因为一点距离就反复猜测关系。', avoidance: '你更习惯先靠自己，亲密太快会让你想留后路。', pattern1: '你擅长解决问题，但不擅长暴露需要。', pattern2: '你会把很多真实感受留在心里。', question: '你上次让别人看到脆弱，是什么时候？' },
+    secure: { anxiety: '你通常不会被关系里的小波动迅速带走。', avoidance: '你能接受亲密，也能在需要时给彼此空间。', pattern1: '你更容易把情绪和事情分开处理。', pattern2: '你能表达需要，也能听见对方需要。', question: '你信任的底气，从哪里来？' }
+  };
+  const copy = axisTexts[winner];
+  progressBar.style.width = '100%';
+  progressText.textContent = '完成';
+  resultEl.innerHTML = `
+    <div id="result-capture" class="result-capture-card">
+    <div class="result-viz"></div>
+    <h2 class="r-type" data-subtitle="${r.subtitle || r.tagline || ''}">${r.label}</h2>
+    <p class="r-score-line">回避 ${avoidance ? avoidance.toFixed(2) : '--'} ｜ 焦虑 ${anxiety ? anxiety.toFixed(2) : '--'}</p>
+    <div class="r-quote" id="rQuote">${r.tagline || ''}</div>
+    <div class="r-divider"></div>
+    <div class="r-desc">${formatParagraphs(r.desc)}<p>这是你上次保存的结果详情。</p></div>
+    <div class="r-divider"></div>
+    <div class="r-axis-section"><p class="r-axis-title">你的两轴解读</p><div class="r-axis-block"><span class="r-axis-label">焦虑</span><p class="r-axis-text">${copy.anxiety}</p></div><div class="r-axis-block"><span class="r-axis-label">回避</span><p class="r-axis-text">${copy.avoidance}</p></div></div>
+    <div class="r-divider"></div>
+    <div class="r-pattern-section"><p class="r-axis-title">在关系里，你可能会……</p><p class="r-axis-text">${copy.pattern1}</p><p class="r-axis-text">${copy.pattern2}</p></div>
+    <div class="r-divider"></div>
+    <div class="r-question-section"><p class="r-axis-title">值得想一想</p><p class="r-question-text">${copy.question}</p></div>
+    </div>
+<div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><div class="story-rec" id="storyRec" style="display:none;"><div class="story-rec-img"></div><div class="story-rec-content"><p class="story-rec-hint">你可能会有共鸣</p><h3 class="story-rec-title">故事标题</h3><a class="story-rec-btn" href="#">读这个故事 →</a></div></div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn" id="redoBtn" type="button">再做一次</button></div>`;
+  document.getElementById('redoBtn').onclick = startQuiz;
+  document.querySelector('.test-intro').style.display = 'none';
+  document.getElementById('testBody').style.display = 'block';
+  introEl.classList.add('hidden');
+  quizEl.classList.add('hidden');
+  resultEl.classList.remove('hidden');
+  if (storyRec) storyRec.style.display = 'none';
+  return true;
+}
+
+function maybeRestoreSavedResult() {
+  if (!window.SheProfileStore) return;
+  const record = window.SheProfileStore.getResult('ecr');
+  if (!record) return;
+  const startBtn = document.getElementById('startBtn');
+  if (startBtn && !document.getElementById('viewLastResultBtn')) {
+    const btn = document.createElement('button');
+    btn.id = 'viewLastResultBtn';
+    btn.type = 'button';
+    btn.className = 'ghost';
+    btn.textContent = '查看上次结果';
+    btn.onclick = () => renderStoredResult(record);
+    startBtn.insertAdjacentElement('afterend', btn);
+  }
+  if (window.SheProfileStore.wantsResultView()) renderStoredResult(record);
+}
 
 function shareLongImage() {
   const button = document.getElementById('shareLongBtn');
