@@ -760,8 +760,8 @@
           btn.onclick = () => selectAnswer(i);
           options.appendChild(btn);
         }
-        storyRec.style.display = 'none';
-      updateProgress();
+        if (storyRec) storyRec.style.display = 'none';
+        updateProgress();
       }
 
       function transition(next) {
@@ -880,6 +880,27 @@
           </div>
         `).join('');
       }
+
+      function buildDimensionRows(scores) {
+        const sortedEntries = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+        const top2 = new Set(sortedEntries.slice(0, 2).map(([key]) => key));
+        return sortedEntries.map(([key, value]) => {
+          const meta = DIMENSION_META[key];
+          return `
+            <div class="dimension-item">
+              <div class="dimension-head">
+                <div class="dimension-name${top2.has(key) ? ' is-high' : ''}">
+                  ${meta.name}
+                  <span class="dimension-name-en">${meta.en}</span>
+                </div>
+                <div class="dimension-score">${value.toFixed(1)} / 5</div>
+              </div>
+              <div class="progress"><div class="progress-bar" style="width:${((value / 5) * 100).toFixed(0)}%"></div></div>
+              <div class="dimension-desc">${meta.desc}</div>
+            </div>
+          `;
+        }).join('');
+      }
       const storyIllustrations = {
         'story-detail.html': 'illustrations/story-queqie.png',
         'story-tuanzi-v3.html': 'illustrations/story-tuanzi.png',
@@ -974,9 +995,8 @@
         state.index = 0;
         introEl.classList.add("hidden");
         resultEl.classList.add("hidden");
-        storyRec.style.display = 'none';
+        if (storyRec) storyRec.style.display = 'none';
         quizEl.classList.remove("hidden");
-        storyRec.style.display = 'none';
         renderQuestion();
       }
 
@@ -984,7 +1004,7 @@
         state.index = -1;
         state.answers = Array(DATA.questions.length).fill(null);
         resultEl.classList.add("hidden");
-        storyRec.style.display = 'none';
+        if (storyRec) storyRec.style.display = 'none';
         quizEl.classList.add("hidden");
         introEl.classList.remove("hidden");
         updateProgress();
