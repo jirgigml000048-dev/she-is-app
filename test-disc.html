@@ -1,0 +1,1183 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>行为风格测评 | 女也 She Is</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --bg: #f5f0eb;
+      --brand: #4A3073;
+      --ink: #2a2a2a;
+      --muted: #7e726b;
+      --line: rgba(74, 48, 115, 0.14);
+      --card: rgba(255,255,255,0.56);
+      --shadow: 0 24px 60px rgba(74, 48, 115, 0.08);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Noto Serif SC", Georgia, serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    button, input { font: inherit; }
+    .page {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 22px 24px 40px;
+      position: relative;
+    }
+    .glow, .glow-2 {
+      position: fixed;
+      border-radius: 999px;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(56px);
+      opacity: .55;
+    }
+    .glow { width: 220px; height: 220px; background: rgba(74,48,115,.08); top: -50px; right: -60px; }
+    .glow-2 { width: 180px; height: 180px; background: rgba(74,48,115,.06); bottom: -50px; left: -50px; }
+    .page > * { position: relative; z-index: 1; }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 34px;
+    }
+    .brand-mark {
+      font-size: 20px;
+      color: var(--brand);
+      letter-spacing: .18em;
+      font-weight: 600;
+    }
+    .brand-sub {
+      font-family: Georgia, "Noto Serif SC", serif;
+      font-size: 15px;
+      font-style: italic;
+      color: rgba(74,48,115,.85);
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 28px 0 18px;
+    }
+    .back {
+      display: inline-block;
+      color: var(--brand);
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .back:hover { color: #3d2565; }
+    .logo {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      margin: 0;
+      text-align: right;
+    }
+    .logo-cn {
+      display: block;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 600;
+      color: #1c1c1c;
+      letter-spacing: 0.12em;
+    }
+    .logo-en {
+      display: block;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 11px;
+      color: #888;
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+    }
+    .header-line {
+      height: 1px;
+      background: rgba(74, 48, 115, 0.28);
+      margin-bottom: 24px;
+    }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .hero-title, .result-title-main {
+      font-size: 31px;
+      line-height: 1.28;
+      letter-spacing: .02em;
+      margin: 0;
+      color: var(--ink);
+      text-wrap: balance;
+    }
+    .hero-desc, .muted {
+      margin: 16px 0 0;
+      font-size: 14px;
+      line-height: 1.95;
+      color: var(--muted);
+    }
+    .hero-meta {
+      margin-top: 18px;
+      font-size: 12px;
+      color: #999;
+      letter-spacing: 0.05em;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--brand);
+      font-size: 12px;
+      letter-spacing: .08em;
+      margin-bottom: 24px;
+      background: rgba(255,255,255,.36);
+    }
+    .primary-btn, .secondary-btn, .share-btn {
+      appearance: none;
+      border-radius: 999px;
+      padding: 14px 18px;
+      cursor: pointer;
+      transition: transform .16s ease, opacity .16s ease, background-color .16s ease;
+    }
+    .primary-btn:hover, .secondary-btn:hover, .share-btn:hover { transform: translateY(-1px); }
+    .primary-btn {
+      width: 100%;
+      margin-top: 34px;
+      border: 1px solid var(--brand);
+      background: var(--brand);
+      color: #fff;
+      font-size: 14px;
+      letter-spacing: .12em;
+    }
+    .secondary-btn {
+      width: 100%;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--brand);
+      font-size: 13px;
+    }
+    .progress-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .06em;
+      margin-bottom: 12px;
+    }
+    .progress-track {
+      width: 100%;
+      height: 2px;
+      background: rgba(74,48,115,.08);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: var(--brand);
+      transition: width .28s ease;
+    }
+    .question-label {
+      font-size: 11px;
+      letter-spacing: .18em;
+      color: var(--brand);
+      margin-bottom: 18px;
+    }
+    .question-text {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.7;
+      text-wrap: balance;
+    }
+    .options {
+      display: grid;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .option {
+      width: 100%;
+      text-align: left;
+      padding: 16px 16px;
+      border: 1px solid rgba(74,48,115,.12);
+      border-radius: 18px;
+      background: rgba(255,255,255,.52);
+      color: var(--ink);
+      line-height: 1.8;
+      font-size: 14px;
+      box-shadow: 0 8px 20px rgba(74,48,115,.04);
+    }
+    .option small {
+      display: block;
+      color: var(--brand);
+      font-size: 11px;
+      letter-spacing: .08em;
+      margin-bottom: 6px;
+    }
+    .option.selected {
+      border-color: var(--brand);
+      background: rgba(74,48,115,.08);
+      box-shadow: 0 10px 24px rgba(74,48,115,.08);
+    }
+    .nav-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .nav-row .secondary-btn,
+    .nav-row .primary-btn { margin-top: 0; width: 100%; }
+
+    .result-capture {
+      background: transparent;
+    }
+    .result-header {
+      margin-bottom: 28px;
+    }
+    .result-header .brand { margin-bottom: 0; }
+    .dimension-list {
+      display: grid;
+      gap: 18px;
+      margin-top: 10px;
+    }
+    .dimension-item { }
+    .dimension-top {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .dimension-name {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 12px;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+    .dimension-name strong {
+      font-size: 13px;
+      font-weight: 500;
+      color: inherit;
+    }
+    .dimension-item.is-top .dimension-name,
+    .dimension-item.is-top .dimension-name strong,
+    .dimension-item.is-top .dimension-score {
+      color: var(--brand);
+      font-weight: 600;
+    }
+    .dimension-score {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(74,48,115,.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      background: rgba(74,48,115,.18);
+      border-radius: inherit;
+    }
+    .dimension-item.is-top .bar-fill { background: var(--brand); }
+
+    .result-type {
+      margin-top: 36px;
+      font-size: 28px;
+      line-height: 1.45;
+      color: var(--ink);
+      text-wrap: balance;
+    }
+    .quote-block {
+      margin: 24px 0;
+      padding-left: 16px;
+      border-left: 3px solid var(--brand);
+      font-size: 18px;
+      line-height: 1.9;
+      color: var(--brand);
+      font-style: italic;
+    }
+    .body-copy p {
+      margin: 0 0 18px;
+      color: var(--ink);
+      line-height: 1.95;
+    }
+    .body-copy p:first-child { font-size: 15px; }
+    .body-copy p:not(:first-child) { font-size: 14px; }
+    .section-title {
+      margin: 48px 0 18px;
+      padding-left: 12px;
+      border-left: 2px solid var(--brand);
+      font-size: 11px;
+      letter-spacing: .15em;
+      font-weight: 600;
+      color: var(--brand);
+      text-transform: uppercase;
+    }
+    .section-copy {
+      font-size: 14px;
+      line-height: 1.95;
+      color: var(--ink);
+    }
+    .daily-list {
+      display: grid;
+      gap: 20px;
+      margin-top: 4px;
+    }
+    .daily-item {
+      font-size: 14px;
+      line-height: 1.95;
+      color: var(--ink);
+    }
+    .reflective {
+      font-size: 16px;
+      line-height: 1.95;
+      color: var(--brand);
+      font-style: italic;
+    }
+    .share-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .result-nav-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .result-nav-link {
+      display: block;
+      width: 100%;
+      text-align: center;
+      border-radius: 10px;
+      padding: 13px 0;
+      font-size: 13px;
+      text-decoration: none;
+    }
+    .result-nav-link.primary {
+      background: var(--brand);
+      color: #fff;
+      border: 1px solid var(--brand);
+    }
+    .result-nav-link.secondary {
+      background: transparent;
+      color: var(--brand);
+      border: 1px solid rgba(74,48,115,.25);
+    }
+    .share-btn {
+      border: 1px solid var(--brand);
+      background: #fff;
+      color: var(--brand);
+      font-size: 13px;
+      padding: 13px 10px;
+    }
+    .reset-btn {
+      width: 100%;
+      margin-top: 16px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .capture-shell, .quote-card-shell {
+      position: fixed;
+      left: -99999px;
+      top: 0;
+      width: 480px;
+      pointer-events: none;
+      opacity: 0;
+    }
+    .capture-poster {
+      width: 480px;
+      background: var(--bg);
+      color: var(--ink);
+      padding: 28px 24px 24px;
+      font-family: "Noto Serif SC", Georgia, serif;
+    }
+    .poster-footer {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(74,48,115,.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: rgba(74,48,115,.72);
+      letter-spacing: .08em;
+    }
+    .quote-card {
+      width: 480px;
+      height: 693px;
+      position: relative;
+      overflow: hidden;
+      background: #f5f0eb;
+      color: var(--ink);
+      padding: 48px 36px;
+      font-family: "Noto Serif SC", Georgia, serif;
+      display: flex;
+      flex-direction: column;
+    }
+    .quote-card::before,
+    .quote-card::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(ellipse, rgba(74,48,115,0.13), transparent 70%);
+    }
+    .quote-card::before {
+      top: -60px;
+      left: -60px;
+    }
+    .quote-card::after {
+      right: -60px;
+      bottom: -60px;
+    }
+    .quote-card > * { position: relative; z-index: 1; }
+    .quote-card-head {
+      font-size: 12px;
+      color: #4A3073;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(74,48,115,0.15);
+      margin-bottom: 28px;
+    }
+    .quote-card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .quote-card-type {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 44px;
+      font-weight: 600;
+      line-height: 1.1;
+      color: #4A3073;
+    }
+    .quote-card-quote {
+      margin-top: 16px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #888;
+      font-style: italic;
+    }
+    .quote-card-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 28px;
+    }
+    .quote-card-foot-left {
+      font-size: 9px;
+      color: #bbb;
+      font-family: "Courier New", Courier, monospace;
+    }
+    .quote-card-foot-right {
+      font-size: 12px;
+      color: #4A3073;
+      font-family: "Cormorant Garamond", Georgia, serif;
+    }
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(22, 16, 30, .72);
+      padding: 20px;
+      z-index: 20;
+    }
+    .modal.active { display: flex; }
+    .modal-inner {
+      position: relative;
+      max-width: min(92vw, 420px);
+      width: 100%;
+      text-align: center;
+    }
+    .modal-close {
+      position: absolute;
+      top: -18px;
+      right: -4px;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(255,255,255,.92);
+      color: var(--brand);
+      font-size: 22px;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .modal img {
+      max-width: 100%;
+      max-height: 78vh;
+      display: block;
+      margin: 0 auto;
+      border-radius: 18px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.24);
+    }
+    .modal-tip {
+      margin-top: 14px;
+      color: #fff;
+      font-size: 13px;
+      letter-spacing: .06em;
+    }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="glow-2"></div>
+
+  <main class="page">
+
+    <header class="page-header">
+      <a class="back" href="assessment.html">← 测评</a>
+      <div class="logo" aria-label="女也 she is ______.">
+        <span class="logo-cn">女也</span>
+        <span class="logo-en">she is ______.</span>
+      </div>
+    </header>
+    <div class="header-line"></div>
+    <section id="introScreen" class="screen active">
+      <div class="pill">DISC · 行为风格</div>
+      <h1 class="hero-title">行为风格测评</h1>
+      <p class="hero-desc">同样面对一个问题，有人第一反应是直接推进，有人是先把所有人的感受照顾好，有人需要把每个细节想清楚才能开始，有人会等情况稳定了再行动。</p>
+      <p class="hero-desc">这四种方式没有优劣之分，它们只是不同的行为风格——你在压力下怎么反应，你和团队的互动方式，你做决定时的本能。</p>
+      <p class="hero-desc">12题，每题选一个最像你的，大概5分钟。</p>
+      <div class="hero-meta">12 题 · 约 5 分钟 · 行为风格探索</div>
+      <button class="primary-btn" id="startBtn">开始测评</button>
+    </section>
+
+    <section id="quizScreen" class="screen">
+      <div class="progress-meta">
+        <span id="progressText">01 / 12</span>
+        <span>DISC</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="question-label" id="questionLabel">Q1</div>
+      <h2 class="question-text" id="questionText"></h2>
+      <div class="options" id="options"></div>
+      <div class="nav-row">
+        <button class="secondary-btn" id="prevBtn" type="button">上一题</button>
+        <button class="primary-btn" id="nextBtn" type="button">下一题</button>
+      </div>
+    </section>
+
+    <section id="resultScreen" class="screen">
+      <div id="result-capture" class="result-capture"></div>
+      <div class="share-row">
+        <button class="share-btn" id="shareLongBtn" type="button">结果长图</button>
+        <button class="share-btn" id="shareQuoteBtn" type="button">分享金句</button>
+      </div>
+      <div class="result-nav-row">
+        <a class="result-nav-link secondary" href="index.html">返回首页</a>
+        <a class="result-nav-link primary" href="profile.html">查看我的画像</a>
+      </div>
+      <button class="reset-btn" id="restartBtn" type="button">再做一次</button>
+    </section>
+  </main>
+
+  <div class="modal" id="shareModal" aria-hidden="true">
+    <div class="modal-inner">
+      <button class="modal-close" id="modalClose" aria-label="关闭">×</button>
+      <img id="modalImage" alt="分享图片预览" />
+      <div class="modal-tip">长按保存</div>
+    </div>
+  </div>
+
+  <script>
+    const QUESTIONS = [
+      {
+        id: 1,
+        text: '团队要做一个决定，但大家迟迟没有进展。你更可能：',
+        options: [
+          { dim: 'C', text: '先把所有选项的利弊列清楚，再讨论' },
+          { dim: 'I', text: '先把大家的想法都摆出来，让气氛活起来' },
+          { dim: 'D', text: '直接说出你的判断，推动做决定' },
+          { dim: 'S', text: '等大家都说完，再给出你的看法' }
+        ]
+      },
+      {
+        id: 2,
+        text: '你被交代了一个任务，但给的信息不够完整。你更可能：',
+        options: [
+          { dim: 'S', text: '等信息更完整再开始，不想做一半重来' },
+          { dim: 'D', text: '先动起来，边做边调整' },
+          { dim: 'C', text: '整理出所有不确定的地方，逐一确认后再做' },
+          { dim: 'I', text: '先去找相关的人聊聊，搞清楚背景' }
+        ]
+      },
+      {
+        id: 3,
+        text: '和别人发生了分歧，对方坚持他的观点。你更可能：',
+        options: [
+          { dim: 'I', text: '试着找到你们之间的共同点，把气氛缓和下来' },
+          { dim: 'C', text: '用数据或逻辑来支撑你的观点' },
+          { dim: 'S', text: '退一步，看看对方的角度有没有道理' },
+          { dim: 'D', text: '把你的理由再说一遍，更直接地坚持' }
+        ]
+      },
+      {
+        id: 4,
+        text: '你在一个新环境里认识了一群陌生人。你更可能：',
+        options: [
+          { dim: 'D', text: '很快找到你想深入交流的人，主动建立连接' },
+          { dim: 'S', text: '先观察，等有人来和你说话' },
+          { dim: 'I', text: '很快和很多人聊起来，让整个场子活跃' },
+          { dim: 'C', text: '更关注观察这群人的互动模式，少说多看' }
+        ]
+      },
+      {
+        id: 5,
+        text: '你负责的一件事出了问题。你更可能：',
+        options: [
+          { dim: 'I', text: '第一反应是和团队说清楚，保持透明' },
+          { dim: 'D', text: '马上找到解决方案，优先把问题解决' },
+          { dim: 'C', text: '先搞清楚问题的根本原因，再决定怎么做' },
+          { dim: 'S', text: '先稳住情绪和局面，再一步步处理' }
+        ]
+      },
+      {
+        id: 6,
+        text: '别人给你反馈说你做的东西有不足。你更可能：',
+        options: [
+          { dim: 'C', text: '把反馈记下来，对照自己的标准仔细想' },
+          { dim: 'I', text: '看对方说的方式，如果方式不对你会先有情绪' },
+          { dim: 'D', text: '听完就想怎么改进，不太在意对方的措辞' },
+          { dim: 'S', text: '认真听，会想很久对方说的对不对' }
+        ]
+      },
+      {
+        id: 7,
+        text: '工作节奏突然加快，事情一下子多了很多。你更可能：',
+        options: [
+          { dim: 'S', text: '默默扛着，不太会说自己的压力' },
+          { dim: 'C', text: '把所有事情列出来，有系统地一件件处理' },
+          { dim: 'I', text: '保持乐观，想办法把团队的士气带起来' },
+          { dim: 'D', text: '分出轻重缓急，优先搞定最重要的' }
+        ]
+      },
+      {
+        id: 8,
+        text: '你参与一个长期项目，中途方向变了。你更可能：',
+        options: [
+          { dim: 'C', text: '想清楚变化带来的每一个影响，再决定' },
+          { dim: 'S', text: '需要时间适应，不喜欢半途改变' },
+          { dim: 'D', text: '快速评估新方向，决定要不要跟着变' },
+          { dim: 'I', text: '先关心团队的状态，确认大家都还在一起' }
+        ]
+      },
+      {
+        id: 9,
+        text: '你有一个新想法，但还不成熟。你更可能：',
+        options: [
+          { dim: 'I', text: '先找几个信任的人聊，感受他们的反应' },
+          { dim: 'S', text: '先自己想清楚，觉得稳妥了再说' },
+          { dim: 'C', text: '先把逻辑梳理好，有了框架再提出来' },
+          { dim: 'D', text: '先说出来，在讨论中完善' }
+        ]
+      },
+      {
+        id: 10,
+        text: '做一件事，你更在意的是：',
+        options: [
+          { dim: 'D', text: '结果——做完了，达到目标了没' },
+          { dim: 'C', text: '质量——每个细节有没有到位' },
+          { dim: 'S', text: '稳定——不出乱子，大家都好' },
+          { dim: 'I', text: '过程中的感受——和谁一起做，气氛怎样' }
+        ]
+      },
+      {
+        id: 11,
+        text: '别人说你“太……了”，你猜最可能是哪个：',
+        options: [
+          { dim: 'S', text: '太没主见了' },
+          { dim: 'D', text: '太强势了' },
+          { dim: 'I', text: '太话多了' },
+          { dim: 'C', text: '太挑剔了' }
+        ]
+      },
+      {
+        id: 12,
+        text: '一天结束时，什么样的感觉会让你觉得「今天值了」：',
+        options: [
+          { dim: 'C', text: '把一件复杂的事情理清楚了，做对了' },
+          { dim: 'S', text: '帮到了需要帮助的人，关系还在' },
+          { dim: 'D', text: '推动了一件重要的事，往前走了一步' },
+          { dim: 'I', text: '和人有真实的连接，彼此都打开了' }
+        ]
+      }
+    ];
+
+    const DIMENSIONS = {
+      D: { en: 'Dominance', zh: '主导' },
+      I: { en: 'Influence', zh: '影响' },
+      S: { en: 'Steadiness', zh: '稳健' },
+      C: { en: 'Conscientiousness', zh: '谨慎' }
+    };
+
+    const RESULTS = {
+      D: {
+        title: 'D 型 · 主导者',
+        quote: '你的第一反应是推动它发生。不是等，不是看，是直接去做。有时候这让你走在所有人前面，有时候让你一个人走。',
+        body: [
+          '你的第一反应是行动。问题来了，你不会在原地分析太久，你会先找到一个方向，然后动起来。大多数人还在讨论的时候，你已经开始做了。',
+          '你对结果有很强的执着。你愿意承担压力，也愿意做决定——哪怕那个决定不是所有人都同意的。在你看来，没有决定是最差的选项。',
+          '你的直接有时候会让人不适应，但那是因为你的时钟比别人快。你不是不在乎他们，是你已经到下一步了。'
+        ],
+        style: '你的驱动力来自结果——完成了、推进了、赢了。你在有阻力的环境里反而表现得更好，因为阻力对你来说是问题要解决，不是理由要放弃。',
+        daily: [
+          '开会的时候你经常是那个把大家从讨论拉回到决策的人，有时候会显得有点急。',
+          '你不太擅长等。等别人、等流程、等结果——这些都需要你主动压住那股「直接去做」的冲动。'
+        ],
+        reflect: '你上一次主动放慢让别人先来，是什么情况，你当时是什么感觉？'
+      },
+      I: {
+        title: 'I 型 · 影响者',
+        quote: '你走进一个房间，气氛就不一样了。你不是刻意的，你就是这样——你的能量会渗进周围。',
+        body: [
+          '你的能量是会传染的。你兴奋的时候，身边的人也会跟着兴奋；你投入地说一件事，别人会忍不住想听完。你的存在本身就是一种影响。',
+          '你在乎关系，在乎人。一个项目结束了，你记得的不是最终的数字，而是过程中那些真实的瞬间——谁说了什么，气氛在哪一刻变了，谁被看见了。',
+          '你的乐观是真实的，不是表演。你真的相信事情会好的，而且你的相信有时候会成为让事情真的好起来的原因。'
+        ],
+        style: '你的驱动力是连接——和人、和想法、和可能性的连接。你在有共鸣的环境里表现最好，因为那种感觉会让你想给出更多。',
+        daily: [
+          '你可能会在兴奋的时候过度承诺，然后在要兑现的时候才意识到自己答应了太多。',
+          '批评对你来说比对大多数人都更刺，即使你表面上没表现出来。'
+        ],
+        reflect: '在你给出的那些能量里，有多少是你真的有的，有多少是撑出来的？'
+      },
+      S: {
+        title: 'S 型 · 稳健者',
+        quote: '你是那个让人安心待在旁边的人。不是因为你什么都说好，而是你真的在，而且你不会突然消失。',
+        body: [
+          '你不制造混乱，你消化混乱。当周围的人都在乱的时候，你会自然地成为那个稳住的人——不是因为你没感觉，而是你处理感觉的方式很安静。',
+          '你重视关系里的稳定。你不会随意撕破一段关系，你会花时间维护它、修补它。有人在你旁边待着会觉得放心，因为你不会突然变卦，不会无缘无故消失。',
+          '你对变化需要更长的适应时间。这不是缺点，是你处理新事物的方式——你需要感觉到脚是踩在地上的，才能往前走。'
+        ],
+        style: '你的驱动力是稳定和归属感——知道自己在哪里，知道身边的人还在，知道事情是可预期的。你在有安全感的环境里会贡献出惊人的耐心和可靠。',
+        daily: [
+          '你可能会在心里有很多，但对外说得很少——别人以为你没意见，其实你只是不想引起摩擦。',
+          '长期处于不稳定的环境会让你真的累，而且你可能不会说出来，而是一点点撑着。'
+        ],
+        reflect: '你现在的稳定里，有多少是你真正安心的，有多少只是你习惯了就不再说了？'
+      },
+      C: {
+        title: 'C 型 · 谨慎者',
+        quote: '你在意每一个细节是否到位。别人觉得够了，你还没完。这种在意是你的标准，也是你最累的地方。',
+        body: [
+          '你的眼睛会自动扫描错误。别人看到的是整体，你看到的是某一处不对劲的地方。你不是故意挑剔，是你的感知系统就是这样设置的。',
+          '你做事之前需要想清楚。随意开始对你来说会造成焦虑，因为你知道细节里藏着风险。一旦想清楚了，你做的东西质量通常都很高。',
+          '你很难接受“差不多就好了”。不是完美主义，是你内心有一套清晰的标准，低于那条线你会难受。'
+        ],
+        style: '你的驱动力是准确和质量——做对了，没有遗漏，每个环节都经得起检验。你在有明确标准、有足够信息的环境里表现最好。',
+        daily: [
+          '别人觉得可以了，你还在检查——这既让你的输出质量高，也让你有时候慢。',
+          '你对自己的要求很高，批评自己时往往比批评别人还严。'
+        ],
+        reflect: '你的标准是服务于你的，还是你在服务于它？'
+      },
+      DI: {
+        title: 'DI 型 · 驱动型影响者',
+        quote: '你要结果，也要人心。你不只是想把事做完，你想让参与这件事的人也觉得值得。',
+        body: [
+          '你兼具两种能量——推动事情发生的意志，和把人带进来的感染力。你不只是要把事做完，你还想让做事的过程是值得的、有意思的。',
+          '你在人前有一种自然的领导感，不是靠头衔，是靠你说话时的笃定和对人的真诚。你能让人既服你，又喜欢跟着你。',
+          '有时候你会在「快速推进」和「顾及所有人」之间拉扯。这两种驱动力不总是同方向的。'
+        ],
+        style: '你的力量在于能同时调动事情和人——你既是引擎，也是磁铁。最佳状态是有清晰目标但路径上有人和你一起。',
+        daily: [
+          '你对没有参与感的团队会失去耐心——你不只是要完成任务，你需要身边有真正在乎这件事的人。',
+          '有时候你的热情会让人以为你比实际上更愿意承担，然后你会被推进更多。'
+        ],
+        reflect: '在你想要带动的那些人里，有没有人你其实还没真正了解他们想要什么？'
+      },
+      DC: {
+        title: 'DC 型 · 精准驱动者',
+        quote: '你不只想赢，你想赢得漂亮、赢得有道理。在你这里，快和对，不是非此即彼的事。',
+        body: [
+          '你行动迅速，但你的行动是有根据的。你不是靠直觉乱冲，你在快速评估、在找最优解，然后你去做。',
+          '你对自己的判断很自信，但你的自信不是盲目的——它来自你做过足够的分析。当别人质疑你的时候，你有话说。',
+          '你的标准很高，对自己和对别人都是。你不容易满足，但你也能为高标准付出相应的代价。'
+        ],
+        style: '你的驱动力是高质量的结果。你想做到，而且想做对。这让你成为一个可以被信任的执行者，但也让你有时候会为了把事情做对而牺牲速度。',
+        daily: [
+          '你可能会对做事方式不同的人失去耐心，尤其是那些「差不多就好了」的人。',
+          '你的意见通常是对的，但你表达的方式有时候会让对方先有防御，然后才能真正听进去。'
+        ],
+        reflect: '你的标准是在保护你想要的结果，还是在保护你对自己的某种要求？'
+      },
+      DS: {
+        title: 'DS 型 · 果断守护者',
+        quote: '你推动事情，但你不会把人落下。你往前走，但你会回头确认身边的人还跟着。',
+        body: [
+          '你有行动的意志，但你的行动里有一种温度。你不是那种踩着别人往前走的人，你会在确认身边的人还跟得上的前提下推进。',
+          '你在需要做决定的时候不会逃避，但你也在意这个决定对周围人意味着什么。这让你成为一个既能拍板又让人信任的存在。',
+          '有时候你会在「快点往前」和「先把大家都稳住」之间慢下来，因为你不想落掉任何人。'
+        ],
+        style: '你的力量是稳定的推动——不是强行，是带着。你在有人需要你负责的环境里往往会表现出你最好的一面。',
+        daily: [
+          '你是那种「做完了还要回头看看大家怎样」的人，这很难得，但也让你有时候承担了太多。',
+          '你很少说「我累了」，因为你觉得还有人需要你在。'
+        ],
+        reflect: '你在「往前推」和「守住身边人」之间，现在更偏哪边？'
+      },
+      ID: {
+        title: 'ID 型 · 热情驱动者',
+        quote: '你充满热情，而且你会用热情推动事情真的发生。你说出来的愿景，自己也跟着去做。',
+        body: [
+          '你的出发点是人和连接，但你不只是想感受美好——你还想让美好的事情真的发生。你的热情不是表演，是行动力的来源。',
+          '你在一个团队里能同时带动情绪和推进事情，这两种能力同时出现在一个人身上不常见。你说出来的愿景让人相信，然后你自己也跟着去做。',
+          '有时候你会在说到做到的中间出现落差——因为你说出来的时候是真的想，但执行细节对你来说不总是最有趣的部分。'
+        ],
+        style: '你的力量是激发——激发可能性，激发人，激发行动。最佳状态是有你信任的人帮你把细节兜住，你来把方向和能量带起来。',
+        daily: [
+          '你在高速推进的时候容易忽略一些需要安静处理的细节，等到出问题了才发现。',
+          '你的热情是真实的资产，但它也会让人对你有高于你实际能承担的期待。'
+        ],
+        reflect: '在你最近推动的那些事里，有没有哪一件你其实没有真的想清楚就开始说了？'
+      },
+      IS: {
+        title: 'IS 型 · 温暖连接者',
+        quote: '你用温度和在场，让人感受到被看见。不是表演，是你真的在意，而且你一直都在。',
+        body: [
+          '你在意人，而且你在意的方式是真实的。你不是应付式的关心，是你会记得细节，会感受到对方情绪的细微变化，会在对方不说的时候也感知到。',
+          '你重视和谐，重视关系里的温度。你不喜欢冲突，不是因为你软弱，是因为你真的在意每个人是不是都还好。',
+          '你的存在让人安心，但有时候你会为了维护这份安心而承担一些不该你一个人扛的重量。'
+        ],
+        style: '你的力量是连接和包容——你能让不同的人都觉得被接住。在需要凝聚力的环境里，你是最重要的那根线。',
+        daily: [
+          '你可能会在关系里过度承接别人的情绪，然后回到自己的空间才发现自己已经很累了。',
+          '你的感受常常是最后才被关注到的，因为你习惯把别人的感受放在前面。'
+        ],
+        reflect: '在你的关系里，有没有人像你对待他们那样对待你？'
+      },
+      IC: {
+        title: 'IC 型 · 感性分析者',
+        quote: '你对人有感觉，对事有逻辑。这两种能力同时出现在一个人身上，其实挺少见的。',
+        body: [
+          '你有共情力，也有分析力。你能感受到房间里的情绪，也能在感受之后用逻辑把它说清楚。这让你在处理复杂的人际问题时特别有价值。',
+          '你在乎质量，也在乎人。你不会为了效率放弃对人的关注，也不会为了关系而降低你的标准。',
+          '有时候这两种驱动力会互相拉扯——情绪上的共情和逻辑上的分析不总是指向同一个答案。'
+        ],
+        style: '你的力量是同时看见人和看见事——你能理解为什么一件事会有这样的结果，也能理解为什么一个人会有这样的反应。这是一种稀缺的复合能力。',
+        daily: [
+          '你会在对一件事有感受的同时分析它，有时候分析反而让你更难从感受里出来。',
+          '你对「做到位」的要求很高，但有时候你不确定是要把事做到位，还是把关系做到位，两个都很重要。'
+        ],
+        reflect: '你的感受和你的分析，最近哪一个说话更大声？'
+      },
+      SC: {
+        title: 'SC 型 · 稳定精进者',
+        quote: '你在稳定中把事情做好。慢而不乱，细而不焦。你不是最快的，但你的东西经得起看。',
+        body: [
+          '你做事有节奏，而且你的节奏是可靠的。你不赶，但你到。你不喧哗，但你做出来的东西经得起看。',
+          '你重视稳定，也重视质量。这两件事在你这里是相辅相成的——正是因为你不乱，你才能把细节做好；正是因为你做细节，你才不需要慌。',
+          '你不是最快的，但你的作品往往是最让人放心的。'
+        ],
+        style: '你的力量是可持续的高质量输出——你不靠爆发，你靠积累。在需要长期稳定投入的环境里，你是那个最后还在的人。',
+        daily: [
+          '外部压力大的时候，你可能不会说出来，只是默默压低自己的节奏继续走——这让你很能扛，但也让你容易被忽视。',
+          '你做事的标准很高，但你说出来的方式很平，所以别人有时候不知道你其实已经付出了很多。'
+        ],
+        reflect: '你的稳定是来自内在的安全感，还是来自「不想让别人失望」？'
+      },
+      CS: {
+        title: 'CS 型 · 细致守护者',
+        quote: '你把每个细节都照顾好了，包括那些没人注意到的地方。你不说，但你做了，而且你做得很准。',
+        body: [
+          '你同时有对精准的追求和对稳定的需要。你想做好，也想环境安全——这两件事都让你把注意力放在细节和风险上，而不是大方向和速度上。',
+          '你是那种会在别人以为万事大吉的时候，默默补上那个漏洞的人。你的存在让很多事情没有出问题，即使没有人知道是因为你。',
+          '你的谨慎是一种能力，但有时候也是一种消耗。'
+        ],
+        style: '你的力量是预防性的——你在问题发生之前就已经在处理它了。在需要细心和可靠性的环境里，你是最重要的保障。',
+        daily: [
+          '你会在事情还没出问题的时候就开始担心，这让你提前做好了很多准备，但也让你花了很多能量在「还没发生的事」上。',
+          '你不太会主动说「这是我做的」，因为你更在乎事情是否到位，而不是功劳。'
+        ],
+        reflect: '你照顾了很多细节，有没有哪个是你真正在乎的、而不只是「不能出错」的？'
+      }
+    };
+
+    const state = {
+      index: 0,
+      answers: Array(QUESTIONS.length).fill(null)
+    };
+
+    const introScreen = document.getElementById('introScreen');
+    const quizScreen = document.getElementById('quizScreen');
+    const resultScreen = document.getElementById('resultScreen');
+    const progressText = document.getElementById('progressText');
+    const progressFill = document.getElementById('progressFill');
+    const questionLabel = document.getElementById('questionLabel');
+    const questionText = document.getElementById('questionText');
+    const optionsEl = document.getElementById('options');
+    const resultCapture = document.getElementById('result-capture');
+    const modal = document.getElementById('shareModal');
+    const modalImage = document.getElementById('modalImage');
+
+    function showScreen(name) {
+      [introScreen, quizScreen, resultScreen].forEach(el => el.classList.remove('active'));
+      if (name === 'intro') introScreen.classList.add('active');
+      if (name === 'quiz') quizScreen.classList.add('active');
+      if (name === 'result') resultScreen.classList.add('active');
+    }
+
+    function renderQuestion() {
+      const q = QUESTIONS[state.index];
+      questionLabel.textContent = `Q${q.id}`;
+      questionText.textContent = q.text;
+      progressText.textContent = `${String(state.index + 1).padStart(2, '0')} / ${QUESTIONS.length}`;
+      progressFill.style.width = `${((state.index) / QUESTIONS.length) * 100}%`;
+      optionsEl.innerHTML = q.options.map((opt, idx) => {
+        const selected = state.answers[state.index] === idx ? 'selected' : '';
+        return `<button type="button" class="option ${selected}" data-index="${idx}"><small>${opt.dim}</small>${opt.text}</button>`;
+      }).join('');
+      document.getElementById('prevBtn').disabled = state.index === 0;
+      document.getElementById('prevBtn').style.opacity = state.index === 0 ? '.45' : '1';
+      document.getElementById('nextBtn').textContent = state.index === QUESTIONS.length - 1 ? '查看结果' : '下一题';
+    }
+
+    function getScores() {
+      const scores = { D: 0, I: 0, S: 0, C: 0 };
+      state.answers.forEach((answerIdx, qIndex) => {
+        const opt = QUESTIONS[qIndex].options[answerIdx];
+        if (opt) scores[opt.dim] += 1;
+      });
+      return scores;
+    }
+
+    function resolveType(scores) {
+      const ordered = Object.entries(scores).sort((a, b) => {
+        if (b[1] !== a[1]) return b[1] - a[1];
+        return ['D','I','S','C'].indexOf(a[0]) - ['D','I','S','C'].indexOf(b[0]);
+      });
+      const [primary, pScore] = ordered[0];
+      const [secondary, sScore] = ordered[1];
+      const diff = pScore - sScore;
+      const allowedCombos = new Set(['DI','DC','DS','ID','IS','IC','SC','CS']);
+      const combo = `${primary}${secondary}`;
+      const typeKey = diff <= 2 && allowedCombos.has(combo) ? combo : primary;
+      return { typeKey, primary, secondary, ordered };
+    }
+
+    function renderResult() {
+      const scores = getScores();
+      const resolved = resolveType(scores);
+      const content = RESULTS[resolved.typeKey];
+      const topScore = Math.max(...Object.values(scores));
+      window._currentQuote = content.quote;
+      window._currentTypeName = content.title;
+
+      const dimensionHtml = ['D', 'I', 'S', 'C'].map(key => {
+        const info = DIMENSIONS[key];
+        const val = scores[key];
+        const isTop = val === topScore;
+        return `
+          <div class="dimension-item ${isTop ? 'is-top' : ''}">
+            <div class="dimension-top">
+              <div class="dimension-name">
+                <strong>${key} — ${info.en}</strong>
+                <span>${info.zh}</span>
+              </div>
+              <div class="dimension-score">${val}/12</div>
+            </div>
+            <div class="bar"><div class="bar-fill" style="width:${(val / 12) * 100}%"></div></div>
+          </div>
+        `;
+      }).join('');
+
+      const bodyHtml = content.body.map(p => `<p>${p}</p>`).join('');
+      const dailyHtml = content.daily.map(item => `<div class="daily-item">— ${item}</div>`).join('');
+
+      resultCapture.innerHTML = `
+        <div class="result-header">
+          <div class="brand">
+            <div class="brand-mark">女也</div>
+            <div class="brand-sub">she is ______.</div>
+          </div>
+        </div>
+        <div class="dimension-list">${dimensionHtml}</div>
+        <h1 class="result-type">${content.title}</h1>
+        <div class="quote-block">${content.quote}</div>
+        <div class="body-copy">${bodyHtml}</div>
+        <div>
+          <div class="section-title">你的行为风格</div>
+          <div class="section-copy">${content.style}</div>
+        </div>
+        <div>
+          <div class="section-title">在日常里</div>
+          <div class="daily-list">${dailyHtml}</div>
+        </div>
+        <div>
+          <div class="section-title">值得想一想</div>
+          <div class="reflective">${content.reflect}</div>
+        </div>
+      `;
+
+      progressFill.style.width = '100%';
+      showScreen('result');
+    }
+
+    function nextQuestion() {
+      if (state.answers[state.index] === null) return;
+      if (state.index === QUESTIONS.length - 1) {
+        renderResult();
+        return;
+      }
+      state.index += 1;
+      renderQuestion();
+    }
+
+    function previousQuestion() {
+      if (state.index === 0) return;
+      state.index -= 1;
+      renderQuestion();
+    }
+
+    function restartQuiz() {
+      state.index = 0;
+      state.answers = Array(QUESTIONS.length).fill(null);
+      progressFill.style.width = '0%';
+      showScreen('intro');
+    }
+
+    async function captureElement(el) {
+      const canvas = await html2canvas(el, {
+        backgroundColor: '#f5f0eb',
+        scale: Math.min(window.devicePixelRatio || 2, 3),
+        useCORS: true,
+        allowTaint: true
+      });
+      return canvas.toDataURL('image/png');
+    }
+
+    function openModal(src) {
+      modalImage.src = src;
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      modalImage.src = '';
+    }
+
+    async function shareLongImage() {
+      const shell = document.createElement('div');
+      shell.className = 'capture-shell';
+      shell.innerHTML = `
+        <div class="capture-poster">
+          ${resultCapture.innerHTML}
+          <div class="poster-footer">
+            <span>行为风格测评 · DISC</span>
+            <span>女也 she is ______.</span>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(shell);
+      try {
+        const src = await captureElement(shell.firstElementChild);
+        openModal(src);
+      } finally {
+        shell.remove();
+      }
+    }
+
+    function generateResultCard(typeName, quote) {
+      const shell = document.createElement('div');
+      shell.className = 'quote-card-shell';
+      const rawTypeName = (window._currentTypeName || typeName || 'DISC').trim();
+      const [typeShortRaw, ...typeDescParts] = rawTypeName.split('·');
+      const typeShort = (typeShortRaw || '').trim();
+      const typeDesc = typeDescParts.join('·').trim();
+      const typeMarkup = typeDesc
+        ? `
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 600; color: #4A3073; line-height: 1.0;">${typeShort}</div>
+            <div style="font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 400; color: #4A3073; margin-top: 8px; letter-spacing: 0.05em;">${typeDesc}</div>
+          `
+        : `<div style="font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 600; color: #4A3073; line-height: 1.0;">${rawTypeName}</div>`;
+      shell.innerHTML = `
+        <div class="quote-card">
+          <div class="quote-card-head">行为风格测评 · DISC</div>
+          <div class="quote-card-body">
+            <div class="quote-card-type">${typeMarkup}</div>
+            <div class="quote-card-quote">${quote}</div>
+          </div>
+          <div class="quote-card-foot">
+            <span class="quote-card-foot-left">she-is-app.netlify.app</span>
+            <span class="quote-card-foot-right">she is ______.</span>
+          </div>
+        </div>
+      `;
+      return shell;
+    }
+
+    async function shareQuoteCard() {
+      const shell = generateResultCard(window._currentTypeName || 'DISC', window._currentQuote || '');
+      document.body.appendChild(shell);
+      try {
+        const src = await captureElement(shell.firstElementChild);
+        openModal(src);
+      } finally {
+        shell.remove();
+      }
+    }
+
+    document.getElementById('startBtn').addEventListener('click', () => {
+      showScreen('quiz');
+      renderQuestion();
+    });
+
+    document.getElementById('options').addEventListener('click', (event) => {
+      const btn = event.target.closest('.option');
+      if (!btn) return;
+      state.answers[state.index] = Number(btn.dataset.index);
+      renderQuestion();
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+    document.getElementById('prevBtn').addEventListener('click', previousQuestion);
+    document.getElementById('restartBtn').addEventListener('click', restartQuiz);
+    document.getElementById('shareLongBtn').addEventListener('click', shareLongImage);
+    document.getElementById('shareQuoteBtn').addEventListener('click', shareQuoteCard);
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('shareModal').addEventListener('click', (event) => {
+      if (event.target === modal) closeModal();
+    });
+
+    window.shareLongImage = shareLongImage;
+    window.generateResultCard = generateResultCard;
+  </script>
+</body>
+</html>
