@@ -6,62 +6,80 @@
     <title>自我图鉴 | 女也 She Is</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Courier+Prime&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Courier+Prime&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-override.css" />
     <style>
       :root {
-        --bg: #f7f3ee;
-        --ink: #2e2e2e;
-        --body: #555;
-        --muted: #888;
+        --bg: #f5f0eb;
+        --surface: rgba(255, 255, 255, 0.84);
+        --surface-soft: rgba(74, 48, 115, 0.03);
+        --surface-muted: rgba(117, 108, 130, 0.06);
+        --text: #2d2238;
+        --body: #574d62;
+        --muted: #7c7287;
         --brand: #4A3073;
-        --brand-hover: #3D2565;
-        --brand-soft: rgba(74, 48, 115, 0.12);
-        --shadow: 0 4px 18px rgba(44, 32, 20, 0.08);
+        --brand-hover: #3d2565;
+        --line: rgba(74, 48, 115, 0.14);
+        --line-strong: rgba(74, 48, 115, 0.24);
+        --placeholder-bg: rgba(117, 108, 130, 0.08);
+        --placeholder-text: #9d96a8;
+        --shadow: 0 16px 42px rgba(74, 48, 115, 0.06);
       }
+
       * { box-sizing: border-box; }
+
       body {
         margin: 0;
         background: var(--bg);
         color: var(--body);
-        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+        font-family: "Noto Serif SC", Georgia, serif;
         line-height: 1.9;
+        -webkit-font-smoothing: antialiased;
         position: relative;
       }
+
       .vi-glow {
         position: fixed;
         pointer-events: none;
         z-index: 0;
       }
+
       .vi-glow--top-left {
         top: 0;
         left: 0;
         width: 500px;
         height: 500px;
-        background: radial-gradient(ellipse at top left, rgba(74,48,115,0.15) 0%, transparent 60%);
+        background: radial-gradient(ellipse at top left, rgba(74, 48, 115, 0.14) 0%, transparent 62%);
         filter: blur(50px);
       }
+
       .vi-glow--bottom-right {
         right: 0;
         bottom: 0;
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(ellipse at bottom right, rgba(74,48,115,0.10) 0%, transparent 60%);
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(ellipse at bottom right, rgba(74, 48, 115, 0.09) 0%, transparent 60%);
         filter: blur(60px);
       }
+
       .page {
         position: relative;
         z-index: 1;
         max-width: 480px;
         margin: 0 auto;
-        padding: 22px 24px 30px;
+        padding: 22px 24px 40px;
       }
+
       a,
       button {
-        transition: color 0.3s ease, opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+        transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
       }
-      a:hover {
-        opacity: 0.85;
+
+      a {
+        color: inherit;
+        text-decoration: none;
       }
+
       @keyframes fadeInUp {
         from {
           opacity: 0;
@@ -72,292 +90,373 @@
           transform: translateY(0);
         }
       }
+
       .page > * {
         animation: fadeInUp 0.5s ease forwards;
       }
-      .page > *:nth-child(1) { animation-delay: 0s; }
-      .page > *:nth-child(2) { animation-delay: 0.06s; }
-      .page > *:nth-child(3) { animation-delay: 0.12s; }
-      .page > *:nth-child(4) { animation-delay: 0.18s; }
-      .page > *:nth-child(5) { animation-delay: 0.24s; }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 28px 0 18px;
+      }
+
       .back {
         display: inline-block;
-        text-decoration: none;
         color: var(--brand);
         font-size: 14px;
-        margin-bottom: 12px;
       }
+
       .back:hover {
         color: var(--brand-hover);
       }
+
+      .logo {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin: 0;
+        text-align: right;
+      }
+
+      .logo-cn {
+        display: block;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 28px;
+        line-height: 1;
+        font-weight: 600;
+        color: #1c1c1c;
+        letter-spacing: 0.12em;
+      }
+
+      .logo-en {
+        display: block;
+        font-family: "Courier Prime", monospace;
+        font-size: 11px;
+        color: #888;
+        letter-spacing: 0.08em;
+        margin-top: 2px;
+      }
+
+      .header-line {
+        height: 1px;
+        background: rgba(74, 48, 115, 0.28);
+      }
+
       .page-pretitle {
-        margin: 0 0 4px;
-        font-family: 'Courier Prime', monospace;
+        margin: 18px 0 4px;
+        font-family: "Courier Prime", monospace;
         font-size: 10px;
-        color: #bbb;
+        color: #b9b2bd;
         letter-spacing: 0.25em;
         text-transform: uppercase;
       }
+
       .title {
         margin: 0;
-        font-family: "Noto Serif SC", "Cormorant Garamond", "Source Han Serif SC", serif;
+        font-family: "Noto Serif SC", Georgia, serif;
         font-size: 36px;
         font-weight: 600;
-        color: var(--ink);
+        color: var(--text);
         letter-spacing: 0.04em;
       }
+
       .subtitle {
-        margin: 8px 0 1.4em;
-        color: var(--body);
+        margin: 8px 0 0;
         font-size: 15px;
-        font-weight: 300;
-        line-height: 1.9;
+        color: var(--body);
       }
-      .section {
-        margin-bottom: 32px;
+
+      .intro {
+        margin: 18px 0 28px;
+        font-size: 14px;
+        color: var(--muted);
       }
-      .tab-shell {
-        margin: 0 0 26px;
+
+      .profile-entry-wrap {
+        display: none;
+        margin: 0 0 24px;
       }
-      .tab-nav {
+
+      .profile-entry-wrap.is-visible {
+        display: block;
+      }
+
+      .profile-entry {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        border: 1px solid var(--brand);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--brand);
+        font-size: 14px;
+        line-height: 1;
+      }
+
+      .profile-entry:hover {
+        background: rgba(74, 48, 115, 0.04);
+        border-color: var(--brand-hover);
+        color: var(--brand-hover);
+      }
+
+      .axis-section {
+        margin-top: 40px;
+      }
+
+      .axis-section:first-of-type {
+        margin-top: 0;
+      }
+
+      .axis-head {
         display: flex;
-        gap: 2rem;
-        border-bottom: 1px solid #e8e4df;
-        margin-bottom: 2rem;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 10px;
       }
-      .tab-btn {
-        position: relative;
-        padding: 0.5rem 0 0.75rem;
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-family: 'Noto Serif SC', Georgia, serif;
-        font-size: 1rem;
-        font-weight: 400;
-        color: #bbb;
-        letter-spacing: 0.03em;
-        transition: color 0.2s ease;
+
+      .axis-title-wrap {
+        display: flex;
+        align-items: stretch;
+        gap: 12px;
+        min-width: 0;
+        flex: 1;
       }
-      .tab-btn::after {
-        content: '';
-        position: absolute;
-        bottom: -1px;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: #4A3073;
-        transform: scaleX(0);
-        transition: transform 0.25s ease;
+
+      .axis-accent {
+        width: 3px;
+        min-height: 52px;
+        border-radius: 999px;
+        background: var(--brand);
+        flex: 0 0 3px;
       }
-      .tab-btn.active {
-        color: #2a2a2a;
-        font-weight: 600;
+
+      .axis-title-block {
+        min-width: 0;
       }
-      .tab-btn.active::after {
-        transform: scaleX(1);
-      }
-      .tab-btn:hover:not(.active) {
-        color: #777;
-      }
-      .tab-btn .tab-sub {
-        display: block;
-        font-family: 'DM Sans', sans-serif;
-        font-size: 0.62rem;
-        letter-spacing: 0.18em;
-        color: #ccc;
-        margin-top: 2px;
-        font-weight: 400;
-      }
-      .tab-btn.active .tab-sub {
-        color: #4A3073;
-      }
-      .tab-hint {
-        margin: 12px 4px 0;
-        color: #7f7871;
-        font-size: 0.82rem;
-        line-height: 1.7;
-      }
-      .tab-panel.hidden {
-        display: none;
-      }
-      .section[data-section-tests] {
-        position: relative;
-        margin-top: 3rem;
-        padding-top: 1.35rem;
-      }
-      .section[data-section-tests]::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: rgba(74, 48, 115, 0.16);
-      }
-      .section[data-section-tests]:first-of-type {
-        margin-top: 2.2rem;
-      }
-      .section[data-section-tests]:first-of-type::before {
-        display: none;
-      }
-      .section-label {
-        margin: 24px 0 12px;
-        font-family: 'Courier Prime', monospace;
-        font-size: 10px;
-        color: #aaa;
-        letter-spacing: 0.28em;
-        text-transform: uppercase;
-      }
-      .section[data-section-tests] .section-label {
+
+      .axis-title {
         margin: 0;
-        font-family: "Noto Serif SC", "Source Han Serif SC", serif;
-        font-size: 1.18rem;
+        color: var(--brand);
+        font-size: 24px;
+        line-height: 1.2;
         font-weight: 600;
-        color: var(--ink);
-        letter-spacing: 0.06em;
+      }
+
+      .axis-subtitle {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 13px;
         line-height: 1.4;
-        text-transform: none;
       }
-      .section-kicker {
-        display: block;
-        margin-bottom: 0.35rem;
-        font-family: 'Courier Prime', monospace;
+
+      .axis-progress {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 56px;
+        padding: 4px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.62);
+        color: var(--muted);
+        font-family: "Courier Prime", monospace;
         font-size: 10px;
-        color: #b7b1aa;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        white-space: nowrap;
       }
-      .section-heading {
+
+      .axis-progress.is-active {
+        color: var(--brand);
+        border-color: var(--line-strong);
+        background: rgba(74, 48, 115, 0.08);
+      }
+
+      .axis-progress.is-complete {
+        color: #fff;
+        background: var(--brand);
+        border-color: var(--brand);
+      }
+
+      .axis-desc {
+        margin: 0 0 16px 15px;
+        color: var(--body);
+        font-size: 14px;
+      }
+
+      .cards {
+        display: grid;
+        gap: 14px;
+      }
+
+      .assessment-card {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 16px;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        box-shadow: 0 8px 24px rgba(74, 48, 115, 0.04);
+      }
+
+      .card-link:hover .assessment-card {
+        border-color: rgba(74, 48, 115, 0.28);
+        background: rgba(255, 255, 255, 0.92);
+        transform: translateY(-1px);
+        box-shadow: 0 12px 26px rgba(74, 48, 115, 0.06);
+      }
+
+      .assessment-card.soft {
+        background: var(--surface-soft);
+      }
+
+      .assessment-card.placeholder {
+        background: var(--placeholder-bg);
+        border-style: dashed;
+        border-color: rgba(117, 108, 130, 0.28);
+        box-shadow: none;
+      }
+
+      .card-accent {
+        width: 3px;
+        align-self: stretch;
+        min-height: 72px;
+        border-radius: 999px;
+        background: var(--brand);
+        flex: 0 0 3px;
+      }
+
+      .assessment-card.placeholder .card-accent {
+        background: rgba(117, 108, 130, 0.3);
+      }
+
+      .card-body {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .card-title-row {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
         gap: 12px;
-        margin-bottom: 8px;
       }
-      .section-heading-copy {
-        flex: 1;
-        min-width: 0;
-      }
-      .section-note {
-        margin: 0 0 12px;
-        color: var(--muted);
-        font-size: 0.82rem;
-        font-style: italic;
-        line-height: 1.8;
-      }
-      .section-note strong {
-        color: var(--ink);
-        font-style: normal;
-      }
-      .section-progress {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 52px;
-        padding: 4px 12px;
-        border-radius: 999px;
-        border: 1px solid rgba(44, 32, 20, 0.08);
-        background: rgba(46, 46, 46, 0.06);
-        color: #666;
-        font-family: 'Courier Prime', monospace;
-        font-size: 10px;
-        letter-spacing: 0.08em;
-        line-height: 1.4;
-        white-space: nowrap;
-        transition: all 0.3s ease;
-      }
-      .section-progress.is-active {
-        color: var(--brand);
-        border-color: rgba(74, 48, 115, 0.2);
-        background: var(--brand-soft);
-      }
-      .section-progress.is-complete {
-        color: #fff;
-        border-color: rgba(74, 48, 115, 0.24);
-        background: var(--brand);
-      }
-      .cards {
-        display: grid;
-        gap: 16px;
-      }
-      .assessment-card {
-        background: #fff;
-        border-radius: 12px;
-        border-left: 3px solid transparent;
-        border: 0.5px solid rgba(44,32,20,0.07);
-        box-shadow: 0 1px 0 rgba(44,32,20,0.06), 0 2px 8px rgba(44,32,20,0.04);
-        min-height: 100px;
-        padding: 12px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-      .assessment-card.science {
-        border-left-color: var(--brand);
-      }
-      .assessment-card.light {
-        border-left-color: var(--brand);
-      }
-      .row {
-        display: flex;
-        gap: 10px;
-      }
-      .icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-        flex-shrink: 0;
-      }
+
       .name {
         margin: 0;
-        font-size: 16px;
-        font-weight: 500;
-        color: var(--ink);
-        letter-spacing: 0.12em;
+        color: var(--text);
+        font-size: 18px;
+        line-height: 1.35;
+        font-weight: 600;
       }
+
+      .assessment-card.placeholder .name {
+        color: #6e6678;
+      }
+
       .desc {
-        margin: 4px 0 1.4em;
+        margin: 8px 0 0;
         color: var(--body);
         font-size: 13px;
-        line-height: 1.9;
+        line-height: 1.85;
       }
-      .time {
-        margin: 6px 0 0;
+
+      .assessment-card.placeholder .desc {
+        color: var(--placeholder-text);
+      }
+
+      .meta {
+        margin: 10px 0 0;
         color: var(--muted);
         font-size: 12px;
       }
-      .start {
-        margin-top: 8px;
+
+      .cta,
+      .pill {
+        flex-shrink: 0;
         font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .cta {
         color: var(--brand);
       }
-      .card-link:hover .start,
-      .card-link:hover .back {
+
+      .card-link:hover .cta {
         color: var(--brand-hover);
       }
-      .card-link {
-        text-decoration: none;
-        color: inherit;
-        display: block;
+
+      .pill {
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(117, 108, 130, 0.12);
+        color: #7f778a;
       }
-      .p1 { background: #f2a98a66; }
-      .p2 { background: #c8d9c088; }
-      .p3 { background: #c8c5de88; }
-      .p4 { background: #f7d8ba; }
-      .p5 { background: #d9e5d3; }
-      .p6 { background: #ddd8ec; }
-      .page-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 28px 0 18px; }
-      .logo { display: inline-flex; flex-direction: column; align-items: flex-end; margin: 0; text-align: right; }
-      .logo-cn { display: block; font-family: "Cormorant Garamond", serif; font-size: 28px; line-height: 1; font-weight: 600; color: #1c1c1c; letter-spacing: 0.12em; }
-      .logo-en { display: block; font-family: 'Courier Prime', monospace; font-size: 11px; color: #888; letter-spacing: 0.08em; margin-top: 2px; }
-      .tab-intro { font-size: 13px; color: #888; line-height: 1.8; letter-spacing: 0.04em; margin: 0 0 20px 0; font-family: "Noto Serif SC", Georgia, serif; }
-</style>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/font-override.css" />
-</head>
+
+      .today-block {
+        margin-top: 44px;
+        padding-top: 26px;
+        border-top: 1px solid rgba(74, 48, 115, 0.18);
+      }
+
+      .today-kicker {
+        margin: 0 0 8px;
+        color: var(--brand);
+        font-size: 22px;
+        line-height: 1.3;
+        font-weight: 600;
+      }
+
+      .today-note {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .today-link:hover .assessment-card {
+        background: rgba(74, 48, 115, 0.05);
+      }
+
+      .more-section {
+        margin-top: 42px;
+      }
+
+      .more-label {
+        margin: 0 0 12px;
+        font-family: "Courier Prime", monospace;
+        font-size: 10px;
+        color: #aaa;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 420px) {
+        .page {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .axis-head {
+          align-items: stretch;
+        }
+
+        .axis-progress,
+        .cta,
+        .pill {
+          font-size: 11px;
+        }
+      }
+    </style>
+  </head>
   <body>
     <div class="vi-glow vi-glow--top-left" aria-hidden="true"></div>
     <div class="vi-glow vi-glow--bottom-right" aria-hidden="true"></div>
+
     <main class="page">
       <header class="page-header">
         <a class="back" href="index.html">← 返回首页</a>
@@ -366,173 +465,273 @@
           <span class="logo-en">she is ______.</span>
         </div>
       </header>
-      <div style="border-bottom: 0.5px solid #4A3073; margin: 0;"></div>
+      <div class="header-line"></div>
 
       <p class="page-pretitle">SELF ARCHIVE</p>
       <h1 class="title">自我图鉴</h1>
       <p class="subtitle">看见内在的自己</p>
+      <p class="intro">沿着四条轴线慢慢靠近自己：你是谁，你怎么感受，你怎么行动，以及你为什么会成为现在的你。</p>
 
-      <div class="tab-shell" aria-label="测试类型切换">
-        <div class="tab-nav" role="tablist" aria-label="自我图鉴测评分组">
-          <button class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="tab-panel-serious" id="tab-serious" data-tab-target="serious">
-            深潜自我
-            <span class="tab-sub">SERIOUS</span>
-          </button>
-          <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="tab-panel-fun" id="tab-fun" data-tab-target="fun">
-            轻松玩玩
-            <span class="tab-sub">FUN</span>
-          </button>
+      <div class="profile-entry-wrap" id="profileEntryWrap">
+        <a class="profile-entry" href="profile.html" id="profileEntry">查看我的画像 <span aria-hidden="true">→</span></a>
+      </div>
+
+      <section class="axis-section" data-section-tests="cognitive">
+        <div class="axis-head">
+          <div class="axis-title-wrap">
+            <span class="axis-accent" aria-hidden="true"></span>
+            <div class="axis-title-block">
+              <h2 class="axis-title">特质轴</h2>
+              <p class="axis-subtitle">你是谁</p>
+            </div>
+          </div>
+          <span class="axis-progress" data-progress>0/1</span>
         </div>
-      </div>
-
-      <div class="tab-panel" id="tab-panel-serious" role="tabpanel" aria-labelledby="tab-serious" data-tab-panel="serious">
-        <p class="tab-intro">这是一次认真的自我考古。每一个量表都经过心理学验证，回答时你只需要真实面对自己。结果会沉淀进你的五维画像，成为你真正读懂自己的起点。</p>
-        <section class="section" data-section-tests="cognitive,hsp">
-          <div class="section-heading">
-            <div class="section-heading-copy">
-              <span class="section-kicker">HOW YOU PERCEIVE</span>
-              <p class="section-label">特质层</p>
-            </div>
-            <span class="section-progress" data-progress>0/2</span>
-          </div>
-          <p class="section-note">你天生如何感知这个世界</p>
-          <div class="cards">
-            <a class="assessment-card science card-link" href="test-cognitive.html" data-module-id="cognitive">
-              <div class="row"><div class="icon" style="background:#b8a9d488"></div><div><h3 class="name">荣格八维认知功能</h3><p class="desc">看清你天然的思维方式，理解为什么你和别人看同一件事会有那么大的差异</p><p class="time">约10分钟 · 80题</p></div></div>
-              <div class="start">进入 →</div>
-            </a>
-            <a class="assessment-card science card-link" href="test-hsp.html" data-module-id="hsp">
-              <div class="row"><div class="icon p2"></div><div><h3 class="name">高敏感测评</h3><p class="desc">知道自己的感受系统有多细腻，以及那些「太累了」是从哪里来的</p><p class="time">一杯茶的时间</p></div></div>
-              <div class="start">进入 →</div>
-            </a>
-          </div>
-        </section>
-
-        <section class="section" data-section-tests="erq,today-mood">
-          <div class="section-heading">
-            <div class="section-heading-copy">
-              <span class="section-kicker">HOW YOU FEEL</span>
-              <p class="section-label">情绪层</p>
-            </div>
-            <span class="section-progress" data-progress>0/2</span>
-          </div>
-          <p class="section-note">你如何体验和处理情绪</p>
-          <div class="cards">
-            <a class="assessment-card science card-link" href="test-erq.html" data-module-id="erq">
-              <div class="row"><div class="icon p3"></div><div><h3 class="name">情绪调节测评</h3><p class="desc">看清楚你在压力下是怎么处理情绪的——是真的消化了，还是只是压下去了</p><p class="time">一杯茶的时间</p></div></div>
-              <div class="start">进入 →</div>
-            </a>
-            <a class="assessment-card light card-link" href="test-today-mood.html" data-module-id="today-mood">
-              <div class="row"><div class="icon p5"></div><div><h3 class="name">今日情绪地图</h3><p class="desc">替你把此刻的内在状态描一张地图，不评判，只是看见</p><p class="time">约2分钟 · 8题</p></div></div>
-              <div class="start">进入 →</div>
-            </a>
-          </div>
-        </section>
-
-        <section class="section" data-section-tests="ecr,boundary-sense,relationship-role">
-          <div class="section-heading">
-            <div class="section-heading-copy">
-              <span class="section-kicker">HOW YOU CONNECT</span>
-              <p class="section-label">关系层</p>
-            </div>
-            <span class="section-progress" data-progress>0/3</span>
-          </div>
-          <p class="section-note">你在关系中如何运作</p>
-          <div class="cards">
-            <a class="assessment-card science card-link" href="test-ecr.html" data-module-id="ecr">
-              <div class="row"><div class="icon p1"></div><div><h3 class="name">依恋风格测评</h3><p class="desc">理解你在亲密关系里的模式，知道那些焦虑或疏离是怎么来的</p><p class="time">一杯茶的时间</p></div></div>
-              <div class="start">进入 →</div>
-            </a>
-            <a class="assessment-card light card-link" href="test-boundary-sense.html" data-module-id="boundary-sense">
-              <div class="row"><div class="icon p6"></div><div><h3 class="name">边界感测评</h3><p class="desc">知道你在哪些地方说「好」其实是说不出「不」，以及为什么</p><p class="time">约2分钟 · 8题</p></div></div>
-              <div class="start">进入 →</div>
-            </a>
-            <a class="assessment-card light card-link" href="test-relationship-role.html" data-module-id="relationship-role">
-              <div class="row"><div class="icon p4"></div><div><h3 class="name">关系角色测评</h3><p class="desc">看见你在一段关系里习惯扮演什么角色，那个角色是你选的还是被推上去的</p><p class="time">约3分钟 · 10题</p></div></div>
-              <div class="start">进入 →</div>
-            </a>
-          </div>
-        </section>
-
-        <section class="section" data-section-tests="fmps">
-          <div class="section-heading">
-            <div class="section-heading-copy">
-              <span class="section-kicker">HOW YOU TREAT YOURSELF</span>
-              <p class="section-label">自我层</p>
-            </div>
-            <span class="section-progress" data-progress>0/1</span>
-          </div>
-          <p class="section-note">你如何对待自己</p>
-          <div class="cards">
-            <a class="assessment-card science card-link" href="test-fmps.html" data-module-id="fmps">
-              <div class="row"><div class="icon p4"></div><div><h3 class="name">完美主义测评</h3><p class="desc">看清你对自己设的门槛，以及那些「还不够好」是自己的标准还是别人的期待</p><p class="time">约4分钟</p></div></div>
-              <div class="start">进入 →</div>
-            </a>
-          </div>
-        </section>
-      </div>
-
-      <div class="tab-panel hidden" id="tab-panel-fun" role="tabpanel" aria-labelledby="tab-fun" data-tab-panel="fun">
-        <p class="tab-intro">不需要准备，也没有正确答案。这里的测评更像一张小镜子——帮你在某个随机的下午，轻轻捕捉此刻的自己。</p>
-        <section class="section" data-section-tests="fun-abm" data-fun-section="true">
-          <div class="section-heading">
-            <div class="section-heading-copy">
-              <span class="section-kicker">LIGHT SELF EXPLORATION</span>
-              <p class="section-label">轻趣味测评 / FUN</p>
-            </div>
-            <span class="section-progress is-active">FUN</span>
-          </div>
-          <div class="cards">
-            <a class="assessment-card light card-link" href="test-abm-love-animal.html">
-              <div class="row"><div class="icon p6"></div><div><h3 class="name">ABM 恋爱动物性格</h3><p class="desc">12道轻测试，看看你在关系里的动物原型</p><p class="time">约3分钟 · 趣味结果单独保存</p></div></div>
-              <div class="start">进入 →</div>
-            </a>
-            <a class="assessment-card light card-link" href="test-ideal-boyfriend.html">
-              <div class="row"><div class="icon p6"></div><div><h3 class="name">你的理想型男友</h3><p class="desc">不是问你喜欢什么，是找到和你共振的那个原型</p><p class="time">约3分钟 · 12题</p></div></div>
-              <div class="start">守灯 / 野风 / 对镜 / 栖木 / 夜谈 · 关系探索</div>
-            </a>
-          </div>
-        </section>
-      </div>
-
-      <section class="section">
-        <p class="section-label">MORE — 更多</p>
+        <p class="axis-desc">你如何感知、思考、做决策——这是你最底层的操作系统</p>
         <div class="cards">
-          <a href="assessment-more.html" class="card-link">
-            <article class="assessment-card light">
-              <div class="row"><div class="icon p6"></div><div><h3 class="name">更多测试</h3><p class="desc">查看全部量表与即将上线</p><p class="time">进入列表</p></div></div>
-              <div class="start">查看全部 →</div>
+          <a class="card-link" href="test-cognitive.html" data-module-id="cognitive">
+            <article class="assessment-card">
+              <span class="card-accent" aria-hidden="true"></span>
+              <div class="card-body">
+                <div class="card-title-row">
+                  <h3 class="name">荣格八维认知功能</h3>
+                  <span class="cta">开始 →</span>
+                </div>
+                <p class="desc">看清你天然的思维方式，理解为什么你和别人看同一件事会有那么大的差异</p>
+                <p class="meta">约 10 分钟 · 80 题</p>
+              </div>
             </article>
           </a>
         </div>
       </section>
-      <section class="section">
-        <p class="section-label">PROFILE — 内在画像</p>
+
+      <section class="axis-section" data-section-tests="hsp,erq,ecr">
+        <div class="axis-head">
+          <div class="axis-title-wrap">
+            <span class="axis-accent" aria-hidden="true"></span>
+            <div class="axis-title-block">
+              <h2 class="axis-title">情绪轴</h2>
+              <p class="axis-subtitle">你怎么感受</p>
+            </div>
+          </div>
+          <span class="axis-progress" data-progress>0/3</span>
+        </div>
+        <p class="axis-desc">你如何感受、消化、应对情绪——这里藏着你消耗最多能量的地方</p>
         <div class="cards">
-          <a href="profile.html" class="card-link" id="profileEntry">
-            <article class="assessment-card science">
-              <div class="row"><div class="icon" style="background:linear-gradient(135deg,#f2a98a88,#c8c5de88)"></div><div><h3 class="name">查看我的画像</h3><p class="desc">把已完成的测评结果整合成一张可分享的内在模式画像。</p><p class="time" id="profileEntryHint">完成任意测评后，这里会点亮</p></div></div>
-              <div class="start" id="profileEntryCta">进入 →</div>
+          <a class="card-link" href="test-hsp.html" data-module-id="hsp">
+            <article class="assessment-card soft">
+              <span class="card-accent" aria-hidden="true"></span>
+              <div class="card-body">
+                <div class="card-title-row">
+                  <h3 class="name">高敏感测评</h3>
+                  <span class="cta">开始 →</span>
+                </div>
+                <p class="desc">知道自己的感受系统有多细腻，以及那些「太累了」是从哪里来的</p>
+                <p class="meta">一杯茶的时间</p>
+              </div>
+            </article>
+          </a>
+          <a class="card-link" href="test-erq.html" data-module-id="erq">
+            <article class="assessment-card">
+              <span class="card-accent" aria-hidden="true"></span>
+              <div class="card-body">
+                <div class="card-title-row">
+                  <h3 class="name">情绪调节测评</h3>
+                  <span class="cta">开始 →</span>
+                </div>
+                <p class="desc">看清楚你在压力下是怎么处理情绪的——是真的消化了，还是只是压下去了</p>
+                <p class="meta">一杯茶的时间</p>
+              </div>
+            </article>
+          </a>
+          <a class="card-link" href="test-ecr.html" data-module-id="ecr">
+            <article class="assessment-card soft">
+              <span class="card-accent" aria-hidden="true"></span>
+              <div class="card-body">
+                <div class="card-title-row">
+                  <h3 class="name">依恋风格测评</h3>
+                  <span class="cta">开始 →</span>
+                </div>
+                <p class="desc">理解你在亲密关系里的模式，知道那些焦虑或疏离是怎么来的</p>
+                <p class="meta">一杯茶的时间</p>
+              </div>
+            </article>
+          </a>
+        </div>
+      </section>
+
+      <section class="axis-section" data-section-tests="fmps,boundary-sense,relationship-role">
+        <div class="axis-head">
+          <div class="axis-title-wrap">
+            <span class="axis-accent" aria-hidden="true"></span>
+            <div class="axis-title-block">
+              <h2 class="axis-title">行为轴</h2>
+              <p class="axis-subtitle">你怎么行动</p>
+            </div>
+          </div>
+          <span class="axis-progress" data-progress>0/3</span>
+        </div>
+        <p class="axis-desc">你如何行动、设标准、划边界——这决定了你和世界的互动方式</p>
+        <div class="cards">
+          <a class="card-link" href="test-fmps.html" data-module-id="fmps">
+            <article class="assessment-card">
+              <span class="card-accent" aria-hidden="true"></span>
+              <div class="card-body">
+                <div class="card-title-row">
+                  <h3 class="name">完美主义测评</h3>
+                  <span class="cta">开始 →</span>
+                </div>
+                <p class="desc">看清你对自己设的门槛，以及那些「还不够好」是自己的标准还是别人的期待</p>
+                <p class="meta">约 4 分钟</p>
+              </div>
+            </article>
+          </a>
+          <a class="card-link" href="test-boundary-sense.html" data-module-id="boundary-sense">
+            <article class="assessment-card soft">
+              <span class="card-accent" aria-hidden="true"></span>
+              <div class="card-body">
+                <div class="card-title-row">
+                  <h3 class="name">边界感测评</h3>
+                  <span class="cta">开始 →</span>
+                </div>
+                <p class="desc">知道你在哪些地方说「好」其实是说不出「不」，以及为什么</p>
+                <p class="meta">约 2 分钟 · 8 题</p>
+              </div>
+            </article>
+          </a>
+          <a class="card-link" href="test-relationship-role.html" data-module-id="relationship-role">
+            <article class="assessment-card">
+              <span class="card-accent" aria-hidden="true"></span>
+              <div class="card-body">
+                <div class="card-title-row">
+                  <h3 class="name">关系角色测评</h3>
+                  <span class="cta">开始 →</span>
+                </div>
+                <p class="desc">看见你在一段关系里习惯扮演什么角色，那个角色是你选的还是被推上去的</p>
+                <p class="meta">约 3 分钟 · 10 题</p>
+              </div>
+            </article>
+          </a>
+        </div>
+      </section>
+
+      <section class="axis-section" data-section-tests="motivation-enneagram,motivation-holland">
+        <div class="axis-head">
+          <div class="axis-title-wrap">
+            <span class="axis-accent" aria-hidden="true"></span>
+            <div class="axis-title-block">
+              <h2 class="axis-title">动机轴</h2>
+              <p class="axis-subtitle">你为什么这样</p>
+            </div>
+          </div>
+          <span class="axis-progress" data-progress>0/2</span>
+        </div>
+        <p class="axis-desc">你为什么是这样的你——驱动力和恐惧的根源（即将上线）</p>
+        <div class="cards">
+          <article class="assessment-card placeholder" aria-disabled="true">
+            <span class="card-accent" aria-hidden="true"></span>
+            <div class="card-body">
+              <div class="card-title-row">
+                <h3 class="name">九型人格</h3>
+                <span class="pill">即将上线</span>
+              </div>
+              <p class="desc">从你的核心驱动力与防御方式出发，看见那些反复出现的执念、恐惧与选择。</p>
+            </div>
+          </article>
+          <article class="assessment-card placeholder" aria-disabled="true">
+            <span class="card-accent" aria-hidden="true"></span>
+            <div class="card-body">
+              <div class="card-title-row">
+                <h3 class="name">霍兰德兴趣类型</h3>
+                <span class="pill">即将上线</span>
+              </div>
+              <p class="desc">理解你会被什么吸引、在哪种环境里更容易发光，找到热情与方向之间的连接点。</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="today-block">
+        <h2 class="today-kicker">今天怎么样</h2>
+        <p class="today-note">替你把此刻的内在状态描一张地图，不评判，只是看见</p>
+        <a class="today-link" href="test-today-mood.html" data-module-id="today-mood">
+          <article class="assessment-card soft">
+            <span class="card-accent" aria-hidden="true"></span>
+            <div class="card-body">
+              <div class="card-title-row">
+                <h3 class="name">今日情绪地图</h3>
+                <span class="cta">开始 →</span>
+              </div>
+              <p class="desc">替你把此刻的内在状态描一张地图，不评判，只是看见</p>
+              <p class="meta">约 2 分钟 · 8 题</p>
+            </div>
+          </article>
+        </a>
+      </section>
+
+      <section class="more-section">
+        <p class="more-label">MORE — 更多</p>
+        <div class="cards">
+          <a class="card-link" href="assessment-more.html">
+            <article class="assessment-card soft">
+              <span class="card-accent" aria-hidden="true"></span>
+              <div class="card-body">
+                <div class="card-title-row">
+                  <h3 class="name">更多测试</h3>
+                  <span class="cta">查看全部 →</span>
+                </div>
+                <p class="desc">查看全部量表与即将上线内容。</p>
+              </div>
             </article>
           </a>
         </div>
       </section>
     </main>
+
     <script src="assets/profile-utils.js"></script>
     <script>
       (function () {
-        const entry = document.getElementById('profileEntry');
-        const hint = document.getElementById('profileEntryHint');
-        const cta = document.getElementById('profileEntryCta');
+        const profileWrap = document.getElementById('profileEntryWrap');
         const prefix = window.SheProfileStore ? window.SheProfileStore.PREFIX : 'she_result_';
 
         function hasModuleResult(moduleId) {
           try {
             return !!localStorage.getItem(prefix + moduleId);
           } catch (error) {
-            console.warn('Failed to read section progress:', error);
+            console.warn('Failed to read stored module result:', error);
             return false;
           }
+        }
+
+        function hasAnyCompletedResult() {
+          if (window.SheProfileStore && typeof window.SheProfileStore.hasResults === 'function') {
+            return window.SheProfileStore.hasResults();
+          }
+          return false;
+        }
+
+        function isLoggedIn() {
+          try {
+            const authHints = [
+              'supabase.auth.token',
+              'sb-',
+              'she_user',
+              'she_session',
+              'user',
+              'session'
+            ];
+
+            for (let i = 0; i < localStorage.length; i += 1) {
+              const key = localStorage.key(i) || '';
+              if (authHints.some(function (hint) { return key.indexOf(hint) !== -1; })) {
+                return true;
+              }
+            }
+          } catch (error) {
+            console.warn('Failed to inspect login state:', error);
+          }
+
+          return true;
         }
 
         document.querySelectorAll('[data-section-tests]').forEach(function (section) {
@@ -552,35 +751,8 @@
           }
         });
 
-        const tabButtons = Array.from(document.querySelectorAll('[data-tab-target]'));
-        const tabPanels = Array.from(document.querySelectorAll('[data-tab-panel]'));
-
-        function setActiveTab(target) {
-          tabButtons.forEach(function (button) {
-            const isActive = button.dataset.tabTarget === target;
-            button.classList.toggle('active', isActive);
-            button.setAttribute('aria-selected', String(isActive));
-          });
-
-          tabPanels.forEach(function (panel) {
-            const shouldShow = panel.dataset.tabPanel === target;
-            panel.classList.toggle('hidden', !shouldShow);
-          });
-        }
-
-        tabButtons.forEach(function (button) {
-          button.addEventListener('click', function () {
-            setActiveTab(button.dataset.tabTarget);
-          });
-        });
-
-        setActiveTab('serious');
-
-        if (window.SheProfileStore && window.SheProfileStore.hasResults()) {
-          entry.querySelector('.assessment-card').style.borderLeftColor = '#4A3073';
-          entry.querySelector('.assessment-card').style.boxShadow = '0 6px 20px rgba(74,48,115,0.18)';
-          hint.textContent = '已有结果可查看，进入整合画像';
-          cta.textContent = '立即查看 →';
+        if (profileWrap && isLoggedIn() && hasAnyCompletedResult()) {
+          profileWrap.classList.add('is-visible');
         }
       })();
     </script>
