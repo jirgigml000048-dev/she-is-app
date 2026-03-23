@@ -294,6 +294,13 @@
           }
         
 
+    .result-capture-card {
+      background: #fffdfa;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 14px;
+      box-shadow: 0 6px 20px rgba(48,35,23,.06);
+    }
     .result-viz {
       margin-bottom: 28px;
     }
@@ -432,6 +439,45 @@
     }
     .r-desc p:last-child {
       margin-bottom: 0;
+    }
+    .r-axis-section,
+    .r-pattern-section,
+    .r-question-section {
+      margin-bottom: 4px;
+    }
+    .r-axis-title {
+      font-family: "Noto Serif SC", serif;
+      font-size: 11px;
+      color: #4A3073;
+      letter-spacing: 0.1em;
+      margin: 0 0 12px;
+    }
+    .r-axis-block {
+      margin-bottom: 14px;
+    }
+    .r-axis-label {
+      display: inline-block;
+      font-family: "Noto Serif SC", serif;
+      font-size: 11px;
+      color: #888;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .r-axis-text {
+      font-family: "Noto Serif SC", serif;
+      font-size: 13px;
+      color: #555;
+      line-height: 2;
+      margin: 0 0 10px;
+    }
+    .r-question-text {
+      font-family: "Noto Serif SC", serif;
+      font-size: 14px;
+      color: #3d3158;
+      line-height: 1.9;
+      margin: 0;
+      border-left: 2px solid rgba(74, 48, 115, 0.45);
+      padding-left: 10px;
     }
 
 
@@ -600,22 +646,47 @@
         ],
         results: {
           high_reappraisal_low_suppression: {
-            label: "思考派", emoji: "💡", subtitle: "你习惯换个角度看事情", tagline: "你习惯换个角度看事情",
-            desc: "<p>情绪来的时候，你有一种本能——去看看它的另一面。难过的事情发生了，你会试着理解它，给它一个新的位置。这种能力让你在风浪里依然保持某种清醒。</p><p>更难得的是，你很少把感受硬生生按下去。眼泪该流就流，愤怒来了你也允许它在。你和情绪之间有一种比较坦诚的关系，彼此不回避。</p><p>这让你的内在有一种流动感。情绪经过你，被你看见、被你消化，然后真的过去了。很少有什么东西会在你心里淤积太久。</p><p>身边的人可能会觉得你情绪稳定。但你知道，那份稳定来自你愿意面对，愿意去拆解，愿意和自己的感受待在一起。</p><p>这是一种你练出来的柔韧。不是没有波澜，是你学会了在波澜里游泳。</p>"
+            label: "思考派",
+            emoji: "💡",
+            subtitle: "情绪来了，你会先去看看它的另一面。这种本能，帮你在很多风浪里保持了清醒。",
+            tagline: "情绪来了，你会先去看看它的另一面。这种本能，帮你在很多风浪里保持了清醒。",
+            desc: "<p>情绪来的时候，你有一种本能——去看看它的另一面。难过的事情发生了，你会试着理解它，给它一个新的位置。</p><p>更难得的是，你很少把感受硬生生按下去。眼泪该流就流，愤怒来了你也允许它在。你和情绪之间有一种比较坦诚的关系。</p><p>情绪经过你，被你看见、被你消化，然后真的过去了。很少有什么东西会在你心里淤积太久。</p><p>那份稳定来自你愿意面对，愿意去拆解，愿意和自己的感受待在一起。这是一种练出来的柔韧。</p>",
+            regulation: "你的系统像一个会主动重新布局的棋手——局势不利的时候，你会先想想能不能换个走法，而不是把棋子推倒。这让你在压力下依然能保持某种运转。",
+            daily: ["朋友找你倾诉时，你往往是那个能帮对方换个角度的人。但有时候对方只是想被听见，你可能比自己意识到的更早进入\"解题模式\"。", "你处理完情绪之后，真的能放下它。但偶尔也会有那种感觉：事情好像过去得太快，自己还没有完整地经历它就已经翻篇了。"],
+            question: "有没有哪件事，你给它换了很多角度，但有一种感受你其实从来没有正面待过？"
           },
           high_reappraisal_high_suppression: {
-            label: "双管派", emoji: "⚡", subtitle: "你用很多方式管理自己的情绪", tagline: "你用很多方式管理自己的情绪",
-            desc: "<p>你的内心有一套很强的翻译系统。当情绪涌上来，你会迅速找到另一个角度去理解它——换个框架，换个故事，让它变得可以承受。</p><p>但与此同时，你也在用力地压着什么。表面上你已经想通了，身体里却还有一团没有被释放的东西。你的理解走在了感受的前面。</p><p>这种状态有点像一边在疗愈，一边在封锁。头脑说\"我懂了\"，心里说\"我还没好\"。两股力量同时运转，让你有时候觉得累，却说不清累在哪里。</p><p>你可能已经习惯了这种方式——先讲道理给自己听，再把剩下的情绪悄悄收好。你做得很好，好到别人根本看不出你还在消化。</p><p>只是偶尔，给那个\"还没好\"的部分一点时间。它不需要被解释，只需要被允许存在一会儿。</p>"
+            label: "双管派",
+            emoji: "⚡",
+            subtitle: "你的头脑走在感受前面——已经想通了，但心里那团东西还没散。",
+            tagline: "你的头脑走在感受前面——已经想通了，但心里那团东西还没散。",
+            desc: "<p>你的内心有一套很强的翻译系统。情绪涌上来，你会迅速找到另一个角度去理解它——换个框架，换个故事，让它变得可以承受。</p><p>但与此同时，你也在用力地压着什么。表面上已经想通了，身体里却还有一团没有被释放的东西。</p><p>这种状态有点像一边在疗愈，一边在封锁。头脑说\"我懂了\"，心里说\"我还没好\"。两股力量同时运转，让你有时候觉得累，却说不清累在哪里。</p><p>你做得很好，好到别人根本看不出你还在消化。</p>",
+            regulation: "你同时在做两件事：用认知重建情绪，用意志压住表达。外人看到的是一个处理得很好的人，你自己感受到的，是两套系统同时在跑。",
+            daily: ["一件事发生了，你很快就能找到\"其实也没那么糟\"——但深夜躺下来，那种感受还是在那里。", "你可能比很多人更会安慰别人，因为你练就了一套把痛苦重新框架的能力。只是对自己用的时候，有时候用过头了。"],
+            question: "你上一次让自己真的爆发或者哭出来，是什么时候？那之后你是什么感觉？"
           },
           low_reappraisal_high_suppression: {
-            label: "压下去派", emoji: "🔒", subtitle: "你更习惯把情绪藏起来", tagline: "你更习惯把情绪藏起来",
-            desc: "<p>你处理情绪的方式，更像是把它们压进一个很深的抽屉。感受来了，你的第一反应是收住、忍住、撑住。让自己看起来没事，让生活继续运转。</p><p>你很少去拆解那些情绪——去想它为什么来、它在告诉你什么、换个角度会不会不一样。对你来说，情绪更像是一种需要被管理的麻烦，而不是需要被听见的信号。</p><p>这让你在外面显得很能扛。但你心里清楚，那些被压下去的东西并没有消失。它们在某个角落慢慢积累，偶尔在某个深夜、某句话、某个瞬间突然涌出来。</p><p>那种突然的溃堤感可能让你困惑——明明已经忍过去了，怎么还在。因为忍过去和真的过去，是两件事。</p><p>你值得学一种更轻的方式来和情绪相处。那些感受不会因为被看见就失控，它们反而会因为被看见而安静下来。</p>"
+            label: "压下去派",
+            emoji: "🔒",
+            subtitle: "你把很多东西压进了很深的地方。忍过去和真的过去，是两件事。",
+            tagline: "你把很多东西压进了很深的地方。忍过去和真的过去，是两件事。",
+            desc: "<p>你处理情绪的方式，更像是把它们压进一个很深的抽屉。感受来了，你的第一反应是收住、忍住、撑住。让自己看起来没事，让生活继续运转。</p><p>你很少去拆解那些情绪——它为什么来，它在告诉你什么。对你来说，情绪更像是一种需要被管理的麻烦。</p><p>这让你在外面显得很能扛。但那些被压下去的东西并没有消失。它们在某个角落慢慢积累，偶尔在某个深夜、某句话、某个瞬间突然涌出来。</p><p>那种突然的溃堤感可能让你困惑——明明已经忍过去了，怎么还在。因为忍过去和真的过去，是两件事。</p>",
+            regulation: "你的系统基本靠意志力在运转——既不重新解读，也不让它表达出来，就是压住。这需要大量能量，而且情绪并没有因此被处理，只是被延后了。",
+            daily: ["在需要保持冷静的场合，你能做到。但代价往往是回家之后异常疲惫，却说不清在哪里累的。", "你可能会在某个不相关的小事上突然情绪失控——因为那个抽屉已经满了，最后一件小事只是触发了开关。"],
+            question: "那个抽屉里，现在装着什么？"
           },
           low_reappraisal_low_suppression: {
-            label: "随流派", emoji: "🌀", subtitle: "你不太主动调节情绪，让它自然流动", tagline: "你不太主动调节情绪，让它自然流动",
-            desc: "<p>情绪在你身上来去得很自然。你不太会刻意去压制它，也不太会去分析它、给它换一个角度。它来了，你感受到了，然后它就走了。</p><p>这种方式有一种原始的诚实。你和自己的感受之间没有太多滤镜，没有太多加工。开心就是开心，难过就是难过，不需要包装成别的东西。</p><p>但有时候你可能会觉得，情绪像天气一样不断变换，却很少留下什么。你经历了很多感受，却不太确定自己从中带走了什么。</p><p>少了那一步\"停下来看看它\"的过程，情绪的来去可能显得有些散漫。像读了很多页书，却没有画过一条线。</p><p>试着偶尔在一种感受面前停久一点。不用分析它，只是看看它。那些反复出现的情绪里，可能藏着你还没听见的话。</p>"
+            label: "随流派",
+            emoji: "🌀",
+            subtitle: "情绪在你身上来去得很自然，没有太多滤镜。只是偶尔，可以在它面前多停一会儿。",
+            tagline: "情绪在你身上来去得很自然，没有太多滤镜。只是偶尔，可以在它面前多停一会儿。",
+            desc: "<p>情绪在你身上来去得很自然。你不太会刻意压制它，也不太会去分析它。它来了，你感受到了，然后它就走了。</p><p>你和自己的感受之间没有太多滤镜，没有太多加工。开心就是开心，难过就是难过。</p><p>但有时候你可能会发现，情绪像天气一样不断变换，却很少留下什么。你经历了很多感受，却不太确定自己从中带走了什么。</p><p>少了那一步\"停下来看看它\"的过程，情绪的来去可能显得有些散漫。像读了很多页书，却没有画过一条线。</p>",
+            regulation: "你的情绪系统没有太多主动干预——既不重新解读，也不压制表达，基本随它。这有一种原始的诚实，但也意味着情绪在你这里经过，却很少被真正接住过。",
+            daily: ["你的情绪恢复速度可能比你自己意识到的快——但这也让你有时候不太确定，自己到底有没有认真经历过那件事。", "身边的人可能觉得你好说话，情绪起伏不大。你自己知道，那些感受都有过，只是不太留痕迹。"],
+            question: "有没有一种情绪，你觉得自己\"处理好了\"，但其实只是等它自己走了？"
           }
         }
+
       };
 
       const state = { index: -1, answers: Array(DATA.questions.length).fill(null) };
@@ -681,7 +752,13 @@
 
       function mean(scores) { return scores.reduce((a, b) => a + b, 0) / scores.length; }
       function formatParagraphs(text) {
-        return String(text || '').replace(/<span[\s\S]*?<\/span>/g, '').split(/\n+/).filter(Boolean).map(item => `<p>${item.replace(/<[^>]+>/g, '')}</p>`).join('');
+        const raw = String(text || '').trim();
+        if (!raw) return '';
+        if (/<p[\s>]/i.test(raw)) return raw;
+        return raw.replace(/<span[\s\S]*?<\/span>/g, '').split(/\n+/).filter(Boolean).map(item => `<p>${item.replace(/<[^>]+>/g, '')}</p>`).join('');
+      }
+      function formatListParagraphs(items) {
+        return (items || []).map(item => `<p class="r-axis-text">${String(item || '').replace(/<[^>]+>/g, '')}</p>`).join('');
       }
       function buildScoreRows(items) {
         return items.map((item) => `
@@ -738,8 +815,14 @@ const storyIllustrations = {
         const highS = sScore >= 4.5;
         const key = `${highR ? "high" : "low"}_reappraisal_${highS ? "high" : "low"}_suppression`;
         const r = DATA.results[key];
-        const summaryMap = { high_reappraisal_low_suppression: "思考派", high_reappraisal_high_suppression: "双管派", low_reappraisal_high_suppression: "压抑派", low_reappraisal_low_suppression: "随流派" };
+        const summaryMap = { high_reappraisal_low_suppression: "思考派", high_reappraisal_high_suppression: "双管派", low_reappraisal_high_suppression: "压下去派", low_reappraisal_low_suppression: "随流派" };
         const rec = storyRecommendations[key];
+        const reappraisalText = highR
+          ? '情绪涌来时，你会调整自己看待这件事的方式。给它一个新的解读框架，让它有地方去。这种能力让情绪有出口，也让你不那么容易被困住。'
+          : '你不太习惯在情绪里做认知上的翻转。感受来了就是来了，你更倾向于直接承受它，而不是先给它换个故事。';
+        const suppressionText = highS
+          ? '你经常控制情绪的外在表现——让自己看起来没事，撑住，不让感受泄露出来。这需要持续消耗能量，即使别人看不出来。'
+          : '你不太会刻意压住情绪的外在表现。感受到什么，脸上和身体里基本同步。少了一层消耗。';
 
         progressBar.style.width = "100%";
         progressText.textContent = "完成";
@@ -768,7 +851,34 @@ const storyIllustrations = {
           <ul class="result-tags"><li class="result-tag">认知重评</li><li class="result-tag">表达抑制</li><li class="result-tag">ERQ-10</li></ul>
           <div class="r-quote" id="rQuote">${r.subtitle || r.tagline || ''}</div>
           <div class="r-divider"></div>
-          <div class="r-desc">${r.desc}<p>这是你当下的模式，不是诊断，也不是定论。</p></div>
+          <div class="r-desc">${formatParagraphs(r.desc)}<p>这是你当下的模式，不是诊断，也不是定论。</p></div>
+          <div class="r-divider"></div>
+          <div class="r-axis-section">
+            <p class="r-axis-title">两个维度解读</p>
+            <div class="r-axis-block">
+              <span class="r-axis-label">认知重评 [分数 ${rScore.toFixed(1)} / 7]</span>
+              <p class="r-axis-text">${reappraisalText}</p>
+            </div>
+            <div class="r-axis-block">
+              <span class="r-axis-label">表达抑制 [分数 ${sScore.toFixed(1)} / 7]</span>
+              <p class="r-axis-text">${suppressionText}</p>
+            </div>
+          </div>
+          <div class="r-divider"></div>
+          <div class="r-pattern-section">
+            <p class="r-axis-title">你的调节方式</p>
+            <p class="r-axis-text">${r.regulation}</p>
+          </div>
+          <div class="r-divider"></div>
+          <div class="r-pattern-section">
+            <p class="r-axis-title">在日常里</p>
+            ${formatListParagraphs(r.daily)}
+          </div>
+          <div class="r-divider"></div>
+          <div class="r-question-section">
+            <p class="r-axis-title">值得想一想</p>
+            <p class="r-question-text">${r.question}</p>
+          </div>
           </div>
 <div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
 <div class="story-rec" id="storyRec" style="display:none;">
