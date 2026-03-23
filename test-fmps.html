@@ -332,23 +332,19 @@
       letter-spacing: 0.02em;
     }
     .r-divider {
-      height: 1px;
-      background: rgba(74,48,115,0.15);
-      margin-bottom: 20px;
+      display: none;
     }
     .r-quote {
-      border-left: 2px solid rgba(74, 48, 115, 0.45);
-      padding-left: 10px;
-      margin-bottom: 4px;
       position: relative;
       z-index: 1;
-      margin: 0 0 20px;
-      padding: 16px 18px;
-      border-left: 3px solid #4A3073;
+      margin: 0 0 24px;
+      padding: 18px 20px;
       background: rgba(74,48,115,0.06);
       color: #3d3158;
       line-height: 1.9;
       font-size: 14px;
+      border-radius: 12px;
+      font-style: italic;
     }
     .r-quote:empty { display: none; }
     .share-caption {
@@ -366,6 +362,96 @@
       padding: 24px;
       background: rgba(255,255,255,0.45);
       border-radius: 20px;
+      margin-bottom: 28px;
+    }
+    .result-section {
+      margin-bottom: 28px;
+    }
+    .result-section:last-of-type {
+      margin-bottom: 0;
+    }
+    .section-title {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: #4A3073;
+      margin: 0 0 12px;
+      text-transform: uppercase;
+    }
+    .dimension-list {
+      display: grid;
+      gap: 16px;
+    }
+    .dimension-item:last-child {
+      margin-bottom: 0;
+    }
+    .dimension-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 9px;
+    }
+    .dimension-name {
+      font-size: 12px;
+      color: #7b7570;
+      font-weight: 400;
+      line-height: 1.35;
+    }
+    .dimension-name.is-high {
+      color: #4A3073;
+      font-weight: 700;
+    }
+    .dimension-name-en {
+      display: block;
+      margin-top: 2px;
+      font-size: 10px;
+      color: #aaa;
+      font-style: italic;
+      letter-spacing: 0.03em;
+      font-weight: 400;
+    }
+    .dimension-score {
+      font-size: 11px;
+      color: #4A3073;
+      white-space: nowrap;
+    }
+    .progress {
+      width: 100%;
+      height: 3px;
+      background: rgba(74,48,115,0.1);
+      overflow: hidden;
+      margin-bottom: 9px;
+    }
+    .progress-bar {
+      height: 100%;
+      background: #4A3073;
+    }
+    .dimension-desc {
+      font-size: 11px;
+      line-height: 1.5;
+      color: #999999;
+    }
+    .mode-copy,
+    .daily-item {
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.9;
+      letter-spacing: 0.01em;
+      margin: 0;
+    }
+    .daily-list {
+      margin-top: 0;
+    }
+    .daily-item + .daily-item {
+      margin-top: 20px;
+    }
+    .reflection {
+      font-size: 20px;
+      line-height: 1.75;
+      color: #4A3073;
+      font-style: italic;
+      margin: 0;
+      letter-spacing: 0.01em;
     }
     .r-desc p {
       margin: 0 0 1.4em;
@@ -517,6 +603,14 @@
         storyRec = document.getElementById('storyRec');
         if (storyRec) storyRec.style.display = 'none';
       });
+      const DIMENSION_META = {
+        CM: { name: "担心错误", en: "Concern over Mistakes", desc: "你有多害怕犯错、被评判" },
+        OR: { name: "条理性", en: "Organisation", desc: "你对整洁和秩序的需要程度" },
+        PE: { name: "父母期望", en: "Parental Expectations", desc: "你内化了多少来自父母的标准" },
+        PS: { name: "个人标准", en: "Personal Standards", desc: "你对自己设定的高要求程度" },
+        DA: { name: "行动疑虑", en: "Doubts about Actions", desc: "做完了之后你还会继续怀疑多久" }
+      };
+
       const DATA = {
         id: "fmps-15",
         title: "你对「做好」的标准有多高",
@@ -547,27 +641,87 @@
         results: {
           high_cm_da: {
             title: "你太怕做错了",
-            body: "<p>每一次开始之前，你的脑子里已经放过了一遍所有可能出错的画面。那些还没发生的失败，对你来说已经有了重量。</p><p>你做事的时候，身体里有一根弦一直绷着。不是怕做不好，是怕搞砸、怕犯错、怕那个最糟糕的版本真的发生。这种恐惧很具体，具体到你能描述每一种失败的样子。</p><p>即使做完了，你也很难松下来。心里总有一个声音在问：真的没问题吗？是不是漏了什么？这种疑虑不会因为完成而消失，反而在完成之后变得更清晰。</p><p>你的认真和负责，很多人看得到。但他们看不到的是，你为每一个决定付出的内耗，远远超过了决定本身。</p><p>你需要的也许不是更多确认，而是允许自己做一个\"还行\"的版本。世界不会因为一次不完美就塌下来。</p>"
+            quote: "你为每一个决定付出的内耗，远远超过了决定本身。",
+            body: "<p>每一次开始之前，你的脑子里已经放过了一遍所有可能出错的画面。那些还没发生的失败，对你来说已经有了重量。</p><p>你做事的时候，身体里有一根弦一直绷着。不是怕做不好，是怕搞砸、怕犯错、怕那个最糟糕的版本真的发生。这种恐惧很具体，具体到你能描述每一种失败的样子。</p><p>即使做完了，你也很难松下来。心里总有一个声音在问：真的没问题吗？是不是漏了什么？这种疑虑不会因为完成而消失，反而在完成之后变得更清晰。</p><p>你的认真和负责，很多人看得到。但他们看不到的是，你为每一个决定付出的内耗，远远超过了决定本身。</p>",
+            modeTitle: "你的完美主义模式",
+            mode: "你的系统同时在两个地方发力——害怕做错（CM高），以及做完了还是不确定（DA高）。这两股力量让你在一件事上消耗的能量，远远超过了它本身需要的。",
+            dailyTitle: "在日常里",
+            daily: [
+              "开始一件事之前，你已经在脑子里演练过它失败的样子——不是一次，是好几个版本。",
+              "做完了，你没有松下来。心里有个声音在问：真的没问题吗？是不是漏了什么？"
+            ],
+            reflectionTitle: "值得想一想",
+            reflection: "你上一次做完一件事之后真正放下了，是什么时候？"
           },
           high_ps_low_cm: {
             title: "你对自己有很高的要求，但不会被它压垮",
-            body: "<p>你对自己有很高的要求，而且你清楚那个标准是什么样的。你追求的东西很具体——做到某个程度、达到某种质量、成为某种状态。</p><p>难得的是，这种高标准没有绑着恐惧。你不是因为怕犯错才努力，你是真的想把事情做好。那种驱动力里有热情，有骄傲，有对自己的期待。</p><p>这让你在很多事情上都能走得很远。你有方向感，有执行力，有一种安静的自信——知道自己要什么，也愿意为它付出。</p><p>别人可能觉得你很卷，但你心里清楚，那些标准是你自己想要的，不是被谁逼出来的。你享受那种接近目标时的感觉。</p><p>只是偶尔记得，休息也是高标准生活的一部分。你值得在\"做得好\"之外，也允许自己\"什么都不做\"。</p>"
+            quote: "那个驱动力里有热情，有骄傲，有对自己的期待——但没有恐惧。",
+            body: "<p>你对自己有很高的要求，而且你清楚那个标准是什么样的。你追求的东西很具体——做到某个程度、达到某种质量、成为某种状态。</p><p>难得的是，这种高标准没有绑着恐惧。你不是因为怕犯错才努力，你是真的想把事情做好。那种驱动力里有热情，有骄傲，有对自己的期待。</p><p>这让你在很多事情上都能走得很远。你有方向感，有执行力，有一种安静的自信——知道自己要什么，也愿意为它付出。</p><p>别人可能觉得你很卷，但你心里清楚，那些标准是你自己想要的，不是被谁逼出来的。你享受那种接近目标时的感觉。</p>",
+            modeTitle: "你的完美主义模式",
+            mode: "你的高标准是主动选择的，不是恐惧驱动的。你知道自己要什么，也愿意为它付出——但不会被它压垮。",
+            dailyTitle: "在日常里",
+            daily: [
+              "你知道自己想要什么程度的结果，而且通常能达到。那种接近目标时的感觉，是你喜欢的。",
+              "别人可能觉得你在卷，但你心里清楚，那些标准是你自己想要的，不是被逼出来的。"
+            ],
+            reflectionTitle: "值得想一想",
+            reflection: "你的高标准里，有多少是真正属于你的，有多少是从别人那里接过来的？"
           },
           high_pe: {
             title: "你内化了很多来自父母的标准",
-            body: "<p>你心里有一套标准，很高、很清晰、很难动摇。但如果诚实地回头看，那套标准最初的声音，听起来更像是别人的。父母的期待、家庭的目光、那些\"你应该\"的话。</p><p>你在很小的时候就学会了读懂别人想要什么，然后把自己调整成那个方向。成绩、表现、选择——很多事情在你真正想清楚之前，就已经被设定好了。</p><p>后来你长大了，有了自己的生活。但那些期待并没有离开，它们搬进了你的内心，变成了你对自己的要求。你已经分不清哪些是你真的想要的，哪些是你觉得\"应该\"想要的。</p><p>你做到了很多，也为此付出了很多——包括一些你可能还没意识到的、属于你自己的东西。那些被搁置的偏好、被压低的声音、被推迟的选择。</p><p>现在，你可以慢慢地去辨认：在那些\"应该\"的底下，你自己真正想要的是什么。那个声音一直在，只是被盖住了很久。</p>"
+            quote: "那套标准你已经背了很久了。它最初的声音，听起来像别人的。",
+            body: "<p>你心里有一套标准，很高、很清晰、很难动摇。但如果诚实地回头看，那套标准最初的声音，听起来更像是别人的。父母的期待、家庭的目光、那些\"你应该\"的话。</p><p>你在很小的时候就学会了读懂别人想要什么，然后把自己调整成那个方向。成绩、表现、选择——很多事情在你真正想清楚之前，就已经被设定好了。</p><p>后来你长大了，有了自己的生活。但那些期待并没有离开，它们搬进了你的内心，变成了你对自己的要求。你已经分不清哪些是你真的想要的，哪些是你觉得\"应该\"想要的。</p><p>你做到了很多，也为此付出了很多——包括一些你可能还没意识到的、属于你自己的东西。那些被搁置的偏好、被压低的声音、被推迟的选择。</p>",
+            modeTitle: "你的完美主义模式",
+            mode: "你的标准里有很大一部分是外部植入的——父母的期待，家庭的目光，那些\"你应该\"的声音。它们搬进了你的内心，变成了你对自己的要求。",
+            dailyTitle: "在日常里",
+            daily: [
+              "做一个决定之前，你有时候会下意识地想：他们会怎么看这件事？那个声音很小，但一直在。",
+              "你做了很多，也做得很好。但有时候你也不确定，那些成就里，有多少是你真正想要的。"
+            ],
+            reflectionTitle: "值得想一想",
+            reflection: "如果没有任何人的目光，你现在的生活会有哪些不一样？"
           },
           high_da_low_cm: {
             title: "开始对你来说是最难的那一步",
-            body: "<p>你做事的过程其实还好，没有太多恐惧和犹豫。你能开始，也能完成。真正困难的部分在后面——做完了，你开始怀疑。</p><p>那种感觉很微妙。不是觉得自己会犯错，是完成之后依然不确定：这样对吗？够好吗？是不是还可以再改一下？一种持续的模糊感，让你很难真正放下一件事。</p><p>别人可能已经觉得很好了，你心里还在翻来覆去。这种疑虑不是对能力的否定，更像是一种无法落地的感觉——事情做完了，心没有完。</p><p>你活在一种微妙的悬浮状态里：永远觉得还差一点，却说不清差在哪里。那种\"可以了\"的笃定感，对你来说格外稀缺。</p><p>也许你需要练习的是一种结束的能力。在某个版本前停下来，告诉自己：到这里，就够了。</p>"
+            quote: "做完了，心没有完。那种「可以了」的笃定感，对你来说格外稀缺。",
+            body: "<p>你做事的过程其实还好，没有太多恐惧和犹豫。你能开始，也能完成。真正困难的部分在后面——做完了，你开始怀疑。</p><p>那种感觉很微妙。不是觉得自己会犯错，是完成之后依然不确定：这样对吗？够好吗？是不是还可以再改一下？一种持续的模糊感，让你很难真正放下一件事。</p><p>别人可能已经觉得很好了，你心里还在翻来覆去。这种疑虑不是对能力的否定，更像是一种无法落地的感觉——事情做完了，心没有完。</p><p>你活在一种微妙的悬浮状态里：永远觉得还差一点，却说不清差在哪里。那种\"可以了\"的笃定感，对你来说格外稀缺。</p>",
+            modeTitle: "你的完美主义模式",
+            mode: "你不太怕犯错，但你很难结束一件事。做完了还在改，改完了还在看，那种「到这里就够了」的笃定感，对你来说格外稀缺。",
+            dailyTitle: "在日常里",
+            daily: [
+              "你能开始，也能完成。真正消耗你的，是完成之后那段时间——反复确认，反复回看，很难真正放下。",
+              "别人说「很好了」，你心里还在转。那个落差，有时候会让你怀疑自己的判断。"
+            ],
+            reflectionTitle: "值得想一想",
+            reflection: "你能不能给这件事一个截止时间——不是完成的截止，是「停止修改」的截止？"
           },
           high_or: {
             title: "你喜欢秩序，但不焦虑",
-            body: "<p>你需要秩序。日程、空间、步骤、流程——当这些东西各就各位，你才能安心地运转。整洁和条理对你来说，更像是呼吸的方式。</p><p>混乱让你不安。物品乱了、计划变了、流程打断了——这些在别人看来很小的事，会在你心里产生真实的噪音。你需要把它们归位，才能重新集中。</p><p>你做事有自己的一套系统，而且这套系统通常很管用。你的条理让你高效、可靠、让人放心。很多人依赖你的组织能力，即使他们没有明说。</p><p>但这种对秩序的需要有时候也是一种负担。当生活不按你的系统来，当意外打破了安排，你承受的压力比看起来要大得多。</p><p>秩序是你的安全感来源。偶尔试试在一小块混乱里待一会儿，你会发现自己比想象中更能适应。</p>"
+            quote: "当一切各就各位，你才能安心运转。这不是挑剔，是你呼吸的方式。",
+            body: "<p>你需要秩序。日程、空间、步骤、流程——当这些东西各就各位，你才能安心地运转。整洁和条理对你来说，更像是呼吸的方式。</p><p>混乱让你不安。物品乱了、计划变了、流程打断了——这些在别人看来很小的事，会在你心里产生真实的噪音。你需要把它们归位，才能重新集中。</p><p>你做事有自己的一套系统，而且这套系统通常很管用。你的条理让你高效、可靠、让人放心。很多人依赖你的组织能力，即使他们没有明说。</p><p>但这种对秩序的需要有时候也是一种负担。当生活不按你的系统来，当意外打破了安排，你承受的压力比看起来要大得多。</p>",
+            modeTitle: "你的完美主义模式",
+            mode: "你的完美主义主要体现在对秩序的需要——不是怕犯错，是需要事情各就各位才能安心运转。你的系统很管用，但也很脆弱。",
+            dailyTitle: "在日常里",
+            daily: [
+              "你的工作方式有自己的一套系统，而且那套系统通常比别人的更管用。你的条理是别人依赖的东西。",
+              "当计划被打乱，你承受的压力比看起来要大。你需要把事情归位，才能重新运转。"
+            ],
+            reflectionTitle: "值得想一想",
+            reflection: "在哪些地方，你对秩序的需要其实是一种对失控的恐惧？"
           },
           balanced: {
             title: "你在「够好」和「更好」之间找到了某种平衡",
-            body: "<p>你心里有标准，也有弹性。你知道自己想做到什么程度，但你也知道世界不会永远配合你的计划。这种平衡感，很多人花了很久才学到。</p><p>你会努力，会认真，会对自己有要求。但当结果不完美的时候，你不会陷在里面太久。你有一种消化不完美的能力，让它成为经验的一部分，而不是自我否定的证据。</p><p>这让你在很多场景里都显得从容。你能投入，也能抽离；能追求，也能接受。身边的人在你旁边会觉得松弛，因为你不制造紧张。</p><p>你的内在有一种温和的秩序感。事情该做好就做好，做不到的地方，你知道怎么和自己和解。</p><p>这份平衡不是天生的，是你一路走来慢慢长出来的。它值得被看见。</p>"
+            quote: "你有标准，也有弹性——知道什么时候追，什么时候放。",
+            body: "<p>你心里有标准，也有弹性。你知道自己想做到什么程度，但你也知道世界不会永远配合你的计划。这种平衡感，很多人花了很久才学到。</p><p>你会努力，会认真，会对自己有要求。但当结果不完美的时候，你不会陷在里面太久。你有一种消化不完美的能力，让它成为经验的一部分，而不是自我否定的证据。</p><p>这让你在很多场景里都显得从容。你能投入，也能抽离；能追求，也能接受。身边的人在你旁边会觉得松弛，因为你不制造紧张。</p><p>你的内在有一种温和的秩序感。事情该做好就做好，做不到的地方，你知道怎么和自己和解。</p>",
+            modeTitle: "你的完美主义模式",
+            mode: "你有内在标准，但不被它绑架。你能投入，也能抽离；能追求，也能接受。这种平衡不是天生的，是一路走来慢慢长出来的。",
+            dailyTitle: "在日常里",
+            daily: [
+              "你能投入，也能抽离。当结果不完美的时候，你有消化它的能力，不会陷在里面太久。",
+              "身边的人在你旁边通常比较轻松——你不制造紧张，也不要求别人达到你不要求自己的标准。"
+            ],
+            reflectionTitle: "值得想一想",
+            reflection: "这份平衡是怎么来的？它是你练出来的，还是某一段经历之后长出来的？"
           }
         }
       };
@@ -761,7 +915,7 @@
         const resultId = matchResult(scores);
         const r = DATA.results[resultId];
         const sortedDimensions = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-        const top2 = sortedDimensions.slice(0, 2).map(([k]) => k);
+        const top2 = sortedDimensions.slice(0, 2).map(([k]) => DIMENSION_META[k].name);
 
         progressBar.style.width = "100%";
         progressText.textContent = "完成";
@@ -778,34 +932,40 @@
 
         resultEl.innerHTML = `
           <div id="result-capture" class="result-capture-card">
-          <div class="result-viz">${buildVizRows(sortedDimensions)}</div>
-          <div class="r-head"><h2 class="r-type" data-subtitle="最突出维度：${top2.map(k => ({CM:'担心错误',OR:'条理性',PE:'父母期望',PS:'个人标准',DA:'行动疑虑'})[k]).join(' · ')}">${r.title}</h2></div>
-          <p class="r-score-line">最突出维度：${top2.map(k => ({CM:'担心错误',OR:'条理性',PE:'父母期望',PS:'个人标准',DA:'行动疑虑'})[k]).join(' · ')}</p>
-          <ul class="result-tags"><li class="result-tag">FMPS-15</li><li class="result-tag">完美主义</li><li class="result-tag">心理画像</li></ul>
-          <div class="r-quote" id="rQuote">${r.title}</div>
-          <div class="r-divider"></div>
-          <div class="r-desc">${r.body}</div>
-
-          <div class="chart-wrap">
-            ${buildRadar(scores)}
-            <div class="bars">${buildBars(scores, top2)}</div>
-            <div class="scores-note">评分方式：CM / OR / PE / PS / DA 各维度 3 题均分（1-5 分）</div>
+            <div class="r-head"><h2 class="r-type" data-subtitle="最突出维度：${top2.join(' · ')}">${r.title}</h2></div>
+            <p class="r-score-line">最突出维度：${top2.join(' · ')}</p>
+            <ul class="result-tags"><li class="result-tag">FMPS-15</li><li class="result-tag">完美主义</li><li class="result-tag">心理画像</li></ul>
+            <div class="r-quote" id="rQuote">${r.quote}</div>
+            <div class="result-section">
+              <div class="section-title">五维度解读</div>
+              <div class="dimension-list">${buildDimensionRows(scores)}</div>
+            </div>
+            <div class="r-desc">${r.body}</div>
+            <section class="result-section">
+              <div class="section-title">${r.modeTitle}</div>
+              <p class="mode-copy">${r.mode}</p>
+            </section>
+            <section class="result-section">
+              <div class="section-title">${r.dailyTitle}</div>
+              <div class="daily-list">${r.daily.map(item => `<div class="daily-item">${item}</div>`).join('')}</div>
+            </section>
+            <section class="result-section">
+              <div class="section-title">${r.reflectionTitle}</div>
+              <p class="reflection">${r.reflection}</p>
+            </section>
+            <div class="story-rec" id="storyRec" style="display:none;">
+              <div class="story-rec-img"></div>
+              <div class="story-rec-content">
+                <p class="story-rec-hint">你可能会有共鸣</p>
+                <h3 class="story-rec-title">故事标题</h3>
+                <a class="story-rec-btn" href="#">读这个故事 →</a>
+              </div>
+            </div>
           </div>
-
-          <p class="share-tip">你最高的两个维度已高亮，方便你快速识别最影响你的完美主义模式。</p>
-
-<div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
-          <div class="story-rec" id="storyRec" style="display:none;">
-  <div class="story-rec-img"></div>
-  <div class="story-rec-content">
-    <p class="story-rec-hint">你可能会有共鸣</p>
-    <h3 class="story-rec-title">故事标题</h3>
-    <a class="story-rec-btn" href="#">读这个故事 →</a>
-  </div>
-</div>
-          </div>
+          <div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
         `;
 
+        storyRec = document.getElementById('storyRec');
         updateStoryBar();
         document.getElementById("redoBtn").onclick = restart;
       }
@@ -856,7 +1016,7 @@
       testName: '完美主义测评 · FMPS',
       resultType: document.querySelector('#result-capture .r-type')?.textContent?.trim() || '测试结果',
       resultSubtitle: document.querySelector('#result-capture .r-type')?.dataset?.subtitle || '',
-      quote: document.getElementById('rQuote')?.textContent?.trim() || extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.innerHTML, '你太怕做错了。'),
+      quote: document.getElementById('rQuote')?.textContent?.trim() || extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.innerHTML, '你为每一个决定付出的内耗，远远超过了决定本身。'),
       score: topScores,
       fileName: 'fmps-result'
     });
