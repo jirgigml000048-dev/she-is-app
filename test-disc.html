@@ -1044,6 +1044,26 @@
         </div>
       `;
 
+      if (window.SheProfileStore) {
+        window.SheProfileStore.saveResult({
+          moduleId: 'disc',
+          moduleName: '行为风格',
+          summary: content.title,
+          resultType: resolved.typeKey,
+          resultLabel: content.title,
+          score: scores,
+          topDimension: resolved.primary,
+          completedAt: new Date().toISOString()
+        });
+      } else {
+        localStorage.setItem('she_result_disc', JSON.stringify({
+          resultType: resolved.typeKey,
+          resultLabel: content.title,
+          score: scores,
+          completedAt: new Date().toISOString()
+        }));
+      }
+
       progressFill.style.width = '100%';
       showScreen('result');
     }
