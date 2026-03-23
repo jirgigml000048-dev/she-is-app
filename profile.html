@@ -3,63 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>我的测试 | 女也 She Is</title>
+    <title>我的画像 | 女也 She Is</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/font-override.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/auth.js"></script>
+    <script src="assets/profile-utils.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-      /* 防止孤字 */
-      h1, h2, h3, h4,
-      .r-type, .r-quote, .r-desc p,
-      .result-type, .result-quote,
-      .card-title, .section-title, .hero-title {
-        text-wrap: balance;
-      }
-
-      p {
-        text-wrap: pretty;
-      }
       :root {
         --bg: #f5f0eb;
-        --surface: rgba(255, 255, 255, 0.92);
-        --surface-muted: rgba(74, 48, 115, 0.08);
-        --ink: #2e2e2e;
-        --body: #5e5651;
-        --muted: #8e857f;
-        --line: rgba(74, 48, 115, 0.12);
+        --surface: rgba(255,255,255,0.72);
+        --surface-strong: rgba(255,255,255,0.84);
         --brand: #4A3073;
-        --brand-hover: #3D2565;
+        --brand-dark: #3D2565;
+        --text: #2d2238;
+        --muted: #766c82;
+        --line: rgba(74,48,115,0.14);
+        --placeholder: #b8b2bd;
+        --placeholder-bg: rgba(117,108,130,0.06);
+        --shadow: 0 16px 42px rgba(74, 48, 115, 0.08);
       }
 
       * { box-sizing: border-box; }
-
-      html, body {
-        margin: 0;
-        padding: 0;
-        min-height: 100%;
-        background: var(--bg);
-        color: var(--body);
-        font-family: "Noto Serif SC", "Source Han Serif SC", serif;
-      }
-
+      html, body { margin: 0; padding: 0; min-height: 100%; }
       body {
-        background:
-          radial-gradient(ellipse at top left, rgba(74, 48, 115, 0.12), transparent 42%),
-          radial-gradient(ellipse at bottom right, rgba(74, 48, 115, 0.08), transparent 38%),
-          var(--bg);
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Noto Serif SC", Georgia, serif;
+        -webkit-font-smoothing: antialiased;
       }
-
-      a, button { transition: all 0.24s ease; }
 
       .page {
         width: 100%;
-        max-width: 480px;
+        max-width: 430px;
         margin: 0 auto;
         min-height: 100vh;
-        padding: 16px 24px 56px;
+        padding: 16px 18px 48px;
       }
 
       .header {
@@ -69,7 +51,6 @@
         gap: 12px;
         padding-top: 6px;
       }
-
       .logo {
         text-decoration: none;
         color: inherit;
@@ -77,7 +58,6 @@
         flex-direction: column;
         align-items: flex-start;
       }
-
       .logo-cn {
         display: block;
         font-family: "Cormorant Garamond", serif;
@@ -87,7 +67,6 @@
         letter-spacing: 0.12em;
         color: #1c1c1c;
       }
-
       .logo-en {
         display: block;
         font-family: "Courier Prime", monospace;
@@ -96,209 +75,362 @@
         letter-spacing: 0.08em;
         margin-top: 2px;
       }
-
-      .header-link {
-        margin-top: 6px;
+      .header-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+      }
+      .header-link,
+      .logout-link {
         font-size: 12px;
         color: var(--brand);
         text-decoration: none;
+        background: none;
+        border: none;
+        padding: 0;
+        font-family: inherit;
+        cursor: pointer;
       }
-
-      .header-link:hover { opacity: 0.72; }
-
       .header-rule {
         height: 1px;
-        margin: 10px 0 34px;
-        background: linear-gradient(to right, transparent, rgba(74, 48, 115, 0.5) 25%, rgba(74, 48, 115, 0.5) 75%, transparent);
+        margin: 10px 0 22px;
+        background: linear-gradient(to right, transparent, rgba(74,48,115,0.5) 25%, rgba(74,48,115,0.5) 75%, transparent);
         border: none;
       }
 
-      .eyebrow {
-        margin: 0 0 8px;
-        font-family: "Cormorant Garamond", serif;
-        font-size: 13px;
-        letter-spacing: 0.24em;
-        color: var(--brand);
-      }
-
-      .hero-title {
-        margin: 0;
-        font-family: "Cormorant Garamond", serif;
-        font-size: 42px;
-        line-height: 1.02;
-        color: var(--ink);
-      }
-
-      .hero-copy {
-        margin: 14px 0 0;
-        font-size: 14px;
-        line-height: 1.9;
-        color: var(--muted);
-      }
-
-      .section {
-        margin-top: 32px;
-      }
-
-      #radarSection .section-title { margin-bottom: 14px; }
-
-      .panel {
-        border: 1px solid var(--line);
-        border-radius: 24px;
-        background: var(--surface);
-        padding: 22px 20px;
-        box-shadow: 0 18px 40px rgba(74, 48, 115, 0.06);
-      }
-
-      .user-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-      }
-
-      .user-kicker {
-        margin: 0 0 6px;
+      .user-chip {
         font-size: 11px;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-
-      .user-name {
-        margin: 0;
-        font-size: 22px;
-        color: var(--ink);
-      }
-
-      .user-email {
-        margin: 6px 0 0;
-        font-size: 12px;
-        color: var(--muted);
+        color: #8a8294;
+        text-align: right;
+        max-width: 140px;
+        line-height: 1.5;
         word-break: break-all;
       }
 
-      .ghost-btn,
-      .solid-link {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 40px;
-        padding: 0 16px;
-        border-radius: 999px;
-        font: inherit;
-        text-decoration: none;
-        cursor: pointer;
+      .intro {
+        position: relative;
+        padding: 40px 18px;
+        margin-bottom: 24px;
+        border-radius: 30px;
+        background:
+          radial-gradient(circle at 50% 14%, rgba(74,48,115,0.06), rgba(74,48,115,0) 56%),
+          linear-gradient(180deg, rgba(255,255,255,0.68), rgba(255,255,255,0.42));
+        border: 1px solid rgba(74,48,115,0.08);
+        box-shadow: 0 18px 40px rgba(74,48,115,0.05);
+        text-align: center;
       }
-
-      .ghost-btn {
-        border: 1px solid rgba(74, 48, 115, 0.24);
-        background: transparent;
+      .intro p { margin: 0; }
+      .intro-lead {
+        font-size: 20px;
+        line-height: 1.5;
         color: var(--brand);
+        letter-spacing: 0.02em;
       }
-
-      .ghost-btn:hover,
-      .solid-link:hover {
-        background: var(--brand-hover);
-        border-color: var(--brand-hover);
-        color: white;
-      }
-
-      .section-title {
-        margin: 0 0 10px;
-        font-family: "Cormorant Garamond", serif;
-        font-size: 30px;
-        color: var(--ink);
-      }
-
-      .section-copy {
-        margin: 0 0 18px;
+      .intro-sub {
+        margin-top: 12px !important;
         font-size: 13px;
-        color: var(--muted);
-        line-height: 1.85;
+        line-height: 1.9;
+        color: #666;
+        letter-spacing: 0.08em;
+      }
+      .intro-end {
+        margin-top: 12px !important;
+        font-size: 13px;
+        line-height: 1.9;
+        color: #999;
+        font-style: italic;
       }
 
-      .cards {
+      .radar-wrap,
+      .portrait-card,
+      .share-actions,
+      .login-card {
+        background: var(--surface-strong);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(8px);
+      }
+      .radar-wrap {
+        padding: 18px 14px 12px;
+        margin-bottom: 16px;
+      }
+      #radarCanvas {
+        display: block;
+        width: 260px;
+        max-width: 100%;
+        height: 260px;
+        margin: 0 auto;
+      }
+      .legend {
         display: grid;
-        gap: 14px;
-      }
-
-      .test-card {
-        border-radius: 22px;
-        padding: 18px 18px 16px;
-        border: 1px solid var(--line);
-      }
-
-      .test-card.completed {
-        background: rgba(255, 255, 255, 0.96);
-        box-shadow: 0 12px 28px rgba(74, 48, 115, 0.05);
-      }
-
-      .test-card.pending {
-        background: var(--surface-muted);
-      }
-
-      .card-meta {
-        margin: 0 0 8px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        margin-top: 4px;
         font-size: 11px;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
         color: var(--muted);
-      }
-
-      .card-title {
-        margin: 0;
-        font-size: 18px;
-        color: var(--ink);
-        line-height: 1.55;
-      }
-
-      .card-result,
-      .card-time {
-        margin: 10px 0 0;
-        font-size: 13px;
-        color: var(--body);
-      }
-
-      .card-actions {
-        margin-top: 14px;
-      }
-
-      .solid-link {
-        border: 1px solid rgba(74, 48, 115, 0.18);
-        background: rgba(255, 255, 255, 0.8);
-        color: var(--brand);
-      }
-
-      .empty-state,
-      .loading-state {
-        border: 1px solid var(--line);
-        border-radius: 24px;
-        padding: 28px 22px;
-        background: rgba(255, 255, 255, 0.74);
         text-align: center;
       }
 
-      .empty-state h2,
-      .loading-state h2 {
+      .accordion-group { display: grid; gap: 12px; }
+      .accordion {
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: var(--surface);
+        overflow: hidden;
+        box-shadow: 0 10px 28px rgba(74,48,115,0.04);
+      }
+      .accordion.placeholder { background: rgba(255,255,255,0.52); }
+      .accordion summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+      .accordion summary::-webkit-details-marker { display: none; }
+      .accordion-summary-main {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 0;
+        flex: 1;
+      }
+      .accordion-accent {
+        width: 3px;
+        min-height: 48px;
+        align-self: stretch;
+        border-radius: 999px;
+        background: var(--brand);
+        flex: 0 0 3px;
+      }
+      .accordion.placeholder .accordion-accent { background: rgba(74,48,115,0.3); }
+      .accordion-title-wrap { min-width: 0; }
+      .accordion-title {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.2;
+        color: #1a1a1a;
+        font-weight: 600;
+      }
+      .accordion-subtitle {
+        margin: 4px 0 0;
+        font-size: 12px;
+        color: #999;
+        line-height: 1.4;
+      }
+      .accordion-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+      .accordion-progress {
+        font-size: 11px;
+        color: var(--brand);
+        white-space: nowrap;
+      }
+      .accordion-toggle {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .accordion[open] summary { border-bottom: 1px solid var(--line); }
+      .accordion-body { padding: 16px 18px 18px; }
+      .axis-copy {
+        margin: 0 0 14px;
+        font-size: 13px;
+        line-height: 1.85;
+        color: #6e6678;
+      }
+      .result-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .chip {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        width: 100%;
+        padding: 12px 13px;
+        border-radius: 16px;
+        text-decoration: none;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
+      }
+      .chip-label {
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        opacity: 0.76;
+      }
+      .chip-value {
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--text);
+      }
+      .chip-ready {
+        border: 1px solid rgba(74,48,115,0.12);
+        background: rgba(74,48,115,0.08);
+        color: var(--brand);
+      }
+      .chip-todo {
+        border: 1px dashed rgba(117,108,130,0.4);
+        background: rgba(117,108,130,0.04);
+        color: #8f8898;
+      }
+      .chip-placeholder {
+        border: 1px solid rgba(117,108,130,0.18);
+        background: var(--placeholder-bg);
+        color: var(--placeholder);
+      }
+
+      .portrait-card {
+        margin-top: 16px;
+        padding: 18px 18px 20px;
+      }
+      .portrait-title {
+        margin: 0 0 10px;
+        color: var(--brand);
+        font-size: 14px;
+        letter-spacing: 0.06em;
+      }
+      .portrait-copy {
+        margin: 0;
+        font-size: 14px;
+        line-height: 2;
+        color: #4b4454;
+      }
+      .portrait-copy.is-placeholder { color: #9d97a4; }
+
+      .share-actions {
+        margin-top: 16px;
+        padding: 16px;
+      }
+      .share-btn-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .share-btn {
+        appearance: none;
+        border: 1px solid rgba(74,48,115,0.24);
+        border-radius: 14px;
+        min-height: 44px;
+        font-family: inherit;
+        font-size: 12px;
+        cursor: pointer;
+        padding: 0 12px;
+      }
+      .share-btn.primary {
+        background: var(--brand);
+        color: #fff;
+        border-color: var(--brand);
+      }
+      .share-btn.secondary {
+        background: rgba(255,255,255,0.75);
+        color: var(--brand);
+      }
+      .share-note {
+        margin: 10px 0 0;
+        font-size: 11px;
+        color: #999;
+        text-align: center;
+        line-height: 1.7;
+      }
+
+      .login-card {
+        padding: 28px 22px;
+        text-align: center;
+      }
+      .login-title {
         margin: 0;
         font-family: "Cormorant Garamond", serif;
-        font-size: 30px;
-        color: var(--ink);
+        font-size: 32px;
+        color: var(--brand);
       }
-
-      .empty-state p,
-      .loading-state p {
-        margin: 12px 0 0;
+      .login-copy {
+        margin: 12px 0 20px;
         font-size: 13px;
+        color: #7d736e;
         line-height: 1.9;
-        color: var(--muted);
+      }
+      .login-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 18px;
+        border-radius: 999px;
+        background: var(--brand);
+        color: #fff;
+        border: none;
+        font-family: inherit;
+        cursor: pointer;
       }
 
-      @media (max-width: 420px) {
-        .page { padding-left: 24px; padding-right: 24px; }
-        .hero-title { font-size: 36px; }
-        .user-row { flex-direction: column; align-items: flex-start; }
+      .capture-stage {
+        position: fixed;
+        left: -99999px;
+        top: 0;
+        width: 390px;
+        z-index: -1;
+      }
+      .share-sheet {
+        width: 390px;
+        background: #f5f0eb;
+        color: #2f2440;
+        font-family: "Noto Serif SC", Georgia, serif;
+        border-radius: 34px;
+        overflow: hidden;
+        box-shadow: 0 16px 36px rgba(74,48,115,0.12);
+      }
+      .share-sheet-inner { padding: 24px 24px 28px; }
+      .brand-block { text-align: center; margin-bottom: 24px; }
+      .brand-mark { font-size: 11px; letter-spacing: 0.18em; color: rgba(74,48,115,0.82); }
+      .brand-line { width: 100%; height: 1px; margin-top: 14px; background: linear-gradient(90deg, rgba(74,48,115,0), rgba(74,48,115,0.24), rgba(74,48,115,0)); }
+      .share-intro { text-align: center; margin-bottom: 24px; }
+      .share-intro h2 { margin: 0; font-size: 30px; line-height: 1.38; color: var(--brand); }
+      .share-intro p { margin: 10px 0 0; font-size: 13px; color: #999; font-style: italic; }
+      .share-radar-panel { margin-bottom: 22px; padding: 16px 12px 12px; border-radius: 24px; background: rgba(255,255,255,0.45); border: 1px solid rgba(74,48,115,0.08); }
+      .share-radar-canvas { display:block; width:240px; height:220px; margin:0 auto; }
+      .share-radar-legend { margin-top:6px; display:grid; grid-template-columns:repeat(4,1fr); gap:4px; font-size:11px; text-align:center; color:#766c82; }
+      .axis-summary { display:grid; gap:10px; margin-bottom:22px; }
+      .axis-row { padding: 12px 0; border-bottom:1px solid rgba(74,48,115,0.08); }
+      .axis-row:last-child { border-bottom:none; padding-bottom:0; }
+      .axis-tag { margin-bottom:8px; font-size:13px; line-height:1.6; color:var(--brand); }
+      .axis-list { display:grid; gap:6px; }
+      .axis-item { display:flex; align-items:baseline; justify-content:space-between; gap:12px; font-size:12px; line-height:1.6; }
+      .axis-item-value { color: var(--brand); white-space: nowrap; }
+      .axis-item.pending .axis-item-name, .axis-item.pending .axis-item-value { color: #918997; }
+      .share-portrait-copy { margin:0 0 26px; padding:18px 0 0; border-top:1px solid rgba(74,48,115,0.1); font-size:15px; line-height:2; color:#4b4454; text-align:left; }
+      .share-footer { text-align:center; }
+      .share-footer .url { margin:0; font-size:11px; color:#8e8793; letter-spacing:0.08em; }
+      .share-footer .sign { margin:8px 0 0; font-size:12px; color:#b0a9b5; }
+
+      .result-card .share-sheet-inner { padding: 28px; text-align:left; }
+      .result-card .brand-block { text-align:left; margin-bottom:18px; }
+      .result-card .brand-mark { letter-spacing: 0.08em; }
+      .result-card .brand-line { margin-top: 12px; background: rgba(74,48,115,0.15); }
+      .result-intro { margin:0 0 20px; text-align:left; font-size:13px; line-height:1.7; color:#666; font-style:italic; }
+      .result-list { margin:0; }
+      .result-row { display:grid; grid-template-columns:6px minmax(0,1fr) auto; align-items:center; column-gap:12px; padding:10px 0; border-bottom:1px solid rgba(74,48,115,0.08); }
+      .result-dot { width:6px; height:6px; border-radius:50%; background:var(--brand); }
+      .result-badge { padding:2px 8px; border-radius:10px; background:rgba(74,48,115,0.08); color:var(--brand); font-size:11px; white-space:nowrap; }
+      .result-row.pending .result-dot { background:#ccc; }
+      .result-row.pending .result-badge { background: rgba(204,204,204,0.24); color:#999; }
+      .result-footer { margin-top:18px; text-align:left; }
+      .result-footer-line { width:100%; height:1px; margin-bottom:14px; background: rgba(74,48,115,0.15); }
+      .result-footer-note { margin:0; font-size:13px; color:var(--brand); font-style:italic; line-height:1.7; }
+      .result-footer-url { margin:10px 0 0; font-size:11px; color:#aaa; }
+
+      @media (max-width: 360px) {
+        .result-grid { grid-template-columns: 1fr; }
+        .share-btn-row { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -309,53 +441,70 @@
           <span class="logo-cn">女也</span>
           <span class="logo-en">she is ______.</span>
         </a>
-        <a class="header-link" href="index.html">返回首页</a>
+        <div class="header-actions">
+          <div id="headerUser" class="user-chip"></div>
+          <a class="header-link" href="index.html">返回首页</a>
+          <button id="logoutBtn" class="logout-link" type="button" style="display:none;">退出登录</button>
+        </div>
       </header>
       <div class="header-rule"></div>
 
-      <section>
-        <p class="eyebrow">MY TESTS</p>
-        <h1 class="hero-title">你做过的测试，都在这里。</h1>
-        <p class="hero-copy">登录后，你的测评结果会按时间归档。做过的可以重新进入，没做过的也能直接补上。</p>
-      </section>
-
-      <section class="section" id="profileRoot">
-        <div class="loading-state">
-          <h2>正在读取你的结果…</h2>
-          <p>请稍等，页面正在检查登录状态并同步你的测试记录。</p>
-        </div>
-      </section>
+      <section id="profileRoot"></section>
     </main>
 
+    <div id="captureStage" class="capture-stage"></div>
+
     <script>
-      const testNameMap = {
-        'hsp': '高敏感测评',
-        'ecr': '依恋风格测评',
-        'erq': '情绪调节测评',
-        'fmps': '完美主义测评',
-        'cognitive': '荣格八维认知功能',
-        'boundary-sense': '边界感测评',
-        'relationship-role': '关系角色测评',
-        'today-mood': '今日情绪地图',
-        'abm-love-animal': '你是哪种爱情动物',
-        'ideal-boyfriend': '你的理想型男友'
+      const TEST_META = {
+        cognitive: { name: '荣格八维认知功能', href: 'test-cognitive.html' },
+        hsp: { name: '高敏感测评', href: 'test-hsp.html' },
+        erq: { name: '情绪调节测评', href: 'test-erq.html' },
+        ecr: { name: '依恋风格测评', href: 'test-ecr.html' },
+        fmps: { name: '完美主义测评', href: 'test-fmps.html' },
+        'boundary-sense': { name: '边界感测评', href: 'test-boundary-sense.html' },
+        'relationship-role': { name: '关系角色测评', href: 'test-relationship-role.html' }
       };
 
-      const testFileMap = {
-        'hsp': 'test-hsp.html',
-        'ecr': 'test-ecr.html',
-        'erq': 'test-erq.html',
-        'fmps': 'test-fmps.html',
-        'cognitive': 'test-cognitive.html',
-        'boundary-sense': 'test-boundary-sense.html',
-        'relationship-role': 'test-relationship-role.html',
-        'today-mood': 'test-today-mood.html',
-        'abm-love-animal': 'test-abm-love-animal.html',
-        'ideal-boyfriend': 'test-ideal-boyfriend.html'
-      };
+      const AXES = [
+        {
+          key: 'trait',
+          name: '特质轴',
+          meaning: '你是谁',
+          short: '特质',
+          description: '你如何感知、思考、做决策——这是你最底层的操作系统',
+          items: [{ key: 'cognitive', label: 'cognitive' }]
+        },
+        {
+          key: 'emotion',
+          name: '情绪轴',
+          meaning: '你怎么感受',
+          short: '情绪',
+          description: '你如何感受、消化、应对情绪——这里藏着你消耗最多能量的地方',
+          items: [{ key: 'hsp', label: 'hsp' }, { key: 'erq', label: 'erq' }, { key: 'ecr', label: 'ecr' }]
+        },
+        {
+          key: 'behavior',
+          name: '行为轴',
+          meaning: '你怎么行动',
+          short: '行为',
+          description: '你如何行动、设标准、划边界——这决定了你和世界的互动方式',
+          items: [{ key: 'fmps', label: 'fmps' }, { key: 'boundary-sense', label: 'boundary-sense' }, { key: 'relationship-role', label: 'relationship-role' }]
+        },
+        {
+          key: 'motive',
+          name: '动机轴',
+          meaning: '你为什么这样',
+          short: '动机',
+          description: '你为什么是这样的你——驱动力和恐惧的根源（即将上线）',
+          placeholder: true,
+          items: [{ key: 'enneagram', label: '九型人格', soon: true }, { key: 'holland', label: '霍兰德', soon: true }]
+        }
+      ];
 
-      const orderedTestNames = Object.keys(testNameMap);
       const profileRoot = document.getElementById('profileRoot');
+      const headerUser = document.getElementById('headerUser');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const captureStage = document.getElementById('captureStage');
 
       function escapeHtml(value) {
         return String(value || '')
@@ -364,19 +513,6 @@
           .replace(/>/g, '&gt;')
           .replace(/"/g, '&quot;')
           .replace(/'/g, '&#39;');
-      }
-
-      function formatTime(value) {
-        if (!value) return '时间未记录';
-        const date = new Date(value);
-        if (Number.isNaN(date.getTime())) return '时间未记录';
-        return new Intl.DateTimeFormat('zh-CN', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        }).format(date);
       }
 
       function getDisplayName(user) {
@@ -390,233 +526,362 @@
           const existing = resultMap.get(item.test_name);
           const existingTime = existing?.completed_at ? new Date(existing.completed_at).getTime() : 0;
           const currentTime = item.completed_at ? new Date(item.completed_at).getTime() : 0;
-          if (!existing || currentTime >= existingTime) {
-            resultMap.set(item.test_name, item);
-          }
+          if (!existing || currentTime >= existingTime) resultMap.set(item.test_name, item);
         });
         return resultMap;
       }
 
-      function clampRadarScore(value) {
-        if (typeof value !== 'number' || Number.isNaN(value)) return null;
-        return Math.max(0, Math.min(5, Number(value.toFixed(2))));
+      function getLocalResultMap() {
+        const map = new Map();
+        if (!window.SheProfileStore) return map;
+        window.SheProfileStore.readAllResults().forEach((item) => map.set(item.moduleId, item));
+        return map;
       }
 
-      function averageScores(values) {
-        const valid = (values || []).filter((value) => typeof value === 'number' && !Number.isNaN(value));
-        if (!valid.length) return null;
-        return valid.reduce((sum, value) => sum + value, 0) / valid.length;
-      }
-
-      function buildRadarDimensions(results) {
-        const resultMap = normalizeResults(results);
-        const hspScore = resultMap.get('hsp')?.result_data?.score;
-        const erqScore = resultMap.get('erq')?.result_data?.score || {};
-        const ecrScore = resultMap.get('ecr')?.result_data?.score || {};
-        const boundaryScore = resultMap.get('boundary-sense')?.result_data?.score || {};
-        const fmpsScore = resultMap.get('fmps')?.result_data?.score || {};
-        const boundaryValues = Object.values(boundaryScore).filter((value) => typeof value === 'number' && !Number.isNaN(value));
-        const fmpsAverage = averageScores([fmpsScore.CM, fmpsScore.PS, fmpsScore.DA]);
-        const ecrSecurity = typeof ecrScore.security === 'number' && !Number.isNaN(ecrScore.security)
-          ? ecrScore.security
-          : (typeof ecrScore.anxiety === 'number' && typeof ecrScore.avoidance === 'number'
-            ? 8 - averageScores([ecrScore.anxiety, ecrScore.avoidance])
-            : null);
-
-        return [
-          {
-            label: '敏感度',
-            description: '你对外界信号的接收强度',
-            score: clampRadarScore(typeof hspScore === 'number' ? hspScore / 7 * 5 : null)
-          },
-          {
-            label: '情绪调节力',
-            description: '你消化和转化情绪的资源储备',
-            score: clampRadarScore(typeof erqScore.reappraisal === 'number' ? erqScore.reappraisal / 7 * 5 : null)
-          },
-          {
-            label: '关系安全感',
-            description: '你在亲密关系中感受到的稳定程度',
-            score: clampRadarScore(typeof ecrSecurity === 'number' ? ecrSecurity / 7 * 5 : null)
-          },
-          {
-            label: '边界稳定性',
-            description: '你区分“我的”和“别人的”时有多清晰',
-            score: clampRadarScore(boundaryValues.length ? Math.max(...boundaryValues) / 4 * 5 : null)
-          },
-          {
-            label: '自我慈悲度',
-            description: '你对自己犯错或不够好时的温和程度',
-            score: clampRadarScore(
-              fmpsAverage !== null
-                ? 6 - fmpsAverage
-                : (typeof fmpsScore.selfCompassion === 'number' ? fmpsScore.selfCompassion : null)
-            )
+      function getResultLabel(key, local, remote) {
+        if (local?.summary) {
+          if (key === 'cognitive') return local.summary.toUpperCase();
+          if (key === 'hsp') {
+            if (local.summary === '高敏感') return '高敏感';
+            if (local.summary === '中敏感') return '中等感受力';
+            if (local.summary === '低敏感') return '低敏感倾向';
           }
-        ];
+          return local.summary;
+        }
+        if (remote?.result_type) return remote.result_type;
+        return '';
       }
 
-      function drawRadar(dimensions) {
-        if (!dimensions.some((item) => item.score !== null)) return;
-        const canvas = document.getElementById('radarCanvas');
-        const legend = document.getElementById('radarLegend');
-        if (!canvas || !legend) return;
+      function hasDone(key, local, remote) {
+        return Boolean(local || remote);
+      }
 
+      function buildAxisData(remoteResults, localResults) {
+        return AXES.map((axis) => {
+          const items = axis.items.map((item) => {
+            if (item.soon) return { ...item, state: 'soon', value: '即将上线' };
+            const local = localResults.get(item.key);
+            const remote = remoteResults.get(item.key);
+            const done = hasDone(item.key, local, remote);
+            return {
+              ...item,
+              state: done ? 'done' : 'todo',
+              href: TEST_META[item.key]?.href || '#',
+              name: TEST_META[item.key]?.name || item.key,
+              value: done ? getResultLabel(item.key, local, remote) : '去做 →',
+              local,
+              remote
+            };
+          });
+          const total = items.filter((item) => !item.soon).length;
+          const doneCount = items.filter((item) => item.state === 'done').length;
+          let score = 0;
+          if (axis.key === 'trait') score = doneCount ? 1 : 0;
+          if (axis.key === 'emotion') score = doneCount / 3;
+          if (axis.key === 'behavior') score = doneCount / 3;
+          if (axis.key === 'motive') score = 0;
+          return { ...axis, items, total, doneCount, score };
+        });
+      }
+
+      function buildPortrait(itemsMap) {
+        const doneItems = Array.from(itemsMap.values()).filter((item) => item.state === 'done');
+        if (doneItems.length < 3) return '做更多测评，解锁你的画像描述';
+
+        const fragments = [];
+        const cognitive = itemsMap.get('cognitive')?.value;
+        const hsp = itemsMap.get('hsp')?.value;
+        const erq = itemsMap.get('erq')?.value;
+        const ecr = itemsMap.get('ecr')?.value;
+        const fmps = itemsMap.get('fmps')?.value;
+        const boundary = itemsMap.get('boundary-sense')?.value;
+        const role = itemsMap.get('relationship-role')?.value;
+
+        if (cognitive) fragments.push(cognitive.includes('F') ? '你有很强的感知力，也很在意人和情境之间的细小变化。' : '你更习惯先搭建理解世界的结构，再决定如何行动。');
+        else if (hsp) fragments.push(hsp === '高敏感' ? '你对外界信号的接收很强，很多人忽略的细节，你会先感到。' : '你对世界有自己的感受阈值，既能接收，也会主动筛选。');
+
+        if (erq) {
+          if (erq.includes('思考派')) fragments.push('情绪来时，你习惯先换一个角度看它，让自己慢慢回到可处理的位置。');
+          else if (erq.includes('双管派')) fragments.push('你既会处理情绪本身，也会试着照顾它在外部关系里的影响。');
+          else if (erq.includes('压下去派')) fragments.push('你常常先把情绪压住，等事情过去以后，才轮到自己慢慢消化。');
+          else fragments.push('你和情绪相处的方式更顺流，很多反应会先在身体里发生。');
+        }
+
+        if (ecr) {
+          if (ecr.includes('专注型')) fragments.push('关系里你渴望靠近，也会反复确认对方是不是还在。');
+          else if (ecr.includes('恐惧型')) fragments.push('你想亲近，但亲近本身也会让你紧张，靠近和退后常常同时发生。');
+          else if (ecr.includes('冷漠型')) fragments.push('你习惯先靠自己，哪怕心里有需要，也不会立刻把它说出口。');
+          else fragments.push('你在关系里更能稳定表达需要，也更容易给彼此空间。');
+        }
+
+        if (fmps) {
+          fragments.push(fmps.includes('高') || fmps.includes('严格') ? '你对自己有比较高的要求，很多标准是在心里先过一遍的。' : '你会在标准和现实之间找平衡，不轻易被单一目标绑住。');
+        } else if (boundary || role) {
+          const behaviorLine = boundary ? `你在边界上更接近${boundary}，这会直接影响你怎么和世界相处。` : `在关系里，你常常先以${role}的方式出现。`;
+          fragments.push(behaviorLine);
+        }
+
+        return fragments.slice(0, 3).join('');
+      }
+
+      function renderLoginPrompt() {
+        headerUser.textContent = '';
+        logoutBtn.style.display = 'none';
+        profileRoot.innerHTML = `
+          <section class="intro">
+            <p class="intro-lead">你不是一个单一的类型。</p>
+            <p class="intro-sub">你是谁，你为什么这样，你怎么感受，你怎么行动——</p>
+            <p class="intro-end">这四个维度加在一起，才接近真实的你。</p>
+          </section>
+          <section class="login-card">
+            <h2 class="login-title">先登录，再看你的画像</h2>
+            <p class="login-copy">登录后，你做过的测评结果会自动归档在这里。未登录状态下，不展示任何测评记录。</p>
+            <button class="login-btn" type="button" onclick="openLoginModal()">立即登录</button>
+          </section>
+        `;
+        injectLoginModal();
+      }
+
+      function renderProfile(user, remoteResults) {
+        const remoteMap = normalizeResults(remoteResults);
+        const localMap = getLocalResultMap();
+        const axes = buildAxisData(remoteMap, localMap);
+        const itemsMap = new Map();
+        axes.forEach((axis) => axis.items.forEach((item) => itemsMap.set(item.key, item)));
+        const portrait = buildPortrait(itemsMap);
+        const portraitLocked = portrait === '做更多测评，解锁你的画像描述';
+
+        headerUser.textContent = `${getDisplayName(user)}\n${user.email || ''}`;
+        logoutBtn.style.display = 'inline';
+
+        profileRoot.innerHTML = `
+          <section class="intro">
+            <p class="intro-lead">你不是一个单一的类型。</p>
+            <p class="intro-sub">你是谁，你为什么这样，你怎么感受，你怎么行动——</p>
+            <p class="intro-end">这四个维度加在一起，才接近真实的你。</p>
+          </section>
+
+          <section class="radar-wrap">
+            <canvas id="radarCanvas" width="260" height="260" aria-label="四轴雷达图"></canvas>
+            <div class="legend"><div>特质</div><div>情绪</div><div>行为</div><div>动机</div></div>
+          </section>
+
+          <section class="accordion-group">
+            ${axes.map((axis, index) => `
+              <details class="accordion ${axis.placeholder ? 'placeholder' : ''}" ${index === 0 ? 'open' : ''}>
+                <summary>
+                  <div class="accordion-summary-main">
+                    <div class="accordion-accent"></div>
+                    <div class="accordion-title-wrap">
+                      <h3 class="accordion-title">${axis.name}</h3>
+                      <p class="accordion-subtitle">${axis.meaning}</p>
+                    </div>
+                  </div>
+                  <div class="accordion-meta">
+                    <span class="accordion-progress">已完成 ${axis.doneCount} / 总计 ${axis.total}</span>
+                    <span class="accordion-toggle">展开查看</span>
+                  </div>
+                </summary>
+                <div class="accordion-body">
+                  <p class="axis-copy">${axis.description}</p>
+                  <div class="result-grid">
+                    ${axis.items.map((item) => {
+                      if (item.state === 'done') {
+                        return `<a class="chip chip-ready" href="${item.href}"><span class="chip-label">${item.label}</span><span class="chip-value">${escapeHtml(item.value)}</span></a>`;
+                      }
+                      if (item.state === 'todo') {
+                        return `<a class="chip chip-todo" href="${item.href}"><span class="chip-label">${item.label}</span><span class="chip-value">去做 →</span></a>`;
+                      }
+                      return `<span class="chip chip-placeholder"><span class="chip-label">${item.label}</span><span class="chip-value">即将上线</span></span>`;
+                    }).join('')}
+                  </div>
+                </div>
+              </details>
+            `).join('')}
+          </section>
+
+          <section class="portrait-card">
+            <h3 class="portrait-title">文字画像</h3>
+            <p class="portrait-copy ${portraitLocked ? 'is-placeholder' : ''}">${escapeHtml(portrait)}</p>
+          </section>
+
+          <section class="share-actions">
+            <div class="share-btn-row">
+              <button class="share-btn primary" type="button" id="shareLongBtn">整体画像长图</button>
+              <button class="share-btn secondary" type="button" id="shareResultBtn">测评结果卡</button>
+            </div>
+            <p class="share-note">会按当前真实结果生成图片并下载到本地。</p>
+          </section>
+        `;
+
+        drawRadar(axes);
+        document.getElementById('shareLongBtn').addEventListener('click', () => shareImage('long', { user, axes, portrait }));
+        document.getElementById('shareResultBtn').addEventListener('click', () => shareImage('result', { user, axes, portrait }));
+      }
+
+      function drawRadar(axes, canvasId = 'radarCanvas', compact = false) {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
         const ctx = canvas.getContext('2d');
-        const cx = 160, cy = 160, radius = 110;
-        const count = dimensions.length;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const ratio = window.devicePixelRatio || 1;
+        const cssWidth = compact ? 240 : 260;
+        const cssHeight = compact ? 220 : 260;
+        canvas.width = cssWidth * ratio;
+        canvas.height = cssHeight * ratio;
+        canvas.style.width = `${cssWidth}px`;
+        canvas.style.height = `${cssHeight}px`;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        ctx.clearRect(0, 0, cssWidth, cssHeight);
 
-        for (let ring = 1; ring <= 5; ring += 1) {
+        const cx = cssWidth / 2;
+        const cy = compact ? 106 : 128;
+        const radius = compact ? 72 : 86;
+        const levels = 4;
+        const angles = [-Math.PI / 2, 0, Math.PI / 2, Math.PI];
+        const values = axes.map((axis) => axis.score);
+        const ready = axes.map((axis) => !axis.placeholder);
+
+        ctx.strokeStyle = 'rgba(74,48,115,0.12)';
+        ctx.lineWidth = 1;
+        for (let level = 1; level <= levels; level += 1) {
+          const r = radius * (level / levels);
           ctx.beginPath();
-          dimensions.forEach((_, index) => {
-            const angle = -Math.PI / 2 + (Math.PI * 2 * index / count);
-            const x = cx + Math.cos(angle) * radius * (ring / 5);
-            const y = cy + Math.sin(angle) * radius * (ring / 5);
-            if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          angles.forEach((angle, index) => {
+            const x = cx + Math.cos(angle) * r;
+            const y = cy + Math.sin(angle) * r;
+            index === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
           });
           ctx.closePath();
-          ctx.strokeStyle = 'rgba(44,32,20,.12)';
           ctx.stroke();
         }
 
-        dimensions.forEach((item, index) => {
-          const angle = -Math.PI / 2 + (Math.PI * 2 * index / count);
+        angles.forEach((angle, index) => {
           const x = cx + Math.cos(angle) * radius;
           const y = cy + Math.sin(angle) * radius;
           ctx.beginPath();
           ctx.moveTo(cx, cy);
           ctx.lineTo(x, y);
-          ctx.strokeStyle = 'rgba(44,32,20,.12)';
+          ctx.strokeStyle = ready[index] ? 'rgba(74,48,115,0.16)' : 'rgba(117,108,130,0.26)';
+          ctx.setLineDash(ready[index] ? [] : [5, 5]);
           ctx.stroke();
-
-          const tx = cx + Math.cos(angle) * (radius + 22);
-          const ty = cy + Math.sin(angle) * (radius + 22);
-          ctx.fillStyle = '#7a6f64';
-          ctx.font = '12px Noto Serif SC';
-          ctx.textAlign = 'center';
-          ctx.fillText(item.label, tx, ty);
         });
+        ctx.setLineDash([]);
 
         ctx.beginPath();
-        dimensions.forEach((item, index) => {
-          const angle = -Math.PI / 2 + (Math.PI * 2 * index / count);
-          const score = item.score === null ? 0 : item.score;
-          const x = cx + Math.cos(angle) * radius * (score / 5);
-          const y = cy + Math.sin(angle) * radius * (score / 5);
-          if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        angles.forEach((angle, index) => {
+          const r = radius * values[index];
+          const x = cx + Math.cos(angle) * r;
+          const y = cy + Math.sin(angle) * r;
+          index === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         });
         ctx.closePath();
-        ctx.fillStyle = 'rgba(74,48,115,0.2)';
+        ctx.fillStyle = 'rgba(74,48,115,0.10)';
         ctx.strokeStyle = '#4A3073';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1.6;
         ctx.fill();
         ctx.stroke();
 
-        dimensions.forEach((item, index) => {
-          const angle = -Math.PI / 2 + (Math.PI * 2 * index / count);
-          const score = item.score === null ? 0 : item.score;
-          const x = cx + Math.cos(angle) * radius * (score / 5);
-          const y = cy + Math.sin(angle) * radius * (score / 5);
+        angles.forEach((angle, index) => {
+          const r = radius * values[index];
+          const x = cx + Math.cos(angle) * r;
+          const y = cy + Math.sin(angle) * r;
           ctx.beginPath();
-          ctx.arc(x, y, 4, 0, Math.PI * 2);
-          ctx.fillStyle = '#4A3073';
+          ctx.arc(x, y, 4.5, 0, Math.PI * 2);
+          ctx.fillStyle = ready[index] ? '#4A3073' : '#c7c0c9';
           ctx.fill();
         });
 
-        legend.innerHTML = dimensions.map((item) => `
-          <div style="padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.72);border:1px solid rgba(74,48,115,.08);">
-            <strong style="display:block;color:#2e2e2e;font-size:14px;">${item.label}${item.score !== null ? ` · ${item.score.toFixed(1)}` : ''}</strong>
-            <span style="font-size:12px;color:#8e857f;">${item.description}</span>
-          </div>
-        `).join('');
+        axes.forEach((axis, index) => {
+          const angle = angles[index];
+          const x = cx + Math.cos(angle) * (radius + (compact ? 20 : 24));
+          const y = cy + Math.sin(angle) * (radius + (compact ? 20 : 24));
+          ctx.fillStyle = ready[index] ? '#4A3073' : '#766c82';
+          ctx.font = `${compact ? 12 : 13}px "Noto Serif SC", Georgia, serif`;
+          ctx.textAlign = index === 1 ? 'left' : index === 3 ? 'right' : 'center';
+          ctx.textBaseline = index === 0 ? 'bottom' : index === 2 ? 'top' : 'middle';
+          ctx.fillText(axis.short, x, y);
+        });
       }
 
-      function renderLoginPrompt() {
-        profileRoot.innerHTML = `
-          <div class="empty-state">
-            <h2>先登录，再看你的测试记录</h2>
-            <p>我们需要先确认你的身份，才能把你做过的结果调出来。登录弹窗会自动打开，如果没有弹出，请手动点击下方按钮。</p>
-            <div class="card-actions" style="margin-top:18px;">
-              <button class="ghost-btn" type="button" onclick="openLoginModal()">立即登录</button>
+      function buildLongShareHTML({ axes, portrait }) {
+        return `
+          <div class="share-sheet profile-card">
+            <div class="share-sheet-inner">
+              <div class="brand-block"><div class="brand-mark">女也 she is ______.</div><div class="brand-line"></div></div>
+              <header class="share-intro"><h2>你不是一个单一的类型。</h2><p>这四个维度加在一起，才接近真实的你。</p></header>
+              <section class="share-radar-panel"><canvas id="shareRadarCanvas" class="share-radar-canvas"></canvas><div class="share-radar-legend"><div>特质</div><div>情绪</div><div>行为</div><div>动机</div></div></section>
+              <section class="axis-summary">
+                ${axes.map((axis) => `
+                  <div class="axis-row">
+                    <div class="axis-tag">${axis.name}</div>
+                    <div class="axis-list">
+                      ${axis.items.map((item) => `
+                        <div class="axis-item ${item.state !== 'done' ? 'pending' : ''}">
+                          <span class="axis-item-name">${item.soon ? item.label : item.name}</span>
+                          <span class="axis-item-value">${item.state === 'done' ? escapeHtml(item.value) : item.soon ? '待解锁' : '未完成'}</span>
+                        </div>
+                      `).join('')}
+                    </div>
+                  </div>
+                `).join('')}
+              </section>
+              <p class="share-portrait-copy">${escapeHtml(portrait)}</p>
+              <footer class="share-footer"><p class="url">she-is-app.netlify.app</p><p class="sign">她的测评 · 女也</p></footer>
             </div>
           </div>
         `;
-        openLoginModal();
       }
 
-      function renderProfile(user, results) {
-        const resultMap = normalizeResults(results);
-        const dimensions = buildRadarDimensions(results);
-        const hasRadarResults = (results || []).length > 0 && dimensions.some((item) => item.score !== null);
-        const radarSection = hasRadarResults ? `
-          <section class="section" id="radarSection">
-            <h2 class="section-title">五维内在雷达</h2>
-            <div style="display:grid;place-items:center;gap:10px;margin-bottom:16px;">
-              <canvas id="radarCanvas" width="320" height="320" style="max-width:100%;height:auto;" aria-label="五维雷达图"></canvas>
-              <div id="radarLegend" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;width:100%;"></div>
+      function buildResultShareHTML({ axes }) {
+        const allItems = axes.flatMap((axis) => axis.items.map((item) => ({ ...item, axis: axis.name })));
+        return `
+          <div class="share-sheet result-card">
+            <div class="share-sheet-inner">
+              <div class="brand-block"><div class="brand-mark">女也 she is ______.</div><div class="brand-line"></div></div>
+              <p class="result-intro">这是我目前的内在轮廓。</p>
+              <section class="result-list">
+                ${allItems.map((item) => `
+                  <div class="result-row ${item.state !== 'done' ? 'pending' : ''}">
+                    <div class="result-dot"></div>
+                    <div class="result-name">${item.soon ? item.label : item.name}</div>
+                    <div class="result-badge">${item.state === 'done' ? escapeHtml(item.value) : item.soon ? '即将上线' : '未完成'}</div>
+                  </div>
+                `).join('')}
+              </section>
+              <footer class="result-footer"><div class="result-footer-line"></div><p class="result-footer-note">你不是一个单一的类型。</p><p class="result-footer-url">she-is-app.netlify.app</p></footer>
             </div>
-          </section>
-        ` : '';
-        const cards = orderedTestNames.map((testName) => {
-          const result = resultMap.get(testName);
-          const href = testFileMap[testName] || '#';
-          const title = escapeHtml(testNameMap[testName] || testName);
-
-          if (result) {
-            const resultType = escapeHtml(result.result_type || '已完成');
-            const completedAt = escapeHtml(formatTime(result.completed_at));
-            return `
-              <article class="test-card completed">
-                <p class="card-meta">completed</p>
-                <h3 class="card-title">${title}</h3>
-                <p class="card-result">结果类型：${resultType}</p>
-                <p class="card-time">完成时间：${completedAt}</p>
-                <div class="card-actions">
-                  <a class="solid-link" href="${href}">重新测试</a>
-                </div>
-              </article>
-            `;
-          }
-
-          return `
-            <article class="test-card pending">
-              <p class="card-meta">not yet</p>
-              <h3 class="card-title">${title}</h3>
-              <div class="card-actions">
-                <a class="solid-link" href="${href}">去测试</a>
-              </div>
-            </article>
-          `;
-        }).join('');
-
-        profileRoot.innerHTML = `
-          <section class="panel">
-            <div class="user-row">
-              <div>
-                <p class="user-kicker">ACCOUNT</p>
-                <h2 class="user-name">${escapeHtml(getDisplayName(user))}</h2>
-                <p class="user-email">${escapeHtml(user.email || '')}</p>
-              </div>
-              <button class="ghost-btn" id="logoutBtn" type="button">退出登录</button>
-            </div>
-          </section>
-
-          ${radarSection}
-
-          <section class="section">
-            <h2 class="section-title">我的测试结果</h2>
-            <p class="section-copy">白色卡片表示你已经完成，灰色卡片表示还没开始。所有入口都可以直接继续。</p>
-            <div class="cards">${cards}</div>
-          </section>
+          </div>
         `;
+      }
 
-        if (hasRadarResults) drawRadar(dimensions);
-        document.getElementById('logoutBtn').addEventListener('click', signOut);
+      async function shareImage(type, data) {
+        const btn = document.getElementById(type === 'long' ? 'shareLongBtn' : 'shareResultBtn');
+        const original = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = '生成中…';
+
+        try {
+          captureStage.innerHTML = type === 'long' ? buildLongShareHTML(data) : buildResultShareHTML(data);
+          if (type === 'long') drawRadar(data.axes, 'shareRadarCanvas', true);
+          const node = captureStage.firstElementChild;
+          const canvas = await html2canvas(node, { backgroundColor: '#f5f0eb', scale: 2, useCORS: true });
+          const link = document.createElement('a');
+          link.download = type === 'long' ? 'profile-long.png' : 'profile-result-card.png';
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+          captureStage.innerHTML = '';
+        } catch (error) {
+          console.error('share failed', error);
+          alert('生成图片失败，请稍后再试。');
+        } finally {
+          btn.disabled = false;
+          btn.textContent = original;
+        }
       }
 
       async function initProfilePage() {
         try {
+          injectLoginModal();
           const user = await getUser();
           if (!user) {
             renderLoginPrompt();
@@ -626,15 +891,11 @@
           renderProfile(user, results);
         } catch (error) {
           console.error('Failed to initialize profile page:', error);
-          profileRoot.innerHTML = `
-            <div class="empty-state">
-              <h2>结果暂时没有加载出来</h2>
-              <p>请刷新页面再试一次。如果你刚完成登录，等几秒再回来通常就能同步成功。</p>
-            </div>
-          `;
+          profileRoot.innerHTML = `<section class="login-card"><h2 class="login-title">结果暂时没有加载出来</h2><p class="login-copy">请刷新页面再试一次。如果你刚完成登录，等几秒再回来通常就能同步成功。</p></section>`;
         }
       }
 
+      logoutBtn.addEventListener('click', signOut);
       initProfilePage();
     </script>
   </body>
