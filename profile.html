@@ -501,7 +501,8 @@
         ecr: { name: '依恋风格测评', href: 'test-ecr.html' },
         fmps: { name: '完美主义测评', href: 'test-fmps.html' },
         'boundary-sense': { name: '边界感测评', href: 'test-boundary-sense.html' },
-        'relationship-role': { name: '关系角色测评', href: 'test-relationship-role.html' }
+        'relationship-role': { name: '关系角色测评', href: 'test-relationship-role.html' },
+        disc: { name: '行为风格测评', href: 'test-disc.html' }
       };
 
       const AXES = [
@@ -527,7 +528,7 @@
           meaning: '你怎么行动',
           short: '行为',
           description: '你如何行动、设标准、划边界——这决定了你和世界的互动方式',
-          items: [{ key: 'fmps', label: 'fmps' }, { key: 'boundary-sense', label: 'boundary-sense' }, { key: 'relationship-role', label: 'relationship-role' }]
+          items: [{ key: 'fmps', label: 'fmps' }, { key: 'boundary-sense', label: 'boundary-sense' }, { key: 'relationship-role', label: 'relationship-role' }, { key: 'disc', label: 'disc' }]
         },
         {
           key: 'motive',
@@ -619,7 +620,7 @@
           let score = 0;
           if (axis.key === 'trait') score = doneCount ? 1 : 0;
           if (axis.key === 'emotion') score = doneCount / 3;
-          if (axis.key === 'behavior') score = doneCount / 3;
+          if (axis.key === 'behavior') score = doneCount / 4;
           if (axis.key === 'motive') score = 0;
           return { ...axis, items, total, doneCount, score };
         });
