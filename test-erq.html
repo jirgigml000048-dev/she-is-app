@@ -633,16 +633,36 @@
       });
       const DATA = {
         questions: [
-          { id: 1, text: "当我想感受一些积极的情绪（如快乐或高兴）时，我会改变自己思考问题的角度", dimension: "reappraisal" },
-          { id: 2, text: "我不会表露自己的情绪", dimension: "suppression" },
-          { id: 3, text: "当我想少感受一些消极的情绪（如悲伤或愤怒）时，我会改变自己思考问题的角度", dimension: "reappraisal" },
-          { id: 4, text: "当感受到积极情绪时，我会很小心地不让它们表露出来", dimension: "suppression" },
-          { id: 5, text: "在面对压力情境时，我会使自己以一种有助于保持平静的方式来考虑它", dimension: "reappraisal" },
-          { id: 6, text: "我控制自己情绪的方式是不表达它们", dimension: "suppression" },
-          { id: 7, text: "当我想多感受一些积极的情绪时，我会改变自己对情境的考虑方式", dimension: "reappraisal" },
-          { id: 8, text: "我会通过改变对情境的考虑方式来控制自己的情绪", dimension: "reappraisal" },
-          { id: 9, text: "当感受到消极的情绪时，我确定不会表露它们", dimension: "suppression" },
-          { id: 10, text: "当我想少感受一些消极的情绪时，我会改变自己对情境的考虑方式", dimension: "reappraisal" }
+          { id: 1, text: "情景：朋友迟到了一小时，你本来很烦。
+
+陈述：我会先想想他是不是有什么原因，让自己平静下来。", dimension: "reappraisal" },
+          { id: 2, text: "情景：和同事开会，有人说了一件让你不舒服的话。
+
+陈述：我不会让别人看出来我有情绪。", dimension: "suppression" },
+          { id: 3, text: "情景：工作上出了一个你觉得不该发生的错误，你很沮丧。
+
+陈述：我会换一个角度看它——也许这是个机会，让我搞清楚哪里还有漏洞。", dimension: "reappraisal" },
+          { id: 4, text: "情景：收到了一个好消息，你其实很激动。
+
+陈述：我会克制自己，不在公开场合表露这种兴奋。", dimension: "suppression" },
+          { id: 5, text: "情景：你面临一个让你焦虑的重要决定。
+
+陈述：我会告诉自己：不管结果怎样，我能处理的。", dimension: "reappraisal" },
+          { id: 6, text: "情景：你心里很乱，但现场需要你保持冷静。
+
+陈述：我的做法是什么都不表现出来，先撑过这一段。", dimension: "suppression" },
+          { id: 7, text: "情景：一件开心的事情发生了，但你有点不敢相信。
+
+陈述：我会让自己好好感受这份高兴，而不是马上想「会不会哪里有问题」。", dimension: "reappraisal" },
+          { id: 8, text: "情景：和重要的人发生了争吵，你很难受。
+
+陈述：我会在脑子里重新组织这件事：我们只是观点不同，不是关系坏了。", dimension: "reappraisal" },
+          { id: 9, text: "情景：你感到委屈，但不想让对方知道。
+
+陈述：我会把那些情绪压下去，就算再难受也不会表露出来。", dimension: "suppression" },
+          { id: 10, text: "情景：你被批评了，感觉很受伤。
+
+陈述：我会试着把这个评价当作信息，而不是对我这个人的否定。", dimension: "reappraisal" }
         ],
         results: {
           high_reappraisal_low_suppression: {
@@ -720,7 +740,7 @@
       function renderQuestion() {
         const q = DATA.questions[state.index];
         qId.textContent = `第 ${q.id} 题`;
-        qText.textContent = q.text;
+        qText.innerHTML = q.text.replace(/\n\n/g, "<br><br>");
         syncSliderValue(state.answers[state.index] || 4);
         if (storyRec) storyRec.style.display = 'none';
         updateProgress();
