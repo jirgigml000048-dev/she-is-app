@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FMPS 完美主义测评结果 Demo</title>
+  <style>
+    :root {
+      --bg: #f5f0eb;
+      --brand: #4A3073;
+      --text: #333333;
+      --muted: #888888;
+      --subtle: #999999;
+      --track: rgba(74, 48, 115, 0.1);
+      --line: rgba(74, 48, 115, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Noto Serif SC", Georgia, serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 390px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    section {
+      margin-top: 32px;
+    }
+
+    .kicker {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: var(--brand);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .quote {
+      margin-top: 22px;
+      padding: 16px 20px;
+      background: rgba(74, 48, 115, 0.04);
+      border-radius: 8px;
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--brand);
+      font-style: italic;
+    }
+
+    .section-title {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--brand);
+      border-left: 2px solid var(--brand);
+      padding-left: 8px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .dimension {
+      margin-bottom: 16px;
+    }
+
+    .dimension:last-child {
+      margin-bottom: 0;
+    }
+
+    .dimension-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 9px;
+    }
+
+    .dimension-name {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 400;
+      line-height: 1.35;
+    }
+
+    .dimension-name.is-high {
+      color: var(--brand);
+      font-weight: 700;
+    }
+
+    .dimension-name-en {
+      display: block;
+      margin-top: 2px;
+      font-size: 10px;
+      color: #aaa;
+      font-style: italic;
+      letter-spacing: 0.03em;
+      font-weight: 400;
+    }
+
+    .dimension-score {
+      font-size: 11px;
+      color: var(--brand);
+      white-space: nowrap;
+    }
+
+    .progress {
+      width: 100%;
+      height: 3px;
+      background: var(--track);
+      overflow: hidden;
+      margin-bottom: 9px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--brand);
+    }
+
+    .dimension-desc {
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--subtle);
+    }
+
+    .body-copy p,
+    .mode-copy,
+    .daily-item {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.9;
+      letter-spacing: 0.01em;
+      margin: 0 0 1em;
+    }
+
+    .body-copy p:last-child,
+    .daily-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .daily-list {
+      margin-top: 0;
+    }
+
+    .daily-item {
+      padding: 0;
+      margin: 0;
+      border: 0;
+    }
+
+    .daily-item + .daily-item {
+      margin-top: 20px;
+    }
+
+    .reflection {
+      font-size: 20px;
+      line-height: 1.75;
+      color: var(--brand);
+      font-style: italic;
+      margin: 0;
+      letter-spacing: 0.01em;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero" style="margin-top: 0;">
+      <div class="kicker">完美主义测评</div>
+      <h1>你太怕做错了</h1>
+      <div class="quote">你为每一个决定付出的内耗，远远超过了决定本身。</div>
+    </section>
+
+    <section>
+      <div class="section-title">你的完美主义来自哪里</div>
+
+      <div class="dimension">
+        <div class="dimension-head">
+          <div class="dimension-name is-high">担心错误<span class="dimension-name-en">Concern over Mistakes</span></div>
+          <div class="dimension-score">4.2 / 5</div>
+        </div>
+        <div class="progress"><div class="progress-bar" style="width: 84%;"></div></div>
+        <div class="dimension-desc">你有多害怕犯错、被评判</div>
+      </div>
+
+      <div class="dimension">
+        <div class="dimension-head">
+          <div class="dimension-name">条理性<span class="dimension-name-en">Organisation</span></div>
+          <div class="dimension-score">3.1 / 5</div>
+        </div>
+        <div class="progress"><div class="progress-bar" style="width: 62%;"></div></div>
+        <div class="dimension-desc">你对整洁和秩序的需要程度</div>
+      </div>
+
+      <div class="dimension">
+        <div class="dimension-head">
+          <div class="dimension-name">父母期望<span class="dimension-name-en">Parental Expectations</span></div>
+          <div class="dimension-score">2.8 / 5</div>
+        </div>
+        <div class="progress"><div class="progress-bar" style="width: 56%;"></div></div>
+        <div class="dimension-desc">你内化了多少来自父母的标准</div>
+      </div>
+
+      <div class="dimension">
+        <div class="dimension-head">
+          <div class="dimension-name is-high">个人标准<span class="dimension-name-en">Personal Standards</span></div>
+          <div class="dimension-score">3.6 / 5</div>
+        </div>
+        <div class="progress"><div class="progress-bar" style="width: 72%;"></div></div>
+        <div class="dimension-desc">你对自己设定的高要求程度</div>
+      </div>
+
+      <div class="dimension">
+        <div class="dimension-head">
+          <div class="dimension-name is-high">行动疑虑<span class="dimension-name-en">Doubts about Actions</span></div>
+          <div class="dimension-score">4.0 / 5</div>
+        </div>
+        <div class="progress"><div class="progress-bar" style="width: 80%;"></div></div>
+        <div class="dimension-desc">做完了之后你还会继续怀疑多久</div>
+      </div>
+    </section>
+
+    <section class="body-copy">
+      <p>每一次开始之前，你的脑子里已经放过了一遍所有可能出错的画面。那些还没发生的失败，对你来说已经有了重量。</p>
+      <p>你做事的时候，身体里有一根弦一直绷着。不是怕做不好，是怕搞砸、怕犯错、怕那个最糟糕的版本真的发生。这种恐惧很具体，具体到你能描述每一种失败的样子。</p>
+      <p>即使做完了，你也很难松下来。心里总有一个声音在问：真的没问题吗？是不是漏了什么？这种疑虑不会因为完成而消失，反而在完成之后变得更清晰。</p>
+      <p>你的认真和负责，很多人看得到。但他们看不到的是，你为每一个决定付出的内耗，远远超过了决定本身。</p>
+    </section>
+
+    <section>
+      <div class="section-title">你的完美主义模式</div>
+      <p class="mode-copy">你的系统同时在两个地方发力——害怕做错（CM高），以及做完了还是不确定（DA高）。这两股力量让你在一件事上消耗的能量，远远超过了它本身需要的。</p>
+    </section>
+
+    <section>
+      <div class="section-title">在日常里</div>
+      <div class="daily-list">
+        <div class="daily-item">开始一件事之前，你已经在脑子里演练过它失败的样子——不是一次，是好几个版本。</div>
+        <div class="daily-item">做完了，你没有松下来。心里有个声音在问：真的没问题吗？是不是漏了什么？</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">值得想一想</div>
+      <p class="reflection">你上一次做完一件事之后真正放下了，是什么时候？</p>
+    </section>
+  </main>
+</body>
+</html>

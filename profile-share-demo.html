@@ -224,76 +224,122 @@
       color: #b0a9b5;
     }
 
+    .result-card {
+      min-height: 520px;
+      height: auto;
+      background: #f5f0eb;
+      box-shadow: 0 16px 36px rgba(74, 48, 115, 0.12);
+    }
+
     .result-card .share-sheet {
-      padding: 24px 24px 24px;
+      height: 100%;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      text-align: left;
     }
 
     .result-card .brand-block {
       text-align: left;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
-    .result-title {
-      margin: 0 0 20px;
-      font-size: 18px;
+    .result-card .brand-mark {
+      font-size: 11px;
+      letter-spacing: 0.08em;
       color: var(--brand);
-      font-weight: 600;
+      text-transform: none;
+    }
+
+    .result-card .brand-line {
+      margin-top: 12px;
+      background: rgba(74, 48, 115, 0.15);
+      opacity: 1;
+    }
+
+    .result-intro {
+      margin: 0 0 20px;
+      text-align: left;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #666;
+      font-style: italic;
     }
 
     .result-list {
-      margin-bottom: 22px;
-      border-top: 1px solid rgba(74, 48, 115, 0.1);
+      margin: 0;
+      flex: 1;
     }
 
     .result-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: 6px minmax(0, 1fr) auto;
       align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 15px 0;
-      border-bottom: 1px solid rgba(74, 48, 115, 0.1);
+      column-gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(74, 48, 115, 0.08);
+    }
+
+    .result-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--brand);
     }
 
     .result-name {
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.6;
+      min-width: 0;
+      font-size: 13px;
+      color: #333;
+      line-height: 1.5;
     }
 
     .result-badge {
       flex-shrink: 0;
-      padding: 5px 10px;
-      border-radius: 999px;
-      background: var(--chip-bg);
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: rgba(74,48,115,0.08);
       color: var(--brand);
-      font-size: 12px;
-      border: 1px solid rgba(74, 48, 115, 0.08);
+      font-size: 11px;
+      line-height: 1.4;
       white-space: nowrap;
+      border: none;
     }
 
-    .result-row.pending .result-name {
-      color: #9e97a5;
+    .result-row.pending .result-dot {
+      background: #ccc;
     }
 
     .result-row.pending .result-badge {
-      background: var(--chip-pending-bg);
-      color: var(--chip-pending-text);
-      border-style: dashed;
+      background: rgba(204, 204, 204, 0.24);
+      color: #999;
+    }
+
+    .result-footer {
+      margin-top: 18px;
+      text-align: left;
+    }
+
+    .result-footer-line {
+      width: 100%;
+      height: 1px;
+      margin-bottom: 14px;
+      background: rgba(74, 48, 115, 0.15);
     }
 
     .result-footer-note {
       margin: 0;
-      font-size: 14px;
-      color: #666;
+      font-size: 13px;
+      color: var(--brand);
       font-style: italic;
-      line-height: 1.8;
+      line-height: 1.7;
     }
 
     .result-footer-url {
       margin: 10px 0 0;
       font-size: 11px;
-      color: #999;
-      letter-spacing: 0.08em;
+      color: #aaa;
+      letter-spacing: 0;
     }
 
     @media (max-width: 480px) {
@@ -418,47 +464,57 @@
         <div class="share-sheet">
           <div class="brand-block">
             <div class="brand-mark">女也 she is ______.</div>
+            <div class="brand-line"></div>
           </div>
 
-          <h2 class="result-title">我做了这些测评</h2>
+          <p class="result-intro">这是我目前的内在轮廓。</p>
 
           <section class="result-list" aria-label="测评结果列表">
             <div class="result-row">
+              <div class="result-dot"></div>
               <div class="result-name">荣格八维认知功能</div>
               <div class="result-badge">INFJ</div>
             </div>
             <div class="result-row">
+              <div class="result-dot"></div>
               <div class="result-name">高敏感测评</div>
               <div class="result-badge">高敏感人格</div>
             </div>
             <div class="result-row">
+              <div class="result-dot"></div>
               <div class="result-name">情绪调节测评</div>
               <div class="result-badge">思考派</div>
             </div>
             <div class="result-row">
+              <div class="result-dot"></div>
               <div class="result-name">依恋风格测评</div>
               <div class="result-badge">专注型</div>
             </div>
             <div class="result-row">
+              <div class="result-dot"></div>
               <div class="result-name">完美主义测评</div>
               <div class="result-badge">中等完美主义</div>
             </div>
             <div class="result-row">
+              <div class="result-dot"></div>
               <div class="result-name">边界感测评</div>
               <div class="result-badge">边界探索者</div>
             </div>
             <div class="result-row pending">
+              <div class="result-dot"></div>
               <div class="result-name">关系角色测评</div>
               <div class="result-badge">未完成</div>
             </div>
             <div class="result-row pending">
+              <div class="result-dot"></div>
               <div class="result-name">今日情绪地图</div>
               <div class="result-badge">未完成</div>
             </div>
           </section>
 
-          <footer>
-            <p class="result-footer-note">这是我目前的内在轮廓。</p>
+          <footer class="result-footer">
+            <div class="result-footer-line"></div>
+            <p class="result-footer-note">你不是一个单一的类型。</p>
             <p class="result-footer-url">she-is-app.netlify.app</p>
           </footer>
         </div>

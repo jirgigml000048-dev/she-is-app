@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>关系角色测评 Demo</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --bg: #f5f0eb;
+      --brand: #4A3073;
+      --text: #333333;
+      --muted: rgba(74, 48, 115, 0.68);
+      --line: rgba(74, 48, 115, 0.12);
+      --quote-bg: rgba(74, 48, 115, 0.04);
+      --white: #ffffff;
+      --shadow: 0 18px 48px rgba(74, 48, 115, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Noto Serif SC", Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 390px;
+      margin: 0 auto;
+      padding: 28px 24px 40px;
+    }
+
+    .brand-lockup {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .brand-name {
+      font-size: 16px;
+      color: var(--brand);
+      letter-spacing: 0.04em;
+    }
+
+    .brand-sub {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+    }
+
+    .brand-line {
+      width: 100%;
+      height: 1px;
+      background: rgba(74, 48, 115, 0.18);
+      transform: scaleY(0.5);
+      transform-origin: center;
+      margin-bottom: 28px;
+    }
+
+    .intro {
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      color: var(--brand);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 24px;
+      line-height: 1.45;
+      font-weight: 500;
+      margin: 0 0 12px;
+      color: #251637;
+    }
+
+    .intro p,
+    .question-title,
+    .option-text,
+    .result-body p,
+    .section-content,
+    .retake-note {
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--text);
+    }
+
+    .intro p {
+      margin: 0;
+      color: rgba(51, 51, 51, 0.82);
+    }
+
+    .question-card,
+    .result-card {
+      background: rgba(255,255,255,0.48);
+      border: 1px solid rgba(74, 48, 115, 0.08);
+      border-radius: 16px;
+      padding: 18px 16px;
+      box-shadow: 0 8px 24px rgba(74, 48, 115, 0.04);
+      backdrop-filter: blur(4px);
+      margin-bottom: 14px;
+    }
+
+    .question-meta {
+      font-size: 11px;
+      color: var(--brand);
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+
+    .question-title {
+      margin: 0 0 14px;
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option {
+      display: block;
+      cursor: pointer;
+    }
+
+    .option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .option-card {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 13px;
+      border: 1px solid rgba(74, 48, 115, 0.14);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.78);
+      transition: 0.2s ease;
+    }
+
+    .option input:checked + .option-card {
+      border-color: var(--brand);
+      background: rgba(74, 48, 115, 0.05);
+      box-shadow: inset 0 0 0 1px rgba(74, 48, 115, 0.12);
+    }
+
+    .option-card:hover {
+      border-color: rgba(74, 48, 115, 0.3);
+    }
+
+    .option-letter {
+      min-width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1px solid rgba(74, 48, 115, 0.2);
+      color: var(--brand);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .submit-wrap,
+    .share-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .share-actions {
+      margin-top: 24px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--brand);
+      background: #fff;
+      color: var(--brand);
+      padding: 12px 14px;
+      border-radius: 999px;
+      flex: 1;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.2s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--brand);
+      color: #fff;
+    }
+
+    .hint {
+      margin-top: 12px;
+      font-size: 12px;
+      color: rgba(74, 48, 115, 0.76);
+      min-height: 18px;
+    }
+
+    .hidden { display: none !important; }
+
+    .result-card {
+      padding: 22px 24px 20px;
+    }
+
+    .result-quote {
+      background: transparent;
+      padding: 0 0 0 16px;
+      border-radius: 0;
+      border-left: 3px solid var(--brand);
+      color: var(--brand);
+      line-height: 1.7;
+      font-size: 18px;
+      font-style: italic;
+      margin: 24px 0;
+    }
+
+    .result-body p {
+      margin: 0 0 1.2em;
+      font-size: 14px;
+      line-height: 1.95;
+      color: #2a2a2a;
+      letter-spacing: 0.01em;
+    }
+
+    .result-body p:first-child {
+      font-size: 15px;
+    }
+
+    .result-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-block {
+      margin-top: 48px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--brand);
+      padding-left: 8px;
+      border-left: 2px solid var(--brand);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin: 0 0 14px;
+    }
+
+    .section-content {
+      color: #2a2a2a;
+      font-size: 14px;
+      line-height: 1.95;
+      letter-spacing: 0.01em;
+    }
+
+    .section-content ul {
+      margin: 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .section-content li {
+      position: relative;
+      padding-left: 1em;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.8;
+      letter-spacing: 0.01em;
+    }
+
+    .section-content li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--brand);
+    }
+
+    .section-content li + li {
+      margin-top: 20px;
+    }
+
+    .section-block:last-of-type .section-content {
+      margin-top: 8px;
+      font-size: 16px;
+      color: var(--brand);
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    .retake {
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .retake-note {
+      font-size: 12px;
+      color: rgba(51,51,51,0.66);
+      margin-top: 10px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(28, 17, 43, 0.78);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 999;
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-inner {
+      position: relative;
+      max-width: min(92vw, 430px);
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-close {
+      position: absolute;
+      right: -4px;
+      top: -36px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.45);
+      background: transparent;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .modal-image-wrap {
+      max-height: 82vh;
+      overflow: auto;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      background: transparent;
+    }
+
+    .modal-image-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .modal-tip {
+      color: rgba(255,255,255,0.88);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    .capture-shell,
+    .quote-share-card {
+      position: fixed;
+      left: -99999px;
+      top: 0;
+      width: 390px;
+      background: var(--bg);
+      color: var(--text);
+      padding: 24px 20px 28px;
+    }
+
+    .capture-footer {
+      margin-top: 24px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(74, 48, 115, 0.14);
+      font-size: 12px;
+      color: rgba(74, 48, 115, 0.72);
+      line-height: 1.8;
+    }
+
+    .quote-share-card {
+      height: 693px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(180deg, #f5f0eb 0%, #f1e9f8 100%);
+    }
+
+    .quote-card-main {
+      margin-top: 48px;
+    }
+
+    .quote-card-title {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      color: var(--brand);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .r-type,
+    .quote-card-type {
+      font-size: 32px;
+      font-weight: 600;
+      color: #1a1a1a;
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .quote-card-text {
+      background: rgba(255,255,255,0.62);
+      border: 1px solid rgba(74,48,115,0.08);
+      border-radius: 18px;
+      padding: 22px 18px;
+      font-size: 22px;
+      line-height: 1.75;
+      color: var(--brand);
+    }
+
+    .quote-card-footer {
+      font-size: 12px;
+      line-height: 1.8;
+      color: rgba(74, 48, 115, 0.72);
+      padding-top: 16px;
+      border-top: 1px solid rgba(74, 48, 115, 0.14);
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section id="quiz-view">
+      <div class="brand-lockup">
+        <div class="brand-name">女也</div>
+        <div class="brand-sub">she is relationship archetype.</div>
+        <div class="brand-line"></div>
+      </div>
+
+      <div class="intro">
+        <div class="eyebrow">relationship role test</div>
+        <h1>关系里，你更常成为哪一种角色？</h1>
+        <p>10 道题，凭直觉选择。结果会落在：倾听者 / 照顾者 / 表达者 之一。</p>
+      </div>
+
+      <form id="quiz-form"></form>
+      <div class="submit-wrap">
+        <button type="button" class="btn btn-primary" id="submit-btn">查看结果</button>
+      </div>
+      <div id="hint" class="hint"></div>
+    </section>
+
+    <section id="result-view" class="hidden">
+      <div id="result-capture" class="result-card"></div>
+      <div class="share-actions">
+        <button type="button" class="btn" id="share-long">结果长图</button>
+        <button type="button" class="btn" id="share-quote">分享金句</button>
+      </div>
+      <div class="retake">
+        <button type="button" class="btn btn-primary" id="retake-btn">再做一次</button>
+        <div class="retake-note">你可以重新作答，看看自己在不同状态下会不会有变化。</div>
+      </div>
+    </section>
+  </main>
+
+  <div id="share-modal" class="modal" aria-hidden="true">
+    <div class="modal-inner">
+      <button type="button" class="modal-close" id="modal-close" aria-label="关闭">×</button>
+      <div class="modal-image-wrap"><img id="modal-image" alt="分享预览" /></div>
+      <div class="modal-tip">长按保存</div>
+    </div>
+  </div>
+
+  <script>
+    const QUESTIONS = [
+      {
+        id: 1,
+        title: '朋友深夜突然发来一长串消息，说自己快撑不住了。你更像会：',
+        options: [
+          { key: 'A', tag: 'LISTENER', text: '先认真看完，一边安慰一边陪她把情绪说出来' },
+          { key: 'B', tag: 'CAREGIVER', text: '马上问她在哪、要不要吃点东西，开始想怎么照顾她' },
+          { key: 'C', tag: 'EXPRESSOR', text: '直接说出你的担心和想法，也会分享你类似的经历' }
+        ]
+      },
+      {
+        id: 2,
+        title: '伴侣看起来明显心情不好，但只说“没事”。你通常会：',
+        options: [
+          { key: 'A', tag: 'LISTENER', text: '不逼问，陪在旁边等他愿意开口' },
+          { key: 'B', tag: 'CAREGIVER', text: '给他倒水、点外卖、把气氛先照顾好' },
+          { key: 'C', tag: 'EXPRESSOR', text: '主动说「我感觉你不太对劲，我们聊聊吧」' }
+        ]
+      },
+      {
+        id: 3,
+        title: '你跟一个亲近的人相处，气氛突然变得安静，谁都没说话。你更像会：',
+        badge: '改版',
+        options: [
+          { key: 'A', tag: 'LISTENER', text: '陪着安静，等对方准备好开口' },
+          { key: 'B', tag: 'CAREGIVER', text: '想起来他最近是不是有什么压力，开始想能不能帮上什么' },
+          { key: 'C', tag: 'EXPRESSOR', text: '说出来——「你最近好像有什么事」' }
+        ]
+      },
+      {
+        id: 4,
+        title: '你和很亲近的人起了小误会，对方开始变冷淡。你的第一反应通常是：',
+        options: [
+          { key: 'A', tag: 'LISTENER', text: '先回想是不是她最近也有别的压力，不急着追问' },
+          { key: 'B', tag: 'CAREGIVER', text: '想着怎么补救、怎么让关系重新舒服一点' },
+          { key: 'C', tag: 'EXPRESSOR', text: '忍不住先把自己的委屈和想法说清楚' }
+        ]
+      },
+      {
+        id: 5,
+        title: '朋友失恋后反复讲同一件事，已经说了很多遍。你更像会：',
+        options: [
+          { key: 'A', tag: 'LISTENER', text: '继续听她说，哪怕内容重复，也知道她还没过去' },
+          { key: 'B', tag: 'CAREGIVER', text: '带她出门、陪她吃饭，想办法让她好受一点' },
+          { key: 'C', tag: 'EXPRESSOR', text: '温和但直接地说出你的判断，希望她早点走出来' }
+        ]
+      },
+      {
+        id: 6,
+        title: '有人问你「你最近怎么样」，你心里其实有很多事。你通常会：',
+        options: [
+          { key: 'A', tag: 'LISTENER', text: '笑笑带过，反而顺势问对方最近怎么样' },
+          { key: 'B', tag: 'CAREGIVER', text: '先说自己还好，担心一说出来会让别人也跟着累' },
+          { key: 'C', tag: 'EXPRESSOR', text: '停一下，挑几件真实的事讲出来' }
+        ]
+      },
+      {
+        id: 7,
+        title: '你遇到了一件很难的事，朋友主动说想陪着你。你更可能：',
+        badge: '改版',
+        options: [
+          { key: 'A', tag: 'LISTENER', text: '接受，但主要是让他们在旁边，不太会主动倾诉' },
+          { key: 'B', tag: 'CAREGIVER', text: '先问他们最近忙不忙，不想给对方添麻烦' },
+          { key: 'C', tag: 'EXPRESSOR', text: '把事情说出来，也会接受对方的安慰' }
+        ]
+      },
+      {
+        id: 8,
+        title: '一段关系里出现沉默期，对方不主动，你也难受。你更可能：',
+        options: [
+          { key: 'A', tag: 'LISTENER', text: '等一等，觉得也许他需要空间' },
+          { key: 'B', tag: 'CAREGIVER', text: '还是会关心他有没有吃饭、最近忙不忙' },
+          { key: 'C', tag: 'EXPRESSOR', text: '先发消息把话题挑开，不想一直猜' }
+        ]
+      },
+      {
+        id: 9,
+        title: '朋友来找你，多半不是为了要建议，而是想被接住。你通常会：',
+        options: [
+          { key: 'A', tag: 'LISTENER', text: '很自然地进入「听她说」的状态' },
+          { key: 'B', tag: 'CAREGIVER', text: '一边听一边照顾细节，比如递纸巾、点热饮、安排后续' },
+          { key: 'C', tag: 'EXPRESSOR', text: '会先回应她，也会把自己的感觉和理解说出来' }
+        ]
+      },
+      {
+        id: 10,
+        title: '回想重要关系里的你，最常出现的遗憾是：',
+        options: [
+          { key: 'A', tag: 'LISTENER', text: '听了很多，却很少让别人真正知道我的感受' },
+          { key: 'B', tag: 'CAREGIVER', text: '总顾着对方舒不舒服，后来才发现自己也有点累' },
+          { key: 'C', tag: 'EXPRESSOR', text: '当下说得太快太满，事后又反复回想是不是说多了' }
+        ]
+      }
+    ];
+
+    const RESULT_MAP = {
+      LISTENER: {
+        typeName: '倾听者',
+        quote: '你给了别人完整的空间。但你的声音，被挤到了很后面。',
+        body: [
+          '在关系里，你总是先听。别人说话的时候，你在的方式很完整——你的眼神、你的沉默、你偶尔的回应，都在说「我在这里，你说」。',
+          '你有一种让人放心开口的气场。很多人在你面前会说出他们不会对别人说的话。你接住了那些沉重的、脆弱的、凌乱的东西，而且你接得很稳。',
+          '你的倾听不是被动的。你在听的时候，脑子里在理解、在感受、在整理。你给出的空间，是你主动创造的，是你选择的慷慨。',
+          '只是有时候，你给了别人太多说话的空间，自己的声音就被挤到了很后面。'
+        ],
+        mode: '你在的方式很完整——眼神、沉默、偶尔的回应，都在告诉对方「你说，我在」。你有一种让人放心开口的气场，接住了很多沉重的、凌乱的东西。只是这种「接住别人」的能力，用在自己身上时，你不太会。',
+        relationship: [
+          '你是很多人的树洞。但当你需要说的时候，你往往先想的是：会不会给别人添麻烦？',
+          '你习惯了做那个听的人，以至于当角色反转、有人想认真听你说话时，你反而不知道说什么了。'
+        ],
+        reflect: '你上一次认真说出自己的感受，是对谁说的？'
+      },
+      CAREGIVER: {
+        typeName: '照顾者',
+        quote: '你照顾了所有人。现在轮到你问自己：谁在照顾我？',
+        body: [
+          '在关系里，你的第一反应是看见对方需要什么。一个眼神、一句话、一个微妙的变化——你就已经在行动了。倒水、安排、调整计划、替对方想到他们还没想到的事。',
+          '你照顾人的方式很细致，细致到对方可能都没有完全意识到你做了多少。你把付出织进了日常的纹理里，安静、自然、不求回报。',
+          '你能扛住很多——情绪的、实际的、别人可能扛不动的。你的肩膀一直都是可以靠的，而且你几乎从不抱怨这件事。',
+          '但你有没有发现，你很少让别人照顾你？接受关心对你来说，比给出关心要难得多。'
+        ],
+        mode: '你的第一反应总是看见对方需要什么，然后去做。细致到对方可能都没有意识到你做了多少。你把付出织进了日常里，安静、自然、不求回报。',
+        relationship: [
+          '你照顾别人的时候是自然的，但接受别人照顾的时候，你会觉得不安——像是欠了什么，或者失去了什么。',
+          '有时候你会发现自己很累，但说不出为什么——因为你做的每一件事单独看都很小，但加在一起是很重的。'
+        ],
+        reflect: '你最近有没有让别人照顾过你——哪怕只是一件小事？'
+      },
+      EXPRESSOR: {
+        typeName: '表达者',
+        quote: '你总是先把手伸出来。在一个大家都在等对方先开口的世界里，这很稀缺。',
+        body: [
+          '在关系里，你是那个先开口的人。你的感受、你的想法、你对这段关系的期待——你愿意把它们说出来，放到两个人之间。',
+          '你的表达不是为了争夺什么，是为了让连接真实地发生。你知道如果什么都不说，关系就会停在表面。你选择了更勇敢的方式——去推动、去靠近、去让对方看到你。',
+          '这种主动性里有一种罕见的诚实。你愿意暴露自己——你的需要、你的脆弱、你的不确定。',
+          '有时候这也让你受伤。你说了，对方没接住。那种落差比沉默更痛，因为你已经把自己摆在了那里。'
+        ],
+        mode: '你愿意把感受、期待、需要说出来，放到两个人之间。你知道如果什么都不说，关系就会停在表面。所以你选择了更勇敢的方式：先开口，先靠近，先把手伸出去。',
+        relationship: [
+          '你说了，对方没接住——这种落差比沉默更痛，因为你已经把自己摆在了那里。你受过这种伤，但你还是继续说。',
+          '有时候你也会想，是不是说太多了？对方会不会觉得压力大？但那个犹豫通常不会阻止你。'
+        ],
+        reflect: '在你说出的那些话里，有没有哪一句，你其实还在等一个回应？'
+      }
+    };
+
+    const PRIORITY = ['LISTENER', 'CAREGIVER', 'EXPRESSOR'];
+
+    const quizForm = document.getElementById('quiz-form');
+    const hint = document.getElementById('hint');
+    const quizView = document.getElementById('quiz-view');
+    const resultView = document.getElementById('result-view');
+    const resultCapture = document.getElementById('result-capture');
+    const shareModal = document.getElementById('share-modal');
+    const modalImage = document.getElementById('modal-image');
+
+    function renderQuestions() {
+      quizForm.innerHTML = QUESTIONS.map((question) => `
+        <article class="question-card">
+          <div class="question-meta">Q${question.id}${question.badge ? ` · ${question.badge}` : ''}</div>
+          <p class="question-title">${question.title}</p>
+          <div class="options">
+            ${question.options.map((option) => `
+              <label class="option">
+                <input type="radio" name="q${question.id}" value="${option.tag}" />
+                <span class="option-card">
+                  <span class="option-letter">${option.key}</span>
+                  <span class="option-text">${option.text}</span>
+                </span>
+              </label>
+            `).join('')}
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function getResultTag() {
+      const answers = QUESTIONS.map(q => quizForm.querySelector(`input[name="q${q.id}"]:checked`)?.value || null);
+      if (answers.includes(null)) return null;
+
+      const score = {
+        LISTENER: 0,
+        CAREGIVER: 0,
+        EXPRESSOR: 0
+      };
+
+      answers.forEach(tag => score[tag] += 1);
+
+      return PRIORITY.reduce((best, current) => {
+        if (!best) return current;
+        return score[current] > score[best] ? current : best;
+      }, '');
+    }
+
+    function renderBrandHeader() {
+      return `
+        <div class="brand-lockup">
+          <div class="brand-name">女也</div>
+          <div class="brand-sub">she is ______.</div>
+          <div class="brand-line"></div>
+        </div>
+      `;
+    }
+
+    function showResult(tag) {
+      const data = RESULT_MAP[tag];
+      window._currentQuote = data.quote;
+      window._currentTypeName = data.typeName;
+
+      resultCapture.innerHTML = `
+        ${renderBrandHeader()}
+        <div class="result-quote">${data.quote}</div>
+        <div class="result-body">
+          ${data.body.map(paragraph => `<p>${paragraph}</p>`).join('')}
+        </div>
+        <div class="section-block">
+          <div class="section-title">你的角色模式</div>
+          <div class="section-content">${data.mode}</div>
+        </div>
+        <div class="section-block">
+          <div class="section-title">在关系里</div>
+          <div class="section-content">
+            <ul>${data.relationship.map(item => `<li>${item}</li>`).join('')}</ul>
+          </div>
+        </div>
+        <div class="section-block">
+          <div class="section-title">值得想一想</div>
+          <div class="section-content">${data.reflect}</div>
+        </div>
+      `;
+
+      quizView.classList.add('hidden');
+      resultView.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function captureElement(node, options = {}) {
+      const canvas = await html2canvas(node, {
+        backgroundColor: '#f5f0eb',
+        scale: window.devicePixelRatio > 1 ? 2 : 1,
+        useCORS: true,
+        ...options
+      });
+      return canvas.toDataURL('image/png');
+    }
+
+    function openModal(src) {
+      modalImage.src = src;
+      shareModal.classList.add('open');
+      shareModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeModal() {
+      shareModal.classList.remove('open');
+      shareModal.setAttribute('aria-hidden', 'true');
+      modalImage.src = '';
+    }
+
+    async function shareLongImage() {
+      const source = document.getElementById('result-capture');
+      if (!source) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'capture-shell';
+      wrapper.innerHTML = `
+        ${renderBrandHeader()}
+        <div>${source.innerHTML.replace(renderBrandHeader(), '')}</div>
+        <div class="capture-footer">关系角色测评 · she is ______.<br/>把自己在关系里的位置，看得更清楚一点。</div>
+      `;
+      document.body.appendChild(wrapper);
+
+      try {
+        const src = await captureElement(wrapper);
+        openModal(src);
+      } finally {
+        document.body.removeChild(wrapper);
+      }
+    }
+
+    function generateResultCard() {
+      const existing = document.getElementById('__result-card-export__');
+      if (existing) existing.remove();
+
+      const card = document.createElement('div');
+      card.id = '__result-card-export__';
+      card.style.cssText = `
+        position: fixed; top: -9999px; left: -9999px;
+        width: 390px; height: 693px;
+        background: #f5f0eb;
+        overflow: hidden;
+        display: flex; flex-direction: column;
+        padding: 48px 36px;
+        font-family: "Noto Serif SC", serif;
+        box-sizing: border-box;
+      `;
+
+      const testName = '关系角色测评';
+      const resultType = window._currentTypeName || '';
+      const quote = window._currentQuote || '';
+
+      card.innerHTML = `
+        <div style="position:absolute;top:-60px;left:-60px;width:280px;height:280px;background:radial-gradient(ellipse,rgba(74,48,115,0.13),transparent 70%);pointer-events:none;"></div>
+        <div style="position:absolute;bottom:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(ellipse,rgba(74,48,115,0.10),transparent 70%);pointer-events:none;"></div>
+        
+        <div style="position:relative;z-index:1;">
+          <div style="font-size:12px;color:#4A3073;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px;">${testName}</div>
+          <div style="height:1px;background:rgba(74,48,115,0.15);margin-bottom:28px;"></div>
+        </div>
+        
+        <div style="flex:1;"></div>
+        
+        <div style="position:relative;z-index:1;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:600;color:#4A3073;line-height:1.1;margin-bottom:10px;">${resultType}</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:#888;line-height:1.7;margin-bottom:16px;">${quote}</div>
+        </div>
+        
+        <div style="flex:1;"></div>
+        
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:1;">
+          <span style="font-family:'Courier New',monospace;font-size:9px;color:#bbb;">she-is-app.netlify.app</span>
+          <span style="font-family:'Courier New',monospace;font-size:12px;color:#4A3073;letter-spacing:0.05em;">she is ______.</span>
+        </div>
+      `;
+
+      document.body.appendChild(card);
+
+      return captureElement(card, { width: 390, height: 693 }).then((src) => {
+        card.remove();
+        return src;
+      }).catch((error) => {
+        card.remove();
+        throw error;
+      });
+    }
+
+    async function shareQuoteImage() {
+      const src = await generateResultCard();
+      openModal(src);
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', () => {
+      const resultTag = getResultTag();
+      if (!resultTag) {
+        hint.textContent = '还有题目未完成，先把 10 题都选完。';
+        return;
+      }
+      hint.textContent = '';
+      showResult(resultTag);
+    });
+
+    document.getElementById('retake-btn').addEventListener('click', () => {
+      quizForm.reset();
+      resultView.classList.add('hidden');
+      quizView.classList.remove('hidden');
+      hint.textContent = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('share-long').addEventListener('click', shareLongImage);
+    document.getElementById('share-quote').addEventListener('click', shareQuoteImage);
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    shareModal.addEventListener('click', (event) => {
+      if (event.target === shareModal) closeModal();
+    });
+
+    renderQuestions();
+  </script>
+</body>
+</html>
