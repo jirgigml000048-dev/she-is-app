@@ -346,12 +346,16 @@
     }
     .r-desc {
       font-family: "Noto Serif SC", serif;
-      font-size: 13px;
-      color: #555;
-      line-height: 2;
+      font-size: 14px;
+      color: #2a2a2a;
+      line-height: 1.95;
+      letter-spacing: 0.01em;
     }
     .r-desc p {
-      margin: 0 0 16px;
+      margin: 0 0 1.2em;
+    }
+    .r-desc p:first-child {
+      font-size: 15px;
     }
     .r-desc p:last-child {
       margin-bottom: 0;
@@ -359,49 +363,77 @@
     .r-axis-section,
     .r-pattern-section,
     .r-question-section {
+      margin-top: 48px;
       margin-bottom: 4px;
     }
     .r-axis-title {
       font-family: "Noto Serif SC", serif;
       font-size: 11px;
       color: #4A3073;
-      letter-spacing: 0.1em;
-      margin: 0 0 12px;
+      letter-spacing: 0.15em;
+      font-weight: 600;
+      margin: 0 0 16px;
+      border-left: 2px solid #4A3073;
+      padding-left: 8px;
     }
     .r-axis-block {
       margin-bottom: 14px;
     }
     .r-axis-label {
-      display: inline-block;
+      display: block;
       font-family: "Noto Serif SC", serif;
       font-size: 11px;
-      color: #888;
-      letter-spacing: 0.08em;
-      margin-bottom: 6px;
+      color: #4A3073;
+      letter-spacing: 0.15em;
+      font-weight: 600;
+      border-left: 2px solid #4A3073;
+      padding-left: 8px;
+      margin: 32px 0 10px;
+    }
+    .r-axis-block:first-of-type .r-axis-label {
+      margin-top: 0;
     }
     .r-axis-text {
       font-family: "Noto Serif SC", serif;
-      font-size: 13px;
-      color: #555;
-      line-height: 2;
+      font-size: 14px;
+      color: #2a2a2a;
+      line-height: 1.95;
+      letter-spacing: 0.01em;
       margin: 0 0 10px;
+    }
+    .r-pattern-section .r-axis-text {
+      line-height: 1.8;
+      margin: 0;
+      position: relative;
+      padding-left: 1em;
+    }
+    .r-pattern-section .r-axis-text::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #4A3073;
+    }
+    .r-pattern-section .r-axis-text + .r-axis-text {
+      margin-top: 20px;
     }
     .r-question-text {
       font-family: "Noto Serif SC", serif;
-      font-size: 14px;
-      color: #3d3158;
+      font-size: 16px;
+      color: #4A3073;
       line-height: 1.9;
       margin: 0;
-      border-left: 2px solid rgba(74, 48, 115, 0.45);
-      padding-left: 10px;
+      font-style: italic;
     }
     .r-quote {
-      border-left: 2px solid rgba(74, 48, 115, 0.45);
-      padding-left: 10px;
-      margin-bottom: 4px;
-      color: #3d3158;
-      line-height: 1.9;
-      font-size: 14px;
+      border-left: 3px solid #4A3073;
+      padding-left: 16px;
+      margin: 24px 0;
+      color: #4A3073;
+      line-height: 1.8;
+      font-size: 18px;
+      font-style: italic;
+      background: transparent;
     }
     .r-quote:empty { display: none; }
     .share-caption {
