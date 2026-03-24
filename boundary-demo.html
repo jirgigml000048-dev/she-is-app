@@ -7,7 +7,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
-      --bg: #f5f0eb;
+      --bg: #FAF7F4;
       --brand: #4A3073;
       --brand-soft: rgba(74, 48, 115, 0.08);
       --brand-quote: rgba(74, 48, 115, 0.04);
@@ -24,6 +24,10 @@
     body {
       margin: 0;
       background: var(--bg);
+        background-image: radial-gradient(ellipse 90% 75% at 0% 0%, rgba(232,121,160,0.18) 0%, transparent 60%),
+          radial-gradient(ellipse 80% 70% at 100% 5%, rgba(167,139,250,0.2) 0%, transparent 55%),
+          radial-gradient(ellipse 70% 80% at 0% 100%, rgba(96,165,250,0.15) 0%, transparent 55%),
+          radial-gradient(ellipse 75% 60% at 100% 90%, rgba(249,115,22,0.12) 0%, transparent 50%);
       color: var(--text);
       font-family: "Noto Serif SC", Georgia, serif;
       min-height: 100vh;
@@ -607,7 +611,7 @@
 
     async function captureNode(node, options = {}) {
       const canvas = await html2canvas(node, {
-        backgroundColor: options.backgroundColor || '#f5f0eb',
+        backgroundColor: options.backgroundColor || '#FAF7F4',
         width: options.width || node.offsetWidth,
         height: options.height || node.offsetHeight,
         scale: Math.min(window.devicePixelRatio * 2, 4),
@@ -625,7 +629,7 @@
       removeExistingExportNode('__boundary-long-wrapper__');
       const wrapper = document.createElement('div');
       wrapper.id = '__boundary-long-wrapper__';
-      wrapper.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:390px;background:#f5f0eb;color:#333;font-family:"Noto Serif SC", Georgia, serif;';
+      wrapper.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:390px;background:#FAF7F4;color:#333;font-family:"Noto Serif SC", Georgia, serif;';
 
       const clonedContent = source.cloneNode(true);
       clonedContent.style.cssText = 'padding:0 28px 8px;';
@@ -654,7 +658,7 @@
       document.body.appendChild(wrapper);
 
       try {
-        const dataUrl = await captureNode(wrapper, { width: 390, backgroundColor: '#f5f0eb', windowWidth: 390 });
+        const dataUrl = await captureNode(wrapper, { width: 390, backgroundColor: '#FAF7F4', windowWidth: 390 });
         showShareModal(dataUrl, 'boundary-long.png');
       } finally {
         wrapper.remove();
@@ -665,7 +669,7 @@
       removeExistingExportNode('__boundary-quote-card__');
       const card = document.createElement('div');
       card.id = '__boundary-quote-card__';
-      card.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:390px;height:693px;padding:44px 34px;background:#f5f0eb;color:#2f2640;font-family:"Noto Serif SC", Georgia, serif;overflow:hidden;';
+      card.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:390px;height:693px;padding:44px 34px;background:#FAF7F4;color:#2f2640;font-family:"Noto Serif SC", Georgia, serif;overflow:hidden;';
 
       card.innerHTML = `
         <div style="position:absolute;top:-72px;left:-62px;width:240px;height:240px;background:radial-gradient(circle, rgba(160,133,214,0.18) 0%, rgba(160,133,214,0) 72%);"></div>
@@ -688,7 +692,7 @@
 
       document.body.appendChild(card);
       try {
-        const dataUrl = await captureNode(card, { width: 390, height: 693, backgroundColor: '#f5f0eb', windowWidth: 390 });
+        const dataUrl = await captureNode(card, { width: 390, height: 693, backgroundColor: '#FAF7F4', windowWidth: 390 });
         showShareModal(dataUrl, 'boundary-quote.png');
       } finally {
         card.remove();

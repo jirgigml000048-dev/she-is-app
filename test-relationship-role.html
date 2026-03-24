@@ -34,7 +34,7 @@
           radial-gradient(circle at 40% 60%, rgba(212, 145, 122, 0.04) 0 1px, transparent 1px 100%),
           repeating-linear-gradient(0deg, rgba(44, 44, 44, 0.01), rgba(44, 44, 44, 0.01) 1px, transparent 1px, transparent 3px);
       }
-      h1, h2, h3 { margin: 0; font-family: "Noto Serif SC", "Cormorant Garamond", "Source Han Serif SC", serif; font-weight: 600; letter-spacing: .04em; color: var(--ink); }
+      h1, h2, h3 { margin: 0; font-family: "Noto Serif SC", "Lora", "Source Han Serif SC", serif; font-weight: 600; letter-spacing: .04em; color: var(--ink); }
       p { margin: 0; }
       a { color: inherit; text-decoration: none; }
       button { font: inherit; }
@@ -185,7 +185,7 @@
     }
     .score-row:last-child { margin-bottom: 0; }
     .score-label {
-      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-family: "Noto Serif SC", "Lora", serif;
       font-size: 11px;
       color: rgba(47,42,38,0.72);
       width: 64px;
@@ -231,7 +231,7 @@
       flex-shrink: 0;
     }
     .r-type {
-      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-family: "Noto Serif SC", "Lora", serif;
       font-size: 30px;
       color: #2e2e2e;
       margin: 0;
@@ -376,7 +376,7 @@
 }
 
 .story-rec-title {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Lora", serif;
   font-size: 20px;
   color: #2e2e2e;
   line-height: 1.4;
@@ -396,7 +396,7 @@
 }
 
         </style>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/font-override.css" />
   <script src="assets/result-card.js"></script>
 </head>
@@ -505,7 +505,11 @@ function generateResultCard() {
   card.style.cssText = `
     position: fixed; top: -9999px; left: -9999px;
     width: 390px; height: 693px;
-    background: #f5f0eb; overflow: hidden; display: flex; flex-direction: column;
+    background: #FAF7F4;
+        background-image: radial-gradient(ellipse 90% 75% at 0% 0%, rgba(232,121,160,0.18) 0%, transparent 60%),
+          radial-gradient(ellipse 80% 70% at 100% 5%, rgba(167,139,250,0.2) 0%, transparent 55%),
+          radial-gradient(ellipse 70% 80% at 0% 100%, rgba(96,165,250,0.15) 0%, transparent 55%),
+          radial-gradient(ellipse 75% 60% at 100% 90%, rgba(249,115,22,0.12) 0%, transparent 50%); overflow: hidden; display: flex; flex-direction: column;
     padding: 48px 36px; font-family: "Noto Serif SC", serif; box-sizing: border-box;
   `;
   card.innerHTML = `
@@ -517,8 +521,8 @@ function generateResultCard() {
     </div>
     <div style="flex:1;"></div>
     <div style="position:relative;z-index:1;">
-      <div style="font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:600;color:#4A3073;line-height:1.1;margin-bottom:10px;">${document.getElementById('resultTitle')?.dataset?.subtitle || document.getElementById('resultTitle')?.textContent?.trim() || ''}</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:#888;line-height:1.7;margin-bottom:16px;">${document.getElementById('resultQuote')?.textContent?.trim() || ''}</div>
+      <div style="font-family:'Lora',serif;font-size:44px;font-weight:600;color:#4A3073;line-height:1.1;margin-bottom:10px;">${document.getElementById('resultTitle')?.dataset?.subtitle || document.getElementById('resultTitle')?.textContent?.trim() || ''}</div>
+      <div style="font-family:'Lora',serif;font-style:italic;font-size:16px;color:#888;line-height:1.7;margin-bottom:16px;">${document.getElementById('resultQuote')?.textContent?.trim() || ''}</div>
     </div>
     <div style="flex:1;"></div>
     <div style="display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:1;">

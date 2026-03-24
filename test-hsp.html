@@ -20,8 +20,8 @@
     *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;margin:0 auto;min-height:100vh;padding:18px 16px 28px}
     .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
     .back{color:var(--muted);text-decoration:none;font-size:14px}
-    .logo{margin:0;font-size:26px;font-family:"Cormorant Garamond",serif;letter-spacing:.12em}
-    h1{margin:8px 0 4px;font-family:"Cormorant Garamond",serif;font-size:24px}
+    .logo{margin:0;font-size:26px;font-family:"Lora",serif;letter-spacing:.12em}
+    h1{margin:8px 0 4px;font-family:"Lora",serif;font-size:24px}
     .sub{margin:0 0 16px;color:var(--muted);font-size:13px}
     .meta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin:14px 0 8px}
     .progress{height:6px;background:#eadfd3;border-radius:999px;overflow:hidden;margin-bottom:14px}
@@ -40,7 +40,11 @@
     .result-panel.show{display:block}
     .quiz-panel.hide{display:none}
     .result-capture-card {
-      background: #f5f0eb;
+      background: #FAF7F4;
+        background-image: radial-gradient(ellipse 90% 75% at 0% 0%, rgba(232,121,160,0.18) 0%, transparent 60%),
+          radial-gradient(ellipse 80% 70% at 100% 5%, rgba(167,139,250,0.2) 0%, transparent 55%),
+          radial-gradient(ellipse 70% 80% at 0% 100%, rgba(96,165,250,0.15) 0%, transparent 55%),
+          radial-gradient(ellipse 75% 60% at 100% 90%, rgba(249,115,22,0.12) 0%, transparent 50%);
       border: 1px solid rgba(74,48,115,0.12);
       border-radius: 24px;
       padding: 28px 24px 26px;
@@ -92,7 +96,7 @@
     }
     .score-row:last-child { margin-bottom: 0; }
     .score-label {
-      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-family: "Noto Serif SC", "Lora", serif;
       font-size: 11px;
       color: rgba(47,42,38,0.72);
       width: 64px;
@@ -138,7 +142,7 @@
       flex-shrink: 0;
     }
     .r-type {
-      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-family: "Noto Serif SC", "Lora", serif;
       font-size: 30px;
       color: #2e2e2e;
       margin: 0;
@@ -262,7 +266,7 @@
     }
     .result-save-btn {
       width: 100%;
-      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-family: "Noto Serif SC", "Lora", serif;
       font-size: 12px;
       color: #4A3073;
       background: transparent;
@@ -278,7 +282,7 @@
       border-color: #4A3073;
     }
     .result-guide {
-      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-family: "Noto Serif SC", "Lora", serif;
       font-size: 11px;
       color: #91867d;
       text-align: center;
@@ -290,7 +294,7 @@
     .result-back-btn {
       display: block;
       width: 100%;
-      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-family: "Noto Serif SC", "Lora", serif;
       font-size: 13px;
       color: white;
       background: #4A3073;
@@ -306,7 +310,7 @@
       background: #3D2565;
     }
     .result-retry-btn {
-      font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+      font-family: "Noto Serif SC", "Lora", serif;
       font-size: 11px;
       color: #4A3073;
       background: transparent;
@@ -371,7 +375,7 @@
 
       .test-intro-scale {
         margin: 0;
-        font-family: 'Cormorant Garamond', serif;
+        font-family: 'Lora', serif;
         font-size: 36px;
         font-weight: 600;
         color: #2e2e2e;
@@ -501,7 +505,7 @@
 }
 
 .story-rec-title {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Lora", serif;
   font-size: 20px;
   color: #2e2e2e;
   line-height: 1.4;
@@ -521,7 +525,7 @@
 }
 
         </style>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/font-override.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/auth.js"></script>

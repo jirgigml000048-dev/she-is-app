@@ -3,11 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  background: #f5f0eb;
+  background: #FAF7F4;
+        background-image: radial-gradient(ellipse 90% 75% at 0% 0%, rgba(232,121,160,0.18) 0%, transparent 60%),
+          radial-gradient(ellipse 80% 70% at 100% 5%, rgba(167,139,250,0.2) 0%, transparent 55%),
+          radial-gradient(ellipse 70% 80% at 0% 100%, rgba(96,165,250,0.15) 0%, transparent 55%),
+          radial-gradient(ellipse 75% 60% at 100% 90%, rgba(249,115,22,0.12) 0%, transparent 50%);
   min-height: 100vh;
   padding: 40px 24px;
   display: flex;
@@ -16,7 +20,7 @@ body {
   gap: 40px;
 }
 h2 {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Lora", serif;
   font-size: 13px;
   letter-spacing: 0.15em;
   color: #888;
@@ -38,13 +42,13 @@ h2 {
   margin-bottom: 14px;
   font-family: "DM Sans", sans-serif;
 }
-.serif-title { font-family: "Cormorant Garamond", serif; font-size: 28px; color: #2e2e2e; line-height: 1.3; margin-bottom: 10px; }
+.serif-title { font-family: "Lora", serif; font-size: 28px; color: #2e2e2e; line-height: 1.3; margin-bottom: 10px; }
 .serif-body { font-family: "Noto Serif SC", serif; font-size: 14px; color: #555; line-height: 1.8; }
 .serif-tag { display: inline-block; font-family: "Noto Serif SC", serif; font-size: 11px; color: #4A3073; background: rgba(74,48,115,0.08); padding: 4px 10px; border-radius: 20px; margin-top: 12px; margin-right: 6px; }
 .sans-title { font-family: "DM Sans", sans-serif; font-weight: 400; font-size: 26px; color: #2e2e2e; line-height: 1.3; margin-bottom: 10px; }
 .sans-body { font-family: "DM Sans", sans-serif; font-weight: 300; font-size: 14px; color: #555; line-height: 1.8; }
 .sans-tag { display: inline-block; font-family: "DM Sans", sans-serif; font-size: 11px; font-weight: 400; color: #4A3073; background: rgba(74,48,115,0.08); padding: 4px 10px; border-radius: 20px; margin-top: 12px; margin-right: 6px; }
-.mix-title { font-family: "Cormorant Garamond", serif; font-size: 28px; color: #2e2e2e; line-height: 1.3; margin-bottom: 10px; }
+.mix-title { font-family: "Lora", serif; font-size: 28px; color: #2e2e2e; line-height: 1.3; margin-bottom: 10px; }
 .mix-body { font-family: "DM Sans", sans-serif; font-weight: 300; font-size: 14px; color: #555; line-height: 1.8; }
 .mix-tag { display: inline-block; font-family: "DM Sans", sans-serif; font-size: 11px; color: #4A3073; background: rgba(74,48,115,0.08); padding: 4px 10px; border-radius: 20px; margin-top: 12px; margin-right: 6px; }
 .divider { width: 32px; height: 1px; background: rgba(74,48,115,0.2); margin: 0 auto; }

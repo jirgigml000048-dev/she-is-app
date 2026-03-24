@@ -6,11 +6,11 @@
     <title>自我图鉴 | 女也 She Is</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Courier+Prime&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Courier+Prime&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/font-override.css" />
     <style>
       :root {
-        --bg: #f5f0eb;
+        --bg: #FAF7F4;
         --surface: rgba(255, 255, 255, 0.84);
         --surface-soft: rgba(74, 48, 115, 0.03);
         --surface-muted: rgba(117, 108, 130, 0.06);
@@ -31,6 +31,10 @@
       body {
         margin: 0;
         background: var(--bg);
+        background-image: radial-gradient(ellipse 90% 75% at 0% 0%, rgba(232,121,160,0.18) 0%, transparent 60%),
+          radial-gradient(ellipse 80% 70% at 100% 5%, rgba(167,139,250,0.2) 0%, transparent 55%),
+          radial-gradient(ellipse 70% 80% at 0% 100%, rgba(96,165,250,0.15) 0%, transparent 55%),
+          radial-gradient(ellipse 75% 60% at 100% 90%, rgba(249,115,22,0.12) 0%, transparent 50%);
         color: var(--body);
         font-family: "Noto Serif SC", Georgia, serif;
         line-height: 1.9;
@@ -123,7 +127,7 @@
 
       .logo-cn {
         display: block;
-        font-family: "Cormorant Garamond", serif;
+        font-family: "Lora", serif;
         font-size: 28px;
         line-height: 1;
         font-weight: 600;
