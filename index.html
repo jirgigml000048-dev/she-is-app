@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <style>
 :root {
-        --bg: #f5f0eb;
+        --bg: #FAF7F4;
         --ink: #2e2e2e;
         --body: #555;
         --muted: #888;
@@ -46,21 +46,19 @@
       }
 
       .bg-accent-orb--top {
-        top: -140px;
-        left: -120px;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(ellipse at top left, rgba(74,48,115,0.18) 0%, transparent 60%);
-        filter: blur(40px);
+        top: 0; left: 0; right: 0; bottom: 0;
+        width: 100vw; height: 100vh;
+        background:
+          radial-gradient(ellipse 90% 75% at 0% 0%, rgba(232,121,160,0.18) 0%, transparent 60%),
+          radial-gradient(ellipse 80% 70% at 100% 5%, rgba(167,139,250,0.2) 0%, transparent 55%),
+          radial-gradient(ellipse 70% 80% at 0% 100%, rgba(96,165,250,0.15) 0%, transparent 55%),
+          radial-gradient(ellipse 75% 60% at 100% 90%, rgba(249,115,22,0.12) 0%, transparent 50%);
+        filter: blur(0px);
+        border-radius: 0;
       }
 
       .bg-accent-orb--bottom {
-        right: -100px;
-        bottom: -120px;
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(ellipse at bottom right, rgba(74,48,115,0.12) 0%, transparent 60%);
-        filter: blur(50px);
+        display: none;
       }
       a,
       button {
@@ -113,7 +111,7 @@
 
       .logo-cn {
         display: block;
-        font-family: "Cormorant Garamond", serif;
+        font-family: "Lora", serif;
         font-size: 28px;
         line-height: 1;
         font-weight: 600;
@@ -145,7 +143,7 @@
         max-height: 340px;
         margin: 0;
         padding: 0;
-        background: #f5f0eb;
+        background: transparent;
       }
 
       .hero-arc-svg {
@@ -231,7 +229,7 @@
       }
 
       .section-row-title {
-        font-family: 'Cormorant Garamond', serif;
+        font-family: 'Lora', serif;
         font-size: 22px;
         font-weight: 600;
         color: #2e2e2e;
@@ -254,7 +252,7 @@
         right: -10px;
         top: 50%;
         transform: translateY(-50%);
-        font-family: 'Cormorant Garamond', serif;
+        font-family: 'Lora', serif;
         font-size: 80px;
         font-weight: 700;
         color: var(--accent);
@@ -352,7 +350,7 @@
         pointer-events: none;
       }
       .typewriter-text {
-        font-family: "Cormorant Garamond", Georgia, serif;
+        font-family: "Lora", Georgia, serif;
         font-style: italic;
         font-size: 12px;
         color: #4A3073;
@@ -395,7 +393,7 @@
         background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
       }
     </style>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/font-override.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/auth.js"></script>
@@ -448,7 +446,7 @@
           </g>
 
           <g clip-path="url(#rightClip)">
-            <text font-family="Noto Serif SC, Source Han Serif SC, Songti SC, serif" font-size="11" fill="#f5f0eb" letter-spacing="3">
+            <text font-family="Noto Serif SC, Source Han Serif SC, Songti SC, serif" font-size="11" fill="#FAF7F4" letter-spacing="3">
               <textPath href="#mainArc" id="rightText">
                 she is searching · she stayed anyway · she said no · she changed her mind · she is still here · soft and fierce · still learning · afraid of being left · she is trying · she is becoming · she is searching · she stayed anyway · she said no · she changed her mind ·
                 <animate attributeName="startOffset" from="-60%" to="10%" dur="22s" repeatCount="indefinite"/>
@@ -458,7 +456,7 @@
 
           <g id="waveformOnArc" aria-hidden="true">
             <g>
-              <rect x="-36" y="-17" width="72" height="34" rx="17" fill="#f5f0eb" stroke="#4A3073" stroke-opacity="0.18" stroke-width="1.2"/>
+              <rect x="-36" y="-17" width="72" height="34" rx="17" fill="#FAF7F4" stroke="#4A3073" stroke-opacity="0.18" stroke-width="1.2"/>
               <rect class="wbar w1" x="-22" y="-3" width="2.4" height="6" rx="1.2" fill="#4A3073"/>
               <rect class="wbar w2" x="-16" y="-6" width="2.4" height="12" rx="1.2" fill="#4A3073"/>
               <rect class="wbar w3" x="-10" y="-8.5" width="2.4" height="17" rx="1.2" fill="#4A3073"/>
@@ -521,14 +519,14 @@
     <button class="audio-btn" id="audioBtn" title="播放 / 暂停" aria-label="播放 / 暂停背景音乐">
   <svg id="playIcon" viewBox="0 0 24 24" aria-hidden="true">
     <circle cx="12" cy="12" r="10" fill="#2e2e2e"></circle>
-    <circle cx="12" cy="12" r="2.2" fill="#f5f0eb"></circle>
-    <path d="M10 8.6v6.8l5.2-3.4z" fill="#f5f0eb"></path>
+    <circle cx="12" cy="12" r="2.2" fill="#FAF7F4"></circle>
+    <path d="M10 8.6v6.8l5.2-3.4z" fill="#FAF7F4"></path>
   </svg>
   <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none" aria-hidden="true">
     <circle cx="12" cy="12" r="10" fill="#2e2e2e"></circle>
-    <circle cx="12" cy="12" r="2.2" fill="#f5f0eb"></circle>
-    <rect x="9" y="8" width="2.2" height="8" rx="1" fill="#f5f0eb"></rect>
-    <rect x="12.8" y="8" width="2.2" height="8" rx="1" fill="#f5f0eb"></rect>
+    <circle cx="12" cy="12" r="2.2" fill="#FAF7F4"></circle>
+    <rect x="9" y="8" width="2.2" height="8" rx="1" fill="#FAF7F4"></rect>
+    <rect x="12.8" y="8" width="2.2" height="8" rx="1" fill="#FAF7F4"></rect>
   </svg>
 </button>
 
