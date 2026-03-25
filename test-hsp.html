@@ -36,289 +36,6 @@
     .btn{flex:1;height:44px;border-radius:10px;border:1px solid #d4c8bc;background:#fff;cursor:pointer;font-size:14px}
     .btn.primary{background: rgba(180,155,225,0.22); backdrop-filter: blur(8px); border: 1px solid rgba(190,165,235,0.45); color: #4A3073;color: #4A3073;border-color:var(--accent)}
     .btn:disabled{opacity:.4;cursor:default}
-    .result-panel{display:none;padding:8px 0}
-    .result-panel.show{display:block}
-    .quiz-panel.hide{display:none}
-    .result-capture-card {
-      background: #FAF7F4;
-        background-image: radial-gradient(ellipse 90% 75% at 0% 0%, rgba(232,121,160,0.18) 0%, transparent 60%),
-          radial-gradient(ellipse 80% 70% at 100% 5%, rgba(167,139,250,0.2) 0%, transparent 55%),
-          radial-gradient(ellipse 70% 80% at 0% 100%, rgba(96,165,250,0.15) 0%, transparent 55%),
-          radial-gradient(ellipse 75% 60% at 100% 90%, rgba(249,115,22,0.12) 0%, transparent 50%);
-      border: 1px solid rgba(74,48,115,0.12);
-      border-radius: 24px;
-      padding: 28px 24px 26px;
-      box-shadow: 0 14px 36px rgba(74,48,115,0.08);
-      position: relative;
-      overflow: hidden;
-    }
-    .result-capture-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.28), transparent 24%);
-      pointer-events: none;
-    }
-    .result-kicker {
-      position: relative;
-      z-index: 1;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin: 0 0 16px;
-      color: #4A3073;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-    .result-kicker::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #4A3073;
-      box-shadow: 0 0 0 5px rgba(74,48,115,0.08);
-    }
-    .result-viz {
-      position: relative;
-      z-index: 1;
-      margin-bottom: 26px;
-      padding: 18px 18px 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.42);
-      border: 1px solid rgba(74,48,115,0.08);
-    }
-    .score-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-    .score-row:last-child { margin-bottom: 0; }
-    .score-label {
-      font-family: "Noto Serif SC", "Lora", serif;
-      font-size: 11px;
-      color: rgba(47,42,38,0.72);
-      width: 64px;
-      flex-shrink: 0;
-    }
-    .score-bar-bg {
-      flex: 1;
-      height: 10px;
-      background: rgba(74,48,115,0.1);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-    .score-bar-fill {
-      width: 0;
-      height: 100%;
-      background: #4A3073;
-      border-radius: 999px;
-      box-shadow: 0 4px 12px rgba(74,48,115,0.22);
-      transition: width 0.8s ease;
-    }
-    .score-val {
-      font-size: 11px;
-      color: #4A3073;
-      width: 28px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-    .r-head {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .r-head::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #4A3073;
-      transform: translateY(-2px);
-      flex-shrink: 0;
-    }
-    .r-type {
-      font-family: "Noto Serif SC", "Lora", serif;
-      font-size: 30px;
-      color: #2e2e2e;
-      margin: 0;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-    }
-    .r-score-line {
-      position: relative;
-      z-index: 1;
-      font-size: 11px;
-      color: #4A3073;
-      letter-spacing: 0.08em;
-      margin: 0 0 16px;
-    }
-    .result-tags {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 0 0 20px;
-      padding: 0;
-      list-style: none;
-    }
-    .result-tags:empty { display: none; }
-    .result-tag {
-      display: inline-flex;
-      align-items: center;
-      min-height: 30px;
-      padding: 0 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(74,48,115,0.35);
-      background: rgba(245,240,235,0.96);
-      color: #4A3073;
-      font-size: 12px;
-      line-height: 1;
-    }
-    .r-divider {
-      height: 1px;
-      background: rgba(74,48,115,0.15);
-      margin-bottom: 20px;
-    }
-    .r-quote {
-      border-left: 2px solid rgba(74, 48, 115, 0.45);
-      padding-left: 10px;
-      margin-bottom: 4px;
-      position: relative;
-      z-index: 1;
-      margin: 0 0 20px;
-      padding: 16px 18px;
-      border-left: 3px solid #4A3073;
-      background: rgba(74,48,115,0.06);
-      color: #3d3158;
-      line-height: 1.9;
-      font-size: 14px;
-    }
-    .r-quote:empty { display: none; }
-    .share-caption {
-      font-size: 11px;
-      color: rgba(74, 48, 115, 0.55);
-      margin: 0 0 12px;
-      letter-spacing: 0.04em;
-    }
-    .r-desc {
-      position: relative;
-      z-index: 1;
-      font-size: 14px;
-      color: #554c47;
-      line-height: 1.9;
-    }
-    .r-desc p {
-      margin: 0 0 1.4em;
-      padding-bottom: 0;
-      border-bottom: none;
-    }
-    .r-desc p:last-child {
-      margin-bottom: 0;
-      padding-bottom: 0;
-      border-bottom: none;
-    }
-    .result-section {
-      position: relative;
-      z-index: 1;
-      margin-top: 20px;
-    }
-    .result-section .r-divider {
-      margin-bottom: 20px;
-    }
-    .r-axis-title {
-      font-family: "Noto Serif SC", serif;
-      font-size: 11px;
-      color: #4A3073;
-      letter-spacing: 0.1em;
-      margin: 0 0 12px;
-    }
-    .r-axis-text {
-      font-family: "Noto Serif SC", serif;
-      font-size: 13px;
-      color: #555;
-      line-height: 2;
-      margin: 0 0 10px;
-    }
-    .r-pattern-section {
-      margin-bottom: 4px;
-    }
-    .r-question-text {
-      font-family: "Noto Serif SC", serif;
-      font-size: 14px;
-      color: #3d3158;
-      line-height: 1.9;
-      margin: 0;
-      border-left: 2px solid rgba(74, 48, 115, 0.45);
-      padding-left: 10px;
-    }
-    .result-actions {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      padding: 20px 0;
-    }
-    .result-save-btn {
-      width: 100%;
-      font-family: "Noto Serif SC", "Lora", serif;
-      font-size: 12px;
-      color: #4A3073;
-      background: transparent;
-      border: 1px solid rgba(74,48,115,0.28);
-      padding: 12px 0;
-      border-radius: 10px;
-      cursor: pointer;
-      letter-spacing: 0.05em;
-      transition: background .2s ease, color .2s ease, border-color .2s ease;
-    }
-    .result-save-btn:hover {
-      background: rgba(74,48,115,0.08);
-      border-color: #4A3073;
-    }
-    .result-guide {
-      font-family: "Noto Serif SC", "Lora", serif;
-      font-size: 11px;
-      color: #91867d;
-      text-align: center;
-      line-height: 1.9;
-      padding: 4px 0;
-      margin: 0;
-    }
-    .result-guide a { color: #4A3073; text-decoration: underline; text-underline-offset: 2px; }
-    .result-back-btn {
-      display: block;
-      width: 100%;
-      font-family: "Noto Serif SC", "Lora", serif;
-      font-size: 13px;
-      color: white;
-      background: #4A3073;
-      border: none;
-      padding: 13px 0;
-      border-radius: 10px;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      transition: background .2s ease;
-    }
-    .result-back-btn:hover {
-      background: #3D2565;
-    }
-    .result-retry-btn {
-      font-family: "Noto Serif SC", "Lora", serif;
-      font-size: 11px;
-      color: #4A3073;
-      background: transparent;
-      border: none;
-      padding: 4px 0;
-      cursor: pointer;
-      letter-spacing: 0.03em;
-    }
   
       .story-link-hint {
         margin-top: 1rem;
@@ -444,86 +161,6 @@
 
         
 
-.share-btn-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-.share-btn-row .result-save-btn,
-.share-btn-row .result-share-long-btn {
-  flex: 1;
-}
-.result-share-long-btn {
-  display: block;
-  width: 100%;
-  appearance: none;
-  font-family: "Noto Serif SC", serif;
-  font-size: 12px;
-  line-height: 1.2;
-  color: #fff;
-  background: #4A3073;
-  border: 1px solid #4A3073;
-  padding: 10px 0;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-  letter-spacing: 0.02em;
-  transition: background-color .2s ease, opacity .2s ease;
-}
-.result-share-long-btn:hover {
-  background: #3D2565;
-  border-color: #3D2565;
-}
-.result-share-long-btn:disabled {
-  opacity: 0.58;
-  cursor: wait;
-}
-
-.story-rec {
-  background: rgba(255,255,255,0.8);
-  border-radius: 16px;
-  border: 1px solid rgba(74,48,115,0.15);
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.story-rec-img {
-  width: 100%;
-  height: 100px;
-  background: radial-gradient(ellipse at center, rgba(74,48,115,0.18), rgba(74,48,115,0.05));
-}
-
-.story-rec-content {
-  padding: 16px 20px;
-}
-
-.story-rec-hint {
-  font-family: "Noto Serif SC", serif;
-  font-size: 11px;
-  color: #888;
-  margin-bottom: 6px;
-}
-
-.story-rec-title {
-  font-family: "Lora", serif;
-  font-size: 20px;
-  color: #2e2e2e;
-  line-height: 1.4;
-  margin-bottom: 12px;
-}
-
-.story-rec-btn {
-  display: block;
-  text-align: center;
-  font-family: "Noto Serif SC", serif;
-  font-size: 12px;
-  color: #4A3073;
-  border: 1px solid rgba(74,48,115,0.3);
-  padding: 10px 0;
-  border-radius: 8px;
-  text-decoration: none;
-}
-
         </style>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/font-override.css" />
@@ -641,56 +278,105 @@
     </div>
   </div>
 
-  <div id="resultPanel" class="result-panel" style="padding:0 1rem;">
-    <div class="card result-capture-card">
-      <p class="result-kicker">Result Profile</p>
-      <div class="result-viz">
-        <div class="score-row">
-          <span class="score-label">感官敏感</span>
-          <div class="score-bar-bg"><div class="score-bar-fill" id="barSensory"></div></div>
-          <span class="score-val" id="valSensory"></span>
+  <div id="resultPanel" style="display:none;padding:5rem 1.5rem 6rem;min-height:100dvh;max-width:28rem;margin:0 auto;">
+  
+  <!-- Result Card -->
+  <div class="result-capture-card" style="background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);border-radius:1rem;padding:2.5rem 2rem;border:1px solid rgba(229,226,223,0.5);box-shadow:0 10px 40px -10px rgba(51,24,92,0.08);margin-bottom:2rem;">
+    
+    <!-- Kicker -->
+    <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.4em;color:#9c3c62;font-weight:600;margin:0 0 1.5rem;text-align:center;">Result Profile</p>
+    
+    <!-- Type Title -->
+    <h2 id="rType" style="font-family:'Noto Serif SC',serif;font-size:1.75rem;line-height:1.3;color:#33185c;margin:0 0 0.5rem;text-align:center;"></h2>
+    
+    <!-- Score -->
+    <p id="rScoreLine" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:#7b7580;margin:0 0 2rem;text-align:center;">平均得分 <span id="rScore"></span> / 7</p>
+    
+    <!-- Tags -->
+    <div id="resultTags" style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;margin-bottom:2rem;"></div>
+    
+    <!-- Quote -->
+    <div id="rQuote" style="font-family:'Noto Serif SC',serif;font-size:1.1rem;font-style:italic;line-height:1.8;color:rgba(28,28,26,0.85);text-align:center;padding:1.5rem 1rem;margin-bottom:2rem;border-left:3px solid #d6baff;background:rgba(236,220,255,0.08);border-radius:0 0.5rem 0.5rem 0;"></div>
+    
+    <!-- Divider -->
+    <div style="height:1px;width:3rem;background:#ccc4d1;margin:0 auto 2rem;"></div>
+    
+    <!-- 四维度分数条 -->
+    <div style="margin-bottom:2rem;">
+      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#7b7580;font-weight:600;margin:0 0 1.25rem;">Dimensions / 维度分析</p>
+      
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <span style="font-size:12px;color:#4a454f;width:4.5rem;flex-shrink:0;font-weight:500;">感官敏感</span>
+          <div style="flex:1;height:6px;background:#f0edea;border-radius:9999px;overflow:hidden;">
+            <div id="barSensory" style="height:100%;background:linear-gradient(to right,#33185c,#4a3073);border-radius:9999px;transition:width 0.5s;width:0%;"></div>
+          </div>
+          <span id="valSensory" style="font-size:12px;color:#33185c;font-weight:600;width:2.5rem;text-align:right;"></span>
         </div>
-        <div class="score-row">
-          <span class="score-label">情绪感染</span>
-          <div class="score-bar-bg"><div class="score-bar-fill" id="barEmotion"></div></div>
-          <span class="score-val" id="valEmotion"></span>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <span style="font-size:12px;color:#4a454f;width:4.5rem;flex-shrink:0;font-weight:500;">情绪感染</span>
+          <div style="flex:1;height:6px;background:#f0edea;border-radius:9999px;overflow:hidden;">
+            <div id="barEmotion" style="height:100%;background:linear-gradient(to right,#33185c,#4a3073);border-radius:9999px;transition:width 0.5s;width:0%;"></div>
+          </div>
+          <span id="valEmotion" style="font-size:12px;color:#33185c;font-weight:600;width:2.5rem;text-align:right;"></span>
         </div>
-        <div class="score-row">
-          <span class="score-label">美的感受</span>
-          <div class="score-bar-bg"><div class="score-bar-fill" id="barAesthetic"></div></div>
-          <span class="score-val" id="valAesthetic"></span>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <span style="font-size:12px;color:#4a454f;width:4.5rem;flex-shrink:0;font-weight:500;">美的感受</span>
+          <div style="flex:1;height:6px;background:#f0edea;border-radius:9999px;overflow:hidden;">
+            <div id="barAesthetic" style="height:100%;background:linear-gradient(to right,#33185c,#4a3073);border-radius:9999px;transition:width 0.5s;width:0%;"></div>
+          </div>
+          <span id="valAesthetic" style="font-size:12px;color:#33185c;font-weight:600;width:2.5rem;text-align:right;"></span>
         </div>
-        <div class="score-row">
-          <span class="score-label">过度唤醒</span>
-          <div class="score-bar-bg"><div class="score-bar-fill" id="barOverstim"></div></div>
-          <span class="score-val" id="valOverstim"></span>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <span style="font-size:12px;color:#4a454f;width:4.5rem;flex-shrink:0;font-weight:500;">过度唤醒</span>
+          <div style="flex:1;height:6px;background:#f0edea;border-radius:9999px;overflow:hidden;">
+            <div id="barOverstim" style="height:100%;background:linear-gradient(to right,#9c3c62,#fd8ab2);border-radius:9999px;transition:width 0.5s;width:0%;"></div>
+          </div>
+          <span id="valOverstim" style="font-size:12px;color:#9c3c62;font-weight:600;width:2.5rem;text-align:right;"></span>
         </div>
       </div>
-      <div class="r-head">
-        <h2 class="r-type" id="rType"></h2>
-      </div>
-      <p class="r-score-line">平均得分 <span id="rScore"></span> / 7</p>
-      <ul class="result-tags" id="resultTags"></ul>
-      <div class="r-quote" id="rQuote"></div>
-      <div class="r-divider"></div>
-      <div class="r-desc" id="rDesc"></div>
-      <div id="resultSections"></div>
     </div>
-<div class="result-actions">
-      <div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div>
-      <div class="story-rec" id="storyRec" style="display:none;">
-  <div class="story-rec-img"></div>
-  <div class="story-rec-content">
-    <p class="story-rec-hint">你可能会有共鸣</p>
-    <h3 class="story-rec-title">故事标题</h3>
-    <a class="story-rec-btn" href="#">读这个故事 →</a>
+    
+    <!-- Description -->
+    <div id="rDesc" style="font-family:'Noto Serif SC',serif;font-size:0.95rem;line-height:1.9;color:#1c1c1a;margin-bottom:2rem;"></div>
+    
+    <!-- Sections -->
+    <div id="resultSections"></div>
+  </div>
+  
+  <!-- Actions -->
+  <div style="display:flex;flex-direction:column;gap:1rem;">
+    <div style="display:flex;gap:0.75rem;">
+      <button id="shareLongBtn" onclick="shareLongImage()" style="flex:1;padding:1rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-weight:500;font-size:12px;letter-spacing:0.1em;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(51,24,92,0.15);transition:all 0.2s;">
+        结果长图
+      </button>
+      <button id="saveResultBtn" onclick="downloadResult()" style="flex:1;padding:1rem;border-radius:0.75rem;background:#f0edea;color:#33185c;font-weight:500;font-size:12px;letter-spacing:0.1em;border:none;cursor:pointer;transition:all 0.2s;">
+        分享卡片
+      </button>
+    </div>
+    
+    <!-- Story Recommendation -->
+    <div id="storyRec" style="display:none;background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);border-radius:1rem;padding:1.5rem;border:1px solid rgba(229,226,223,0.5);margin-top:0.5rem;">
+      <div class="story-rec-content">
+        <p style="font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#9c3c62;font-weight:600;margin:0 0 0.5rem;">你可能会有共鸣</p>
+        <h3 class="story-rec-title" style="font-family:'Noto Serif SC',serif;font-size:1.1rem;color:#33185c;margin:0 0 0.75rem;"></h3>
+        <a class="story-rec-btn" href="#" style="font-size:12px;color:#33185c;font-weight:500;text-decoration:none;">读这个故事 →</a>
+      </div>
+    </div>
+    
+    <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:#7b7580;text-align:center;margin:1rem 0;">
+      这是你心理画像的一部分 · <a href="/assessment" style="color:#33185c;text-decoration:none;font-weight:500;">查看全部测评</a>
+    </p>
+    
+    <a href="/" style="display:block;text-align:center;padding:1rem;border-radius:0.75rem;border:1px solid rgba(204,196,209,0.3);color:#33185c;font-weight:500;font-size:12px;text-decoration:none;letter-spacing:0.1em;">
+      返回首页
+    </a>
+    
+    <button id="retryBtn" onclick="retryQuiz()" style="width:100%;padding:1rem;border-radius:0.75rem;background:transparent;color:#7b7580;font-weight:400;font-size:12px;border:none;cursor:pointer;letter-spacing:0.05em;">
+      再做一次
+    </button>
   </div>
 </div>
-      <p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p>
-      <a href="index.html" class="result-back-btn">返回首页</a>
-      <button class="result-retry-btn" id="retryBtn" type="button" onclick="retryQuiz()">再做一次</button>
-    </div>
-  </div>
 </div>
 
   </div>
@@ -909,16 +595,32 @@ if(window.SheProfileStore){window.SheProfileStore.saveResult({moduleId:'hsp',mod
 $('rType').textContent=r.type;
 $('rType').dataset.subtitle = r.subtitle || '';
 $('rDesc').innerHTML=r.desc;
-$('resultSections').innerHTML = buildResultSections(r);
 $('rQuote').textContent = r.quote || '';
-let captionEl = document.querySelector('.share-caption');
-if (!captionEl) {
-  captionEl = document.createElement('p');
-  captionEl.className = 'share-caption';
-  captionEl.textContent = '↑ 分享卡片中会显示这句话';
-  $('rQuote').after(captionEl);
+$('resultTags').innerHTML = [...new Set(r.tags || [])].map(t => `<span style="display:inline-block;padding:6px 14px;border-radius:9999px;background:rgba(236,220,255,0.3);color:#33185c;font-size:11px;font-weight:500;letter-spacing:0.05em;">${t}</span>`).join('');
+let secHTML = '';
+if(r.sections){
+  if(r.sections.perception){
+    secHTML += `<div style="margin-bottom:2rem;">
+      <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#9c3c62;font-weight:600;margin:0 0 1rem;">你的感知方式 / Your Perception</h3>
+      <p style="font-family:'Noto Serif SC',serif;font-size:0.95rem;line-height:1.9;color:#1c1c1a;">${r.sections.perception}</p>
+    </div>`;
+  }
+  if(r.sections.daily){
+    secHTML += `<div style="margin-bottom:2rem;">
+      <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#9c3c62;font-weight:600;margin:0 0 1rem;">在日常里 / In Daily Life</h3>
+      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.75rem;">
+        ${r.sections.daily.map(d => `<li style="font-family:'Noto Serif SC',serif;font-size:0.95rem;line-height:1.7;color:#1c1c1a;padding-left:1.25rem;border-left:2px solid #d6baff;">${d}</li>`).join('')}
+      </ul>
+    </div>`;
+  }
+  if(r.sections.question){
+    secHTML += `<div style="margin-bottom:1.5rem;padding:1.5rem;background:rgba(236,220,255,0.08);border-radius:0.75rem;">
+      <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#9c3c62;font-weight:600;margin:0 0 1rem;">值得想一想 / Worth Reflecting</h3>
+      <p style="font-family:'Noto Serif SC',serif;font-size:1rem;font-style:italic;line-height:1.8;color:#33185c;">${r.sections.question}</p>
+    </div>`;
+  }
 }
-$('resultTags').innerHTML = [...new Set(r.tags || [])].map(tag => `<li class="result-tag">${tag}</li>`).join('');
+$('resultSections').innerHTML = secHTML;
 $('rScore').textContent=mean.toFixed(2);
 $('barSensory').style.width = toWidth(sensoryAvg);
 $('valSensory').textContent = sensoryAvg.toFixed(1);
@@ -929,7 +631,7 @@ $('valAesthetic').textContent = aestheticAvg.toFixed(1);
 $('barOverstim').style.width = toWidth(overstimAvg);
 $('valOverstim').textContent = overstimAvg.toFixed(1);
 $('quizPanel').style.display = 'none';
-$('resultPanel').classList.add('show');
+$('resultPanel').style.display = 'block';
 storyRec.style.display = 'block';
 window.scrollTo(0,0);
 saveTestResult('hsp', level, { score: mean, level });
@@ -938,7 +640,7 @@ saveTestResult('hsp', level, { score: mean, level });
 function retryQuiz(){
 ans.fill(null); cur=0;
 $('quizPanel').style.display = 'flex';
-$('resultPanel').classList.remove('show');
+$('resultPanel').style.display = 'none';
 storyRec.style.display = 'none';
 render();
 }
@@ -1002,7 +704,7 @@ function renderStoredResult(record) {
   $('rDesc').innerHTML = r.desc;
   $('resultSections').innerHTML = buildResultSections(r);
   $('rQuote').textContent = r.quote || '';
-  $('resultTags').innerHTML = [...new Set(r.tags || [])].map(tag => `<li class="result-tag">${tag}</li>`).join('');
+  $('resultTags').innerHTML = [...new Set(r.tags || [])].map(t => `<span style="display:inline-block;padding:6px 14px;border-radius:9999px;background:rgba(236,220,255,0.3);color:#33185c;font-size:11px;font-weight:500;letter-spacing:0.05em;">${t}</span>`).join('');
   $('rScore').textContent = score ? score.toFixed(2) : '--';
   $('barSensory').style.width = '0%';
   $('valSensory').textContent = '--';
@@ -1015,7 +717,7 @@ function renderStoredResult(record) {
   document.querySelector('.test-intro').style.display = 'none';
   document.getElementById('testBody').style.display = 'block';
   $('quizPanel').style.display = 'none';
-  $('resultPanel').classList.add('show');
+  $('resultPanel').style.display = 'block';
   storyRec.style.display = 'none';
   return true;
 }
