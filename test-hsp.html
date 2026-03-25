@@ -587,30 +587,61 @@
   </div>
   </div>
   <div class="test-body" id="testBody" style="display:none">
-<main class="page">
-  <div class="top">
-    <a class="back" href="assessment-more.html">← back</a>
-    <h2 class="logo">女也</h2>
-  </div>
-  <h1>高敏感测评</h1>
-  <p class="sub">你的感受力，比你以为的更丰富</p>
-
-  <div id="quizPanel" class="quiz-panel">
-    <div class="meta"><span id="counter">1 / 22</span><span id="answered">已完成 0 / 22</span></div>
-    <div class="progress"><div id="bar" class="bar"></div></div>
-    <div class="card">
-      <div class="q-text" id="qText"></div>
-      <div class="likert" id="likert"></div>
-      <div class="labels"><span>1 完全不符合</span><span>7 非常符合</span></div>
+<div>
+  <div id="quizPanel" style="padding:5rem 1.5rem 8rem;min-height:100dvh;display:flex;flex-direction:column;align-items:center;max-width:28rem;margin:0 auto;">
+    <!-- Progress -->
+    <div style="width:100%;margin-bottom:2.5rem;text-align:center;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1rem;">
+        <span id="counter" style="font-family:'Noto Serif SC',serif;font-size:2.5rem;color:rgba(51,24,92,0.8);"></span>
+        <div style="text-align:right;">
+          <p style="font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:#7b7580;font-weight:600;margin:0 0 4px;">进度 / STATUS</p>
+          <p id="answered" style="font-size:12px;color:rgba(51,24,92,0.6);font-weight:500;margin:0;"></p>
+        </div>
+      </div>
+      <div style="width:100%;height:4px;background:#f0edea;border-radius:9999px;overflow:hidden;">
+        <div id="bar" style="height:100%;background:#9c3c62;border-radius:9999px;transition:width 0.25s;width:0%;"></div>
+      </div>
     </div>
-    <div class="actions">
-      <button class="btn" id="prevBtn">上一题</button>
-      <button class="btn" id="nextBtn">下一题</button>
-      <button class="btn primary" id="submitBtn" disabled>翻开这一页</button>
+    <!-- Question Card -->
+    <div style="width:100%;position:relative;">
+      <div style="position:absolute;top:-1rem;right:-1rem;width:8rem;height:8rem;background:rgba(236,220,255,0.3);border-radius:9999px;filter:blur(48px);z-index:-1;"></div>
+      <div style="background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);border-radius:1rem;padding:2rem;margin-bottom:2.5rem;border:1px solid rgba(229,226,223,0.5);box-shadow:0 10px 40px -10px rgba(51,24,92,0.08);display:flex;flex-direction:column;align-items:center;text-align:center;">
+        <div style="width:3rem;height:2px;background:rgba(51,24,92,0.15);border-radius:9999px;margin-bottom:2.5rem;"></div>
+        <h2 id="qText" style="font-family:'Noto Serif SC',serif;font-size:1.5rem;line-height:1.6;color:#1c1c1a;margin:0 0 1rem;padding:0 0.5rem;"></h2>
+        <p id="qTextEn" style="font-family:'Noto Serif SC',serif;font-size:1rem;color:rgba(51,24,92,0.5);line-height:1.5;margin:0 0 3rem;font-style:italic;"></p>
+        <!-- Likert Scale -->
+        <div style="width:100%;">
+          <div id="likert" style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 4px;"></div>
+          <div style="display:flex;justify-content:space-between;width:100%;padding:0 4px;margin-top:1rem;">
+            <div style="width:6rem;text-align:left;">
+              <p style="font-size:10px;color:#7b7580;font-weight:700;text-transform:uppercase;margin:0;">1 完全不符合</p>
+              <p style="font-size:8px;color:rgba(123,117,128,0.6);text-transform:uppercase;letter-spacing:-0.02em;font-weight:500;margin:2px 0 0;">Completely Disagree</p>
+            </div>
+            <div style="width:6rem;text-align:right;">
+              <p style="font-size:10px;color:#7b7580;font-weight:700;text-transform:uppercase;margin:0;">7 非常符合</p>
+              <p style="font-size:8px;color:rgba(123,117,128,0.6);text-transform:uppercase;letter-spacing:-0.02em;font-weight:500;margin:2px 0 0;">Strongly Agree</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Action Buttons -->
+    <div style="width:100%;display:flex;flex-direction:column;gap:1rem;">
+      <div style="display:flex;gap:1rem;width:100%;">
+        <button id="prevBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#f0edea;color:#7b7580;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:all 0.2s;">
+          ← 上一题
+        </button>
+        <button id="nextBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;box-shadow:0 4px 16px rgba(51,24,92,0.15);transition:all 0.2s;">
+          下一题 →
+        </button>
+      </div>
+      <button id="submitBtn" disabled style="width:100%;padding:1.25rem;border-radius:0.75rem;border:1px solid rgba(204,196,209,0.3);color:#33185c;font-weight:500;font-size:12px;letter-spacing:0.1em;background:rgba(246,243,240,0.4);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.75rem;transition:all 0.2s;">
+        ✦ 翻开这一页 / Flip this page
+      </button>
     </div>
   </div>
 
-  <div id="resultPanel" class="result-panel">
+  <div id="resultPanel" class="result-panel" style="padding:0 1rem;">
     <div class="card result-capture-card">
       <p class="result-kicker">Result Profile</p>
       <div class="result-viz">
@@ -660,7 +691,7 @@
       <button class="result-retry-btn" id="retryBtn" type="button" onclick="retryQuiz()">再做一次</button>
     </div>
   </div>
-</main>
+</div>
 
   </div>
 </div>
@@ -730,6 +761,30 @@ question: '有什么你一直觉得"没什么大不了"，但其实还没有真�
 }
 };
 
+const QsEn = [
+  'I easily notice subtle changes in the environment.',
+  "Other people's emotions strongly affect me.",
+  'I am quite sensitive to pain.',
+  'I find myself overwhelmed on busy days and need to retreat to a quiet place.',
+  'I am particularly sensitive to caffeine.',
+  'I am easily overwhelmed by bright lights, strong smells, coarse textures, or loud sounds.',
+  'I have a rich and complex inner life.',
+  'Loud noises make me uncomfortable.',
+  'Art or music can move me deeply.',
+  'I am very conscientious.',
+  'I startle easily.',
+  'I get flustered when I have a lot to do in a short time.',
+  "I am aware of others' discomfort in their environment and know what to do to make them comfortable.",
+  'I get annoyed when others try to make me do too much at once.',
+  'I try hard not to make mistakes or forget things.',
+  "I make a point of avoiding violent movies or TV shows.",
+  'I find it unpleasant to have a lot going on at once.',
+  'Changes in my life shake me up.',
+  "I notice and enjoy fine scents, tastes, sounds, or works of art.",
+  'I find it important to arrange my life to avoid upsetting or overwhelming situations.',
+  'When I must compete or be observed performing, I get so nervous that I perform worse than usual.',
+  "When I was a child, my parents or teachers saw me as sensitive or shy."
+];
 const ans = Array(Qs.length).fill(null);
 let cur = 0;
 const $=id=>document.getElementById(id);
@@ -765,23 +820,40 @@ function applyStoryRecommendation(level) {
 }
 
 function render(){
-$('qText').textContent = Qs[cur];
-$('counter').textContent = `${cur + 1} / ${Qs.length}`;
-const done = ans.filter(v=>v!==null).length;
-$('answered').textContent = `已完成 ${done} / ${Qs.length}`;
-$('bar').style.width = `${(done / Qs.length) * 100}%`;
-$('prevBtn').disabled = cur===0;
-$('nextBtn').disabled = cur===Qs.length-1;
-$('submitBtn').disabled = done!==Qs.length;
-const likert=$('likert'); likert.innerHTML='';
-for(let i=1;i<=7;i++){
-const b=document.createElement('button');
-b.className='opt'+(ans[cur]===i?' active':'');
-b.textContent=i;
-b.type='button';
-b.onclick=()=>{ans[cur]=i;render();};
-likert.appendChild(b);
-}
+  // 题目文本
+  $('qText').textContent = Qs[cur];
+  $('qTextEn').textContent = QsEn[cur];
+
+  // 进度
+  $('counter').innerHTML = `${cur+1} <span style="font-size:1rem;color:rgba(204,196,209,1);font-family:'Plus Jakarta Sans',sans-serif;">/ ${Qs.length}</span>`;
+  const done = ans.filter(v => v !== null).length;
+  $('answered').innerHTML = `已完成 ${done} / ${Qs.length} <span style="opacity:0.6;">/ Completed ${done} / ${Qs.length}</span>`;
+  $('bar').style.width = `${(done / Qs.length) * 100}%`;
+
+  // 按钮状态
+  $('prevBtn').disabled = cur === 0;
+  $('prevBtn').style.opacity = cur === 0 ? '0.5' : '1';
+  $('prevBtn').style.cursor = cur === 0 ? 'not-allowed' : 'pointer';
+  $('nextBtn').disabled = cur === Qs.length - 1;
+  $('nextBtn').style.opacity = cur === Qs.length - 1 ? '0.5' : '1';
+  $('submitBtn').disabled = done !== Qs.length;
+  $('submitBtn').style.opacity = done === Qs.length ? '1' : '0.5';
+
+  // Likert 圆形按钮
+  const likert = $('likert');
+  likert.innerHTML = '';
+  for(let i = 1; i <= 7; i++){
+    const b = document.createElement('button');
+    const isActive = ans[cur] === i;
+    b.textContent = i;
+    b.style.cssText = isActive
+      ? 'width:2.5rem;height:2.5rem;border-radius:9999px;background:#33185c;color:#ffffff;font-size:14px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 12px rgba(51,24,92,0.25);transform:scale(1.15);transition:all 0.2s;'
+      : 'width:2rem;height:2rem;border-radius:9999px;background:transparent;color:#7b7580;font-size:12px;font-weight:600;border:1px solid #ccc4d1;cursor:pointer;transition:all 0.2s;';
+    b.onmouseover = () => { if(!isActive) b.style.borderColor = '#33185c'; b.style.color = '#33185c'; };
+    b.onmouseout = () => { if(!isActive) { b.style.borderColor = '#ccc4d1'; b.style.color = '#7b7580'; } };
+    b.onclick = () => { ans[cur] = i; render(); };
+    likert.appendChild(b);
+  }
 }
 
 $('prevBtn').onclick=()=>{if(cur>0){cur--;render();}};
@@ -856,7 +928,7 @@ $('barAesthetic').style.width = toWidth(aestheticAvg);
 $('valAesthetic').textContent = aestheticAvg.toFixed(1);
 $('barOverstim').style.width = toWidth(overstimAvg);
 $('valOverstim').textContent = overstimAvg.toFixed(1);
-$('quizPanel').classList.add('hide');
+$('quizPanel').style.display = 'none';
 $('resultPanel').classList.add('show');
 storyRec.style.display = 'block';
 window.scrollTo(0,0);
@@ -865,7 +937,7 @@ saveTestResult('hsp', level, { score: mean, level });
 
 function retryQuiz(){
 ans.fill(null); cur=0;
-$('quizPanel').classList.remove('hide');
+$('quizPanel').style.display = 'flex';
 $('resultPanel').classList.remove('show');
 storyRec.style.display = 'none';
 render();
@@ -942,10 +1014,8 @@ function renderStoredResult(record) {
   $('valOverstim').textContent = '--';
   document.querySelector('.test-intro').style.display = 'none';
   document.getElementById('testBody').style.display = 'block';
-  $('quizPanel').classList.add('hide');
+  $('quizPanel').style.display = 'none';
   $('resultPanel').classList.add('show');
-  progressText.textContent = '已完成';
-  progressBar.style.width = '100%';
   storyRec.style.display = 'none';
   return true;
 }
