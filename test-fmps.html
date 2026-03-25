@@ -1118,7 +1118,7 @@ function maybeRestoreSavedResult() {
   const startBtn = document.getElementById('startBtn');
   if (startBtn && !document.getElementById('viewLastResultBtn')) {
     const btn = document.createElement('button');
-    btn.id = 'viewLastResultBtn'; btn.type = 'button'; btn.className = 'ghost'; btn.textContent = '查看上次结果';
+    btn.id = 'viewLastResultBtn'; btn.type = 'button'; btn.className = 'ghost'; btn.textContent = '查看上次结果'; btn.style.marginTop = '1.5rem';
     btn.onclick = () => renderStoredResult(record);
     startBtn.insertAdjacentElement('afterend', btn);
   }
