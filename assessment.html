@@ -1,793 +1,300 @@
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>自我图鉴 | 女也 She Is</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Courier+Prime&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/font-override.css" />
-    <style>
-      :root {
-        --bg: #FAF7F4;
-        --surface: rgba(255, 255, 255, 0.84);
-        --surface-soft: rgba(74, 48, 115, 0.03);
-        --surface-muted: rgba(117, 108, 130, 0.06);
-        --text: #2d2238;
-        --body: #574d62;
-        --muted: #7c7287;
-        --brand: #4A3073;
-        --brand-hover: #3d2565;
-        --line: rgba(74, 48, 115, 0.14);
-        --accent: rgba(74, 48, 115, 0.24);
-        --placeholder-bg: rgba(117, 108, 130, 0.08);
-        --placeholder-text: #9d96a8;
-        --shadow: 0 16px 42px rgba(74, 48, 115, 0.06);
-      }
-
-      * { box-sizing: border-box; }
-
-      body {
-        margin: 0;
-        background: var(--bg);
-        background-image: radial-gradient(ellipse 90% 75% at 0% 0%, rgba(232,121,160,0.18) 0%, transparent 60%),
-          radial-gradient(ellipse 80% 70% at 100% 5%, rgba(167,139,250,0.2) 0%, transparent 55%),
-          radial-gradient(ellipse 70% 80% at 0% 100%, rgba(96,165,250,0.15) 0%, transparent 55%),
-          radial-gradient(ellipse 75% 60% at 100% 90%, rgba(249,115,22,0.12) 0%, transparent 50%);
-        color: var(--body);
-        font-family: "Noto Serif SC", Georgia, serif;
-        line-height: 1.9;
-        -webkit-font-smoothing: antialiased;
-        position: relative;
-      }
-
-      .vi-glow {
-        position: fixed;
-        pointer-events: none;
-        z-index: 0;
-      }
-
-      .vi-glow--top-left {
-        top: 0;
-        left: 0;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(ellipse at top left, rgba(74, 48, 115, 0.14) 0%, transparent 62%);
-        filter: blur(50px);
-      }
-
-      .vi-glow--bottom-right {
-        right: 0;
-        bottom: 0;
-        width: 420px;
-        height: 420px;
-        background: radial-gradient(ellipse at bottom right, rgba(74, 48, 115, 0.09) 0%, transparent 60%);
-        filter: blur(60px);
-      }
-
-      .page {
-        position: relative;
-        z-index: 1;
-        max-width: 480px;
-        margin: 0 auto;
-        padding: 22px 24px 40px;
-      }
-
-      a,
-      button {
-        transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(8px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .page > * {
-        animation: fadeInUp 0.5s ease forwards;
-      }
-
-      .page-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 16px;
-        padding: 28px 0 18px;
-      }
-
-      .back {
-        display: inline-block;
-        color: var(--brand);
-        font-size: 14px;
-      }
-
-      .back:hover {
-        color: var(--brand-hover);
-      }
-
-      .logo {
-        display: inline-flex;
-        flex-direction: column;
-        align-items: flex-end;
-        margin: 0;
-        text-align: right;
-      }
-
-      .logo-cn {
-        display: block;
-        font-family: "Lora", serif;
-        font-size: 28px;
-        line-height: 1;
-        font-weight: 600;
-        color: #1c1c1c;
-        letter-spacing: 0.12em;
-      }
-
-      .logo-en {
-        display: block;
-        font-family: "Courier Prime", monospace;
-        font-size: 11px;
-        color: #888;
-        letter-spacing: 0.08em;
-        margin-top: 2px;
-      }
-
-      .header-line {
-        height: 1px;
-        background: rgba(74, 48, 115, 0.28);
-      }
-
-      .page-pretitle {
-        margin: 18px 0 4px;
-        font-family: "Courier Prime", monospace;
-        font-size: 10px;
-        color: #b9b2bd;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
-      }
-
-      .title {
-        margin: 0;
-        font-family: "Noto Serif SC", Georgia, serif;
-        font-size: 36px;
-        font-weight: 600;
-        color: var(--text);
-        letter-spacing: 0.04em;
-      }
-
-      .subtitle {
-        margin: 8px 0 0;
-        font-size: 15px;
-        color: var(--body);
-      }
-
-      .intro {
-        margin: 18px 0 28px;
-        font-size: 14px;
-        color: var(--muted);
-      }
-
-      .profile-entry-wrap {
-        display: none;
-        margin: 0 0 24px;
-      }
-
-      .profile-entry-wrap.is-visible {
-        display: block;
-      }
-
-      .profile-entry {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
-        border: 1px solid var(--brand);
-        border-radius: 8px;
-        background: transparent;
-        color: var(--brand);
-        font-size: 13px;
-        line-height: 1;
-      }
-
-      .profile-entry:hover {
-        background: rgba(74, 48, 115, 0.03);
-        border-color: var(--brand-hover);
-        color: var(--brand-hover);
-      }
-
-      .axis-section {
-        margin-top: 48px;
-      }
-
-      .axis-section:first-of-type {
-        margin-top: 0;
-      }
-
-      .axis-head {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 14px;
-        margin-bottom: 16px;
-      }
-
-      .axis-title-wrap {
-        display: flex;
-        align-items: flex-start;
-        gap: 12px;
-        min-width: 0;
-        flex: 1;
-      }
-
-      .axis-accent {
-        width: 3px;
-        height: 46px;
-        border-radius: 0;
-        background: var(--brand);
-        flex: 0 0 3px;
-      }
-
-      .axis-title-block {
-        min-width: 0;
-      }
-
-      .axis-title {
-        margin: 0;
-        color: #1a1a1a;
-        font-size: 20px;
-        line-height: 1.2;
-        font-weight: 600;
-      }
-
-      .axis-subtitle {
-        margin: 2px 0 0;
-        color: #999;
-        font-size: 12px;
-        line-height: 1.4;
-        letter-spacing: 0.05em;
-      }
-
-      .axis-progress {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 56px;
-        padding: 4px 12px;
-        border-radius: 999px;
-        border: 1px solid rgba(74, 48, 115, 0.1);
-        background: rgba(255, 255, 255, 0.5);
-        color: var(--muted);
-        font-family: "Courier Prime", monospace;
-        font-size: 10px;
-        letter-spacing: 0.08em;
-        white-space: nowrap;
-      }
-
-      .axis-progress.is-active {
-        color: var(--brand);
-        border-color: rgba(74, 48, 115, 0.16);
-        background: rgba(255, 255, 255, 0.78);
-      }
-
-      .axis-progress.is-complete {
-        color: #fff;
-        background: var(--brand);
-        border-color: var(--brand);
-      }
-
-      .axis-desc {
-        margin: 8px 0 20px 15px;
-        color: #666;
-        font-size: 13px;
-        line-height: 1.7;
-      }
-
-      .cards {
-        display: grid;
-        gap: 8px;
-      }
-
-      .assessment-card {
-        display: flex;
-        gap: 0;
-        align-items: flex-start;
-        padding: 16px 18px;
-        border-radius: 12px;
-        border: 1px solid rgba(74, 48, 115, 0.08);
-        background: #fff;
-        box-shadow: none;
-        transition: all 0.2s ease;
-      }
-
-      .card-link:hover .assessment-card {
-        background: rgba(74, 48, 115, 0.06);
-        border-color: rgba(74, 48, 115, 0.25);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 16px rgba(74, 48, 115, 0.08);
-        transition: all 0.2s ease;
-      }
-
-      .assessment-card.soft {
-        background: #fff;
-      }
-
-      .assessment-card.placeholder {
-        background: transparent;
-        border: 1px dashed rgba(0, 0, 0, 0.12);
-        box-shadow: none;
-      }
-
-      .card-accent {
-        display: none;
-      }
-
-      .card-body {
-        flex: 1;
-        min-width: 0;
-      }
-
-      .card-title-row {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 12px;
-        flex-wrap: wrap;
-      }
-
-      .name {
-        margin: 0;
-        color: #1a1a1a;
-        font-size: 15px;
-        line-height: 1.45;
-        font-weight: 500;
-      }
-
-      .assessment-card.placeholder .name {
-        color: #bbb;
-      }
-
-      .desc {
-        margin: 4px 0 0;
-        color: #888;
-        font-size: 12px;
-        line-height: 1.6;
-      }
-
-      .assessment-card.placeholder .desc {
-        color: #bbb;
-      }
-
-      .meta {
-        margin: 10px 0 0;
-        color: #999;
-        font-size: 11px;
-        line-height: 1.6;
-      }
-
-      .cta,
-      .pill {
-        flex-shrink: 0;
-        white-space: nowrap;
-      }
-
-      .cta {
-        width: 100%;
-        margin-top: 10px;
-        color: var(--brand);
-        font-size: 11px;
-        line-height: 1;
-      }
-
-      .card-link:hover .cta {
-        color: var(--brand);
-        opacity: 0.68;
-      }
-
-      .pill {
-        margin-left: auto;
-        padding: 0;
-        border-radius: 0;
-        background: transparent;
-        color: #bbb;
-        font-size: 11px;
-        line-height: 1.4;
-      }
-
-      .today-block {
-        margin: 48px 0 32px;
-        padding-top: 32px;
-        border-top: 1px solid rgba(74, 48, 115, 0.1);
-      }
-
-      .today-kicker {
-        margin: 0 0 8px;
-        color: var(--brand);
-        font-size: 22px;
-        line-height: 1.3;
-        font-weight: 600;
-      }
-
-      .today-note {
-        margin: 0 0 14px;
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .today-link:hover .assessment-card {
-        background: rgba(74, 48, 115, 0.05);
-      }
-
-      .more-section {
-        margin-top: 42px;
-      }
-
-      .more-label {
-        margin: 0 0 12px;
-        font-family: "Courier Prime", monospace;
-        font-size: 10px;
-        color: #aaa;
-        letter-spacing: 0.24em;
-        text-transform: uppercase;
-      }
-
-      @media (max-width: 420px) {
-        .page {
-          padding-left: 18px;
-          padding-right: 18px;
-        }
-
-        .axis-head {
-          align-items: stretch;
-        }
-
-        .axis-progress,
-        .cta,
-        .pill {
-          font-size: 11px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="vi-glow vi-glow--top-left" aria-hidden="true"></div>
-    <div class="vi-glow vi-glow--bottom-right" aria-hidden="true"></div>
-
-    <main class="page">
-      <header class="page-header">
-        <a class="back" href="index.html">← 返回首页</a>
-        <div class="logo" aria-label="女也 she is ______.">
-          <span class="logo-cn">女也</span>
-          <span class="logo-en">she is ______.</span>
-        </div>
-      </header>
-      <div class="header-line"></div>
-
-      <p class="page-pretitle">SELF ARCHIVE</p>
-      <h1 class="title">自我图鉴</h1>
-      <p class="subtitle">看见内在的自己</p>
-      <p class="intro">沿着四条轴线慢慢靠近自己：你是谁，你怎么感受，你怎么行动，以及你为什么会成为现在的你。</p>
-
-      <div class="profile-entry-wrap" id="profileEntryWrap">
-        <a class="profile-entry" href="profile.html" id="profileEntry">查看我的画像 <span aria-hidden="true">→</span></a>
-      </div>
-
-      <section class="axis-section" data-section-tests="cognitive">
-        <div class="axis-head">
-          <div class="axis-title-wrap">
-            <span class="axis-accent" aria-hidden="true"></span>
-            <div class="axis-title-block">
-              <h2 class="axis-title">特质轴</h2>
-              <p class="axis-subtitle">你是谁</p>
-            </div>
-          </div>
-          <span class="axis-progress" data-progress>0/1</span>
-        </div>
-        <p class="axis-desc">你如何感知、思考、做决策——这是你最底层的操作系统</p>
-        <div class="cards">
-          <a class="card-link" href="test-cognitive.html" data-module-id="cognitive">
-            <article class="assessment-card">
-              <span class="card-accent" aria-hidden="true"></span>
-              <div class="card-body">
-                <div class="card-title-row">
-                  <h3 class="name">荣格八维认知功能（完整版）</h3>
-                  <span class="cta">开始 →</span>
-                </div>
-                <p class="desc">看清你天然的思维方式，理解为什么你和别人看同一件事会有那么大的差异</p>
-                <p class="meta">约 10 分钟 · 80 题</p>
-              </div>
-            </article>
-          </a>
-          <a class="card-link" href="test-cognitive-48.html" data-module-id="cognitive">
-            <article class="assessment-card soft">
-              <span class="card-accent" aria-hidden="true"></span>
-              <div class="card-body">
-                <div class="card-title-row">
-                  <h3 class="name">荣格八维认知功能（快速版）</h3>
-                  <span class="cta">开始 →</span>
-                </div>
-                <p class="desc">保留八维结构，每维 6 题，先快速拿到你的认知轮廓</p>
-                <p class="meta">约 6 分钟 · 48 题</p>
-              </div>
-            </article>
-          </a>
-        </div>
-      </section>
-
-      <section class="axis-section" data-section-tests="hsp,erq,ecr">
-        <div class="axis-head">
-          <div class="axis-title-wrap">
-            <span class="axis-accent" aria-hidden="true"></span>
-            <div class="axis-title-block">
-              <h2 class="axis-title">情绪轴</h2>
-              <p class="axis-subtitle">你怎么感受</p>
-            </div>
-          </div>
-          <span class="axis-progress" data-progress>0/3</span>
-        </div>
-        <p class="axis-desc">你如何感受、消化、应对情绪——这里藏着你消耗最多能量的地方</p>
-        <div class="cards">
-          <a class="card-link" href="test-hsp.html" data-module-id="hsp">
-            <article class="assessment-card soft">
-              <span class="card-accent" aria-hidden="true"></span>
-              <div class="card-body">
-                <div class="card-title-row">
-                  <h3 class="name">高敏感测评</h3>
-                  <span class="cta">开始 →</span>
-                </div>
-                <p class="desc">知道自己的感受系统有多细腻，以及那些「太累了」是从哪里来的</p>
-                <p class="meta">一杯茶的时间</p>
-              </div>
-            </article>
-          </a>
-          <a class="card-link" href="test-erq.html" data-module-id="erq">
-            <article class="assessment-card">
-              <span class="card-accent" aria-hidden="true"></span>
-              <div class="card-body">
-                <div class="card-title-row">
-                  <h3 class="name">情绪调节测评</h3>
-                  <span class="cta">开始 →</span>
-                </div>
-                <p class="desc">看清楚你在压力下是怎么处理情绪的——是真的消化了，还是只是压下去了</p>
-                <p class="meta">一杯茶的时间</p>
-              </div>
-            </article>
-          </a>
-          <a class="card-link" href="test-ecr.html" data-module-id="ecr">
-            <article class="assessment-card soft">
-              <span class="card-accent" aria-hidden="true"></span>
-              <div class="card-body">
-                <div class="card-title-row">
-                  <h3 class="name">依恋风格测评</h3>
-                  <span class="cta">开始 →</span>
-                </div>
-                <p class="desc">理解你在亲密关系里的模式，知道那些焦虑或疏离是怎么来的</p>
-                <p class="meta">一杯茶的时间</p>
-              </div>
-            </article>
-          </a>
-        </div>
-      </section>
-
-      <section class="axis-section" data-section-tests="fmps,boundary-sense,relationship-role,disc">
-        <div class="axis-head">
-          <div class="axis-title-wrap">
-            <span class="axis-accent" aria-hidden="true"></span>
-            <div class="axis-title-block">
-              <h2 class="axis-title">行为轴</h2>
-              <p class="axis-subtitle">你怎么行动</p>
-            </div>
-          </div>
-          <span class="axis-progress" data-progress>0/4</span>
-        </div>
-        <p class="axis-desc">你如何行动、设标准、划边界——这决定了你和世界的互动方式</p>
-        <div class="cards">
-          <a class="card-link" href="test-fmps.html" data-module-id="fmps">
-            <article class="assessment-card">
-              <span class="card-accent" aria-hidden="true"></span>
-              <div class="card-body">
-                <div class="card-title-row">
-                  <h3 class="name">完美主义测评</h3>
-                  <span class="cta">开始 →</span>
-                </div>
-                <p class="desc">看清你对自己设的门槛，以及那些「还不够好」是自己的标准还是别人的期待</p>
-                <p class="meta">约 4 分钟</p>
-              </div>
-            </article>
-          </a>
-          <a class="card-link" href="test-boundary-sense.html" data-module-id="boundary-sense">
-            <article class="assessment-card soft">
-              <span class="card-accent" aria-hidden="true"></span>
-              <div class="card-body">
-                <div class="card-title-row">
-                  <h3 class="name">边界感测评</h3>
-                  <span class="cta">开始 →</span>
-                </div>
-                <p class="desc">知道你在哪些地方说「好」其实是说不出「不」，以及为什么</p>
-                <p class="meta">约 2 分钟 · 8 题</p>
-              </div>
-            </article>
-          </a>
-          <a class="card-link" href="test-relationship-role.html" data-module-id="relationship-role">
-            <article class="assessment-card">
-              <span class="card-accent" aria-hidden="true"></span>
-              <div class="card-body">
-                <div class="card-title-row">
-                  <h3 class="name">关系角色测评</h3>
-                  <span class="cta">开始 →</span>
-                </div>
-                <p class="desc">看见你在一段关系里习惯扮演什么角色，那个角色是你选的还是被推上去的</p>
-                <p class="meta">约 3 分钟 · 10 题</p>
-              </div>
-            </article>
-          </a>
-          <a class="card-link" href="test-disc.html" data-module-id="disc">
-            <article class="assessment-card soft">
-              <span class="card-accent" aria-hidden="true"></span>
-              <div class="card-body">
-                <div class="card-title-row">
-                  <h3 class="name">行为风格测评</h3>
-                  <span class="cta">开始 →</span>
-                </div>
-                <p class="desc">看清你在压力下怎么反应、怎么做决定、怎么和团队互动——这是你行动方式的底层逻辑</p>
-                <p class="meta">约 5 分钟 · 12 题</p>
-              </div>
-            </article>
-          </a>
-        </div>
-      </section>
-
-      <section class="axis-section" data-section-tests="motivation-enneagram,motivation-holland">
-        <div class="axis-head">
-          <div class="axis-title-wrap">
-            <span class="axis-accent" aria-hidden="true"></span>
-            <div class="axis-title-block">
-              <h2 class="axis-title">动机轴</h2>
-              <p class="axis-subtitle">你为什么这样</p>
-            </div>
-          </div>
-          <span class="axis-progress" data-progress>0/2</span>
-        </div>
-        <p class="axis-desc">你为什么是这样的你——驱动力和恐惧的根源（即将上线）</p>
-        <div class="cards">
-          <article class="assessment-card placeholder" aria-disabled="true">
-            <span class="card-accent" aria-hidden="true"></span>
-            <div class="card-body">
-              <div class="card-title-row">
-                <h3 class="name">九型人格</h3>
-                <span class="pill">即将上线</span>
-              </div>
-              <p class="desc">从你的核心驱动力与防御方式出发，看见那些反复出现的执念、恐惧与选择。</p>
-            </div>
-          </article>
-          <article class="assessment-card placeholder" aria-disabled="true">
-            <span class="card-accent" aria-hidden="true"></span>
-            <div class="card-body">
-              <div class="card-title-row">
-                <h3 class="name">霍兰德兴趣类型</h3>
-                <span class="pill">即将上线</span>
-              </div>
-              <p class="desc">理解你会被什么吸引、在哪种环境里更容易发光，找到热情与方向之间的连接点。</p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="today-block">
-        <h2 class="today-kicker">今天怎么样</h2>
-        <p class="today-note">替你把此刻的内在状态描一张地图，不评判，只是看见</p>
-        <a class="today-link" href="test-today-mood.html" data-module-id="today-mood">
-          <article class="assessment-card soft">
-            <span class="card-accent" aria-hidden="true"></span>
-            <div class="card-body">
-              <div class="card-title-row">
-                <h3 class="name">今日情绪地图</h3>
-                <span class="cta">开始 →</span>
-              </div>
-              <p class="desc">替你把此刻的内在状态描一张地图，不评判，只是看见</p>
-              <p class="meta">约 2 分钟 · 8 题</p>
-            </div>
-          </article>
-        </a>
-      </section>
-
-      <section class="more-section">
-        <p class="more-label">MORE — 更多</p>
-        <div class="cards">
-          <a class="card-link" href="assessment-more.html">
-            <article class="assessment-card soft">
-              <span class="card-accent" aria-hidden="true"></span>
-              <div class="card-body">
-                <div class="card-title-row">
-                  <h3 class="name">更多测试</h3>
-                  <span class="cta">查看全部 →</span>
-                </div>
-                <p class="desc">查看全部量表与即将上线内容。</p>
-              </div>
-            </article>
-          </a>
-        </div>
-      </section>
-    </main>
-
-    <script src="assets/profile-utils.js"></script>
-    <script>
-      (function () {
-        const profileWrap = document.getElementById('profileEntryWrap');
-        const prefix = window.SheProfileStore ? window.SheProfileStore.PREFIX : 'she_result_';
-
-        function hasModuleResult(moduleId) {
-          try {
-            return !!localStorage.getItem(prefix + moduleId);
-          } catch (error) {
-            console.warn('Failed to read stored module result:', error);
-            return false;
-          }
-        }
-
-        function hasAnyCompletedResult() {
-          if (window.SheProfileStore && typeof window.SheProfileStore.hasResults === 'function') {
-            return window.SheProfileStore.hasResults();
-          }
-          return false;
-        }
-
-        function isLoggedIn() {
-          try {
-            const authHints = [
-              'supabase.auth.token',
-              'sb-',
-              'she_user',
-              'she_session',
-              'user',
-              'session'
-            ];
-
-            for (let i = 0; i < localStorage.length; i += 1) {
-              const key = localStorage.key(i) || '';
-              if (authHints.some(function (hint) { return key.indexOf(hint) !== -1; })) {
-                return true;
-              }
-            }
-          } catch (error) {
-            console.warn('Failed to inspect login state:', error);
-          }
-
-          return true;
-        }
-
-        document.querySelectorAll('[data-section-tests]').forEach(function (section) {
-          const progress = section.querySelector('[data-progress]');
-          const moduleIds = (section.dataset.sectionTests || '')
-            .split(',')
-            .map(function (item) { return item.trim(); })
-            .filter(Boolean);
-
-          const doneCount = moduleIds.filter(hasModuleResult).length;
-          const totalCount = moduleIds.length;
-
-          if (progress) {
-            progress.textContent = doneCount + '/' + totalCount;
-            progress.classList.toggle('is-active', doneCount > 0);
-            progress.classList.toggle('is-complete', totalCount > 0 && doneCount === totalCount);
-          }
-        });
-
-        if (profileWrap && isLoggedIn() && hasAnyCompletedResult()) {
-          profileWrap.classList.add('is-visible');
-        }
-      })();
-    </script>
-  </body>
+<!DOCTYPE html>
+<html class="light" lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>自我图鉴 | 女也 She Is</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&family=Noto+Serif+SC:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface-container": "#f0edea",
+        "on-secondary-container": "#771f44",
+        "tertiary-container": "#3d3e3e",
+        "inverse-on-surface": "#f3f0ed",
+        "on-secondary": "#ffffff",
+        "error-container": "#ffdad6",
+        "on-error": "#ffffff",
+        "outline-variant": "#ccc4d1",
+        "on-secondary-fixed": "#3e001e",
+        "tertiary-fixed": "#e3e2e2",
+        "on-primary": "#ffffff",
+        "on-tertiary": "#ffffff",
+        "on-primary-fixed": "#26074e",
+        "on-tertiary-container": "#a9a9a9",
+        "tertiary": "#272828",
+        "background": "#fcf9f6",
+        "inverse-primary": "#d6baff",
+        "secondary-fixed-dim": "#ffb0c8",
+        "surface-tint": "#6c5196",
+        "surface-container-low": "#f6f3f0",
+        "on-tertiary-fixed-variant": "#464747",
+        "on-surface": "#1c1c1a",
+        "on-tertiary-fixed": "#1b1c1c",
+        "outline": "#7b7580",
+        "surface-container-highest": "#e5e2df",
+        "primary": "#33185c",
+        "surface-dim": "#dcdad7",
+        "inverse-surface": "#31302f",
+        "surface-container-high": "#eae8e5",
+        "on-surface-variant": "#4a454f",
+        "on-secondary-fixed-variant": "#7e244a",
+        "surface-container-lowest": "#ffffff",
+        "on-error-container": "#93000a",
+        "primary-fixed": "#ecdcff",
+        "on-primary-container": "#b99ce7",
+        "primary-fixed-dim": "#d6baff",
+        "on-primary-fixed-variant": "#53397c",
+        "tertiary-fixed-dim": "#c7c6c6",
+        "surface-variant": "#e5e2df",
+        "secondary": "#9c3c62",
+        "secondary-fixed": "#ffd9e2",
+        "surface": "#fcf9f6",
+        "primary-container": "#4a3073",
+        "error": "#ba1a1a",
+        "secondary-container": "#fd8ab2",
+        "surface-bright": "#fcf9f6",
+        "on-background": "#1c1c1a"
+      },
+      fontFamily: {
+        "headline": ["Noto Serif", "Noto Serif SC", "serif"],
+        "body": ["Plus Jakarta Sans", "sans-serif"],
+        "label": ["Plus Jakarta Sans", "sans-serif"]
+      },
+      borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+    },
+  },
+}
+</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: max(884px, 100dvh);
+}
+.serif-title { font-family: 'Noto Serif', 'Noto Serif SC', serif; }
+.glass-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+</style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary-container/30">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#fcf9f6]/80 backdrop-blur-xl">
+<div class="flex justify-between items-center px-6 py-4 w-full">
+<a href="/" class="hover:opacity-80 transition-opacity active:scale-95 duration-300">
+<span class="material-symbols-outlined text-[#33185c]">arrow_back</span>
+</a>
+<h1 class="font-headline text-2xl tracking-tight text-[#33185c] flex items-center gap-2">
+<span class="font-bold">女也</span>
+<span class="text-xs uppercase tracking-[0.2em] font-light opacity-60">She Is</span>
+</h1>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/15" style="background: linear-gradient(135deg, #4a3073, #9c3c62);"></div>
+</div>
+<div class="bg-[#f0edea] h-[1px] w-full opacity-20"></div>
+</header>
+
+<main class="pt-24 pb-32 px-6 max-w-3xl mx-auto">
+
+<!-- Hero Title -->
+<section class="mb-12">
+<span class="text-secondary font-label text-[10px] uppercase tracking-[0.2em] font-bold mb-4 block">Personal Discovery</span>
+<h2 class="text-4xl md:text-5xl font-headline font-normal text-primary leading-tight mb-2 tracking-tight italic">Discover Your<br>Inner Landscape</h2>
+<h2 class="font-headline text-xl md:text-2xl font-normal text-primary/50 tracking-widest mb-6">探索你的内在</h2>
+<p class="text-on-surface-variant font-body text-sm leading-relaxed max-w-[90%]">Explore the depths of your psyche through our four-axis framework.<br>通过四个维度的深度测评，开启您的内在探索之旅：你是谁，你怎么感受，你怎么行动，以及你为什么会成为现在的你。</p>
+</section>
+
+<!-- Axis 01: Trait Axis 特质轴 -->
+<section class="mb-16">
+<div class="flex items-baseline gap-4 mb-8">
+<span class="serif-title text-5xl text-secondary font-black">01</span>
+<div>
+<h3 class="serif-title text-xl font-bold text-primary">Trait Axis <span class="text-base font-normal text-primary/50">/ 特质轴</span></h3>
+<div class="h-0.5 w-12 bg-secondary mt-1"></div>
+</div>
+</div>
+<div class="grid gap-6">
+<!-- Jungian Full -->
+<a href="test-cognitive.html" class="group block relative bg-surface-container-lowest rounded-lg p-6 shadow-[0_4px_24px_rgba(51,24,92,0.04)] overflow-hidden transition-all hover:shadow-[0_8px_32px_rgba(51,24,92,0.08)]">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors"></div>
+<h4 class="serif-title text-lg font-bold text-primary mb-1">Jungian Cognitive Function</h4>
+<p class="text-[10px] text-primary/40 font-bold uppercase tracking-wider mb-3">荣格认知功能 · 完整版</p>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-5">Discover your innate mental preferences and how you perceive the world.<br><span class="text-on-surface-variant/60">探索你天生的心理偏好及感知世界的方式。</span></p>
+<span class="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase">Start / 开始</span>
+</a>
+<!-- Jungian Quick -->
+<a href="test-cognitive-48.html" class="block bg-surface-container-low rounded-lg p-6 border-l-4 border-secondary/30 hover:bg-surface-container transition-colors">
+<h4 class="serif-title text-lg font-bold text-primary mb-1">Jungian Quick Version</h4>
+<p class="text-[10px] text-primary/40 font-bold uppercase tracking-wider mb-3">荣格认知功能 · 快速版</p>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-5">A streamlined 48-question version for faster insights.<br><span class="text-on-surface-variant/60">精简 48 题版本，快速获得认知功能画像。</span></p>
+<span class="inline-flex items-center gap-2 text-primary border border-outline-variant/30 px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase">Start / 开始</span>
+</a>
+</div>
+</section>
+
+<!-- Axis 02: Emotion Axis 情绪轴 -->
+<section class="mb-16">
+<div class="flex items-baseline gap-4 mb-8">
+<span class="serif-title text-5xl text-secondary font-black">02</span>
+<div>
+<h3 class="serif-title text-xl font-bold text-primary">Emotion Axis <span class="text-base font-normal text-primary/50">/ 情绪轴</span></h3>
+<div class="h-0.5 w-12 bg-secondary mt-1"></div>
+</div>
+</div>
+<div class="grid gap-6">
+<!-- HSP -->
+<a href="test-hsp.html" class="block bg-surface-container-lowest rounded-lg p-6 shadow-sm hover:shadow-md transition-all">
+<h4 class="serif-title text-lg font-bold text-primary mb-1">High Sensitivity</h4>
+<p class="text-[10px] text-secondary font-bold uppercase mb-3 tracking-wider">高敏感度特质测试</p>
+<p class="text-sm text-on-surface-variant mb-5">Measure your sensory processing sensitivity and emotional depth.<br><span class="text-on-surface-variant/60">测量你的感觉加工敏感度与情绪深度。</span></p>
+<span class="inline-block w-full py-3 rounded-full bg-surface-container text-primary font-bold text-xs uppercase tracking-widest text-center hover:bg-surface-container-high transition-colors">Discover / 探索</span>
+</a>
+<!-- ERQ -->
+<a href="test-erq.html" class="block bg-surface-container-lowest rounded-lg p-6 shadow-sm hover:shadow-md transition-all">
+<h4 class="serif-title text-lg font-bold text-primary mb-1">Emotion Regulation</h4>
+<p class="text-[10px] text-secondary font-bold uppercase mb-3 tracking-wider">情绪调节策略</p>
+<p class="text-sm text-on-surface-variant mb-5">Understand how you manage and regulate your emotional responses.<br><span class="text-on-surface-variant/60">了解你管理和调节情绪反应的方式。</span></p>
+<span class="inline-block w-full py-3 rounded-full bg-surface-container text-primary font-bold text-xs uppercase tracking-widest text-center hover:bg-surface-container-high transition-colors">Discover / 探索</span>
+</a>
+<!-- ECR Attachment -->
+<a href="test-ecr.html" class="block bg-primary text-on-primary rounded-lg p-6 shadow-lg relative overflow-hidden hover:opacity-95 transition-opacity">
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container/20 to-transparent"></div>
+<div class="relative z-10">
+<h4 class="serif-title text-lg font-bold mb-1">Attachment Style</h4>
+<p class="text-[10px] text-primary-fixed-dim font-bold uppercase mb-3 tracking-wider">成人依恋类型</p>
+<p class="text-sm text-primary-fixed/80 mb-5">Understanding how you connect in intimate relationships.<br><span class="text-primary-fixed/60">了解你在亲密关系中的连接方式。</span></p>
+<span class="inline-block w-full py-3 rounded-full bg-on-primary text-primary font-bold text-xs uppercase tracking-widest text-center">Start / 开始</span>
+</div>
+</a>
+<!-- Today Mood -->
+<a href="test-today-mood.html" class="block bg-surface-container-low rounded-lg p-6 border-l-4 border-secondary/30 hover:bg-surface-container transition-colors">
+<h4 class="serif-title text-lg font-bold text-primary mb-1">Today's Mood Map</h4>
+<p class="text-[10px] text-primary/40 font-bold uppercase tracking-wider mb-3">今日情绪地图</p>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-5">A daily check-in to map your emotional landscape right now.<br><span class="text-on-surface-variant/60">每日情绪签到，记录此刻的内在天气。</span></p>
+<span class="inline-flex items-center gap-2 text-primary border border-outline-variant/30 px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase">Check In / 签到</span>
+</a>
+</div>
+</section>
+
+<!-- Axis 03: Behavior Axis 行为轴 -->
+<section class="mb-16">
+<div class="flex items-baseline gap-4 mb-8">
+<span class="serif-title text-5xl text-secondary font-black">03</span>
+<div>
+<h3 class="serif-title text-xl font-bold text-primary">Behavior Axis <span class="text-base font-normal text-primary/50">/ 行为轴</span></h3>
+<div class="h-0.5 w-12 bg-secondary mt-1"></div>
+</div>
+</div>
+<div class="grid gap-6">
+<!-- Perfectionism -->
+<a href="test-fmps.html" class="block glass-card rounded-lg p-6 border border-white/50 hover:shadow-md transition-all">
+<h4 class="serif-title text-lg font-bold text-primary mb-1">Perfectionism</h4>
+<p class="text-[10px] text-primary/40 font-bold uppercase tracking-wider mb-3">完美主义倾向</p>
+<p class="text-sm text-on-surface-variant mb-5">How do high standards affect your daily flow?<br><span class="text-on-surface-variant/60">衡量高标准如何影响你的日常心流。</span></p>
+<span class="inline-flex bg-primary text-white text-[10px] px-5 py-2 rounded-full font-bold uppercase tracking-widest">Begin / 开启</span>
+</a>
+<div class="grid grid-cols-2 gap-4">
+<!-- Boundary Sense -->
+<a href="test-boundary-sense.html" class="block bg-surface-container-high rounded-lg p-6 hover:bg-surface-container-highest transition-colors">
+<h4 class="serif-title text-base font-bold text-primary mb-2">Boundary Sense</h4>
+<p class="text-[10px] text-primary/60 font-bold uppercase">边界感评估</p>
+</a>
+<!-- Relationship Role -->
+<a href="test-relationship-role.html" class="block bg-surface-container rounded-lg p-6 hover:bg-surface-container-high transition-colors">
+<h4 class="serif-title text-base font-bold text-primary mb-2">Interpersonal Roles</h4>
+<p class="text-[10px] text-primary/60 font-bold uppercase">关系角色定位</p>
+</a>
+</div>
+<!-- DISC -->
+<a href="test-disc.html" class="block bg-surface-container-lowest rounded-lg p-6 shadow-sm hover:shadow-md transition-all">
+<h4 class="serif-title text-lg font-bold text-primary mb-1">DISC Behavior Style</h4>
+<p class="text-[10px] text-primary/40 font-bold uppercase tracking-wider mb-3">行为风格测评</p>
+<p class="text-sm text-on-surface-variant mb-5">Understand your behavioral tendencies in work and social settings.<br><span class="text-on-surface-variant/60">了解你在工作和社交中的行为倾向。</span></p>
+<span class="inline-block w-full py-3 rounded-full bg-surface-container text-primary font-bold text-xs uppercase tracking-widest text-center hover:bg-surface-container-high transition-colors">Discover / 探索</span>
+</a>
+</div>
+</section>
+
+<!-- Axis 04: Motivation Axis 动机轴 -->
+<section class="mb-16">
+<div class="flex items-baseline gap-4 mb-8">
+<span class="serif-title text-5xl text-secondary font-black">04</span>
+<div>
+<h3 class="serif-title text-xl font-bold text-primary">Motivation Axis <span class="text-base font-normal text-primary/50">/ 动机轴</span></h3>
+<div class="h-0.5 w-12 bg-secondary mt-1"></div>
+</div>
+</div>
+<div class="space-y-4">
+<!-- Enneagram (placeholder) -->
+<div class="flex items-center gap-6 p-6 rounded-lg bg-surface-container-lowest border border-surface-container-high opacity-60">
+<div class="flex-grow">
+<h4 class="serif-title font-bold text-primary">Enneagram</h4>
+<p class="text-[10px] font-bold text-secondary uppercase tracking-widest">九型人格动机</p>
+</div>
+<span class="text-[10px] text-outline font-label uppercase tracking-widest">Coming Soon</span>
+</div>
+<!-- Holland (placeholder) -->
+<div class="flex items-center gap-6 p-6 rounded-lg bg-surface-container-lowest border border-surface-container-high opacity-60">
+<div class="flex-grow">
+<h4 class="serif-title font-bold text-primary">Holland Career</h4>
+<p class="text-[10px] font-bold text-secondary uppercase tracking-widest">霍兰德职业兴趣</p>
+</div>
+<span class="text-[10px] text-outline font-label uppercase tracking-widest">Coming Soon</span>
+</div>
+</div>
+</section>
+
+<!-- My Profile Summary -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-[#4a3073] to-[#33185c] rounded-xl p-8 text-on-primary relative overflow-hidden">
+<div class="absolute right-[-20px] top-[-20px] w-40 h-40 border-[16px] border-white/5 rounded-full"></div>
+<div class="relative z-10">
+<h3 class="serif-title text-2xl font-bold mb-2">Your Inner Portrait</h3>
+<p class="text-on-primary/70 text-xs font-headline tracking-widest mb-1">你的内在画像</p>
+<p class="text-on-primary/60 text-sm font-body mb-6 leading-relaxed">All your completed assessments woven into one living portrait — patterns, edges, and the quiet truths in between.<br><span class="text-on-primary/40">把做过的测评结果连成一张内在模式画像。</span></p>
+<a href="profile.html" class="inline-flex items-center gap-2 bg-white text-primary px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest">
+View Portrait / 查看画像
+</a>
+</div>
+</div>
+</section>
+
+</main>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center pt-4 pb-8 px-4 bg-[#ffffff]/60 backdrop-blur-2xl rounded-t-[2.5rem] z-50 shadow-[0_-8px_32px_rgba(28,28,26,0.04)]">
+<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="/">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="/stories">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Stories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#33185c] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#9c3c62] after:rounded-full" href="/assessment">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Archive</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Map</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="/mailbox">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Letters</span>
+</a>
+</nav>
+
+</body>
 </html>

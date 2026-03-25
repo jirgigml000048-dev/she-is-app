@@ -1,416 +1,291 @@
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>来信 | 女也 She Is</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="css/font-override.css" />
-    <style>
-      :root {
-        --bg: #FAF7F4;
-        --surface: rgba(255, 255, 255, 0.58);
-        --surface-border: rgba(74, 48, 115, 0.14);
-        --ink: #2f2538;
-        --body: rgba(47, 37, 56, 0.8);
-        --muted: rgba(74, 48, 115, 0.52);
-        --accent: #4A3073;
-        --accent-soft: rgba(74, 48, 115, 0.08);
-        --shadow: 0 24px 60px rgba(74, 48, 115, 0.08);
-        --radius: 28px;
-      }
+<!DOCTYPE html>
+<html class="light" lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>来信 | 女也 She Is</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Serif+SC:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface-container": "#f0edea",
+        "on-secondary-container": "#771f44",
+        "tertiary-container": "#3d3e3e",
+        "inverse-on-surface": "#f3f0ed",
+        "on-secondary": "#ffffff",
+        "error-container": "#ffdad6",
+        "on-error": "#ffffff",
+        "outline-variant": "#ccc4d1",
+        "on-secondary-fixed": "#3e001e",
+        "tertiary-fixed": "#e3e2e2",
+        "on-primary": "#ffffff",
+        "on-tertiary": "#ffffff",
+        "on-primary-fixed": "#26074e",
+        "on-tertiary-container": "#a9a9a9",
+        "tertiary": "#272828",
+        "background": "#fcf9f6",
+        "inverse-primary": "#d6baff",
+        "secondary-fixed-dim": "#ffb0c8",
+        "surface-tint": "#6c5196",
+        "surface-container-low": "#f6f3f0",
+        "on-tertiary-fixed-variant": "#464747",
+        "on-surface": "#1c1c1a",
+        "on-tertiary-fixed": "#1b1c1c",
+        "outline": "#7b7580",
+        "surface-container-highest": "#e5e2df",
+        "primary": "#33185c",
+        "surface-dim": "#dcdad7",
+        "inverse-surface": "#31302f",
+        "surface-container-high": "#eae8e5",
+        "on-surface-variant": "#4a454f",
+        "on-secondary-fixed-variant": "#7e244a",
+        "surface-container-lowest": "#ffffff",
+        "on-error-container": "#93000a",
+        "primary-fixed": "#ecdcff",
+        "on-primary-container": "#b99ce7",
+        "primary-fixed-dim": "#d6baff",
+        "on-primary-fixed-variant": "#53397c",
+        "tertiary-fixed-dim": "#c7c6c6",
+        "surface-variant": "#e5e2df",
+        "secondary": "#9c3c62",
+        "secondary-fixed": "#ffd9e2",
+        "surface": "#fcf9f6",
+        "primary-container": "#4a3073",
+        "error": "#ba1a1a",
+        "secondary-container": "#fd8ab2",
+        "surface-bright": "#fcf9f6",
+        "on-background": "#1c1c1a"
+      },
+      fontFamily: {
+        "headline": ["Noto Serif", "Noto Serif SC", "serif"],
+        "body": ["Plus Jakarta Sans", "sans-serif"],
+        "label": ["Plus Jakarta Sans", "sans-serif"],
+        "handwriting": ["Dancing Script", "cursive"]
+      },
+      borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+    },
+  },
+}
+</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: max(884px, 100dvh);
+}
+.serif-title { font-family: 'Noto Serif', 'Noto Serif SC', serif; }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-container/30">
 
-      * { box-sizing: border-box; }
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#fcf9f6]/80 backdrop-blur-xl">
+<div class="flex justify-between items-center px-6 py-4 w-full">
+<a href="/" class="hover:opacity-80 transition-opacity active:scale-95 duration-300">
+<span class="material-symbols-outlined text-[#33185c]">arrow_back</span>
+</a>
+<h1 class="font-headline text-2xl tracking-tight text-[#33185c] flex items-center gap-2">
+<span class="font-bold">女也</span>
+<span class="text-xs uppercase tracking-[0.2em] font-light opacity-60">She Is</span>
+</h1>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/15" style="background: linear-gradient(135deg, #4a3073, #9c3c62);"></div>
+</div>
+<div class="bg-[#f0edea] h-[1px] w-full opacity-20"></div>
+</header>
 
-      html,
-      body {
-        margin: 0;
-        min-height: 100%;
-        background: var(--bg);
-        background-image: radial-gradient(ellipse 90% 75% at 0% 0%, rgba(232,121,160,0.18) 0%, transparent 60%),
-          radial-gradient(ellipse 80% 70% at 100% 5%, rgba(167,139,250,0.2) 0%, transparent 55%),
-          radial-gradient(ellipse 70% 80% at 0% 100%, rgba(96,165,250,0.15) 0%, transparent 55%),
-          radial-gradient(ellipse 75% 60% at 100% 90%, rgba(249,115,22,0.12) 0%, transparent 50%);
-        color: var(--body);
-        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
-      }
+<main class="pt-24 pb-32 px-6 max-w-screen-xl mx-auto">
 
-      body {
-        position: relative;
-        overflow-x: hidden;
-      }
+<!-- Hero Section -->
+<section class="mb-10 text-center">
+<span class="font-label text-xs uppercase tracking-[0.3em] text-secondary font-bold mb-4 block">The Art of Connection</span>
+<h2 class="font-headline text-4xl md:text-6xl text-primary font-bold mb-6 leading-tight">Letters to<br><span class="italic font-normal">the Self.</span></h2>
+<h3 class="font-headline text-lg md:text-xl text-primary/40 mb-4">写给自己的信</h3>
+<div class="relative inline-block mt-2">
+<div class="absolute -top-6 -left-8 text-6xl text-surface-container-highest opacity-50 font-serif">"</div>
+<p class="font-handwriting text-2xl md:text-3xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
+Write as if no one is watching, but as if your future self is listening.
+</p>
+<div class="absolute -bottom-10 -right-8 text-6xl text-surface-container-highest opacity-50 font-serif">"</div>
+</div>
+</section>
 
-      .vi-glow {
-        position: fixed;
-        pointer-events: none;
-        z-index: 0;
-        border-radius: 50%;
-        filter: blur(90px);
-      }
+<!-- Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
 
-      .vi-glow--top {
-        width: 360px;
-        height: 360px;
-        top: -130px;
-        right: -100px;
-        background: radial-gradient(ellipse, rgba(74, 48, 115, 0.1), transparent 70%);
-      }
+<!-- Compose Section -->
+<div class="md:col-span-8 bg-surface-container-lowest p-8 md:p-12 rounded-xl shadow-sm border border-outline-variant/10 relative overflow-hidden">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-headline text-2xl text-primary font-bold">New Letter <span class="text-base font-normal text-primary/40">/ 写一封信</span></h3>
+</div>
+<div class="space-y-6">
+<div class="border-b border-outline-variant/20 pb-2">
+<label class="font-label text-[10px] uppercase tracking-wider text-secondary font-bold">Subject / 标题</label>
+<input class="w-full bg-transparent border-none focus:ring-0 font-headline text-xl text-on-surface placeholder:text-outline-variant/40 p-0 mt-1" placeholder="A title for your thoughts..." type="text">
+</div>
+<div class="min-h-[250px]">
+<label class="font-label text-[10px] uppercase tracking-wider text-secondary font-bold">The Message / 内容</label>
+<textarea class="w-full h-full bg-transparent border-none focus:ring-0 font-body text-base leading-relaxed text-on-surface placeholder:text-outline-variant/40 p-0 resize-none min-h-[250px] mt-1" placeholder="Begin here... 从这里开始写..."></textarea>
+</div>
+</div>
+<!-- Visibility Toggle + Send -->
+<div class="mt-8 flex items-center gap-3">
+  <button id="visibility-toggle" class="flex-1 min-w-0 flex items-center justify-center gap-1.5 px-3 py-3 rounded-full bg-primary text-on-primary text-[10px] font-label font-bold uppercase tracking-wide whitespace-nowrap transition-colors" onclick="this.dataset.public = this.dataset.public === 'true' ? 'false' : 'true'; const isPublic = this.dataset.public === 'true'; this.querySelector('.icon').textContent = isPublic ? 'public' : 'lock'; this.querySelector('.label-text').textContent = isPublic ? 'Public / 公开' : 'Private / 仅自己'; this.classList.toggle('bg-primary', isPublic); this.classList.toggle('text-on-primary', isPublic); this.classList.toggle('bg-surface-container-high', !isPublic); this.classList.toggle('text-on-surface-variant', !isPublic);" data-public="true">
+    <span class="material-symbols-outlined text-sm icon">public</span>
+    <span class="label-text whitespace-nowrap">Public / 公开</span>
+  </button>
+  <button class="flex-1 min-w-0 py-3 px-3 bg-surface-container-high text-on-surface rounded-full font-label uppercase tracking-wide text-[10px] font-bold shadow-sm active:scale-95 transition-transform flex items-center justify-center gap-1.5 whitespace-nowrap border border-outline/20">
+    Seal & Send <span class="material-symbols-outlined text-sm">send</span>
+  </button>
+</div>
+</div>
 
-      .vi-glow--bottom {
-        width: 320px;
-        height: 320px;
-        bottom: -90px;
-        left: -80px;
-        background: radial-gradient(ellipse, rgba(74, 48, 115, 0.08), transparent 70%);
-      }
+<!-- Sidebar -->
+<div class="md:col-span-4 flex flex-col gap-8">
+<!-- My Letters -->
+<div class="bg-surface-container-high/40 backdrop-blur-md p-8 rounded-xl flex flex-col justify-between min-h-[280px]">
+<div>
+<div class="bg-primary-container/10 w-12 h-12 rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary">inventory_2</span>
+</div>
+<h4 class="font-headline text-2xl text-primary font-bold mb-1">My Letters</h4>
+<p class="font-headline text-sm text-primary/40 mb-3">我的信件</p>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed">Revisit the words you once shared — both the public and the private ones.</p>
+</div>
+<a class="font-label text-[10px] uppercase tracking-[0.2em] font-bold text-secondary flex items-center gap-2 hover:translate-x-1 transition-transform mt-4" href="#">
+Explore / 查看 <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+<!-- Recent Draft -->
+<div class="bg-secondary-container/10 p-8 rounded-xl relative overflow-hidden">
+<div class="absolute -right-4 -top-4 opacity-5 rotate-12">
+<span class="material-symbols-outlined text-[80px]">mail</span>
+</div>
+<span class="font-label text-[10px] uppercase tracking-widest text-secondary font-bold block mb-4">Last Saved / 最近草稿</span>
+<p class="font-handwriting text-xl text-on-surface-variant mb-4">
+"The world grew quiet today, and in that space, I finally heard..."
+</p>
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+<span class="text-[10px] font-label uppercase text-on-surface-variant/60">Drafted 2 hours ago</span>
+</div>
+</div>
+</div>
+</div>
 
-      .page {
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        max-width: 480px;
-        margin: 0 auto;
-        min-height: 100vh;
-        padding: 0 24px 48px;
-      }
+<!-- Public Letters Feed -->
+<section class="mt-24">
+<div class="flex justify-between items-end mb-12">
+<div>
+<h3 class="font-headline text-3xl text-primary font-bold">The Collected Mail</h3>
+<p class="font-headline text-base text-primary/40 mt-1">公开的信</p>
+</div>
+</div>
+<div class="space-y-8">
 
-      .header {
-        padding: 14px 0 2px;
-      }
+<!-- Public Letter 1 -->
+<article class="bg-surface-container-lowest rounded-xl p-8 shadow-sm border border-outline-variant/10 hover:shadow-md transition-all">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center">
+<span class="text-xs font-bold text-primary">A</span>
+</div>
+<span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant/60">Anonymous · November 12</span>
+</div>
+<span class="material-symbols-outlined text-outline/30 text-sm">public</span>
+</div>
+<h4 class="font-headline text-xl text-primary mb-3">On the Quietness of Mornings</h4>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed mb-6">Today I noticed how the light hits the floorboards at exactly 7:15 AM. There is something sacred about routine — not the kind that traps you, but the kind that holds space for you to simply exist without performing.</p>
+<!-- Reply from Gigi -->
+<div class="bg-surface-container-low rounded-lg p-5 border-l-4 border-secondary/30">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-5 h-5 rounded-full" style="background: linear-gradient(135deg, #4a3073, #9c3c62);"></div>
+<span class="font-label text-[10px] uppercase tracking-widest text-secondary font-bold">She Is · Reply</span>
+</div>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed italic">Thank you for noticing the light. Most of us walk through mornings as if they owe us something. You've reminded me that sometimes the quietest observation is the bravest act.</p>
+</div>
+</article>
 
-      .logo {
-        margin: 0;
-      }
+<!-- Public Letter 2 -->
+<article class="bg-surface-container-lowest rounded-xl p-8 shadow-sm border border-outline-variant/10 hover:shadow-md transition-all">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container/20 flex items-center justify-center">
+<span class="text-xs font-bold text-secondary">M</span>
+</div>
+<span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant/60">Anonymous · November 8</span>
+</div>
+<span class="material-symbols-outlined text-outline/30 text-sm">public</span>
+</div>
+<h4 class="font-headline text-xl text-primary mb-3">To the Version of Me at Twenty</h4>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed">If I could reach through time, I would tell you that the restlessness is a gift. You don't need to have it figured out. The confusion you feel is just your mind trying on different futures, and that's exactly what it should be doing.</p>
+</article>
 
-      .logo-cn {
-        display: block;
-        font-family: "Lora", serif;
-        font-size: 28px;
-        line-height: 1;
-        font-weight: 600;
-        color: #1c1c1c;
-        letter-spacing: 0.12em;
-      }
+<!-- Public Letter 3 -->
+<article class="bg-surface-container-lowest rounded-xl p-8 shadow-sm border border-outline-variant/10 hover:shadow-md transition-all">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-fixed/30 flex items-center justify-center">
+<span class="text-xs font-bold text-primary">S</span>
+</div>
+<span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant/60">Anonymous · October 29</span>
+</div>
+<span class="material-symbols-outlined text-outline/30 text-sm">public</span>
+</div>
+<h4 class="font-headline text-xl text-primary mb-3">Finding Grace in Mistakes</h4>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed mb-6">The ink blot on this page reminded me that beauty isn't found in perfection. I spilled coffee on my thesis draft this morning and instead of panicking, I just looked at the stain and thought — this is the most honest thing on this page.</p>
+<!-- Reply from Gigi -->
+<div class="bg-surface-container-low rounded-lg p-5 border-l-4 border-secondary/30">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-5 h-5 rounded-full" style="background: linear-gradient(135deg, #4a3073, #9c3c62);"></div>
+<span class="font-label text-[10px] uppercase tracking-widest text-secondary font-bold">She Is · Reply</span>
+</div>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed italic">The coffee stain knows something your thesis doesn't — that life leaves marks, and the marks are the point. Keep writing around them.</p>
+</div>
+</article>
 
-      .logo-en {
-        display: block;
-        font-family: 'Courier Prime', monospace;
-        font-size: 11px;
-        color: #888;
-        letter-spacing: 0.08em;
-        margin-top: 2px;
-        text-align: right;
-      }
+</div>
+</section>
 
-      .header-rule {
-        height: 1px;
-        margin: 0 0 54px;
-        background: linear-gradient(to right, transparent, rgba(74,48,115,0.5) 25%, rgba(74,48,115,0.5) 75%, transparent);
-        border: none;
-      }
+</main>
 
-      .back {
-        display: inline-flex;
-        align-items: center;
-        min-height: 44px;
-        margin-bottom: 18px;
-        color: var(--accent);
-        text-decoration: none;
-        font-size: 14px;
-        letter-spacing: 0.04em;
-      }
+<!-- Floating Write Button (Mobile) -->
+<div class="fixed bottom-28 right-6 md:hidden">
+<button class="bg-primary text-on-primary w-14 h-14 rounded-full flex items-center justify-center shadow-xl shadow-primary/20 hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined">edit_note</span>
+</button>
+</div>
 
-      .page-pretitle {
-        margin: 0 0 10px;
-        font-size: 12px;
-        line-height: 1.4;
-        letter-spacing: 0.3em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center pt-4 pb-8 px-4 bg-[#ffffff]/60 backdrop-blur-2xl rounded-t-[2.5rem] z-50 shadow-[0_-8px_32px_rgba(28,28,26,0.04)]">
+<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="/">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="/stories">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Stories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="/assessment">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Archive</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Map</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#33185c] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#9c3c62] after:rounded-full" href="/mailbox">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">mail</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Letters</span>
+</a>
+</nav>
 
-      .title {
-        margin: 0;
-        font-family: "Lora", "Noto Serif SC", serif;
-        font-size: clamp(42px, 9vw, 58px);
-        line-height: 0.98;
-        font-weight: 500;
-        letter-spacing: 0.08em;
-        color: var(--accent);
-      }
-
-      .intro {
-        max-width: 28em;
-        margin: 18px 0 0;
-        font-size: 15px;
-        line-height: 2;
-        color: var(--body);
-      }
-
-      .intro-note {
-        display: block;
-        margin-top: 12px;
-        font-size: 13px;
-        color: var(--muted);
-      }
-
-      .form-shell {
-        margin-top: 46px;
-        padding: 34px 24px 28px;
-        border: 1px solid var(--surface-border);
-        border-radius: var(--radius);
-        background: var(--surface);
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(14px);
-      }
-
-      .form-caption {
-        margin: 0 0 26px;
-        font-family: "Lora", serif;
-        font-size: 24px;
-        letter-spacing: 0.08em;
-        color: var(--ink);
-      }
-
-      .letter-form {
-        display: grid;
-        gap: 22px;
-      }
-
-      .field {
-        display: grid;
-        gap: 10px;
-      }
-
-      .field label {
-        font-size: 13px;
-        letter-spacing: 0.08em;
-        color: var(--accent);
-      }
-
-      .field small {
-        font-size: 12px;
-        line-height: 1.7;
-        color: var(--muted);
-      }
-
-      .field input,
-      .field textarea {
-        width: 100%;
-        border: none;
-        border-bottom: 1px solid rgba(74, 48, 115, 0.24);
-        border-radius: 0;
-        padding: 0 0 12px;
-        background: transparent;
-        color: var(--ink);
-        font: inherit;
-        font-size: 15px;
-        line-height: 1.9;
-        outline: none;
-        transition: border-color 0.24s ease, transform 0.24s ease;
-      }
-
-      .field input::placeholder,
-      .field textarea::placeholder {
-        color: rgba(74, 48, 115, 0.36);
-      }
-
-      .field input:focus,
-      .field textarea:focus {
-        border-color: var(--accent);
-        transform: translateY(-1px);
-      }
-
-      .field textarea {
-        min-height: 160px;
-        resize: vertical;
-      }
-
-      .form-actions {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 14px;
-        padding-top: 8px;
-      }
-
-      .submit-btn {
-        appearance: none;
-        border: 1px solid transparent;
-        border-radius: 999px;
-        padding: 13px 26px;
-        background: rgba(180,155,225,0.22); backdrop-filter: blur(8px); border: 1px solid rgba(190,165,235,0.45); color: #4A3073;
-        color: #FAF7F4;
-        font: inherit;
-        font-size: 14px;
-        letter-spacing: 0.12em;
-        cursor: pointer;
-        transition: transform 0.24s ease, box-shadow 0.24s ease, opacity 0.24s ease;
-        box-shadow: 0 14px 30px rgba(74, 48, 115, 0.18);
-      }
-
-      .submit-btn:hover,
-      .submit-btn:focus-visible {
-        transform: translateY(-1px);
-        opacity: 0.92;
-      }
-
-      .submit-btn:disabled {
-        cursor: wait;
-        opacity: 0.7;
-        transform: none;
-      }
-
-      .form-status {
-        min-height: 24px;
-        margin: 0;
-        font-size: 13px;
-        line-height: 1.8;
-        color: var(--muted);
-      }
-
-      .form-status.is-success {
-        color: var(--accent);
-      }
-
-      .form-status.is-error {
-        color: #8a4b5d;
-      }
-
-      @media (max-width: 520px) {
-        .page {
-          padding: 0 24px 40px;
-        }
-
-        .header-rule {
-          margin-bottom: 42px;
-        }
-
-        .form-shell {
-          padding: 28px 20px 24px;
-          border-radius: 24px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
-    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
-
-    <main class="page">
-      <header class="header">
-        <div class="logo">
-          <span class="logo-cn">女也</span>
-          <span class="logo-en">she is ______.</span>
-        </div>
-      </header>
-      <div class="header-rule"></div>
-      <a class="back" href="index.html">← 返回首页</a>
-
-      <p class="page-pretitle">Letters</p>
-      <h1 class="title">来信</h1>
-      <p class="intro">
-        如果你想说点什么，这里留给你。可以只是一个片刻、一句迟来的话、一次没有说完的心情。
-        <span class="intro-note">如希望收到回复，可在下方留下联系方式。</span>
-      </p>
-
-      <section class="form-shell" aria-labelledby="letter-form-title">
-        <h2 class="form-caption" id="letter-form-title">Write to She Is</h2>
-
-        <form
-          class="letter-form"
-          id="letterForm"
-          action="https://formspree.io/f/xnjglekz"
-          method="POST"
-        >
-          <div class="field">
-            <label for="senderName">称呼</label>
-            <input
-              id="senderName"
-              name="称呼"
-              type="text"
-              autocomplete="name"
-              placeholder="你想被如何称呼"
-            />
-          </div>
-
-          <div class="field">
-            <label for="letterContent">内容</label>
-            <textarea
-              id="letterContent"
-              name="内容"
-              required
-              placeholder="把你想说的话写在这里。"
-            ></textarea>
-          </div>
-
-          <div class="field">
-            <label for="contactInfo">联系方式</label>
-            <input
-              id="contactInfo"
-              name="联系方式"
-              type="text"
-              inputmode="email"
-              autocomplete="email"
-              placeholder="邮箱 / 微信 / 其他联系方式"
-            />
-            <small>选填，如需回复请留下。</small>
-          </div>
-
-          <div class="form-actions">
-            <button class="submit-btn" type="submit">提交来信</button>
-            <p class="form-status" id="formStatus" aria-live="polite"></p>
-          </div>
-        </form>
-      </section>
-    </main>
-
-    <script>
-      (function() {
-        const form = document.getElementById('letterForm');
-        const status = document.getElementById('formStatus');
-        const submitButton = form.querySelector('button[type="submit"]');
-        const defaultButtonText = submitButton.textContent;
-
-        function setStatus(message, type) {
-          status.textContent = message;
-          status.className = 'form-status' + (type ? ' is-' + type : '');
-        }
-
-        form.addEventListener('submit', async function(event) {
-          event.preventDefault();
-          submitButton.disabled = true;
-          submitButton.textContent = '提交中...';
-          setStatus('正在寄出你的来信。');
-
-          try {
-            const response = await fetch(form.action, {
-              method: 'POST',
-              body: new FormData(form),
-              headers: {
-                Accept: 'application/json'
-              }
-            });
-
-            if (!response.ok) {
-              throw new Error('submit_failed');
-            }
-
-            form.reset();
-            setStatus('谢谢你的来信，已经收到。', 'success');
-          } catch (error) {
-            setStatus('提交失败，请稍后再试，或检查 Formspree 表单 ID 是否已替换。', 'error');
-          } finally {
-            submitButton.disabled = false;
-            submitButton.textContent = defaultButtonText;
-          }
-        });
-      })();
-    </script>
-  </body>
+</body>
 </html>

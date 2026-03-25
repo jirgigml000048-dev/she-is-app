@@ -1,304 +1,344 @@
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>100位女孩 | 女也 She Is</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Courier+Prime&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html class="light" lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>100位女孩 | 女也 She Is</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Noto+Serif+SC:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface-container": "#f0edea",
+        "on-secondary-container": "#771f44",
+        "tertiary-container": "#3d3e3e",
+        "inverse-on-surface": "#f3f0ed",
+        "on-secondary": "#ffffff",
+        "error-container": "#ffdad6",
+        "on-error": "#ffffff",
+        "outline-variant": "#ccc4d1",
+        "on-secondary-fixed": "#3e001e",
+        "tertiary-fixed": "#e3e2e2",
+        "on-primary": "#ffffff",
+        "on-tertiary": "#ffffff",
+        "on-primary-fixed": "#26074e",
+        "on-tertiary-container": "#a9a9a9",
+        "tertiary": "#272828",
+        "background": "#fcf9f6",
+        "inverse-primary": "#d6baff",
+        "secondary-fixed-dim": "#ffb0c8",
+        "surface-tint": "#6c5196",
+        "surface-container-low": "#f6f3f0",
+        "on-tertiary-fixed-variant": "#464747",
+        "on-surface": "#1c1c1a",
+        "on-tertiary-fixed": "#1b1c1c",
+        "outline": "#7b7580",
+        "surface-container-highest": "#e5e2df",
+        "primary": "#33185c",
+        "surface-dim": "#dcdad7",
+        "inverse-surface": "#31302f",
+        "surface-container-high": "#eae8e5",
+        "on-surface-variant": "#4a454f",
+        "on-secondary-fixed-variant": "#7e244a",
+        "surface-container-lowest": "#ffffff",
+        "on-error-container": "#93000a",
+        "primary-fixed": "#ecdcff",
+        "on-primary-container": "#b99ce7",
+        "primary-fixed-dim": "#d6baff",
+        "on-primary-fixed-variant": "#53397c",
+        "tertiary-fixed-dim": "#c7c6c6",
+        "surface-variant": "#e5e2df",
+        "secondary": "#9c3c62",
+        "secondary-fixed": "#ffd9e2",
+        "surface": "#fcf9f6",
+        "primary-container": "#4a3073",
+        "error": "#ba1a1a",
+        "secondary-container": "#fd8ab2",
+        "surface-bright": "#fcf9f6",
+        "on-background": "#1c1c1a"
+      },
+      fontFamily: {
+        "headline": ["Noto Serif", "Noto Serif SC", "serif"],
+        "body": ["Plus Jakarta Sans", "sans-serif"],
+        "label": ["Plus Jakarta Sans", "sans-serif"]
+      },
+      borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+    },
+  },
+}
+</script>
 <style>
-      :root {
-        --bg: #f7f3ee;
-        --ink: #2e2e2e;
-        --body: #555;
-        --muted: #888;
-        --shadow: 0 4px 20px rgba(44, 32, 20, 0.08);
-      }
-
-      * { box-sizing: border-box; }
-
-      body {
-        margin: 0;
-        background: var(--bg);
-        background-image: radial-gradient(ellipse 90% 75% at 0% 0%, rgba(232,121,160,0.18) 0%, transparent 60%),
-          radial-gradient(ellipse 80% 70% at 100% 5%, rgba(167,139,250,0.2) 0%, transparent 55%),
-          radial-gradient(ellipse 70% 80% at 0% 100%, rgba(96,165,250,0.15) 0%, transparent 55%),
-          radial-gradient(ellipse 75% 60% at 100% 90%, rgba(249,115,22,0.12) 0%, transparent 50%);
-        color: var(--body);
-        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
-        line-height: 1.9;
-      }
-
-      .page {
-        max-width: 480px;
-        margin: 0 auto;
-        padding: 22px 24px 28px;
-      }
-      a,
-      button {
-        transition: opacity 0.3s ease;
-      }
-      a:hover {
-        opacity: 0.72;
-      }
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(8px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .page > * {
-        animation: fadeInUp 0.5s ease forwards;
-      }
-      .page > *:nth-child(1) { animation-delay: 0s; }
-      .page > *:nth-child(2) { animation-delay: 0.06s; }
-      .page > *:nth-child(3) { animation-delay: 0.12s; }
-      .page > *:nth-child(4) { animation-delay: 0.18s; }
-      .page > *:nth-child(5) { animation-delay: 0.24s; }
-
-      .back {
-        display: inline-block;
-        text-decoration: none;
-        color: var(--body);
-        font-size: 14px;
-        margin-bottom: 12px;
-      }
-
-      .page-pretitle {
-        margin: 0 0 6px;
-        font-family: 'Courier Prime', monospace;
-        font-size: 10px;
-        color: #bbb;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
-      }
-
-      .title {
-        margin: 0;
-        margin-top: 0;
-        font-family: "Noto Serif SC", "Lora", "Source Han Serif SC", serif;
-        font-size: 36px;
-        font-weight: 600;
-        line-height: 1.1;
-        color: var(--ink);
-        letter-spacing: 0.12em;
-      }
-
-      .subtitle {
-        margin: 8px 0 1.4em;
-        font-size: 15px;
-        font-weight: 300;
-        color: var(--body);
-        line-height: 1.9;
-      }
-
-      .list {
-        display: grid;
-        gap: 14px;
-      }
-
-      .story-link {
-        display: block;
-        text-decoration: none;
-        color: inherit;
-      }
-
-      .story-card {
-        border-radius: 16px;
-        overflow: hidden;
-        border: 0.5px solid rgba(44,32,20,0.07);
-        box-shadow: 0 1px 0 rgba(44,32,20,0.06), 0 2px 8px rgba(44,32,20,0.04);
-        background: #fff;
-      }
-
-      .card-illustration {
-        height: 160px;
-        overflow: hidden;
-      }
-
-      .story-bottom {
-        background: #fff;
-        padding: 12px 16px;
-        min-height: 72px;
-      }
-
-      .story-title {
-        margin: 6px 0 0;
-        font-family: "Lora", serif;
-        font-size: 22px;
-        font-weight: 600;
-        line-height: 1.2;
-        color: #2e2e2e;
-      }
-
-      .story-quote {
-        margin: 6px 0 8px;
-        font-family: 'Courier Prime', monospace;
-        font-size: 14px;
-        color: #666;
-        line-height: 1.5;
-        font-style: italic;
-      }
-
-      .tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-top: 10px;
-      }
-
-      .tag {
-        padding: 3px 8px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 400;
-        color: var(--body);
-      }
-
-      .c1 .tag { background: rgba(242, 169, 138, 0.25); color: #7d3d24; }
-      .c2 .tag { background: rgba(200, 217, 192, 0.4); color: #445540; }
-      .c3 .tag { background: rgba(200, 197, 222, 0.4); color: #464061; }
-      .c4 .tag { background: rgba(68, 161, 148, 0.15); color: #2a6b64; }
-      .c4 .tag { background: rgba(68, 161, 148, 0.15); color: #2a6b64; }
-      .c4 .tag { background: rgba(68, 161, 148, 0.15); color: #2a6b64; }
-      .page-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 28px 0 18px; }
-      .logo { display: inline-flex; flex-direction: column; align-items: flex-end; margin: 0; text-align: right; }
-      .logo-cn { display: block; font-family: "Lora", serif; font-size: 28px; line-height: 1; font-weight: 600; color: #1c1c1c; letter-spacing: 0.12em; }
-      .logo-en { display: block; font-family: 'Courier Prime', monospace; font-size: 11px; color: #888; letter-spacing: 0.08em; margin-top: 2px; }
-      .vi-glow {
-        position: fixed;
-        pointer-events: none;
-        z-index: 0;
-        border-radius: 50%;
-        filter: blur(80px);
-      }
-      .vi-glow--top {
-        width: 340px;
-        height: 340px;
-        top: -100px;
-        right: -80px;
-        background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
-      }
-      .vi-glow--bottom {
-        width: 280px;
-        height: 280px;
-        bottom: -60px;
-        left: -60px;
-        background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
-      }
-    </style>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/font-override.css" />
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+body { min-height: max(884px, 100dvh); }
+</style>
 </head>
-  <body>
-    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
-    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
-    <main class="page">
-      <header class="page-header">
-        <a class="back" href="index.html">← 返回首页</a>
-        <div class="logo" aria-label="女也 she is ______.">
-          <span class="logo-cn">女也</span>
-          <span class="logo-en">she is ______.</span>
-        </div>
-      </header>
-      <div style="border-bottom: 0.5px solid #4A3073; margin: 0;"></div>
+<body class="bg-background text-on-surface font-body selection:bg-primary-fixed min-h-screen">
 
-      <p class="page-pretitle">100 GIRLS</p>
-      <h1 class="title">她们的故事</h1>
-      <p class="subtitle">100 real girls · 100 个真实的她</p>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#fcf9f6]/80 backdrop-blur-xl">
+<div class="flex justify-between items-center px-6 py-4 w-full">
+<a href="/" class="hover:opacity-80 transition-opacity active:scale-95 duration-300">
+<span class="material-symbols-outlined text-[#33185c]">arrow_back</span>
+</a>
+<h1 class="font-headline text-2xl tracking-tight text-[#33185c] flex items-center gap-2">
+<span class="font-bold">女也</span>
+<span class="text-xs uppercase tracking-[0.2em] font-light opacity-60">She Is</span>
+</h1>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/15" style="background: linear-gradient(135deg, #4a3073, #9c3c62);"></div>
+</div>
+<div class="bg-[#f0edea] h-[1px] w-full opacity-20"></div>
+</header>
 
-      <section class="list">
-                <a href="story-detail.html" class="story-link">
-          <article class="story-card c3">
-            <div class="card-illustration">
-              <img src="illustrations/story-queqie.png" alt="" style="width:100%;height:160px;object-fit:cover;">
-            </div>
-            <div class="story-bottom">
-              <h3 class="story-title">真空里的野蛮生长</h3>
-              <p class="story-quote">「我一直的梦想是变小。」</p>
-              <div class="tags"><span class="tag">#真空生长</span><span class="tag">#提前懂事</span><span class="tag">#慢慢长大</span></div>
-            </div>
-          </article>
-        </a>
-        <a href="story-tuanzi-v3.html" class="story-link">
-          <article class="story-card c4">
-            <div class="card-illustration">
-              <img src="illustrations/story-tuanzi.png" alt="" style="width:100%;height:160px;object-fit:cover;">
-            </div>
-            <div class="story-bottom">
-              <h3 class="story-title">她身体里住着一道错误的方程</h3>
-              <p class="story-quote">「加班=会死，不能生=被扔掉」</p>
-              <div class="tags"><span class="tag">#害怕被丢下</span><span class="tag">#感受力很强</span></div>
-            </div>
-          </article>
-        </a>
-        <a href="story-xiaochen.html" class="story-link">
-          <article class="story-card c2">
-            <div class="card-illustration">
-              <img src="illustrations/story-xiaochen.png" alt="" style="width:100%;height:160px;object-fit:cover;">
-            </div>
-            <div class="story-bottom">
-              <h3 class="story-title">世界需要"愤怒"的女孩</h3>
-              <p class="story-quote">「被他们讨厌，说明我做的是对的。」</p>
-              <div class="tags"><span class="tag">#年轻锋利</span><span class="tag">#坚定</span><span class="tag">#原生家庭</span></div>
-            </div>
-          </article>
-        </a>
-        <a href="story-zixingche.html" class="story-link">
-          <article class="story-card c1">
-            <div class="card-illustration">
-              <img src="illustrations/story-zixingche.png" alt="" style="width:100%;height:160px;object-fit:cover;">
-            </div>
-            <div class="story-bottom">
-              <h3 class="story-title">30岁却像15岁的赛博格</h3>
-              <p class="story-quote">「我的人生计划最长只有60天。」</p>
-              <div class="tags"><span class="tag">#慢性病</span><span class="tag">#两个月一次</span><span class="tag">#独处需求</span></div>
-            </div>
-          </article>
-        </a>
-        <a href="story-xiaoli.html" class="story-link">
-          <article class="story-card c3">
-            <div class="card-illustration">
-              <img src="illustrations/story-xiaoli.png" alt="" style="width:100%;height:160px;object-fit:cover;">
-            </div>
-            <div class="story-bottom">
-              <h3 class="story-title">她决定在精密结构里，自己养一颗星星</h3>
-              <p class="story-quote">「我经常觉得，我是一颗从天上掉下来的星星。」</p>
-              <div class="tags"><span class="tag">#秩序感</span><span class="tag">#星星</span><span class="tag">#皮肤置换</span></div>
-            </div>
-          </article>
-        </a>
-        <a href="story-bingbing.html" class="story-link">
-          <article class="story-card c2">
-            <div class="card-illustration">
-              <img src="illustrations/story-bingbing.png" alt="" style="width:100%;height:160px;object-fit:cover;">
-            </div>
-            <div class="story-bottom">
-              <h3 class="story-title">穿百褶裙的机甲驾驶员</h3>
-              <p class="story-quote">「看起来像红茶，喝下去全是烈酒。」</p>
-              <div class="tags"><span class="tag">#量化交易员</span><span class="tag">#原创音乐人</span><span class="tag">#铠甲与小花</span></div>
-            </div>
-          </article>
-        </a>
-        <a href="story-xiuxiu.html" class="story-link">
-          <article class="story-card c1">
-            <div class="card-illustration">
-              <img src="illustrations/story-xiuxiu.png" alt="" style="width:100%;height:160px;object-fit:cover;">
-            </div>
-            <div class="story-bottom">
-              <h3 class="story-title">在北京，允许不长大</h3>
-              <p class="story-quote">「能过一天是一天嘛。」</p>
-              <div class="tags"><span class="tag">#允许不长大</span><span class="tag">#游乐场</span><span class="tag">#废墟重建</span></div>
-            </div>
-          </article>
-        </a>
+<main class="pt-24 pb-32 px-6 max-w-5xl mx-auto">
 
-      </section>
-    </main>
-  </body>
+<!-- Hero Section -->
+<section class="mb-12">
+<h1 class="font-headline text-4xl md:text-5xl lg:text-6xl mb-4 text-primary leading-tight">
+100 Girls Collection<br><span class="text-secondary italic">一百位真实的女孩</span>
+</h1>
+<p class="font-body text-on-surface-variant max-w-xl mb-10 leading-relaxed">
+A curated digital anthology celebrating the fierce and soft journeys of a hundred individual lives. Each story is a reflection, a muse, and a testament to being.
+</p>
+<!-- Filter Bar -->
+<div class="flex flex-col md:flex-row gap-4 items-center mb-8">
+<div class="relative w-full md:flex-1">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-12 pr-4 py-2.5 rounded-full bg-surface-container-low border-none focus:ring-2 focus:ring-primary/20 text-on-surface placeholder:text-outline-variant font-body" placeholder="Search stories..." type="text">
+</div>
+<div class="flex gap-2 overflow-x-auto pb-2 w-full md:w-auto">
+<button class="px-4 py-1.5 rounded-full bg-primary text-on-primary font-label text-[10px] tracking-widest uppercase">All</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Inner Soul</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Identity</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Art</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Relationship</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Career</button>
+</div>
+</div>
+</section>
+
+<!-- Story Cards -->
+<p class="text-[10px] text-outline/40 text-right mb-2 font-label tracking-wider">Cover images are AIGC and do not represent real individuals.</p>
+<div class="space-y-12">
+
+<!-- 007 曲奇 (left image) -->
+<article class="group relative flex flex-col md:flex-row bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="inner-soul,identity">
+<div class="w-full md:w-2/5 h-80 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<img alt="曲奇" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-007-quqi.png" onerror="this.style.display='none'">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+</div>
+<div class="p-8 md:p-12 flex-1 flex flex-col justify-center">
+<div class="mb-4 flex items-center gap-3">
+<span class="w-12 h-[1px] bg-secondary"></span>
+<span class="text-secondary font-label text-xs tracking-[0.2em] uppercase font-bold">Volume 007</span>
+</div>
+<h2 class="font-headline text-2xl md:text-3xl text-on-surface mb-2 leading-tight">真空里的野蛮生长</h2>
+<h3 class="font-headline text-lg md:text-xl text-primary/60 mb-6 font-medium">Feral Growth in a Vacuum</h3>
+<p class="font-body text-on-surface-variant leading-relaxed mb-8 line-clamp-3">
+At nineteen, Cookie has spent only four months of her entire high school life in a classroom. Depression, a mother she learned to parent before she learned to drive, and a grandfather's decline have forced her to build her own coordinate system in the silence.
+</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-outline text-sm font-body italic">6 min read</span>
+<a href="story-detail.html" class="flex items-center gap-2 text-primary font-bold tracking-wider hover:translate-x-1 transition-transform">
+READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
+</a>
+</div>
+</div>
+</article>
+
+<!-- 006 嗅嗅 (right image) -->
+<article class="group relative flex flex-col md:flex-row-reverse bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="inner-soul,identity">
+<div class="w-full md:w-2/5 h-80 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<img alt="嗅嗅" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-006-xiuxiu.png" onerror="this.style.display='none'">
+<div class="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+</div>
+<div class="p-8 md:p-12 flex-1 flex flex-col justify-center">
+<div class="mb-4 flex items-center gap-3">
+<span class="w-12 h-[1px] bg-secondary"></span>
+<span class="text-secondary font-label text-xs tracking-[0.2em] uppercase font-bold">Volume 006</span>
+</div>
+<h2 class="font-headline text-2xl md:text-3xl text-on-surface mb-2 leading-tight">在北京，允许不长大</h2>
+<h3 class="font-headline text-lg md:text-xl text-primary/60 mb-6 font-medium">Permission Not to Grow Up</h3>
+<p class="font-body text-on-surface-variant leading-relaxed mb-8 line-clamp-3">
+Wrapped head-to-toe in Beijing black, Xiuxiu smiles with the unguarded sweetness of a child who has just slipped out to play. After a year of loss—heartbreak, unemployment, a childhood friend's sudden death—she still tilts a glass of water into the afternoon light.
+</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-outline text-sm font-body italic">3 min read</span>
+<a href="story-xiuxiu.html" class="flex items-center gap-2 text-primary font-bold tracking-wider hover:-translate-x-1 transition-transform">
+<span class="material-symbols-outlined rotate-180">arrow_right_alt</span> READ STORY
+</a>
+</div>
+</div>
+</article>
+
+<!-- 005 冰冰 (left image) -->
+<article class="group relative flex flex-col md:flex-row bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="art,identity">
+<div class="w-full md:w-2/5 h-80 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<img alt="冰冰" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-005-bingbing.png" onerror="this.style.display='none'">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+</div>
+<div class="p-8 md:p-12 flex-1 flex flex-col justify-center">
+<div class="mb-4 flex items-center gap-3">
+<span class="w-12 h-[1px] bg-secondary"></span>
+<span class="text-secondary font-label text-xs tracking-[0.2em] uppercase font-bold">Volume 005</span>
+</div>
+<h2 class="font-headline text-2xl md:text-3xl text-on-surface mb-2 leading-tight">百褶裙机甲驾驶员</h2>
+<h3 class="font-headline text-lg md:text-xl text-primary/60 mb-6 font-medium">The Girl Who Pilots a Mech in a Pleated Skirt</h3>
+<p class="font-body text-on-surface-variant leading-relaxed mb-8 line-clamp-3">
+By day she writes quantitative models in a CBD tower; by night she presses piano keys and rearranges emotions into original songs. She hasn't dared open her music account in months, because as long as the box stays closed, the dream is still alive.
+</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-outline text-sm font-body italic">5 min read</span>
+<a href="story-bingbing.html" class="flex items-center gap-2 text-primary font-bold tracking-wider hover:translate-x-1 transition-transform">
+READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
+</a>
+</div>
+</div>
+</article>
+
+<!-- 004 小李 (right image) -->
+<article class="group relative flex flex-col md:flex-row-reverse bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="inner-soul,identity">
+<div class="w-full md:w-2/5 h-80 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<img alt="小李" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-004-xiaoli.png" onerror="this.style.display='none'">
+<div class="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+</div>
+<div class="p-8 md:p-12 flex-1 flex flex-col justify-center">
+<div class="mb-4 flex items-center gap-3">
+<span class="w-12 h-[1px] bg-secondary"></span>
+<span class="text-secondary font-label text-xs tracking-[0.2em] uppercase font-bold">Volume 004</span>
+</div>
+<h2 class="font-headline text-2xl md:text-3xl text-on-surface mb-2 leading-tight">精密结构里养一颗星星</h2>
+<h3 class="font-headline text-lg md:text-xl text-primary/60 mb-6 font-medium">A Star She Keeps Inside the Machine</h3>
+<p class="font-body text-on-surface-variant leading-relaxed mb-8 line-clamp-3">
+Xiao Li's 450-word introductory message arrived with flawless punctuation and four neatly labeled sections—the precision of someone who once wore her father's old uniform through a freezing Tianjin winter and decided never to leave anything to chance again.
+</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-outline text-sm font-body italic">5 min read</span>
+<a href="story-xiaoli.html" class="flex items-center gap-2 text-primary font-bold tracking-wider hover:-translate-x-1 transition-transform">
+<span class="material-symbols-outlined rotate-180">arrow_right_alt</span> READ STORY
+</a>
+</div>
+</div>
+</article>
+
+<!-- 003 自行车 (left image) -->
+<article class="group relative flex flex-col md:flex-row bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="inner-soul,identity">
+<div class="w-full md:w-2/5 h-80 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<img alt="自行车" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-003-zixingche.png" onerror="this.style.display='none'">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+</div>
+<div class="p-8 md:p-12 flex-1 flex flex-col justify-center">
+<div class="mb-4 flex items-center gap-3">
+<span class="w-12 h-[1px] bg-secondary"></span>
+<span class="text-secondary font-label text-xs tracking-[0.2em] uppercase font-bold">Volume 003</span>
+</div>
+<h2 class="font-headline text-2xl md:text-3xl text-on-surface mb-2 leading-tight">两个月返厂一次的赛博格</h2>
+<h3 class="font-headline text-lg md:text-xl text-primary/60 mb-6 font-medium">Sixty Days Between Repairs</h3>
+<p class="font-body text-on-surface-variant leading-relaxed mb-8 line-clamp-3">
+Bicycle lives in sixty-day increments—the interval between hospital infusions that keep her chronic illness in check. She abandoned a PhD in Seoul, moved to a twelfth-floor apartment where no gaze can reach her, and—against all odds—is free.
+</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-outline text-sm font-body italic">5 min read</span>
+<a href="story-zixingche.html" class="flex items-center gap-2 text-primary font-bold tracking-wider hover:translate-x-1 transition-transform">
+READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
+</a>
+</div>
+</div>
+</article>
+
+<!-- 002 小陈 (right image) -->
+<article class="group relative flex flex-col md:flex-row-reverse bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="identity,relationship">
+<div class="w-full md:w-2/5 h-80 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<img alt="小陈" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-002-xiaochen.png" onerror="this.style.display='none'">
+<div class="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+</div>
+<div class="p-8 md:p-12 flex-1 flex flex-col justify-center">
+<div class="mb-4 flex items-center gap-3">
+<span class="w-12 h-[1px] bg-secondary"></span>
+<span class="text-secondary font-label text-xs tracking-[0.2em] uppercase font-bold">Volume 002</span>
+</div>
+<h2 class="font-headline text-2xl md:text-3xl text-on-surface mb-2 leading-tight">世界需要愤怒的女孩</h2>
+<h3 class="font-headline text-lg md:text-xl text-primary/60 mb-6 font-medium">The World Needs Girls Who Burn</h3>
+<p class="font-body text-on-surface-variant leading-relaxed mb-8 line-clamp-3">
+A law student with the crackling energy of an ENTP who once stood up alone against a group of boys—and wore their collective ostracism as a badge of honor. A woman's most radical act is not tenderness but conviction.
+</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-outline text-sm font-body italic">5 min read</span>
+<a href="story-xiaochen.html" class="flex items-center gap-2 text-primary font-bold tracking-wider hover:-translate-x-1 transition-transform">
+<span class="material-symbols-outlined rotate-180">arrow_right_alt</span> READ STORY
+</a>
+</div>
+</div>
+</article>
+
+<!-- 001 团子 (left image) -->
+<article class="group relative flex flex-col md:flex-row bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="inner-soul,relationship">
+<div class="w-full md:w-2/5 h-80 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<img alt="团子" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-001-tuanzi.png" onerror="this.style.display='none'">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+</div>
+<div class="p-8 md:p-12 flex-1 flex flex-col justify-center">
+<div class="mb-4 flex items-center gap-3">
+<span class="w-12 h-[1px] bg-secondary"></span>
+<span class="text-secondary font-label text-xs tracking-[0.2em] uppercase font-bold">Volume 001</span>
+</div>
+<h2 class="font-headline text-2xl md:text-3xl text-on-surface mb-2 leading-tight">身体里错误的方程式</h2>
+<h3 class="font-headline text-lg md:text-xl text-primary/60 mb-6 font-medium">The Wrong Equation Living Inside Her</h3>
+<p class="font-body text-on-surface-variant leading-relaxed mb-8 line-clamp-3">
+Tuanzi is a PhD from China's top university who nearly bled to death from a ruptured ectopic pregnancy—and woke up knowing her marriage was already over. She disassembles the pain into parts, finds the faulty line of code, and rewrites it.
+</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-outline text-sm font-body italic">8 min read</span>
+<a href="story-tuanzi-v3.html" class="flex items-center gap-2 text-primary font-bold tracking-wider hover:translate-x-1 transition-transform">
+READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
+</a>
+</div>
+</div>
+</article>
+
+</div>
+
+<!-- Pagination -->
+<nav class="mt-16 flex justify-center items-center gap-4">
+<button class="w-12 h-12 rounded-full flex items-center justify-center border border-outline-variant/30 text-outline hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<span class="font-label text-sm font-bold text-primary">01 / 01</span>
+<button class="w-12 h-12 rounded-full flex items-center justify-center border border-outline-variant/30 text-primary hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</nav>
+
+</main>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center pt-4 pb-8 px-4 bg-[#ffffff]/60 backdrop-blur-2xl rounded-t-[2.5rem] z-50 shadow-[0_-8px_32px_rgba(28,28,26,0.04)]">
+<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="/">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#33185c] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#9c3c62] after:rounded-full" href="/stories">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Stories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="/assessment">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Archive</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Map</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="/mailbox">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Letters</span>
+</a>
+</nav>
+
+</body>
 </html>
