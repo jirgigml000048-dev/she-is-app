@@ -278,104 +278,131 @@
     </div>
   </div>
 
-  <div id="resultPanel" style="display:none;padding:5rem 1.5rem 6rem;min-height:100dvh;max-width:28rem;margin:0 auto;">
+  <div id="resultPanel" style="display:none;padding:5rem 1.5rem 6rem;max-width:40rem;margin:0 auto;">
   
-  <!-- Result Card -->
-  <div class="result-capture-card" style="background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);border-radius:1rem;padding:2.5rem 2rem;border:1px solid rgba(229,226,223,0.5);box-shadow:0 10px 40px -10px rgba(51,24,92,0.08);margin-bottom:2rem;">
-    
-    <!-- Kicker -->
-    <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.4em;color:#9c3c62;font-weight:600;margin:0 0 1.5rem;text-align:center;">Result Profile</p>
-    
-    <!-- Type Title -->
-    <h2 id="rType" style="font-family:'Noto Serif SC',serif;font-size:1.75rem;line-height:1.3;color:#33185c;margin:0 0 0.5rem;text-align:center;"></h2>
-    
-    <!-- Score -->
-    <p id="rScoreLine" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:#7b7580;margin:0 0 2rem;text-align:center;">平均得分 <span id="rScore"></span> / 7</p>
-    
-    <!-- Tags -->
-    <div id="resultTags" style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;margin-bottom:2rem;"></div>
-    
-    <!-- Quote -->
-    <div id="rQuote" style="font-family:'Noto Serif SC',serif;font-size:1.1rem;font-style:italic;line-height:1.8;color:rgba(28,28,26,0.85);text-align:center;padding:1.5rem 1rem;margin-bottom:2rem;border-left:3px solid #d6baff;background:rgba(236,220,255,0.08);border-radius:0 0.5rem 0.5rem 0;"></div>
-    
-    <!-- Divider -->
-    <div style="height:1px;width:3rem;background:#ccc4d1;margin:0 auto 2rem;"></div>
-    
-    <!-- 四维度分数条 -->
+  <!-- Section 1: The Inner Landscape -->
+  <section style="margin-bottom:4rem;position:relative;">
     <div style="margin-bottom:2rem;">
-      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#7b7580;font-weight:600;margin:0 0 1.25rem;">Dimensions / 维度分析</p>
-      
-      <div style="display:flex;flex-direction:column;gap:1rem;">
-        <div style="display:flex;align-items:center;gap:0.75rem;">
-          <span style="font-size:12px;color:#4a454f;width:4.5rem;flex-shrink:0;font-weight:500;">感官敏感</span>
-          <div style="flex:1;height:6px;background:#f0edea;border-radius:9999px;overflow:hidden;">
-            <div id="barSensory" style="height:100%;background:linear-gradient(to right,#33185c,#4a3073);border-radius:9999px;transition:width 0.5s;width:0%;"></div>
-          </div>
-          <span id="valSensory" style="font-size:12px;color:#33185c;font-weight:600;width:2.5rem;text-align:right;"></span>
+      <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;letter-spacing:0.2em;color:rgba(51,24,92,0.5);text-transform:uppercase;">The Inner Landscape</span>
+      <h2 id="rType" style="font-family:'Noto Serif SC',serif;font-size:2.25rem;margin:0.5rem 0 0;line-height:1.25;color:#33185c;"></h2>
+    </div>
+    <div style="width:6rem;height:1px;background:rgba(51,24,92,0.2);margin-bottom:3rem;"></div>
+    <p id="rQuote" style="font-family:'Noto Serif',serif;font-size:1.25rem;font-style:italic;color:rgba(28,28,26,0.75);line-height:1.8;text-align:center;max-width:28rem;margin:0 auto;"></p>
+  </section>
+
+  <!-- Section 2: Core Dimensions -->
+  <section style="margin-bottom:4rem;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid rgba(204,196,209,0.2);padding-bottom:1rem;margin-bottom:2.5rem;">
+      <div>
+        <h3 style="font-family:'Noto Serif SC',serif;font-size:1.5rem;color:#33185c;margin:0;">核心维度</h3>
+        <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.25em;color:rgba(51,24,92,0.4);font-weight:300;">Core Dimensions</span>
+      </div>
+      <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;font-weight:700;color:#9c3c62;text-transform:uppercase;letter-spacing:0.1em;">Analysis Complete</span>
+    </div>
+    
+    <div style="display:flex;flex-direction:column;gap:2rem;">
+      <!-- 感官敏感 -->
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0.75rem;">
+          <span style="font-family:'Noto Serif SC',serif;font-size:1.1rem;color:#1c1c1a;">感官敏感 <span style="font-size:11px;font-family:'Plus Jakarta Sans',sans-serif;opacity:0.4;margin-left:0.5rem;text-transform:uppercase;letter-spacing:0.05em;">Sensory</span></span>
+          <span id="valSensory" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:#33185c;"></span>
         </div>
-        <div style="display:flex;align-items:center;gap:0.75rem;">
-          <span style="font-size:12px;color:#4a454f;width:4.5rem;flex-shrink:0;font-weight:500;">情绪感染</span>
-          <div style="flex:1;height:6px;background:#f0edea;border-radius:9999px;overflow:hidden;">
-            <div id="barEmotion" style="height:100%;background:linear-gradient(to right,#33185c,#4a3073);border-radius:9999px;transition:width 0.5s;width:0%;"></div>
-          </div>
-          <span id="valEmotion" style="font-size:12px;color:#33185c;font-weight:600;width:2.5rem;text-align:right;"></span>
+        <div style="height:6px;width:100%;background:#eae8e5;border-radius:9999px;overflow:hidden;">
+          <div id="barSensory" style="height:100%;background:linear-gradient(to right,#33185c,#4a3073);border-radius:9999px;transition:width 0.6s;width:0%;"></div>
         </div>
-        <div style="display:flex;align-items:center;gap:0.75rem;">
-          <span style="font-size:12px;color:#4a454f;width:4.5rem;flex-shrink:0;font-weight:500;">美的感受</span>
-          <div style="flex:1;height:6px;background:#f0edea;border-radius:9999px;overflow:hidden;">
-            <div id="barAesthetic" style="height:100%;background:linear-gradient(to right,#33185c,#4a3073);border-radius:9999px;transition:width 0.5s;width:0%;"></div>
-          </div>
-          <span id="valAesthetic" style="font-size:12px;color:#33185c;font-weight:600;width:2.5rem;text-align:right;"></span>
+        <p id="descSensory" style="font-size:12px;color:#4a454f;font-weight:500;line-height:1.6;margin:0.5rem 0 0;"></p>
+      </div>
+      <!-- 情绪感染 -->
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0.75rem;">
+          <span style="font-family:'Noto Serif SC',serif;font-size:1.1rem;color:#1c1c1a;">情绪感染 <span style="font-size:11px;font-family:'Plus Jakarta Sans',sans-serif;opacity:0.4;margin-left:0.5rem;text-transform:uppercase;letter-spacing:0.05em;">Emotion</span></span>
+          <span id="valEmotion" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:#9c3c62;"></span>
         </div>
-        <div style="display:flex;align-items:center;gap:0.75rem;">
-          <span style="font-size:12px;color:#4a454f;width:4.5rem;flex-shrink:0;font-weight:500;">过度唤醒</span>
-          <div style="flex:1;height:6px;background:#f0edea;border-radius:9999px;overflow:hidden;">
-            <div id="barOverstim" style="height:100%;background:linear-gradient(to right,#9c3c62,#fd8ab2);border-radius:9999px;transition:width 0.5s;width:0%;"></div>
-          </div>
-          <span id="valOverstim" style="font-size:12px;color:#9c3c62;font-weight:600;width:2.5rem;text-align:right;"></span>
+        <div style="height:6px;width:100%;background:#eae8e5;border-radius:9999px;overflow:hidden;">
+          <div id="barEmotion" style="height:100%;background:#9c3c62;border-radius:9999px;transition:width 0.6s;width:0%;"></div>
         </div>
+        <p id="descEmotion" style="font-size:12px;color:#4a454f;font-weight:500;line-height:1.6;margin:0.5rem 0 0;"></p>
+      </div>
+      <!-- 美的感受 -->
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0.75rem;">
+          <span style="font-family:'Noto Serif SC',serif;font-size:1.1rem;color:#1c1c1a;">美的感受 <span style="font-size:11px;font-family:'Plus Jakarta Sans',sans-serif;opacity:0.4;margin-left:0.5rem;text-transform:uppercase;letter-spacing:0.05em;">Aesthetic</span></span>
+          <span id="valAesthetic" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:#33185c;"></span>
+        </div>
+        <div style="height:6px;width:100%;background:#eae8e5;border-radius:9999px;overflow:hidden;">
+          <div id="barAesthetic" style="height:100%;background:linear-gradient(to right,#33185c,#4a3073);border-radius:9999px;transition:width 0.6s;width:0%;"></div>
+        </div>
+        <p id="descAesthetic" style="font-size:12px;color:#4a454f;font-weight:500;line-height:1.6;margin:0.5rem 0 0;"></p>
+      </div>
+      <!-- 过度唤醒 -->
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0.75rem;">
+          <span style="font-family:'Noto Serif SC',serif;font-size:1.1rem;color:#1c1c1a;">过度唤醒 <span style="font-size:11px;font-family:'Plus Jakarta Sans',sans-serif;opacity:0.4;margin-left:0.5rem;text-transform:uppercase;letter-spacing:0.05em;">Overstimulation</span></span>
+          <span id="valOverstim" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:#9c3c62;"></span>
+        </div>
+        <div style="height:6px;width:100%;background:#eae8e5;border-radius:9999px;overflow:hidden;">
+          <div id="barOverstim" style="height:100%;background:linear-gradient(to right,#9c3c62,#fd8ab2);border-radius:9999px;transition:width 0.6s;width:0%;"></div>
+        </div>
+        <p id="descOverstim" style="font-size:12px;color:#4a454f;font-weight:500;line-height:1.6;margin:0.5rem 0 0;"></p>
       </div>
     </div>
-    
-    <!-- Description -->
-    <div id="rDesc" style="font-family:'Noto Serif SC',serif;font-size:0.95rem;line-height:1.9;color:#1c1c1a;margin-bottom:2rem;"></div>
-    
-    <!-- Sections -->
-    <div id="resultSections"></div>
-  </div>
-  
-  <!-- Actions -->
-  <div style="display:flex;flex-direction:column;gap:1rem;">
-    <div style="display:flex;gap:0.75rem;">
-      <button id="shareLongBtn" onclick="shareLongImage()" style="flex:1;padding:1rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-weight:500;font-size:12px;letter-spacing:0.1em;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(51,24,92,0.15);transition:all 0.2s;">
-        结果长图
-      </button>
-      <button id="saveResultBtn" onclick="downloadResult()" style="flex:1;padding:1rem;border-radius:0.75rem;background:#f0edea;color:#33185c;font-weight:500;font-size:12px;letter-spacing:0.1em;border:none;cursor:pointer;transition:all 0.2s;">
-        分享卡片
-      </button>
+  </section>
+
+  <!-- Section 3: Deep Analysis (Editorial) -->
+  <section style="background:#f6f3f0;padding:2rem;border-radius:1rem;position:relative;overflow:hidden;margin-bottom:4rem;">
+    <div style="position:absolute;top:0;right:0;width:8rem;height:8rem;background:rgba(51,24,92,0.04);border-radius:9999px;transform:translate(50%,-50%);filter:blur(48px);"></div>
+    <div style="border-left:4px solid #33185c;padding-left:1.5rem;">
+      <div style="margin-bottom:1.5rem;">
+        <h3 style="font-family:'Noto Serif SC',serif;font-size:1.5rem;color:#33185c;margin:0;">深度解析</h3>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:rgba(51,24,92,0.35);margin:0.25rem 0 0;">The Editorial Reflection</p>
+      </div>
+      <div id="rDesc" style="font-family:'Noto Serif SC',serif;font-size:0.95rem;line-height:1.9;color:#1c1c1a;margin-bottom:1.5rem;"></div>
+      <div id="resultSections"></div>
+    </div>
+  </section>
+
+  <!-- Section 4: Tags -->
+  <section style="margin-bottom:3rem;text-align:center;">
+    <div id="resultTags" style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;"></div>
+    <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:#7b7580;margin:1.5rem 0 0;">平均得分 <span id="rScore" style="font-weight:700;color:#33185c;"></span> / 7</p>
+  </section>
+
+  <!-- Section 5: CTA -->
+  <section style="border-top:1px solid rgba(204,196,209,0.3);padding-top:2.5rem;display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <div style="margin-bottom:2rem;">
+      <p style="font-family:'Noto Serif SC',serif;font-size:1.5rem;color:#33185c;margin:0;">开启你的旅程</p>
+      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:rgba(51,24,92,0.4);margin:0.5rem 0 0;">Start Your Journey</p>
     </div>
     
-    <!-- Story Recommendation -->
-    <div id="storyRec" style="display:none;background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);border-radius:1rem;padding:1.5rem;border:1px solid rgba(229,226,223,0.5);margin-top:0.5rem;">
-      <div class="story-rec-content">
+    <div style="width:100%;max-width:24rem;display:flex;flex-direction:column;gap:0.75rem;">
+      <div style="display:flex;gap:0.75rem;">
+        <button id="shareLongBtn" onclick="shareLongImage()" style="flex:1;padding:1rem;border-radius:9999px;background:#33185c;color:#ffffff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;border:none;cursor:pointer;box-shadow:0 8px 24px rgba(51,24,92,0.15);transition:all 0.2s;">
+          结果长图
+        </button>
+        <button id="saveResultBtn" onclick="downloadResult()" style="flex:1;padding:1rem;border-radius:9999px;background:#f0edea;color:#33185c;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.2s;">
+          分享卡片
+        </button>
+      </div>
+      
+      <!-- Story Rec -->
+      <div id="storyRec" style="display:none;background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);border-radius:1rem;padding:1.5rem;border:1px solid rgba(229,226,223,0.5);margin-top:0.5rem;text-align:left;">
         <p style="font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#9c3c62;font-weight:600;margin:0 0 0.5rem;">你可能会有共鸣</p>
         <h3 class="story-rec-title" style="font-family:'Noto Serif SC',serif;font-size:1.1rem;color:#33185c;margin:0 0 0.75rem;"></h3>
         <a class="story-rec-btn" href="#" style="font-size:12px;color:#33185c;font-weight:500;text-decoration:none;">读这个故事 →</a>
       </div>
+      
+      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:rgba(28,28,26,0.5);margin:1rem 0;line-height:1.6;">
+        Share your unique landscape with the world.<br>Find your sisters in reflection.
+      </p>
+      
+      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:#7b7580;margin:0.5rem 0;">
+        这是你心理画像的一部分 · <a href="/assessment" style="color:#33185c;text-decoration:none;font-weight:500;">查看全部测评</a>
+      </p>
+      
+      <a href="/" style="display:block;text-align:center;padding:0.75rem;color:#7b7580;font-size:12px;text-decoration:none;">返回首页</a>
+      <button id="retryBtn" onclick="retryQuiz()" style="padding:0.75rem;background:transparent;color:#7b7580;font-size:12px;border:none;cursor:pointer;">再做一次</button>
     </div>
-    
-    <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:#7b7580;text-align:center;margin:1rem 0;">
-      这是你心理画像的一部分 · <a href="/assessment" style="color:#33185c;text-decoration:none;font-weight:500;">查看全部测评</a>
-    </p>
-    
-    <a href="/" style="display:block;text-align:center;padding:1rem;border-radius:0.75rem;border:1px solid rgba(204,196,209,0.3);color:#33185c;font-weight:500;font-size:12px;text-decoration:none;letter-spacing:0.1em;">
-      返回首页
-    </a>
-    
-    <button id="retryBtn" onclick="retryQuiz()" style="width:100%;padding:1rem;border-radius:0.75rem;background:transparent;color:#7b7580;font-weight:400;font-size:12px;border:none;cursor:pointer;letter-spacing:0.05em;">
-      再做一次
-    </button>
-  </div>
+  </section>
 </div>
 </div>
 
@@ -596,27 +623,23 @@ $('rType').textContent=r.type;
 $('rType').dataset.subtitle = r.subtitle || '';
 $('rDesc').innerHTML=r.desc;
 $('rQuote').textContent = r.quote || '';
-$('resultTags').innerHTML = [...new Set(r.tags || [])].map(t => `<span style="display:inline-block;padding:6px 14px;border-radius:9999px;background:rgba(236,220,255,0.3);color:#33185c;font-size:11px;font-weight:500;letter-spacing:0.05em;">${t}</span>`).join('');
+$('resultTags').innerHTML = [...new Set(r.tags || [])].map(t => `<span style="display:inline-block;padding:6px 16px;border-radius:9999px;background:rgba(236,220,255,0.25);color:#33185c;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.05em;">${t}</span>`).join('');
 let secHTML = '';
 if(r.sections){
   if(r.sections.perception){
-    secHTML += `<div style="margin-bottom:2rem;">
-      <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#9c3c62;font-weight:600;margin:0 0 1rem;">你的感知方式 / Your Perception</h3>
-      <p style="font-family:'Noto Serif SC',serif;font-size:0.95rem;line-height:1.9;color:#1c1c1a;">${r.sections.perception}</p>
+    secHTML += `<div style="margin-bottom:1.5rem;">
+      <p style="font-family:'Noto Serif SC',serif;font-size:1.05rem;font-style:italic;color:#33185c;margin:0 0 0.75rem;line-height:1.7;">"${r.sections.perception.replace(/^"|"$/g, '')}"</p>
     </div>`;
   }
   if(r.sections.daily){
-    secHTML += `<div style="margin-bottom:2rem;">
-      <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#9c3c62;font-weight:600;margin:0 0 1rem;">在日常里 / In Daily Life</h3>
-      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.75rem;">
-        ${r.sections.daily.map(d => `<li style="font-family:'Noto Serif SC',serif;font-size:0.95rem;line-height:1.7;color:#1c1c1a;padding-left:1.25rem;border-left:2px solid #d6baff;">${d}</li>`).join('')}
-      </ul>
+    secHTML += `<div style="margin-bottom:1.5rem;">
+      <p style="font-size:12px;font-weight:500;color:#4a454f;margin:0 0 0.75rem;">在日常里，你可能会：</p>
+      ${r.sections.daily.map(d => `<p style="font-family:'Noto Serif SC',serif;font-size:0.9rem;line-height:1.8;color:#1c1c1a;padding:0.5rem 0;border-bottom:1px solid rgba(204,196,209,0.15);">${d}</p>`).join('')}
     </div>`;
   }
   if(r.sections.question){
-    secHTML += `<div style="margin-bottom:1.5rem;padding:1.5rem;background:rgba(236,220,255,0.08);border-radius:0.75rem;">
-      <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#9c3c62;font-weight:600;margin:0 0 1rem;">值得想一想 / Worth Reflecting</h3>
-      <p style="font-family:'Noto Serif SC',serif;font-size:1rem;font-style:italic;line-height:1.8;color:#33185c;">${r.sections.question}</p>
+    secHTML += `<div style="margin-top:1.5rem;padding:1.25rem;background:rgba(236,220,255,0.06);border-radius:0.75rem;">
+      <p style="font-family:'Noto Serif SC',serif;font-size:1rem;font-style:italic;line-height:1.8;color:#33185c;margin:0;">${r.sections.question}</p>
     </div>`;
   }
 }
@@ -630,6 +653,34 @@ $('barAesthetic').style.width = toWidth(aestheticAvg);
 $('valAesthetic').textContent = aestheticAvg.toFixed(1);
 $('barOverstim').style.width = toWidth(overstimAvg);
 $('valOverstim').textContent = overstimAvg.toFixed(1);
+const dimDescriptions = {
+  sensory: {
+    high: 'Highly attuned to environmental stimuli — you notice what others miss.',
+    mid: 'Moderate sensory awareness balanced with practical filtering.',
+    low: 'Efficient sensory processing — you filter noise naturally.'
+  },
+  emotion: {
+    high: 'Deep emotional resonance — others\' feelings become your own.',
+    mid: 'Balanced empathy with healthy emotional boundaries.',
+    low: 'Steady emotional equilibrium, less affected by ambient moods.'
+  },
+  aesthetic: {
+    high: 'Profoundly moved by beauty — art and music touch your core.',
+    mid: 'Appreciative of beauty while maintaining grounded perspective.',
+    low: 'Practical orientation — function over form.'
+  },
+  overstim: {
+    high: 'Easily overwhelmed — you need intentional recovery time.',
+    mid: 'Manageable stimulation threshold with occasional overload.',
+    low: 'High tolerance for busy environments and multitasking.'
+  }
+};
+for(const [key, indices] of Object.entries(dims)){
+  const dimMean = indices.reduce((a,b) => a+b, 0) / indices.length;
+  const dimLevel = dimMean >= 4.5 ? 'high' : dimMean >= 3.0 ? 'mid' : 'low';
+  const descEl = $('desc' + key.charAt(0).toUpperCase() + key.slice(1));
+  if(descEl) descEl.textContent = dimDescriptions[key][dimLevel];
+}
 $('quizPanel').style.display = 'none';
 $('resultPanel').style.display = 'block';
 storyRec.style.display = 'block';
@@ -704,7 +755,7 @@ function renderStoredResult(record) {
   $('rDesc').innerHTML = r.desc;
   $('resultSections').innerHTML = buildResultSections(r);
   $('rQuote').textContent = r.quote || '';
-  $('resultTags').innerHTML = [...new Set(r.tags || [])].map(t => `<span style="display:inline-block;padding:6px 14px;border-radius:9999px;background:rgba(236,220,255,0.3);color:#33185c;font-size:11px;font-weight:500;letter-spacing:0.05em;">${t}</span>`).join('');
+  $('resultTags').innerHTML = [...new Set(r.tags || [])].map(t => `<span style="display:inline-block;padding:6px 16px;border-radius:9999px;background:rgba(236,220,255,0.25);color:#33185c;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.05em;">${t}</span>`).join('');
   $('rScore').textContent = score ? score.toFixed(2) : '--';
   $('barSensory').style.width = '0%';
   $('valSensory').textContent = '--';
