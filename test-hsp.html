@@ -707,30 +707,15 @@ render();
 }
 
 function downloadResult(){
-const button = $('saveResultBtn');
-const originalText = button ? button.textContent : '分享结果';
-if (button) {
-  button.disabled = true;
-  button.textContent = '保存中…';
-}
-try {
-  generateResultCard({
-    testName: '高敏感测评 · HSP',
-    resultType: $('rType')?.textContent?.trim() || '测试结果',
-    resultSubtitle: $('rType')?.dataset?.subtitle || '',
-    quote: document.getElementById('rQuote')?.textContent?.trim() || extractResultCardQuote($('rDesc')?.innerHTML, '你的神经系统像一台增益开得很大的收音机，信号和噪音一起进来。'),
-    score: `平均得分 ${$('rScore')?.textContent?.trim() || '--'} / 7`,
-    fileName: 'hsp-result'
-  });
-} finally {
-  if (button) {
-    button.disabled = false;
-    button.textContent = originalText;
-  }
-}
+  window.location.href = 'hsp-share-card.html';
 }
 
 window.downloadResult = downloadResult;
+
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('saveResultBtn');
+  if (btn) btn.onclick = function() { window.location.href = 'hsp-share-card.html'; };
+});
 
 function shareLongImage(){
   const captureEl = document.querySelector('.result-capture-card') || document.querySelector('#resultPanel');

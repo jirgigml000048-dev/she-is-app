@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>HSP 金句卡 | 女也 She Is</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container": "#f0edea",
+            "surface": "#fcf9f6",
+            "primary": "#33185c",
+            "outline": "#7b7580",
+            "on-primary-container": "#b99ce7",
+            "background": "#fcf9f6",
+            "on-surface-variant": "#4a454f",
+            "secondary": "#9c3c62",
+            "secondary-fixed-dim": "#ffb0c8",
+            "secondary-container": "#fd8ab2",
+            "primary-container": "#4a3073",
+            "on-secondary": "#ffffff",
+            "on-primary": "#ffffff",
+            "outline-variant": "#ccc4d1",
+            "surface-container-high": "#eae8e5",
+            "surface-container-low": "#f6f3f0",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#1c1c1a"
+          },
+          fontFamily: {
+            "headline": ["Noto Serif"],
+            "body": ["Plus Jakarta Sans"],
+            "label": ["Plus Jakarta Sans"]
+          },
+          borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .serif-italic { font-style: italic; }
+    body { min-height: max(884px, 100dvh); }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen flex flex-col items-center justify-center p-6 overflow-x-hidden">
+
+  <header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-[#fcf9f6]/80 backdrop-blur-xl">
+    <span class="material-symbols-outlined text-primary cursor-pointer hover:opacity-70 transition-opacity" onclick="history.back()">arrow_back</span>
+    <h1 class="font-headline font-bold text-primary tracking-tighter text-lg">女也 She Is</h1>
+    <span class="material-symbols-outlined text-primary cursor-pointer hover:opacity-70 transition-opacity" onclick="doShare()">share</span>
+  </header>
+
+  <main class="w-full max-w-lg mt-20 mb-24 relative">
+    <div class="absolute -top-12 -left-12 w-64 h-64 bg-secondary-fixed-dim/20 rounded-full blur-[80px]"></div>
+    <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-primary-container/10 rounded-full blur-[100px]"></div>
+
+    <!-- Card -->
+    <div id="shareCard" class="relative overflow-hidden rounded-xl bg-surface-container-low shadow-[0_32px_64px_-12px_rgba(51,24,92,0.08)] border border-outline-variant/10">
+      <div class="p-10 pt-16 pb-12 px-12">
+        <article class="space-y-8">
+          <!-- Header -->
+          <div class="space-y-6">
+            <div class="flex justify-between items-center">
+              <span class="font-headline text-primary text-xs tracking-[0.3em] uppercase font-bold">女也 She Is</span>
+              <div class="h-[1px] flex-1 mx-4 bg-outline-variant/30"></div>
+            </div>
+            <div class="text-center py-4 border-y border-outline-variant/10">
+              <span id="labelDisplay" class="font-label text-primary/60 text-xs tracking-[0.5em] uppercase font-medium">
+                高敏感 <span class="mx-2 opacity-30">/</span> High Sensitivity
+              </span>
+            </div>
+          </div>
+
+          <!-- Quote: Chinese main, English sub -->
+          <div class="space-y-4 text-center py-4">
+            <p id="quoteZh" class="font-headline text-3xl md:text-4xl text-primary leading-[1.4] font-medium">
+              别人还没开口，你已经接住了那个房间里的所有情绪。
+            </p>
+            <p id="quoteEn" class="font-headline text-base text-primary/40 leading-relaxed font-light serif-italic">
+              Before a word is spoken, you've already caught every emotion in the room.
+            </p>
+          </div>
+
+          <!-- Divider -->
+          <div class="flex items-center gap-4">
+            <div class="h-[1px] w-12 bg-secondary/30"></div>
+            <div class="w-2 h-2 rounded-full bg-secondary"></div>
+            <div class="h-[1px] flex-1 bg-surface-container-high"></div>
+          </div>
+
+          <!-- Footer -->
+          <div class="flex items-end justify-between pt-2">
+            <div class="space-y-1">
+              <p class="font-label text-[10px] text-outline uppercase tracking-[0.2em]">HSP · 高敏感度特质测试</p>
+              <p class="font-label text-xs text-primary font-semibold" id="dateDisplay"></p>
+            </div>
+            <div class="text-right">
+              <p class="font-headline text-[10px] text-primary tracking-tighter font-bold">she-is-app.netlify.app</p>
+              <p class="font-label text-[8px] text-outline uppercase tracking-widest">Find your mirror</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="mt-10 flex justify-center gap-6">
+      <button onclick="saveCard()" class="flex flex-col items-center gap-2 group/btn">
+        <div class="w-14 h-14 rounded-full bg-surface-container-high flex items-center justify-center text-primary transition-all duration-300 group-hover/btn:bg-primary group-hover/btn:text-on-primary">
+          <span class="material-symbols-outlined">download</span>
+        </div>
+        <span class="font-label text-[10px] uppercase tracking-widest text-outline">保存</span>
+      </button>
+      <button onclick="doShare()" class="flex flex-col items-center gap-2 group/btn">
+        <div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-lg shadow-primary/20 scale-110 transition-transform active:scale-95">
+          <span class="material-symbols-outlined">ios_share</span>
+        </div>
+        <span class="font-label text-[10px] uppercase tracking-widest text-primary font-bold">分享</span>
+      </button>
+    </div>
+  </main>
+
+  <script>
+    const QUOTES = {
+      high: {
+        zh: '别人还没开口，你已经接住了那个房间里的所有情绪。',
+        en: "Before a word is spoken, you've already caught every emotion in the room.",
+        label_zh: '高敏感', label_en: 'High Sensitivity'
+      },
+      mid: {
+        zh: '感受得到风在变，但不至于被每一阵风吹走。',
+        en: "You feel the wind shifting — but you won't be swept away by every gust.",
+        label_zh: '中等敏感', label_en: 'Mid Sensitivity'
+      },
+      low: {
+        zh: '情绪到了才处理，不会提前替它铺路。',
+        en: "Emotions arrive when they arrive. You don't pave the road before the feeling comes.",
+        label_zh: '低敏感', label_en: 'Low Sensitivity'
+      }
+    };
+
+    let level = 'high';
+    try {
+      const stored = localStorage.getItem('sheIs_test_hsp');
+      if (stored) level = JSON.parse(stored).level || 'high';
+    } catch(e) {}
+
+    const q = QUOTES[level] || QUOTES.high;
+    document.getElementById('quoteZh').textContent = q.zh;
+    document.getElementById('quoteEn').textContent = q.en;
+    document.getElementById('labelDisplay').innerHTML = q.label_zh + '<span class="mx-2 opacity-30">/</span>' + q.label_en;
+    document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('zh-CN', {year:'numeric', month:'long', day:'numeric'});
+
+    function doShare() {
+      if (navigator.share) {
+        navigator.share({ title: '女也 She Is · HSP 测评', text: q.zh, url: window.location.href });
+      } else {
+        navigator.clipboard?.writeText(q.zh + '\n\n— 女也 She Is\nshe-is-app.netlify.app');
+        alert('已复制到剪贴板');
+      }
+    }
+
+    function saveCard() {
+      alert('长按截图保存');
+    }
+  </script>
+</body>
+</html>
