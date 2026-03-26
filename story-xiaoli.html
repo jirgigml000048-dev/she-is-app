@@ -1,474 +1,143 @@
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>小李：她决定在精密结构里，自己养一颗星星 | 女也 She Is</title>
-    
-    <style>
-      :root {
-        --bg: #F4F0E4;
-        --ink: #2C2C2C;
-        --teal: #0d1b2a;
-        --slate: #a8c5da;
-        --coral: #e8d5b7;
+<!DOCTYPE html>
+<html class="light" lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小李：她决定在精密结构里，自己养一颗星星 | 女也 She Is</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Serif+SC:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#33185c',
+            secondary: '#9c3c62',
+            surface: '#fcf9f6'
+          },
+          fontFamily: {
+            headline: ['Noto Serif', 'Noto Serif SC', 'serif'],
+            body: ['Plus Jakarta Sans', 'Noto Serif SC', 'sans-serif']
+          }
+        }
       }
-
-      * { box-sizing: border-box; }
-
-      body {
-        margin: 0;
-        background: var(--bg);
-        background-image: radial-gradient(ellipse 90% 75% at 0% 0%, rgba(232,121,160,0.18) 0%, transparent 60%),
-          radial-gradient(ellipse 80% 70% at 100% 5%, rgba(167,139,250,0.2) 0%, transparent 55%),
-          radial-gradient(ellipse 70% 80% at 0% 100%, rgba(96,165,250,0.15) 0%, transparent 55%),
-          radial-gradient(ellipse 75% 60% at 100% 90%, rgba(249,115,22,0.12) 0%, transparent 50%);
-        color: var(--ink);
-        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
-      }
-
-      .page {
-        max-width: 480px;
-        margin: 0 auto;
-        min-height: 100vh;
-        padding-top: 56px;
-        padding-bottom: 48px;
-      }
-
-      .site-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 14px 24px;
-        max-width: 480px;
-        margin: 0 auto;
-        border-bottom: 1px solid rgba(168,197,218,0.2);
-        background: rgba(244,240,228,0.95);
-        backdrop-filter: blur(6px);
-      }
-
-      .back-btn {
-        font-size: 12px;
-        letter-spacing: 0.06em;
-        text-decoration: none;
-        color: var(--ink);
-      }
-
-      .page-header-row {
-        display: flex;
-        
-        
-        width: 100%;
-        margin-bottom: 0;
-      
-        justify-content: space-between;
-        align-items: flex-start;
-      }
-
-      .logo {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin: 0 0 0 auto;
-      }
-
-      .logo-cn {
-        display: block;
-        font-family: "Lora", serif;
-        font-size: 18px;
-        line-height: 1;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        color: var(--ink);
-      }
-
-      .logo-en {
-        display: block;
-        font-family: "Courier Prime", monospace;
-        font-size: 10px;
-        letter-spacing: 0.08em;
-        color: rgba(44,44,44,0.62);
-        margin-top: 2px;
-      }
-
-      .character-card {
-        margin: 24px;
-        padding: 18px;
-        border: 1px solid rgba(168,197,218,0.25);
-        border-radius: 14px;
-        background: rgba(244,240,228,0.7);
-        border-bottom: 2px solid var(--coral);
-      }
-
-      .story-subtitle {
-        margin: 0 0 10px;
-        font-size: 16px;
-        line-height: 1.5;
-        font-weight: 500;
-        color: var(--ink);
-      }
-
-      .pill-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
-
-      .story-tag {
-        font-size: 11px;
-        padding: 4px 10px;
-        border-radius: 999px;
-        background: rgba(168,197,218,0.10);
-        color: var(--slate);
-      }
-
-      .story-illus {
-        margin: 16px 0 24px;
-        min-height: 180px;
-        border: 1.5px dashed rgba(168,197,218,0.4);
-        border-radius: 12px;
-        background: rgba(168,197,218,0.08);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        gap: 8px;
-        color: var(--slate);
-        font-size: 12px;
-      }
-
-      .story-body { padding: 8px 24px 0; }
-
-      .story-body p {
-        margin: 0 0 1.2em;
-        font-size: 15px;
-        line-height: 1.9;
-        color: var(--ink);
-      }
-
-      .story-section {
-        position: relative;
-        margin: 48px 0 24px;
-      }
-
-      .story-section-num {
-        font-size: 56px;
-        color: var(--teal);
-        opacity: 0.2;
-        line-height: 1;
-        position: absolute;
-        left: -8px;
-        top: -12px;
-        user-select: none;
-        font-weight: 600;
-      }
-
-      .sec-content { padding-left: 44px; }
-
-      .sec-label {
-        font-size: 11px;
-        color: var(--slate);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-bottom: 6px;
-      }
-
-      .story-formula {
-        display: inline-block;
-        background: rgba(168,197,218,0.12);
-        color: #a8c5da;
-        font-family: 'Courier New', monospace;
-        font-size: 14px;
-        padding: 5px 14px;
-        border-radius: 4px;
-        letter-spacing: 0.04em;
-      }
-
-      .equation {
-        margin: 0.8em 0 1.2em;
-        padding: 10px 12px;
-        border: 1px solid rgba(168,197,218,0.35);
-        background: rgba(168,197,218,0.12);
-        border-radius: 8px;
-        font-family: 'Courier New', monospace;
-        font-size: 15px;
-        color: var(--ink);
-        letter-spacing: 0.03em;
-      }
-
-      .story-quote {
-        margin: 16px 0;
-        padding: 10px 12px 10px 14px;
-        border-left: 2px solid var(--coral);
-        background: rgba(232,213,183,0.14);
-        font-size: 15px;
-        line-height: 1.9;
-        color: var(--ink);
-      }
-
-      .footer {
-        margin: 18px 24px 0;
-        padding-top: 20px;
-        border-top: 1px solid rgba(168,197,218,0.2);
-      }
-
-      .source {
-        margin: 0 0 14px;
-        font-size: 12px;
-        color: var(--ink);
-      }
-
-      .story-cta {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        text-decoration: none;
-        border: 1px solid var(--teal);
-        color: var(--ink);
-        border-radius: 12px;
-        padding: 10px 14px;
-        background: rgba(13,27,42,0.08);
-        font-size: 13px;
-        letter-spacing: 0.02em;
-      }
-
-      .story-cta strong { color: var(--teal); }
-    .audio-btn {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 100;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.9);
-  backdrop-filter: blur(10px);
-  border: 1.5px solid rgba(44,44,44,0.15);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 12px rgba(44,32,20,0.12);
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-.audio-btn:hover { opacity: 0.85; transform: scale(1.08); }
-.audio-btn.playing { animation: spin 4s linear infinite; }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.audio-btn.playing:hover { animation-play-state: paused; }
-.audio-btn svg { width: 18px; height: 18px; fill: #2e2e2e; }
-
-      .vi-glow {
-
-        position: fixed;
-
-        pointer-events: none;
-
-        z-index: 0;
-
-        border-radius: 50%;
-
-        filter: blur(80px);
-
-      }
-
-      .vi-glow--top {
-
-        width: 340px;
-
-        height: 340px;
-
-        top: -100px;
-
-        right: -80px;
-
-        background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
-
-      }
-
-      .vi-glow--bottom {
-
-        width: 280px;
-
-        height: 280px;
-
-        bottom: -60px;
-
-        left: -60px;
-
-        background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
-
-      }
-
-    </style>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/font-override.css" />
+    }
+  </script>
+  <style>
+    body { -webkit-font-smoothing: antialiased; background: #fcf9f6; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  </style>
 </head>
-  <body>
-    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
-    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
-    <main class="page"><header class="site-header page-header-row">
-        <a href="stories.html" class="back-btn">← 故事</a>
-        <div class="logo"><span class="logo-cn">女也</span><span class="logo-en">she is ______.</span></div>
-      </header>
-
-      <section class="character-card">
-        <h1 class="story-subtitle">小李：她决定在精密结构里，自己养一颗星星</h1>
-        <div class="pill-wrap">
-          <span class="story-tag">#秩序感</span>
-          <span class="story-tag">#星星</span>
-          <span class="story-tag">#皮肤置换</span>
-        </div>
-      </section>
-
-      <div class="story-illus">
-        <img src="illustrations/story-xiaoli.png" alt="" style="width:100%;display:block;border-radius:8px;">
+<body class="bg-surface text-[#1c1c1a] font-body selection:bg-[#33185c]/20">
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-[#33185c]/10 bg-[#fcf9f6]/85 backdrop-blur-xl">
+    <div class="mx-auto flex h-16 max-w-5xl items-center justify-between px-5 sm:px-6">
+      <a href="/stories" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#33185c] transition hover:bg-[#33185c]/5" aria-label="返回故事列表">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </a>
+      <div class="text-center text-[#33185c]">
+        <div class="font-headline text-xl font-bold leading-none">女也</div>
+        <div class="mt-1 text-[10px] uppercase tracking-[0.28em] text-[#33185c]/55">She Is</div>
       </div>
+      <button id="shareButton" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#33185c] transition hover:bg-[#33185c]/5" aria-label="分享故事">
+        <span class="material-symbols-outlined">share</span>
+      </button>
+    </div>
+  </header>
 
-      <article class="story-body">
-        <p>小李发来的邀约私信写了整整 450 个字。"目前的状态"、"关于我"、"关于吃饭地点"、"我的空余时间"——四个板块段落分明，连标点符号的运用都无可挑剔，让每天处理公文的我感到一种生理性的舒适。文末她写道："暂为以上，即使见不到您，也很感谢您愿意拨冗阅读我的消息🤝。"礼貌，克制，滴水不漏。正是这种过于成熟的"边界感"，让我对这个22岁、留着寸头的女孩心生好奇。</p>
+  <main class="pb-32 pt-16">
+    <section class="relative isolate flex h-[70vh] min-h-[520px] items-end overflow-hidden">
+      <div class="absolute inset-0 bg-[linear-gradient(135deg,#33185c_0%,#5c2c73_36%,#9c3c62_72%,#f0d6d8_100%)]"></div>
+      <img src="illustrations/story-xiaoli.png" alt="小李：她决定在精密结构里，自己养一颗星星" class="absolute inset-0 h-full w-full object-cover opacity-30">
+      <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-[#fcf9f6]"></div>
+      <div class="relative z-10 mx-auto w-full max-w-5xl px-6 pb-12 sm:px-8 md:pb-14">
+        <p class="mb-4 text-sm uppercase tracking-[0.35em] text-white/80">Vol.004 / Stitch Edition</p>
+        <h1 class="max-w-4xl font-headline text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">小李：她决定在精密结构里，自己养一颗星星</h1>
+        <p class="mt-4 font-headline text-xl italic text-white/78 sm:text-2xl">Her Own Star</p>
+      </div>
+    </section>
 
-        <section class="story-section">
-          <div class="story-section-num">01</div>
-          <div class="sec-content">
-            <div class="sec-label">被剃掉的长发</div>
-            <div class="story-formula">"秩序重建"的第一顶头盔</div>
-          </div>
-        </section>
+    <article class="mx-auto max-w-3xl px-6 py-12 sm:px-8">
+      <div class="rounded-[2rem] border border-[#33185c]/10 bg-white/60 p-6 shadow-[0_30px_80px_rgba(51,24,92,0.07)] sm:p-8 md:p-10">
+        <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">小李发来的邀约私信写了整整 450 个字。&quot;目前的状态&quot;、&quot;关于我&quot;、&quot;关于吃饭地点&quot;、&quot;我的空余时间&quot;——四个板块段落分明，连标点符号的运用都无可挑剔，让每天处理公文的我感到一种生理性的舒适。文末她写道：&quot;暂为以上，即使见不到您，也很感谢您愿意拨冗阅读我的消息🤝。&quot;礼貌，克制，滴水不漏。正是这种过于成熟的&quot;边界感&quot;，让我对这个22岁、留着寸头的女孩心生好奇。</p>
+<section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">01</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">被剃掉的长发</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">&quot;秩序重建&quot;的第一顶头盔</p></div></div></section>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">那种对世界进行&quot;秩序化&quot;处理的本能，一直延续到了见面的每一帧。为了确定最合适的餐厅，小李提前两天在公司附近进行了&quot;踩点&quot;。仅仅因为我随口提了一句&quot;方便聊天&quot;，她立刻调整了参数，在后续的选址理由中，将&quot;安静&quot;的权重提到了最高。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">约定时间是 11:30。11:20，小李发来了一份精准的导航日志：&quot;这家店在大厦的东边，隔一条小路；我在楼底下，也就是北门等您？或者您那边有其它安排吗？&quot;当我因会迟到请她先入座时，随即收到的，是一张用红色箭头明确圈出座位坐标的现场照片。这让我有了平时被接待去重要商务宴会的错觉。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">后来我才明白，这是她不容许任何一点&quot;找不到&quot;的模糊性存在——就像她不允许电路板上有多余的焊点。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">见面的地点是一家在商务楼二层角落的西餐厅。她选择了里屋最角落的位置。黑框眼镜、极短的寸头，穿着一件看起来洗了很多次、已经有些发白的深色厚棉服。棉服里面，裹了一层夹棉的工程师格子衬衫，再里面，是最朴素的白色T恤。她像个洋葱一样把自己层层包裹起来。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;我选择的发型是寸头，我的穿搭确实很容易引起误会。但这么多年已经改不掉了，所以如果真见面的话，希望别把我当成男生。&quot;和她的邀约文字描述完全吻合，光看形象，眼前这个小个子南方女孩确实是假小子模样。但细看之下，她的五官明明是清秀的，线条柔和，几乎找不到明显的短板。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;你有想过你留长头发，打扮成女孩会非常漂亮吗？&quot;我忍不住好奇。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;想过，&quot;她切牛排的手顿了一下，毫不犹豫，&quot;我也想象过自己女孩的样子。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">觉察到她似乎对男孩形象并没有执念，我接着问：&quot;那当时为什么选择了短发呢？&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;太省事了，&quot;她恢复了平静，&quot;而且，我不喜欢洗头。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">那是一个关于&quot;痛&quot;的记忆。小时候在广东，父亲给她洗头时，手劲总是很大，粗暴地抓扯着她的头皮。那个中年男人的力气和不耐烦，混杂着水流，成了她童年最具体的痛感。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;为什么这么大力气？他会边念叨边给你洗吗？&quot;我尝试深挖一些细节。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;不记得了，只记得当时的感受。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我想象着那个画面：南方潮湿的浴室，粗暴的大手，无法逃脱的小女孩，还有混杂着洗发水泡沫的眼泪。那不仅仅是皮肉的痛，那是一种被掌控、被忽视的痛。哪怕是现在，提起&quot;洗头&quot;两个字，她的眉心依然会下意识地收紧。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">后来，为了切断这种痛，也为了不再让厚重的刘海闷出痘痘，她做了一个最符合工程师思维的决定：切断它。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">那把剪刀落下的瞬间，一定像是一种仪式。这并非为了成为男生，而是为了成为一个&quot;不再感到疼痛的生物&quot;。寸头是她的防御形态。她切断了那缕让她受过伤的神经，也切断了世俗对女孩子&quot;柔顺&quot;的期待。</p>
+<section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">02</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">导师的旧棉服</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">一次&quot;皮肤置换&quot;</p></div></div></section>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">小李切牛排的手很稳，语气也很稳，她喜欢想清楚和嚼完食物才开始回答。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她继续平静地给我讲&quot;家庭暴力&quot;，讲&quot;校园霸凌&quot;。我不敢打断，只能小心翼翼地听，试图在心里掂量这些事情在她此刻生命中的重量。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;这些事情，你有跟别人说过吗？&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;有啊，我的导师。是她问我的，她要不问我，我才不说。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">这是她第一次提到&quot;导师&quot;。听到这个词，我脑海里立马浮现出她主页里那则画风突变的&quot;寻物启事&quot;。那是一则悬赏寻找一个不锈钢水杯的帖子。那个总是用秩序表达、留着寸头的酷盖，在行文的每一段末尾都加上了【哭泣】的表情，一共用了 18 个。那个&quot;看起来不该属于22岁时尚女孩&quot;的老式不锈钢水杯，正是恩师送的。原来那18个哭泣表情里，是她对这位老师近乎依恋的感情。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她给我讲了这段结缘的往事。2022年的冬天，天津冷得刺骨。那是她为了逃离原生家庭，考到北方后的第一个冬天。那时候她很穷，穷到只有一件衣服可以御寒——那是她父亲留下的旧制服。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我想象着那个瘦小的女孩，裹在宽大的、带着父亲气息（那是她拼命想逃离的气息）的制服里，窝在异乡漏风的宿舍。那件衣服保护了她的体温，却也在时刻提醒她：你虽然逃出来了，但你依然一无所有。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">转折发生在一场&quot;发疯&quot;之后。为了争取宿舍权益，她像个愣头青一样在贴吧&quot;挂&quot;校领导，甚至惊动了上级。她以为等待她的是处分，结果等来了她的导师——一位系里的党委书记。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">导师没有责怪她，却看见了她单薄的衣衫。第二天，导师拎着一大包衣服来了。那是学校募捐活动里，同学们捐赠的旧衣。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;这件棉服，就是那时候老师给我的。&quot;小李突然从座位上起身，举起那件原本挂在椅背上的深色棉衣，眼里闪着光，&quot;特别抗造。它陪着我从大一到现在。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我想，这件棉衣大概是世界在她的身上完成的一次&quot;皮肤的置换&quot;。她脱下了那件冰冷的&quot;父亲制服&quot;，穿上了这件带着陌生人善意的&quot;社会旧衣&quot;。这件旧衣服是她在这个世界上获得的第一个&quot;安全屋&quot;。它告诉她：虽然原生家庭是一片废墟，但这个世界还有人愿意为你挡风。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">后来的一切都开始变得美好。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;我最喜欢的城市就是天津，因为在天津，我度过了最开心的几年。没有人评判，没有人要求。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">看着她抚摸那件旧棉服的样子，我突然明白：她哪里是在穿一件旧衣服，她是在穿一身新的骨血。</p>
+<section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">03</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">没有时间的星盘</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">在精密结构里，养了一颗星星</p></div></div></section>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">对事情的&quot;秩序化&quot;处理，甚至延伸到了玄学。选择这家餐厅的时候，小李给我发来一条信息：&quot;我起了一个卦，发现这家是现有选项里，能量最消停的一个。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">听起来神叨叨的，但理由却意外地务实：她只是想要一个安静、不被打扰的聊天环境。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;我研究玄学，不是为了算什么时候发财。&quot;她推了推黑框眼镜，&quot;我是想知道，人性为什么会有善恶？&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她对&quot;为什么&quot;有一种近乎执拗的兴趣。不是&quot;事情会不会发生&quot;，而是&quot;事情为什么会这样发生&quot;；不是&quot;一个人会怎么做&quot;，而是&quot;他为什么会选择这种方式&quot;。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;就是，我知道 1+1 等于 2，但我想知道为什么只能是 2。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">前二十年遭受的那些来自亲人、同学的恶意，让她对&quot;人&quot;这个系统充满了不信任。她试图用玄学的代码，去破解他们的底层逻辑。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;那你为什么选择学电子？&quot;我问。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;因为我喜欢星星。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">这听起来太荒谬了，像是一句没头没尾的诗。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;因为我经常觉得，我是一颗从天上掉下来的星星。&quot;她认真地说。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">因为觉得自己是星星，所以她选择了电子，想离航天近一点。这或许是我整顿饭下来，听到的最浪漫的一句。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">但即便是有着最浪漫的想法，她也会把它落成最具体的动作。这正是她处理情感的方式——她拥有极高的感性，却使用着极度理性的算法。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;我情感很充沛，我有超级多的情感体验。&quot;这是她对自己的公正认知。她并不是一个没有感情的机器。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她告诉我，在广东老家时，她其实也有过一个产生情愫的男生。那是22岁的青春里，最容易让人冲昏头脑的时刻。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;然后呢？&quot;我问。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;然后我评估了一下，&quot;语气平静得像是在谈论一个项目，&quot;我觉得不能为了他放弃我自己，所以我就出来了。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;评估&quot;。在谈论爱情的时候，她用了这样一个冷冰冰的词。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">这就是小李。她把秩序运用到极致，即便是她&quot;充沛的情感&quot;。她把那些可能导致混乱、失控的因素，通过&quot;计算&quot;和&quot;评估&quot;剔除出去，只留下那些能让她感到安全的东西——比如解决一个技术难题后的成就感，比如和朋友分享喜悦时的双倍快乐。</p>
+<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她太早明白，爱并不是一个稳定的系统。所以当她削掉了长发，穿上了旧棉衣，她决定不再等待被谁拯救。她选择在那个精密的、不会塌陷的人生结构里，自己养一颗星星。</p>
+      </div>
+    </article>
+  </main>
 
-        <p>那种对世界进行"秩序化"处理的本能，一直延续到了见面的每一帧。为了确定最合适的餐厅，小李提前两天在公司附近进行了"踩点"。仅仅因为我随口提了一句"方便聊天"，她立刻调整了参数，在后续的选址理由中，将"安静"的权重提到了最高。</p>
-        <p>约定时间是 11:30。11:20，小李发来了一份精准的导航日志："这家店在大厦的东边，隔一条小路；我在楼底下，也就是北门等您？或者您那边有其它安排吗？"当我因会迟到请她先入座时，随即收到的，是一张用红色箭头明确圈出座位坐标的现场照片。这让我有了平时被接待去重要商务宴会的错觉。</p>
-        <p>后来我才明白，这是她不容许任何一点"找不到"的模糊性存在——就像她不允许电路板上有多余的焊点。</p>
-        <p>见面的地点是一家在商务楼二层角落的西餐厅。她选择了里屋最角落的位置。黑框眼镜、极短的寸头，穿着一件看起来洗了很多次、已经有些发白的深色厚棉服。棉服里面，裹了一层夹棉的工程师格子衬衫，再里面，是最朴素的白色T恤。她像个洋葱一样把自己层层包裹起来。</p>
-        <p>"我选择的发型是寸头，我的穿搭确实很容易引起误会。但这么多年已经改不掉了，所以如果真见面的话，希望别把我当成男生。"和她的邀约文字描述完全吻合，光看形象，眼前这个小个子南方女孩确实是假小子模样。但细看之下，她的五官明明是清秀的，线条柔和，几乎找不到明显的短板。</p>
-        <p>"你有想过你留长头发，打扮成女孩会非常漂亮吗？"我忍不住好奇。</p>
-        <p>"想过，"她切牛排的手顿了一下，毫不犹豫，"我也想象过自己女孩的样子。"</p>
-        <p>觉察到她似乎对男孩形象并没有执念，我接着问："那当时为什么选择了短发呢？"</p>
-        <p>"太省事了，"她恢复了平静，"而且，我不喜欢洗头。"</p>
-        <p>那是一个关于"痛"的记忆。小时候在广东，父亲给她洗头时，手劲总是很大，粗暴地抓扯着她的头皮。那个中年男人的力气和不耐烦，混杂着水流，成了她童年最具体的痛感。</p>
-        <p>"为什么这么大力气？他会边念叨边给你洗吗？"我尝试深挖一些细节。</p>
-        <p>"不记得了，只记得当时的感受。"</p>
-        <p>我想象着那个画面：南方潮湿的浴室，粗暴的大手，无法逃脱的小女孩，还有混杂着洗发水泡沫的眼泪。那不仅仅是皮肉的痛，那是一种被掌控、被忽视的痛。哪怕是现在，提起"洗头"两个字，她的眉心依然会下意识地收紧。</p>
-        <p>后来，为了切断这种痛，也为了不再让厚重的刘海闷出痘痘，她做了一个最符合工程师思维的决定：切断它。</p>
-        <p>那把剪刀落下的瞬间，一定像是一种仪式。这并非为了成为男生，而是为了成为一个"不再感到疼痛的生物"。寸头是她的防御形态。她切断了那缕让她受过伤的神经，也切断了世俗对女孩子"柔顺"的期待。</p>
+  <div class="fixed bottom-6 left-1/2 z-40 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2">
+    <a href="/stories" class="flex items-center justify-center gap-2 rounded-full bg-[#33185c] px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_20px_60px_rgba(51,24,92,0.28)] transition hover:bg-[#44206f]">
+      <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      返回故事列表
+    </a>
+  </div>
 
-        <section class="story-section">
-          <div class="story-section-num">02</div>
-          <div class="sec-content">
-            <div class="sec-label">导师的旧棉服</div>
-            <div class="story-formula">一次"皮肤置换"</div>
-          </div>
-        </section>
-
-        <p>小李切牛排的手很稳，语气也很稳，她喜欢想清楚和嚼完食物才开始回答。</p>
-        <p>她继续平静地给我讲"家庭暴力"，讲"校园霸凌"。我不敢打断，只能小心翼翼地听，试图在心里掂量这些事情在她此刻生命中的重量。</p>
-        <p>"这些事情，你有跟别人说过吗？"</p>
-        <p>"有啊，我的导师。是她问我的，她要不问我，我才不说。"</p>
-        <p>这是她第一次提到"导师"。听到这个词，我脑海里立马浮现出她主页里那则画风突变的"寻物启事"。那是一则悬赏寻找一个不锈钢水杯的帖子。那个总是用秩序表达、留着寸头的酷盖，在行文的每一段末尾都加上了【哭泣】的表情，一共用了 18 个。那个"看起来不该属于22岁时尚女孩"的老式不锈钢水杯，正是恩师送的。原来那18个哭泣表情里，是她对这位老师近乎依恋的感情。</p>
-        <p>她给我讲了这段结缘的往事。2022年的冬天，天津冷得刺骨。那是她为了逃离原生家庭，考到北方后的第一个冬天。那时候她很穷，穷到只有一件衣服可以御寒——那是她父亲留下的旧制服。</p>
-        <p>我想象着那个瘦小的女孩，裹在宽大的、带着父亲气息（那是她拼命想逃离的气息）的制服里，窝在异乡漏风的宿舍。那件衣服保护了她的体温，却也在时刻提醒她：你虽然逃出来了，但你依然一无所有。</p>
-        <p>转折发生在一场"发疯"之后。为了争取宿舍权益，她像个愣头青一样在贴吧"挂"校领导，甚至惊动了上级。她以为等待她的是处分，结果等来了她的导师——一位系里的党委书记。</p>
-        <p>导师没有责怪她，却看见了她单薄的衣衫。第二天，导师拎着一大包衣服来了。那是学校募捐活动里，同学们捐赠的旧衣。</p>
-        <p>"这件棉服，就是那时候老师给我的。"小李突然从座位上起身，举起那件原本挂在椅背上的深色棉衣，眼里闪着光，"特别抗造。它陪着我从大一到现在。"</p>
-        <p>我想，这件棉衣大概是世界在她的身上完成的一次"皮肤的置换"。她脱下了那件冰冷的"父亲制服"，穿上了这件带着陌生人善意的"社会旧衣"。这件旧衣服是她在这个世界上获得的第一个"安全屋"。它告诉她：虽然原生家庭是一片废墟，但这个世界还有人愿意为你挡风。</p>
-        <p>后来的一切都开始变得美好。</p>
-        <p>"我最喜欢的城市就是天津，因为在天津，我度过了最开心的几年。没有人评判，没有人要求。"</p>
-        <p>看着她抚摸那件旧棉服的样子，我突然明白：她哪里是在穿一件旧衣服，她是在穿一身新的骨血。</p>
-
-        <section class="story-section">
-          <div class="story-section-num">03</div>
-          <div class="sec-content">
-            <div class="sec-label">没有时间的星盘</div>
-            <div class="story-formula">在精密结构里，养了一颗星星</div>
-          </div>
-        </section>
-
-        <p>对事情的"秩序化"处理，甚至延伸到了玄学。选择这家餐厅的时候，小李给我发来一条信息："我起了一个卦，发现这家是现有选项里，能量最消停的一个。"</p>
-        <p>听起来神叨叨的，但理由却意外地务实：她只是想要一个安静、不被打扰的聊天环境。</p>
-        <p>"我研究玄学，不是为了算什么时候发财。"她推了推黑框眼镜，"我是想知道，人性为什么会有善恶？"</p>
-        <p>她对"为什么"有一种近乎执拗的兴趣。不是"事情会不会发生"，而是"事情为什么会这样发生"；不是"一个人会怎么做"，而是"他为什么会选择这种方式"。</p>
-        <p>"就是，我知道 1+1 等于 2，但我想知道为什么只能是 2。"</p>
-        <p>前二十年遭受的那些来自亲人、同学的恶意，让她对"人"这个系统充满了不信任。她试图用玄学的代码，去破解他们的底层逻辑。</p>
-        <p>"那你为什么选择学电子？"我问。</p>
-        <p>"因为我喜欢星星。"</p>
-        <p>这听起来太荒谬了，像是一句没头没尾的诗。</p>
-        <p>"因为我经常觉得，我是一颗从天上掉下来的星星。"她认真地说。</p>
-        <p>因为觉得自己是星星，所以她选择了电子，想离航天近一点。这或许是我整顿饭下来，听到的最浪漫的一句。</p>
-        <p>但即便是有着最浪漫的想法，她也会把它落成最具体的动作。这正是她处理情感的方式——她拥有极高的感性，却使用着极度理性的算法。</p>
-        <p>"我情感很充沛，我有超级多的情感体验。"这是她对自己的公正认知。她并不是一个没有感情的机器。</p>
-        <p>她告诉我，在广东老家时，她其实也有过一个产生情愫的男生。那是22岁的青春里，最容易让人冲昏头脑的时刻。</p>
-        <p>"然后呢？"我问。</p>
-        <p>"然后我评估了一下，"语气平静得像是在谈论一个项目，"我觉得不能为了他放弃我自己，所以我就出来了。"</p>
-        <p>"评估"。在谈论爱情的时候，她用了这样一个冷冰冰的词。</p>
-        <p>这就是小李。她把秩序运用到极致，即便是她"充沛的情感"。她把那些可能导致混乱、失控的因素，通过"计算"和"评估"剔除出去，只留下那些能让她感到安全的东西——比如解决一个技术难题后的成就感，比如和朋友分享喜悦时的双倍快乐。</p>
-        <p>她太早明白，爱并不是一个稳定的系统。所以当她削掉了长发，穿上了旧棉衣，她决定不再等待被谁拯救。她选择在那个精密的、不会塌陷的人生结构里，自己养一颗星星。</p>
-      </article>
-
-      <footer class="footer">
-        <p class="source">小李 · 22岁 · 电子系</p>
-      </footer>
-    </main>
-  <audio id="bgAudio" loop>
-  <source src="audio/story-xiaoli.mp3" type="audio/mpeg">
-</audio>
-
-<button class="audio-btn" id="audioBtn" title="播放 / 暂停" aria-label="播放 / 暂停背景音乐">
-  <svg id="playIcon" viewBox="0 0 24 24" aria-hidden="true">
-    <circle cx="12" cy="12" r="10" fill="#2e2e2e"></circle>
-    <circle cx="12" cy="12" r="2.2" fill="#f7f3ee"></circle>
-    <path d="M10 8.6v6.8l5.2-3.4z" fill="#f7f3ee"></path>
-  </svg>
-  <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none" aria-hidden="true">
-    <circle cx="12" cy="12" r="10" fill="#2e2e2e"></circle>
-    <circle cx="12" cy="12" r="2.2" fill="#f7f3ee"></circle>
-    <rect x="9" y="8" width="2.2" height="8" rx="1" fill="#f7f3ee"></rect>
-    <rect x="12.8" y="8" width="2.2" height="8" rx="1" fill="#f7f3ee"></rect>
-  </svg>
-</button>
-
-<script>
-(function() {
-  const audio = document.getElementById('bgAudio');
-  const btn = document.getElementById('audioBtn');
-  const playIcon = document.getElementById('playIcon');
-  const pauseIcon = document.getElementById('pauseIcon');
-  audio.volume = 0.35;
-  audio.muted = true;
-  audio.play().catch(function() {});
-  var unmuted = false;
-  function unmute() {
-    if (!unmuted) {
-      audio.muted = false;
-      unmuted = true;
-      if (!audio.paused) {
-        playIcon.style.display = 'none';
-        pauseIcon.style.display = 'block';
-        btn.classList.add('playing');
+  <script>
+    document.getElementById('shareButton')?.addEventListener('click', async () => {
+      const shareData = { title: document.title, text: '小李：她决定在精密结构里，自己养一颗星星 | 女也 She Is', url: window.location.href };
+      try {
+        if (navigator.share) {
+          await navigator.share(shareData);
+          return;
+        }
+        await navigator.clipboard.writeText(window.location.href);
+        alert('链接已复制');
+      } catch (error) {
+        console.error(error);
       }
-    }
-    document.removeEventListener('click', unmute);
-    document.removeEventListener('touchstart', unmute);
-  }
-  document.addEventListener('click', unmute);
-  document.addEventListener('touchstart', unmute);
-  btn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    unmute();
-    if (audio.paused) {
-      audio.play();
-      playIcon.style.display = 'none';
-      pauseIcon.style.display = 'block';
-      btn.classList.add('playing');
-    } else {
-      audio.pause();
-      playIcon.style.display = 'block';
-      pauseIcon.style.display = 'none';
-      btn.classList.remove('playing');
-    }
-  });
-})();
-</script>
-
+    });
+  </script>
 </body>
 </html>

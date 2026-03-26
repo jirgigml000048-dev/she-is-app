@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>自行车：30岁却像15岁的赛博格 | 女也 She Is</title>
+    
+    <style>
+      :root {
+        --bg: #F4F0E4;
+        --ink: #2C2C2C;
+        --teal: #3a4211;
+        --slate: #7a9248;
+        --coral: #f8c7e4;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        background-image: radial-gradient(ellipse 90% 75% at 0% 0%, rgba(232,121,160,0.18) 0%, transparent 60%),
+          radial-gradient(ellipse 80% 70% at 100% 5%, rgba(167,139,250,0.2) 0%, transparent 55%),
+          radial-gradient(ellipse 70% 80% at 0% 100%, rgba(96,165,250,0.15) 0%, transparent 55%),
+          radial-gradient(ellipse 75% 60% at 100% 90%, rgba(249,115,22,0.12) 0%, transparent 50%);
+        color: var(--ink);
+        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+      }
+
+      .page {
+        max-width: 480px;
+        margin: 0 auto;
+        min-height: 100vh;
+        padding-top: 56px;
+        padding-bottom: 48px;
+      }
+
+      .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 24px;
+        max-width: 480px;
+        margin: 0 auto;
+        border-bottom: 1px solid rgba(122,146,72,0.2);
+        background: rgba(244,240,228,0.95);
+        backdrop-filter: blur(6px);
+      }
+
+      .back-btn {
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-decoration: none;
+        color: var(--ink);
+      }
+
+      .page-header-row {
+        display: flex;
+        
+        
+        width: 100%;
+        margin-bottom: 0;
+      
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .logo {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0 0 0 auto;
+      }
+
+      .logo-cn {
+        display: block;
+        font-family: "Lora", serif;
+        font-size: 18px;
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        color: var(--ink);
+      }
+
+      .logo-en {
+        display: block;
+        font-family: "Courier Prime", monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        color: rgba(44,44,44,0.62);
+        margin-top: 2px;
+      }
+
+      .character-card {
+        margin: 24px;
+        padding: 18px;
+        border: 1px solid rgba(122,146,72,0.25);
+        border-radius: 14px;
+        background: rgba(244,240,228,0.7);
+        border-bottom: 2px solid var(--coral);
+      }
+
+      .story-subtitle {
+        margin: 0 0 10px;
+        font-size: 16px;
+        line-height: 1.5;
+        font-weight: 500;
+        color: var(--ink);
+      }
+
+      .pill-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+
+      .story-tag {
+        font-size: 11px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(122,146,72,0.10);
+        color: var(--slate);
+      }
+
+      .story-illus {
+        margin: 16px 0 24px;
+        min-height: 180px;
+        border: 1.5px dashed rgba(122,146,72,0.4);
+        border-radius: 12px;
+        background: rgba(122,146,72,0.08);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 8px;
+        color: var(--slate);
+        font-size: 12px;
+      }
+
+      .story-body { padding: 8px 24px 0; }
+
+      .story-body p {
+        margin: 0 0 1.2em;
+        font-size: 15px;
+        line-height: 1.9;
+        color: var(--ink);
+      }
+
+      .story-section {
+        position: relative;
+        margin: 48px 0 24px;
+      }
+
+      .story-section-num {
+        font-size: 56px;
+        color: var(--teal);
+        opacity: 0.2;
+        line-height: 1;
+        position: absolute;
+        left: -8px;
+        top: -12px;
+        user-select: none;
+        font-weight: 600;
+      }
+
+      .sec-content { padding-left: 44px; }
+
+      .sec-label {
+        font-size: 11px;
+        color: var(--slate);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+
+      .story-formula {
+        display: inline-block;
+        background: rgba(122,146,72,0.12);
+        color: var(--teal);
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        padding: 5px 14px;
+        border-radius: 4px;
+        letter-spacing: 0.04em;
+      }
+
+      .equation {
+        margin: 0.8em 0 1.2em;
+        padding: 10px 12px;
+        border: 1px solid rgba(122,146,72,0.35);
+        background: rgba(122,146,72,0.12);
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+        font-size: 15px;
+        color: var(--ink);
+        letter-spacing: 0.03em;
+      }
+
+      .story-quote {
+        margin: 16px 0;
+        padding: 10px 12px 10px 14px;
+        border-left: 2px solid var(--coral);
+        background: rgba(248,199,228,0.08);
+        font-size: 15px;
+        line-height: 1.9;
+        color: var(--ink);
+      }
+
+      .footer {
+        margin: 18px 24px 0;
+        padding-top: 20px;
+        border-top: 1px solid rgba(122,146,72,0.2);
+      }
+
+      .source {
+        margin: 0 0 14px;
+        font-size: 12px;
+        color: var(--ink);
+      }
+
+      .story-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        border: 1px solid var(--teal);
+        color: var(--ink);
+        border-radius: 12px;
+        padding: 10px 14px;
+        background: rgba(58,66,17,0.08);
+        font-size: 13px;
+        letter-spacing: 0.02em;
+      }
+
+      .story-cta strong { color: var(--teal); }
+    .audio-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 100;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(44,44,44,0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px rgba(44,32,20,0.12);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.audio-btn:hover { opacity: 0.85; transform: scale(1.08); }
+.audio-btn.playing { animation: spin 4s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.audio-btn.playing:hover { animation-play-state: paused; }
+.audio-btn svg { width: 18px; height: 18px; fill: #2e2e2e; }
+
+      .vi-glow {
+
+        position: fixed;
+
+        pointer-events: none;
+
+        z-index: 0;
+
+        border-radius: 50%;
+
+        filter: blur(80px);
+
+      }
+
+      .vi-glow--top {
+
+        width: 340px;
+
+        height: 340px;
+
+        top: -100px;
+
+        right: -80px;
+
+        background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+
+      }
+
+      .vi-glow--bottom {
+
+        width: 280px;
+
+        height: 280px;
+
+        bottom: -60px;
+
+        left: -60px;
+
+        background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+
+      }
+
+    </style>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/font-override.css" />
+</head>
+  <body>
+    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+    <main class="page"><header class="site-header page-header-row">
+        <a href="stories.html" class="back-btn">← 故事</a>
+        <div class="logo"><span class="logo-cn">女也</span><span class="logo-en">she is ______.</span></div>
+      </header>
+
+      <section class="character-card">
+        <h1 class="story-subtitle">自行车：30岁却像15岁的赛博格</h1>
+        <div class="pill-wrap">
+          <span class="story-tag">#慢性病</span>
+          <span class="story-tag">#两个月一次</span>
+          <span class="story-tag">#独处需求</span>
+        </div>
+      </section>
+
+      <div class="story-illus">
+        <img src="illustrations/story-zixingche.png" alt="" style="width:100%;display:block;border-radius:8px;">
+      </div>
+
+      <article class="story-body">
+        <p>"我的人生计划最长只有60天。因为每两个月，我就要返厂维修一次。"</p>
+
+        <p>坐在卡座等我的女孩，长着一张会让所有被社会毒打过的成年人都嫉妒的脸。圆圆的，肉嘟嘟的，透着一种没心没肺的红润。</p>
+        <p>"你看着好小，刚毕业吗？"</p>
+        <p>"我都30了。"她笑起来，明媚却露出一点害羞，"顶着这张脸，我也很有压力的。"</p>
+        <p>她让我叫她"自行车"，只是因为字母正好是名字的缩写。后来我想了想，这个名字自洽了她现在的状态：结构简单，没有复杂的引擎，不需要昂贵的燃料，也不带人。她只负责维持好自己的平衡，在生活的缝隙里，轻盈地滑行。</p>
+        <p>这种"幼态"不是保养出来的，而是被命运"冷冻"出来的。因为一场突如其来的变故，她早早地从那个催人老的世俗赛道上跳了车。</p>
+
+        <section class="story-section">
+          <div class="story-section-num">01</div>
+          <div class="sec-content">
+            <div class="sec-label">赛博朋克的身体</div>
+            <div class="story-formula">做个"生化人"没什么不好</div>
+          </div>
+        </section>
+
+        <p>自行车的生活节奏，是被"两个月"这个刻度强行切割的。因为体内那个难以治愈的慢性病，她每隔八周，就必须去医院打一次针。换做别人，或许觉得这是某种无期徒刑般的折磨。但她把这看作一种"系统维护"。</p>
+        <p>"我觉得自己过的是那种赛博朋克的人生。"她嚼着饺子轻描淡写。</p>
+        <p>生病最严重的时候，为了维持生命，医生在她的锁骨下方开了一个口，插入了一根长长的PICC导管。她无法进食，只能靠这根管子直接向心脏输送营养液。那段时间，她不像在吃饭，像是在充电。</p>
+        <p>有一次在医院厕所，突然大出血。她坐在马桶上，竟然还能维持着一种荒诞的体面：提好裤子，按响呼叫铃，然后抱住冲进来的护士，礼貌地说了一句：</p>
+        <p>"不好意思，我要晕了。"</p>
+        <p>说完，像一台电量耗尽的机器，啪嗒一声，"关机"了。</p>
+        <p>我很想知道，当一个人在病床上被异化为"机器"时，究竟在想什么。</p>
+        <p>"很痛苦吗？"我问。</p>
+        <p>"没有，"她摇摇头，"人在真的已经不行了的时候，反而不会特别难受。因为你知道不会更差了。再差就是死，既然没死，所以没什么了。"</p>
+        <p>这种在生死线上走过一遭的经历，给了她一种奇异的豁达。既然身体是一台需要定期返厂维修的机器，那就不要做长远的计划了。</p>
+        <p>"我的生活被分成了两个月、两个月、又两个月。我不用想明年，也不用想五年后，我只要把当下的这两个月'苟'好就行。"</p>
+        <p>这反而成了一种极致的自由。</p>
+        <p>但在她表现出这份令人羡慕的松弛时，你很难想象，这是用"放弃博士学位"换来的。在韩国念书、往返国内治病、加上疫情的阻隔……为了活下去，她亲手切断了那条通往世俗成功的"优绩主义"道路。这份看似轻盈的赛博朋克人生，其实是一个最沉重的决定换来的。</p>
+
+        <section class="story-section">
+          <div class="story-section-num">02</div>
+          <div class="sec-content">
+            <div class="sec-label">12楼的绝对真空</div>
+            <div class="story-formula">不把"同事"请回家</div>
+          </div>
+        </section>
+
+        <p>为了保护这来之不易的电量，自行车对"独处"有着自己都不能理解的需求。</p>
+        <p>她租住在12楼。理由很简单："在这个高度，窗外没有视线能扫到我。"</p>
+        <p>这是一种对童年阴影的代偿。小时候她住在北京的胡同里，那是人和人之间没有物理缝隙的地方，手一伸就能碰到邻居家的窗户。那种时刻被注视、被侵入的"憋屈感"，让她现在对"视线"过敏。</p>
+        <p>她也不养猫。"在我妈妈家，猫存在的时间比我还早。所以猫对我来说，更像是一个必须服从的习惯。"所以，即便现在一个人住，她走路时依然习惯不抬脚，怕踩到猫；睡觉时依然不敢关门，怕猫挠门。那些为了照顾另一个生命而形成的肌肉记忆，依然保留在她的身体里。</p>
+        <p>我建议她养些花花草草，她拒绝得斩钉截铁。</p>
+        <p>"你知道买花回家有一种什么感觉吗？"她瞪大圆圆的眼睛，"有一种把同事请回家的感觉。"</p>
+        <p>仅仅因为之前的行政工作负责过浇花。在她看来，任何需要她去照顾、去负责、去在这个空间里分走她注意力的东西，都是"加班"。</p>
+        <p>所以现在，她一个人住在12楼的屋子里，没有任何需要照顾的生物。只要关上门，她就是这个真空宇宙的中心。</p>
+        <p>这种需求并非矫情，而是一种生理性的应激反应。她提到以前出差判卷子，不得不和同事住标准间。即便同事人很好，也不打扰她，但那种"无法完全独处"的压迫感，依然会在几天后让她崩溃。</p>
+        <p>"我记得有天半夜，我实在受不了了。"她躲进酒店狭小的卫生间，关上门，坐在马桶盖上吃薯片。"我也不知道为什么，我就是很焦虑，我必须要自己待会儿。"</p>
+        <p>在那个封闭的、只有滴水声的狭小空间里，随着薯片清脆的碎裂声，她终于感到了放松。</p>
+        <p>我想，她不需要真的猫，她的身体里就像住着一只"幽灵猫"，她只要保留那份温柔的"幻肢痛"就够了。这让她看起来虽然独来独往，但并不冷漠，只是更加珍惜自己的边界。</p>
+
+        <section class="story-section">
+          <div class="story-section-num">03</div>
+          <div class="sec-content">
+            <div class="sec-label">退出优绩主义的列车</div>
+            <div class="story-formula">父母的KPI只是"活着"</div>
+          </div>
+        </section>
+
+        <p>自行车曾经也是那列名为"优绩主义"列车上的一员，准备在学术的道路上一路狂奔。直到有一天，她在首尔街头的便利店门口，突然惊恐发作。眼前一黑，听不见声音。那一刻，身体的警报声盖过了所有的野心。</p>
+        <p>她决定跳车。没有毕业典礼，没有学位证书，她甚至还要专门回去拍一张穿校服的照片，来和那段人生告别。</p>
+        <p>遗憾吗？"遗憾过。但我现在好了。"</p>
+        <p>这场"跳车"带来的意外红利是：父母对她的期待值，降到了冰点。当身边的同龄人都在被催婚、催生、催着赚大钱时，自行车获得了一张"世俗豁免权"。父母不再问她为什么不结婚，也不问她赚多少钱。在他们眼里，女儿能每两个月充一次电，能自己把饭吃好，能活蹦乱跳地出现在面前，就已经完成了最高的KPI。</p>
+        <p>她从那个必须赢的系统里退了出来，变成了一个"只要活着就很棒"的幸存者。</p>
+        <p>但"幸存者"也有自己的烦恼。当父母试图补偿她，想要更多地介入她的生活，甚至抱怨她不像别人家的女儿那样"贴心"时，她展现出了惊人的冷酷。</p>
+        <p>"你们得到你们想要的了。"她对父母说得直白而锋利，"小时候你们送我去集训队，让我独立，不用你们操心。现在我长大了，你们又希望我做贴心小棉袄？甘蔗没有两头甜。我已经定型了。"</p>
+        <p>她甚至像签合同一样，给亲情划定了严格的条款。我可以每周回家一次，带好吃的，陪他们高质量地聊两小时天。但在这个时间之外，我无法提供随叫随到的情绪价值。</p>
+        <p>这听起来冷漠得像是在谈生意。但转过头，她又在做着一件极度温柔的事——"训练"拥抱。</p>
+        <p>"我正在努力培养我父母拥抱我的习惯。"她说。</p>
+        <p>因为她发现，父母的上一辈没有好好爱过他们，所以他们羞于表达肢体接触。于是，每次回家和离开，她都会强迫自己执行一个程序：张开手，抱一下。</p>
+        <p>尽管她内心并不习惯，尽管这像是一个设定好的任务。</p>
+        <p>"虽然很慢，但我正在慢慢学习。"</p>
+        <p>这就是自行车式的爱。不是本能的流露，而是理性的选择。即使是温情，也需要在她的系统里经过严密的计算：但我愿意为你，去执行这个并不熟练的程序。</p>
+
+        <section class="story-section">
+          <div class="story-section-num">04</div>
+          <div class="sec-content">
+            <div class="sec-label">尾声</div>
+            <div class="story-formula">一辆自行车的平衡</div>
+          </div>
+        </section>
+
+        <p>饭局结束，自行车焦虑地说："不好意思剩这么多。"</p>
+        <p>我提议让她打包。</p>
+        <p>"太好了，这下周末不用做饭了。"她没有社交包袱，笑得像捡到了宝藏。</p>
+        <p>所以，后来我觉得"自行车"这个名字起得真好。她不需要像轿车那样复杂的引擎，也不需要像跑车那样昂贵的燃料。她结构简单，自我驱动。她不需要谁坐在后座，也不需要谁在后面推。她就在那两个月的刻度里，轻盈地、甚至带点摇晃地，骑向她的12楼。</p>
+      </article>
+
+      <footer class="footer">
+        <p class="source">自行车 · 30岁 · 北京</p>
+      </footer>
+    </main>
+  <audio id="bgAudio" loop>
+  <source src="audio/story-zixingche.mp3" type="audio/mpeg">
+</audio>
+
+<button class="audio-btn" id="audioBtn" title="播放 / 暂停" aria-label="播放 / 暂停背景音乐">
+  <svg id="playIcon" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" fill="#2e2e2e"></circle>
+    <circle cx="12" cy="12" r="2.2" fill="#f7f3ee"></circle>
+    <path d="M10 8.6v6.8l5.2-3.4z" fill="#f7f3ee"></path>
+  </svg>
+  <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" fill="#2e2e2e"></circle>
+    <circle cx="12" cy="12" r="2.2" fill="#f7f3ee"></circle>
+    <rect x="9" y="8" width="2.2" height="8" rx="1" fill="#f7f3ee"></rect>
+    <rect x="12.8" y="8" width="2.2" height="8" rx="1" fill="#f7f3ee"></rect>
+  </svg>
+</button>
+
+<script>
+(function() {
+  const audio = document.getElementById('bgAudio');
+  const btn = document.getElementById('audioBtn');
+  const playIcon = document.getElementById('playIcon');
+  const pauseIcon = document.getElementById('pauseIcon');
+  audio.volume = 0.35;
+  audio.muted = true;
+  audio.play().catch(function() {});
+  var unmuted = false;
+  function unmute() {
+    if (!unmuted) {
+      audio.muted = false;
+      unmuted = true;
+      if (!audio.paused) {
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+        btn.classList.add('playing');
+      }
+    }
+    document.removeEventListener('click', unmute);
+    document.removeEventListener('touchstart', unmute);
+  }
+  document.addEventListener('click', unmute);
+  document.addEventListener('touchstart', unmute);
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    unmute();
+    if (audio.paused) {
+      audio.play();
+      playIcon.style.display = 'none';
+      pauseIcon.style.display = 'block';
+      btn.classList.add('playing');
+    } else {
+      audio.pause();
+      playIcon.style.display = 'block';
+      pauseIcon.style.display = 'none';
+      btn.classList.remove('playing');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
