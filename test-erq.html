@@ -1,312 +1,102 @@
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>情绪调节测评 | 女也 She Is</title>
-    <style>
-      /* 防止孤字 */
-      h1, h2, h3, h4,
-      .r-type, .r-quote, .r-desc p,
-      .result-type, .result-quote,
-      .card-title, .section-title, .hero-title {
-        text-wrap: balance;
-      }
-
-      p {
-        text-wrap: pretty;
-      }
-      :root {
-        --bg: #faf9f7;
-        --ink: #2c2c2c;
-        --gold: #c4a882;
-        --line: #e9e3da;
-      }
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        background: var(--bg);
-        background-image: radial-gradient(ellipse 90% 75% at 0% 0%, rgba(232,121,160,0.18) 0%, transparent 60%),
-          radial-gradient(ellipse 80% 70% at 100% 5%, rgba(167,139,250,0.2) 0%, transparent 55%),
-          radial-gradient(ellipse 70% 80% at 0% 100%, rgba(96,165,250,0.15) 0%, transparent 55%),
-          radial-gradient(ellipse 75% 60% at 100% 90%, rgba(249,115,22,0.12) 0%, transparent 50%);
-        color: var(--ink);
-        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
-      }
-      .page {
-        max-width: 680px;
-        margin: 0 auto;
-        min-height: 100vh;
-        padding: 18px 18px 28px;
-      }
-      .topline { height: 2px; background: var(--line); border-radius: 99px; overflow: hidden; }
-      .topline > span { display: block; height: 100%; width: 0%; background: var(--gold); transition: width .3s ease; }
-      .meta { display: flex; justify-content: space-between; align-items: center; margin: 10px 0 16px; font-size: 12px; color: #6c6c6c; letter-spacing: .04em; }
-      .panel {
-        background: #fff;
-        border: 1px solid #eee8de;
-        border-radius: 18px;
-        padding: 26px 20px;
-        box-shadow: 0 10px 30px rgba(88, 68, 43, 0.06);
-        min-height: 72vh;
-      }
-      .hidden { display: none; }
-      h1,h2 { margin: 0; font-family: "Noto Serif SC", "Lora", "Source Han Serif SC", serif; color: var(--ink); }
-      .title { font-size: 35px; letter-spacing: .04em; }
-      .subtitle { margin-top: 10px; color: #6f6a64; font-size: 14px; }
-      .desc { margin-top: 18px; line-height: 1.8; color: #46433f; font-size: 15px; }
-      .primary {
-        margin-top: 26px;
-        border: 0;
-        background: var(--ink);
-        color: #4A3073;
-        border-radius: 999px;
-        padding: 12px 22px;
-        font-size: 15px;
-        cursor: pointer;
-      }
-      .question-wrap { transition: opacity .3s ease, transform .3s ease; }
-      .question-wrap.fade-out { opacity: 0; transform: translateY(12px); }
-      .question-id { font-size: 12px; color: #8d867f; letter-spacing: .08em; }
-      .question-text { margin-top: 10px; font-size: 25px; line-height: 1.45; }
-      .slider-card {
-        margin-top: 22px;
-        padding: 18px 16px 14px;
-        border-radius: 18px;
-        border: 1px solid #efe6db;
-        background: linear-gradient(180deg, #fcfaf7 0%, #f8f4ee 100%);
-      }
-      .slider-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 14px;
-      }
-      .slider-caption {
-        font-size: 12px;
-        color: #8b8279;
-        letter-spacing: .06em;
-      }
-      .slider-value {
-        min-width: 68px;
-        text-align: center;
-        padding: 6px 12px;
-        border-radius: 999px;
-        background: rgba(74, 48, 115, 0.10);
-        color: #4A3073;
-        font-size: 13px;
-      }
-      .scale-labels {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 8px;
-        font-size: 0.78rem;
-        color: #777;
-        line-height: 1.4;
-      }
-      .scale-labels span:last-child { text-align: right; }
-      .slider-wrap { min-width: 0; }
-      .answer-slider {
-        width: 100%;
-        margin: 0;
-        accent-color: #4A3073;
-        -webkit-appearance: none;
-        appearance: none;
-        background: transparent;
-      }
-      .answer-slider::-webkit-slider-runnable-track {
-        height: 10px;
-        border-radius: 999px;
-        background: linear-gradient(90deg, rgba(74,48,115,0.18) 0%, rgba(74,48,115,0.38) 100%);
-      }
-      .answer-slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        width: 30px;
-        height: 30px;
-        margin-top: -10px;
-        border-radius: 50%;
-        background: #4A3073;
-        border: 4px solid #fdfaf6;
-        box-shadow: 0 4px 14px rgba(74,48,115,0.22);
-      }
-      .answer-slider::-moz-range-track {
-        height: 10px;
-        border-radius: 999px;
-        background: linear-gradient(90deg, rgba(74,48,115,0.18) 0%, rgba(74,48,115,0.38) 100%);
-      }
-      .answer-slider::-moz-range-thumb {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background: #4A3073;
-        border: 4px solid #fdfaf6;
-        box-shadow: 0 4px 14px rgba(74,48,115,0.22);
-      }
-      .slider-ticks {
-        display: grid;
-        grid-template-columns: repeat(7, minmax(0, 1fr));
-        margin-top: 8px;
-        font-size: 11px;
-        color: #998f85;
-      }
-      .slider-ticks span { text-align: center; }
-      .slider-card .slider-value { margin-top: 10px; }
-      .actions { display: flex; justify-content: space-between; margin-top: 24px; gap: 10px; flex-wrap: wrap; }
-      .ghost {
-        border: 1px solid #dad2c6; background: transparent; color: #5f5850;
-        border-radius: 999px; padding: 9px 16px; font-size: 13px; cursor: pointer;
-      }
-      .result-emoji { font-size: 38px; margin: 0; }
-      .result-type { margin-top: 8px; font-size: 34px; }
-      .tagline { margin-top: 8px; font-size: 18px; color: #4f4a45; }
-      .share-tip { margin-top: 20px; padding-top: 16px; border-top: 1px dashed #ddcfbc; font-size: 14px; color: #6b6258; }
-      .score-row { margin-top: 12px; font-size: 13px; color: #7a7470; }
-      @media (max-width: 540px) {
-        .title { font-size: 28px; }
-        .question-text { font-size: 21px; }
-        .panel { padding: 22px 16px; }
-        .slider-card { padding: 18px 14px 14px; }
-        .slider-header {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 10px;
-        }
-        .slider-value { margin-top: 2px; }
-        .scale-labels {
-          font-size: 0.76rem;
-          gap: 10px;
-        }
-      }
-      .story-link-hint {
-        margin-top: 1rem;
-        font-size: 0.85rem;
-        color: #888;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .story-link-hint a {
-        color: #555;
-        text-decoration: underline;
-        text-underline-offset: 3px;
-      }
-      .result-actions { display: flex; flex-direction: column; align-items: stretch; gap: 12px; margin-top: 20px; }
-      .result-back-btn, .result-retry-btn { display: block; width: 100%; text-align: center; }
-      .result-retry-btn.ghost {
-        border: 1px solid rgba(187, 187, 187, .45);
-        background: transparent;
-        color: #bbb;
-        border-radius: 999px;
-        padding: 12px 18px;
-      }
-      .result-retry-btn.ghost:hover { color: #a6a6a6; border-color: rgba(166, 166, 166, .65); }
-
-      .test-intro {
-        padding: 8px 0 24px;
-      }
-      .test-intro-card {
-        display: flex;
-        background: #F7F3EE;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 4px 20px rgba(44,32,20,0.07);
-      }
-      .test-intro-accent {
-        width: 4px;
-        flex-shrink: 0;
-        background: #C8C5DE;
-        border-radius: 0;
-      }
-      .test-intro-content {
-        padding: 28px 24px 28px 22px;
-        flex: 1;
-      }
-      .test-intro-source {
-        margin: 0;
-        font-family: 'Courier Prime', monospace;
-        font-size: 11px;
-        color: #888;
-        letter-spacing: 0.08em;
-        line-height: 1.5;
-      }
-      .test-intro-rule {
-        height: 0.5px;
-        background: #e0dbd4;
-        margin: 14px 0;
-      }
-      .test-intro-scale {
-        margin: 0;
-        font-family: 'Lora', serif;
-        font-size: 36px;
-        font-weight: 600;
-        color: #2e2e2e;
-        line-height: 1.1;
-        letter-spacing: 0.08em;
-      }
-      .test-intro-body {
-        margin: 0 0 12px;
-        font-size: 15px;
-        line-height: 1.9;
-        color: #555;
-      }
-      .test-intro-note {
-        margin: 0;
-        font-family: 'DM Sans', sans-serif;
-        font-size: 12px;
-        color: #999;
-        line-height: 1.6;
-      }
-      .test-intro-btn {
-        display: block;
-        width: 100%;
-        padding: 14px;
-        background: linear-gradient(135deg, #F2A98A 0%, #C8C5DE 100%);
-        color: #fff;
-        border: none;
-        border-radius: 30px;
-        font-family: 'DM Sans', sans-serif;
-        font-size: 14px;
-        letter-spacing: 0.15em;
-        cursor: pointer;
-        box-shadow: 0 4px 16px rgba(242,169,138,0.35);
-        transition: opacity 0.2s ease;
-        margin-top: 32px;
-      }
-      .test-intro-btn:hover { opacity: 0.88; }
-          .vi-glow {
-            position: fixed;
-            pointer-events: none;
-            z-index: 0;
-            border-radius: 50%;
-            filter: blur(80px);
-          }
-          .vi-glow--top {
-            width: 340px;
-            height: 340px;
-            top: -100px;
-            right: -80px;
-            background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
-          }
-          .vi-glow--bottom {
-            width: 280px;
-            height: 280px;
-            bottom: -60px;
-            left: -60px;
-            background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
-          }
-        
-
-    .result-capture-card {
-      background: #fffdfa;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 18px 14px;
-      box-shadow: 0 6px 20px rgba(48,35,23,.06);
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>情绪调节策略测评 · ERQ | 女也 She Is</title>
+  <style>
+    h1, h2, h3, h4,
+    .r-type, .r-quote, .r-desc p,
+    .result-type, .result-quote,
+    .card-title, .section-title, .hero-title {
+      text-wrap: balance;
     }
-    .result-viz {
-      margin-bottom: 28px;
+    p { text-wrap: pretty; }
+
+    :root {
+      --bg: #fcf9f6;
+      --card: #fffdfa;
+      --ink: #1c1c1a;
+      --muted: #7b7580;
+      --line: #e7dfd6;
+      --primary: #33185c;
+      --secondary: #9c3c62;
+      --surface: #fcf9f6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Plus Jakarta Sans", "Noto Serif SC", sans-serif;
+    }
+
+    /* Glass player */
+    .glass-player {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(229,226,223,0.5);
+      border-radius: 1rem;
+      box-shadow: 0 10px 40px -10px rgba(51,24,92,0.08);
+    }
+
+    /* Glow */
+    .vi-glow {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      border-radius: 50%;
+      filter: blur(80px);
+    }
+    .vi-glow--top {
+      width: 340px; height: 340px; top: -100px; right: -80px;
+      background: radial-gradient(ellipse, rgba(74,48,115,0.07), transparent 70%);
+    }
+    .vi-glow--bottom {
+      width: 280px; height: 280px; bottom: -60px; left: -60px;
+      background: radial-gradient(ellipse, rgba(74,48,115,0.05), transparent 70%);
+    }
+
+    /* Slider */
+    .answer-slider {
+      width: 100%;
+      margin: 0;
+      accent-color: var(--primary);
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+    }
+    .answer-slider::-webkit-slider-runnable-track {
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(51,24,92,0.15) 0%, rgba(51,24,92,0.35) 100%);
+    }
+    .answer-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 30px; height: 30px;
+      margin-top: -10px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 4px solid #fdfaf6;
+      box-shadow: 0 4px 14px rgba(51,24,92,0.25);
+    }
+    .answer-slider::-moz-range-track {
+      height: 10px; border-radius: 999px;
+      background: linear-gradient(90deg, rgba(51,24,92,0.15) 0%, rgba(51,24,92,0.35) 100%);
+    }
+    .answer-slider::-moz-range-thumb {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 4px solid #fdfaf6;
+      box-shadow: 0 4px 14px rgba(51,24,92,0.25);
+    }
+
+    /* Result */
+    .result-capture-card {
+      background: var(--bg);
+      padding: 1.5rem 0.75rem;
     }
     .score-row {
       display: flex;
@@ -314,674 +104,592 @@
       gap: 12px;
       margin-bottom: 14px;
     }
-    .score-row:last-child { margin-bottom: 0; }
     .score-label {
-      font-family: "Noto Serif SC", "Lora", serif;
+      font-family: "Noto Serif SC", serif;
       font-size: 11px;
-      color: rgba(47,42,38,0.72);
+      color: rgba(51,24,92,0.72);
       width: 64px;
       flex-shrink: 0;
     }
     .score-bar-bg {
-      flex: 1;
-      height: 10px;
-      background: rgba(74,48,115,0.1);
-      border-radius: 999px;
-      overflow: hidden;
+      flex: 1; height: 10px;
+      background: rgba(51,24,92,0.08);
+      border-radius: 999px; overflow: hidden;
     }
     .score-bar-fill {
-      width: 0;
-      height: 100%;
-      background: #4A3073;
+      width: 0; height: 100%;
+      background: var(--primary);
       border-radius: 999px;
-      box-shadow: 0 4px 12px rgba(74,48,115,0.22);
+      box-shadow: 0 4px 12px rgba(51,24,92,0.2);
       transition: width 0.8s ease;
     }
     .score-val {
-      font-size: 11px;
-      color: #4A3073;
-      width: 36px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-    .r-head {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .r-head::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #4A3073;
-      transform: translateY(-2px);
-      flex-shrink: 0;
-    }
-    .r-type {
-      font-family: "Noto Serif SC", "Lora", serif;
-      font-size: 30px;
-      color: #2e2e2e;
-      margin: 0;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-    }
-    .r-score-line {
-      position: relative;
-      z-index: 1;
-      font-size: 11px;
-      color: #4A3073;
-      letter-spacing: 0.08em;
-      margin: 0 0 16px;
+      font-size: 11px; color: var(--primary);
+      width: 36px; text-align: right; flex-shrink: 0;
     }
     .result-tags {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 0 0 20px;
-      padding: 0;
-      list-style: none;
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin: 0 0 1.5rem; padding: 0; list-style: none;
     }
-    .result-tags:empty { display: none; }
     .result-tag {
-      display: inline-flex;
-      align-items: center;
-      min-height: 30px;
-      padding: 0 12px;
+      display: inline-flex; align-items: center;
+      min-height: 30px; padding: 0 12px;
       border-radius: 999px;
-      border: 1px solid rgba(74,48,115,0.35);
-      background: rgba(245,240,235,0.96);
-      color: #4A3073;
-      font-size: 12px;
-      line-height: 1;
-      text-transform: none;
-      letter-spacing: 0.02em;
+      background: rgba(236,220,255,0.25);
+      color: var(--primary);
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.05em;
     }
     .r-divider {
       height: 1px;
-      background: rgba(74,48,115,0.15);
-      margin-bottom: 20px;
-    }
-    .r-quote {
-      border-left: 2px solid rgba(74, 48, 115, 0.45);
-      padding-left: 10px;
-      margin-bottom: 4px;
-      position: relative;
-      z-index: 1;
-      margin: 0 0 20px;
-      padding: 16px 18px;
-      border-left: 3px solid #4A3073;
-      background: rgba(74,48,115,0.06);
-      color: #3d3158;
-      line-height: 1.9;
-      font-size: 14px;
-    }
-    .r-quote:empty { display: none; }
-    .share-caption {
-      font-size: 11px;
-      color: rgba(74, 48, 115, 0.55);
-      margin: 0 0 12px;
-      letter-spacing: 0.04em;
-    }
-    .r-desc {
-      position: relative;
-      z-index: 1;
-      font-size: 14px;
-      color: #554c47;
-      line-height: 1.9;
-      padding: 24px;
-      background: rgba(255,255,255,0.45);
-      border-radius: 20px;
-    }
-    .r-desc p {
-      margin: 0 0 1.4em;
-    }
-    .r-desc p:last-child {
-      margin-bottom: 0;
-    }
-    .r-axis-section,
-    .r-pattern-section,
-    .r-question-section {
-      margin-bottom: 4px;
+      background: rgba(51,24,92,0.12);
+      margin: 1.5rem 0;
     }
     .r-axis-title {
-      font-family: "Noto Serif SC", serif;
-      font-size: 11px;
-      color: #4A3073;
-      letter-spacing: 0.1em;
-      margin: 0 0 12px;
-    }
-    .r-axis-block {
-      margin-bottom: 14px;
-    }
-    .r-axis-label {
-      display: inline-block;
-      font-family: "Noto Serif SC", serif;
-      font-size: 11px;
-      color: #888;
-      letter-spacing: 0.08em;
-      margin-bottom: 6px;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 10px;
+      color: var(--primary);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin: 0 0 0.75rem;
+      font-weight: 700;
     }
     .r-axis-text {
       font-family: "Noto Serif SC", serif;
       font-size: 13px;
-      color: #555;
+      color: #4a454f;
       line-height: 2;
       margin: 0 0 10px;
     }
     .r-question-text {
       font-family: "Noto Serif SC", serif;
       font-size: 14px;
-      color: #3d3158;
+      color: var(--primary);
       line-height: 1.9;
       margin: 0;
-      border-left: 2px solid rgba(74, 48, 115, 0.45);
-      padding-left: 10px;
+      padding: 1.25rem;
+      background: rgba(236,220,255,0.06);
+      border-radius: 0.75rem;
+      font-style: italic;
+    }
+    .result-guide {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 11px; color: var(--muted);
+      margin: 0.5rem 0;
+    }
+    .result-guide a { color: var(--primary); text-decoration: none; font-weight: 500; }
+
+    @media (max-width: 540px) {
+      .question-text-main { font-size: 1.25rem !important; }
     }
 
+    /* Editorial shadow */
+    .editorial-shadow {
+      box-shadow: 0 2px 0 rgba(51,24,92,0.06), 0 8px 32px -4px rgba(51,24,92,0.10);
+    }
 
-.share-btn-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-.share-btn-row .result-save-btn,
-.share-btn-row .result-share-long-btn {
-  flex: 1;
-}
-.result-share-long-btn {
-  display: block;
-  width: 100%;
-  appearance: none;
-  font-family: "Noto Serif SC", serif;
-  font-size: 12px;
-  line-height: 1.2;
-  color: #fff;
-  background: #4A3073;
-  border: 1px solid #4A3073;
-  padding: 10px 0;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-  letter-spacing: 0.02em;
-  transition: background-color .2s ease, opacity .2s ease;
-}
-.result-share-long-btn:hover {
-  background: #3D2565;
-  border-color: #3D2565;
-}
-.result-share-long-btn:disabled {
-  opacity: 0.58;
-  cursor: wait;
-}
-
-.story-rec {
-  background: rgba(255,255,255,0.8);
-  border-radius: 16px;
-  border: 1px solid rgba(74,48,115,0.15);
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.story-rec-img {
-  width: 100%;
-  height: 100px;
-  background: radial-gradient(ellipse at center, rgba(74,48,115,0.18), rgba(74,48,115,0.05));
-}
-
-.story-rec-content {
-  padding: 16px 20px;
-}
-
-.story-rec-hint {
-  font-family: "Noto Serif SC", serif;
-  font-size: 11px;
-  color: #888;
-  margin-bottom: 6px;
-}
-
-.story-rec-title {
-  font-family: "Lora", serif;
-  font-size: 20px;
-  color: #2e2e2e;
-  line-height: 1.4;
-  margin-bottom: 12px;
-}
-
-.story-rec-btn {
-  display: block;
-  text-align: center;
-  font-family: "Noto Serif SC", serif;
-  font-size: 12px;
-  color: #4A3073;
-  border: 1px solid rgba(74,48,115,0.3);
-  padding: 10px 0;
-  border-radius: 8px;
-  text-decoration: none;
-}
-
-</style>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/font-override.css" />
-    <script src="assets/result-card.js"></script>
+    /* Dialogue block */
+    .dialogue {
+      font-family: "Noto Serif SC", "Noto Serif", serif;
+      font-size: 0.95rem;
+      line-height: 2;
+      color: rgba(28,28,26,0.72);
+      border-left: 2px solid rgba(156,60,98,0.3);
+      padding-left: 1rem;
+      margin: 1rem 0;
+      font-style: italic;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;1,400&family=Noto+Serif+SC:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/font-override.css" />
+  <script src="assets/result-card.js"></script>
 </head>
-  <body>
-    <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
-    <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
-    <div class="page">
-      <div class="test-intro">
-        <div class="test-intro-card">
-          <div class="test-intro-accent"></div>
-          <div class="test-intro-content">
-            <p class="test-intro-source">基于 Gross &amp; John (2003) 情绪调节问卷（Emotion Regulation Questionnaire）</p>
-            <div class="test-intro-rule"></div>
-            <h2 class="test-intro-scale">情绪调节测评</h2>
-            <div class="test-intro-rule"></div>
-            <p class="test-intro-body">难过的时候，你是会试着换个角度想，还是先把情绪压下去、等一个人的时候再说？<br><br>没有哪一种方式天生更高级，但它们会决定：你是把情绪变成可以理解的语言，还是把它悄悄锁进身体。你和情绪相处的方法，多半很早就学会了，只是很少有人陪你认真看一眼。</p>
-            <p class="test-intro-note">看清楚你在压力下是怎么处理情绪的——是真的消化了，还是只是压下去了</p>
-            <button class="test-intro-btn" id="startBtn">准备好了</button>
+<body>
+
+<div class="vi-glow vi-glow--top" aria-hidden="true"></div>
+<div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
+
+<!-- Fixed Header -->
+<header style="position:fixed;top:0;width:100%;z-index:50;background:rgba(252,249,246,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 20px;width:100%;">
+    <a href="/assessment" style="text-decoration:none;display:flex;align-items:center;">
+      <span style="color:#33185c;font-size:22px;line-height:1;">←</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <span style="font-family:'Noto Serif SC',serif;font-weight:700;font-size:1.25rem;color:#33185c;">女也</span>
+      <span style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;font-weight:300;color:#33185c;opacity:0.6;">She Is</span>
+    </div>
+    <div style="width:2rem;height:2rem;border-radius:9999px;background:linear-gradient(135deg,#4a3073,#9c3c62);flex-shrink:0;"></div>
+  </div>
+  <div style="background:#f0edea;height:1px;width:100%;opacity:0.2;"></div>
+</header>
+
+<div class="page">
+
+  <!-- ===== START PAGE ===== -->
+  <div class="test-intro" style="min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3.5rem 2rem 1.6rem 2rem;position:relative;overflow:hidden;background:#fcf9f6;">
+    <!-- Background Soft Texture -->
+    <div style="position:absolute;inset:0;pointer-events:none;opacity:0.4;">
+      <div style="position:absolute;top:-10%;right:-10%;width:80%;height:60%;border-radius:9999px;background:linear-gradient(to bottom right,rgba(236,220,255,0.3),transparent);filter:blur(60px);"></div>
+      <div style="position:absolute;bottom:-10%;left:-10%;width:70%;height:50%;border-radius:9999px;background:linear-gradient(to top right,rgba(229,226,223,0.5),transparent);filter:blur(60px);"></div>
+    </div>
+    <!-- Content -->
+    <div style="width:100%;max-width:28rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:2rem;position:relative;z-index:10;">
+      <!-- Header -->
+      <div style="display:flex;flex-direction:column;gap:0.6rem;align-items:center;">
+        <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.4em;color:#9c3c62;font-weight:600;">Self Discovery</span>
+        <h2 style="font-family:'Noto Serif SC',serif;font-size:2rem;line-height:1.2;color:#33185c;margin:0;">
+          情绪调节策略<br>
+          <span style="display:block;margin-top:0.5rem;font-weight:400;opacity:0.9;">Emotion Regulation · ERQ</span>
+        </h2>
+        <div style="height:1px;width:3rem;background:#ccc4d1;"></div>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;letter-spacing:0.15em;color:#4a454f;text-transform:uppercase;margin:0;">
+          ERQ · Emotion Regulation Questionnaire
+        </p>
+      </div>
+      <!-- Reflective Text -->
+      <div style="max-width:20rem;display:flex;flex-direction:column;gap:1.25rem;">
+        <p style="font-family:'Noto Serif SC',serif;font-size:1.15rem;font-style:italic;line-height:1.7;color:rgba(28,28,26,0.8);margin:0;">
+          "Do you think your way through pain, or quietly hold it inside?"
+        </p>
+        <p style="font-family:'Noto Serif SC',serif;font-size:0.85rem;color:rgba(74,69,79,0.8);line-height:1.6;font-weight:300;margin:0;">
+          难过时，你是换个角度想通，还是先把情绪压下去？看清你和情绪相处的方式。
+        </p>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;color:#9c9099;line-height:1.6;margin:0;">
+          基于 Gross &amp; John (2003) 情绪调节问卷（ERQ）
+        </p>
+      </div>
+      <!-- CTA -->
+      <div style="width:100%;padding-top:1.2rem;">
+        <button id="startBtn" style="width:100%;height:4rem;background:linear-gradient(to right,#33185c,#4a3073);color:#ffffff;border:none;border-radius:0.75rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;letter-spacing:0.2em;font-size:0.85rem;text-transform:uppercase;cursor:pointer;box-shadow:0 20px 40px rgba(51,24,92,0.2);transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+          Ready / 准备好了 →
+        </button>
+        <p style="margin-top:1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;color:#7b7580;letter-spacing:0.15em;text-transform:uppercase;">Approx. 3-5 Minutes · 10 Questions</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== QUIZ PAGE ===== -->
+  <div class="test-body" id="testBody" style="display:none;">
+    <div id="quizPanel" style="padding:5rem 1.5rem 8rem;min-height:100dvh;display:flex;flex-direction:column;align-items:center;max-width:28rem;margin:0 auto;">
+      <!-- Progress -->
+      <div style="width:100%;margin-bottom:2.5rem;text-align:center;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1rem;">
+          <span id="counter" style="font-family:'Noto Serif SC',serif;font-size:2.5rem;color:rgba(51,24,92,0.8);"></span>
+          <div style="text-align:right;">
+            <p style="font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:#7b7580;font-weight:600;margin:0 0 4px;">进度 / STATUS</p>
+            <p id="progressText" style="font-size:12px;color:rgba(51,24,92,0.6);font-weight:500;margin:0;"></p>
+          </div>
+        </div>
+        <div style="width:100%;height:4px;background:#f0edea;border-radius:9999px;overflow:hidden;">
+          <div id="bar" style="height:100%;background:#9c3c62;border-radius:9999px;transition:width 0.25s;width:0%;"></div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div style="width:100%;position:relative;">
+        <div style="position:absolute;top:-1rem;right:-1rem;width:8rem;height:8rem;background:rgba(236,220,255,0.3);border-radius:9999px;filter:blur(48px);z-index:-1;"></div>
+        <div class="glass-player" style="padding:2rem;margin-bottom:2.5rem;display:flex;flex-direction:column;align-items:center;text-align:center;">
+          <div style="width:3rem;height:2px;background:rgba(51,24,92,0.15);border-radius:9999px;margin-bottom:2.5rem;"></div>
+          <p id="questionId" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#9c3c62;font-weight:600;margin:0 0 1rem;"></p>
+          <h2 id="questionText" class="question-text-main" style="font-family:'Noto Serif SC',serif;font-size:1.4rem;line-height:1.65;color:#1c1c1a;margin:0 0 2rem;padding:0 0.5rem;text-align:left;"></h2>
+
+          <!-- Slider -->
+          <div style="width:100%;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+              <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;color:#7b7580;letter-spacing:0.1em;">请在 1–7 之间滑动</span>
+              <span id="currentValue" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:#33185c;padding:4px 14px;border-radius:999px;background:rgba(51,24,92,0.08);">当前：4</span>
+            </div>
+            <input class="answer-slider" id="answerSlider" type="range" min="1" max="7" step="1" value="4" style="width:100%;" />
+            <div style="display:flex;justify-content:space-between;width:100%;padding:0 4px;margin-top:1rem;">
+              <div style="width:6rem;text-align:left;">
+                <p style="font-size:10px;color:#7b7580;font-weight:700;text-transform:uppercase;margin:0;">1 非常不同意</p>
+                <p style="font-size:8px;color:rgba(123,117,128,0.6);text-transform:uppercase;letter-spacing:-0.02em;font-weight:500;margin:2px 0 0;">Strongly Disagree</p>
+              </div>
+              <div style="width:6rem;text-align:right;">
+                <p style="font-size:10px;color:#7b7580;font-weight:700;text-transform:uppercase;margin:0;">7 非常同意</p>
+                <p style="font-size:8px;color:rgba(123,117,128,0.6);text-transform:uppercase;letter-spacing:-0.02em;font-weight:500;margin:2px 0 0;">Strongly Agree</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="test-body" id="testBody" style="display:none">
-        <div style="max-width:480px;margin:0 auto;padding:12px 20px 0"><a href="assessment-more.html" style="color:#888;font-size:14px;text-decoration:none;">← 测评</a></div>
-        <main class="page"><div style="padding:12px 0 4px"><a href="assessment-more.html" style="color:#888;font-size:14px;text-decoration:none;">← 测评</a></div>
-          <div class="topline"><span id="progressBar"></span></div>
-          <div class="meta"><span id="progressText">准备开始</span><span>ERQ-10</span></div>
 
-          <section class="panel" id="intro">
-            <h1 class="title">情绪调节测评</h1>
-            <p class="subtitle">10题 · 约3分钟 · 情绪调节探索</p>
-            <p class="desc">像翻看自己在压力里的旧习惯。请按第一反应作答，不必美化，也不必纠正。</p>
-            <button class="primary" id="beginQuizBtn">开始</button>
-          </section>
-
-          <section class="panel hidden" id="quiz">
-            <div class="question-wrap" id="questionWrap">
-              <div class="question-id" id="questionId"></div>
-              <h2 class="question-text" id="questionText"></h2>
-              <div class="slider-card">
-                <div class="slider-header">
-                  <span class="slider-caption">请在 1-7 之间滑动选择</span>
-                  <span class="slider-value" id="currentValue">当前选择：4</span>
-                </div>
-                <div class="slider-wrap">
-                  <div class="scale-labels"><span>非常不同意</span><span>非常同意</span></div>
-                  <input class="answer-slider" id="answerSlider" type="range" min="1" max="7" step="1" value="4" />
-                  <div class="slider-ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></div>
-                </div>
-              </div>
-              <div class="actions">
-                <button class="ghost" id="prevBtn">← 上一题</button>
-                <button class="ghost" id="nextBtn">确认本题</button>
-                <button class="ghost" id="restartBtn">重新开始</button>
-              </div>
-            </div>
-          </section>
-
-          <section class="panel hidden" id="result"></section>
-        </main>
+      <!-- Action Buttons -->
+      <div style="width:100%;display:flex;flex-direction:column;gap:1rem;">
+        <div style="display:flex;gap:1rem;width:100%;">
+          <button id="prevBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#f0edea;color:#7b7580;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:all 0.2s;">
+            ← 上一题
+          </button>
+          <button id="nextBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;box-shadow:0 4px 16px rgba(51,24,92,0.15);transition:all 0.2s;">
+            确认本题 →
+          </button>
+        </div>
+        <button id="restartBtn" style="width:100%;padding:0.75rem;background:transparent;color:#7b7580;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;border:none;cursor:pointer;">
+          重新开始
+        </button>
       </div>
     </div>
-    <script src="assets/profile-utils.js"></script>
-    <script>
-      let storyRec;
-      window.addEventListener('DOMContentLoaded', () => {
-        storyRec = document.getElementById('storyRec');
-        if (storyRec) storyRec.style.display = 'none';
-      });
-      const DATA = {
-        questions: [
-          { id: 1, text: "情景：朋友迟到了一小时，你本来很烦。
 
-陈述：我会先想想他是不是有什么原因，让自己平静下来。", dimension: "reappraisal" },
-          { id: 2, text: "情景：和同事开会，有人说了一件让你不舒服的话。
+    <!-- ===== RESULT PAGE ===== -->
+    <div id="resultPanel" style="display:none;padding:5rem 0.75rem 6rem;max-width:40rem;margin:0 auto;">
 
-陈述：我不会让别人看出来我有情绪。", dimension: "suppression" },
-          { id: 3, text: "情景：工作上出了一个你觉得不该发生的错误，你很沮丧。
+      <div class="result-capture-card" id="result-capture">
 
-陈述：我会换一个角度看它——也许这是个机会，让我搞清楚哪里还有漏洞。", dimension: "reappraisal" },
-          { id: 4, text: "情景：收到了一个好消息，你其实很激动。
-
-陈述：我会克制自己，不在公开场合表露这种兴奋。", dimension: "suppression" },
-          { id: 5, text: "情景：你面临一个让你焦虑的重要决定。
-
-陈述：我会告诉自己：不管结果怎样，我能处理的。", dimension: "reappraisal" },
-          { id: 6, text: "情景：你心里很乱，但现场需要你保持冷静。
-
-陈述：我的做法是什么都不表现出来，先撑过这一段。", dimension: "suppression" },
-          { id: 7, text: "情景：一件开心的事情发生了，但你有点不敢相信。
-
-陈述：我会让自己好好感受这份高兴，而不是马上想「会不会哪里有问题」。", dimension: "reappraisal" },
-          { id: 8, text: "情景：和重要的人发生了争吵，你很难受。
-
-陈述：我会在脑子里重新组织这件事：我们只是观点不同，不是关系坏了。", dimension: "reappraisal" },
-          { id: 9, text: "情景：你感到委屈，但不想让对方知道。
-
-陈述：我会把那些情绪压下去，就算再难受也不会表露出来。", dimension: "suppression" },
-          { id: 10, text: "情景：你被批评了，感觉很受伤。
-
-陈述：我会试着把这个评价当作信息，而不是对我这个人的否定。", dimension: "reappraisal" }
-        ],
-        results: {
-          high_reappraisal_low_suppression: {
-            label: "思考派",
-            emoji: "💡",
-            subtitle: "情绪来了，你会先去看看它的另一面。这种本能，帮你在很多风浪里保持了清醒。",
-            tagline: "情绪来了，你会先去看看它的另一面。这种本能，帮你在很多风浪里保持了清醒。",
-            desc: "<p>情绪来的时候，你有一种本能——去看看它的另一面。难过的事情发生了，你会试着理解它，给它一个新的位置。</p><p>更难得的是，你很少把感受硬生生按下去。眼泪该流就流，愤怒来了你也允许它在。你和情绪之间有一种比较坦诚的关系。</p><p>情绪经过你，被你看见、被你消化，然后真的过去了。很少有什么东西会在你心里淤积太久。</p><p>那份稳定来自你愿意面对，愿意去拆解，愿意和自己的感受待在一起。这是一种练出来的柔韧。</p>",
-            regulation: "你的系统像一个会主动重新布局的棋手——局势不利的时候，你会先想想能不能换个走法，而不是把棋子推倒。这让你在压力下依然能保持某种运转。",
-            daily: ["朋友找你倾诉时，你往往是那个能帮对方换个角度的人。但有时候对方只是想被听见，你可能比自己意识到的更早进入\"解题模式\"。", "你处理完情绪之后，真的能放下它。但偶尔也会有那种感觉：事情好像过去得太快，自己还没有完整地经历它就已经翻篇了。"],
-            question: "有没有哪件事，你给它换了很多角度，但有一种感受你其实从来没有正面待过？"
-          },
-          high_reappraisal_high_suppression: {
-            label: "双管派",
-            emoji: "⚡",
-            subtitle: "你的头脑走在感受前面——已经想通了，但心里那团东西还没散。",
-            tagline: "你的头脑走在感受前面——已经想通了，但心里那团东西还没散。",
-            desc: "<p>你的内心有一套很强的翻译系统。情绪涌上来，你会迅速找到另一个角度去理解它——换个框架，换个故事，让它变得可以承受。</p><p>但与此同时，你也在用力地压着什么。表面上已经想通了，身体里却还有一团没有被释放的东西。</p><p>这种状态有点像一边在疗愈，一边在封锁。头脑说\"我懂了\"，心里说\"我还没好\"。两股力量同时运转，让你有时候觉得累，却说不清累在哪里。</p><p>你做得很好，好到别人根本看不出你还在消化。</p>",
-            regulation: "你同时在做两件事：用认知重建情绪，用意志压住表达。外人看到的是一个处理得很好的人，你自己感受到的，是两套系统同时在跑。",
-            daily: ["一件事发生了，你很快就能找到\"其实也没那么糟\"——但深夜躺下来，那种感受还是在那里。", "你可能比很多人更会安慰别人，因为你练就了一套把痛苦重新框架的能力。只是对自己用的时候，有时候用过头了。"],
-            question: "你上一次让自己真的爆发或者哭出来，是什么时候？那之后你是什么感觉？"
-          },
-          low_reappraisal_high_suppression: {
-            label: "压下去派",
-            emoji: "🔒",
-            subtitle: "你把很多东西压进了很深的地方。忍过去和真的过去，是两件事。",
-            tagline: "你把很多东西压进了很深的地方。忍过去和真的过去，是两件事。",
-            desc: "<p>你处理情绪的方式，更像是把它们压进一个很深的抽屉。感受来了，你的第一反应是收住、忍住、撑住。让自己看起来没事，让生活继续运转。</p><p>你很少去拆解那些情绪——它为什么来，它在告诉你什么。对你来说，情绪更像是一种需要被管理的麻烦。</p><p>这让你在外面显得很能扛。但那些被压下去的东西并没有消失。它们在某个角落慢慢积累，偶尔在某个深夜、某句话、某个瞬间突然涌出来。</p><p>那种突然的溃堤感可能让你困惑——明明已经忍过去了，怎么还在。因为忍过去和真的过去，是两件事。</p>",
-            regulation: "你的系统基本靠意志力在运转——既不重新解读，也不让它表达出来，就是压住。这需要大量能量，而且情绪并没有因此被处理，只是被延后了。",
-            daily: ["在需要保持冷静的场合，你能做到。但代价往往是回家之后异常疲惫，却说不清在哪里累的。", "你可能会在某个不相关的小事上突然情绪失控——因为那个抽屉已经满了，最后一件小事只是触发了开关。"],
-            question: "那个抽屉里，现在装着什么？"
-          },
-          low_reappraisal_low_suppression: {
-            label: "随流派",
-            emoji: "🌀",
-            subtitle: "情绪在你身上来去得很自然，没有太多滤镜。只是偶尔，可以在它面前多停一会儿。",
-            tagline: "情绪在你身上来去得很自然，没有太多滤镜。只是偶尔，可以在它面前多停一会儿。",
-            desc: "<p>情绪在你身上来去得很自然。你不太会刻意压制它，也不太会去分析它。它来了，你感受到了，然后它就走了。</p><p>你和自己的感受之间没有太多滤镜，没有太多加工。开心就是开心，难过就是难过。</p><p>但有时候你可能会发现，情绪像天气一样不断变换，却很少留下什么。你经历了很多感受，却不太确定自己从中带走了什么。</p><p>少了那一步\"停下来看看它\"的过程，情绪的来去可能显得有些散漫。像读了很多页书，却没有画过一条线。</p>",
-            regulation: "你的情绪系统没有太多主动干预——既不重新解读，也不压制表达，基本随它。这有一种原始的诚实，但也意味着情绪在你这里经过，却很少被真正接住过。",
-            daily: ["你的情绪恢复速度可能比你自己意识到的快——但这也让你有时候不太确定，自己到底有没有认真经历过那件事。", "身边的人可能觉得你好说话，情绪起伏不大。你自己知道，那些感受都有过，只是不太留痕迹。"],
-            question: "有没有一种情绪，你觉得自己\"处理好了\"，但其实只是等它自己走了？"
-          }
-        }
-
-      };
-
-      const state = { index: -1, answers: Array(DATA.questions.length).fill(null) };
-      const introEl = document.getElementById("intro");
-      const quizEl = document.getElementById("quiz");
-      const resultEl = document.getElementById("result");
-      const qWrap = document.getElementById("questionWrap");
-      const qId = document.getElementById("questionId");
-      const qText = document.getElementById("questionText");
-      const progressBar = document.getElementById("progressBar");
-      const progressText = document.getElementById("progressText");
-      const answerSlider = document.getElementById("answerSlider");
-      const currentValue = document.getElementById("currentValue");
-
-      function updateProgress() {
-        if (state.index < 0) {
-          progressBar.style.width = "0%";
-          progressText.textContent = "准备开始";
-          return;
-        }
-        const done = state.answers.filter(v => v !== null).length;
-        progressBar.style.width = `${(done / DATA.questions.length) * 100}%`;
-        progressText.textContent = `${Math.min(state.index + 1, DATA.questions.length)}/${DATA.questions.length}`;
-      }
-
-      function syncSliderValue(value) {
-        currentValue.textContent = `当前选择：${value}`;
-        answerSlider.value = value;
-      }
-
-      function renderQuestion() {
-        const q = DATA.questions[state.index];
-        qId.textContent = `第 ${q.id} 题`;
-        qText.innerHTML = q.text.replace(/\n\n/g, "<br><br>");
-        syncSliderValue(state.answers[state.index] || 4);
-        if (storyRec) storyRec.style.display = 'none';
-        updateProgress();
-      }
-
-      function transition(next) {
-        qWrap.classList.add("fade-out");
-        setTimeout(() => { next(); qWrap.classList.remove("fade-out"); }, 300);
-      }
-
-      function commitCurrentAnswer() {
-        state.answers[state.index] = Number(answerSlider.value);
-      }
-
-      function nextQuestion() {
-        commitCurrentAnswer();
-        if (state.index === DATA.questions.length - 1) {
-          transition(showResult);
-        } else {
-          transition(() => { state.index += 1; renderQuestion(); });
-        }
-      }
-
-      function goPrev() {
-        if (state.index <= 0) return;
-        commitCurrentAnswer();
-        transition(() => { state.index -= 1; renderQuestion(); });
-      }
-
-      function mean(scores) { return scores.reduce((a, b) => a + b, 0) / scores.length; }
-      function formatParagraphs(text) {
-        const raw = String(text || '').trim();
-        if (!raw) return '';
-        if (/<p[\s>]/i.test(raw)) return raw;
-        return raw.replace(/<span[\s\S]*?<\/span>/g, '').split(/\n+/).filter(Boolean).map(item => `<p>${item.replace(/<[^>]+>/g, '')}</p>`).join('');
-      }
-      function formatListParagraphs(items) {
-        return (items || []).map(item => `<p class="r-axis-text">${String(item || '').replace(/<[^>]+>/g, '')}</p>`).join('');
-      }
-      function buildScoreRows(items) {
-        return items.map((item) => `
-          <div class="score-row">
-            <span class="score-label">${item.label}</span>
-            <div class="score-bar-bg"><div class="score-bar-fill" style="width:${item.percent.toFixed(0)}%"></div></div>
-            <span class="score-val">${item.value.toFixed(1)}</span>
+        <!-- Section 1: Type + Quote -->
+        <section style="margin-bottom:4rem;position:relative;">
+          <div style="margin-bottom:2rem;">
+            <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;letter-spacing:0.2em;color:rgba(51,24,92,0.5);text-transform:uppercase;">Emotion Regulation Strategy</span>
+            <h2 id="rType" style="font-family:'Noto Serif SC',serif;font-size:2.25rem;margin:0.5rem 0 0;line-height:1.25;color:#33185c;"></h2>
           </div>
-        `).join('');
-      }
+          <div style="width:6rem;height:1px;background:rgba(51,24,92,0.2);margin-bottom:3rem;"></div>
+          <!-- Score bars -->
+          <div style="margin-bottom:2rem;" id="scoreViz"></div>
+          <!-- Tags -->
+          <ul class="result-tags" id="resultTags"></ul>
+          <!-- Quote -->
+          <p id="rQuote" style="font-family:'Noto Serif',serif;font-size:1.25rem;font-style:italic;color:rgba(28,28,26,0.75);line-height:1.8;text-align:left;margin:0;"></p>
+        </section>
 
-const storyIllustrations = {
-        'story-detail.html': 'illustrations/story-queqie.png',
-        'story-tuanzi-v3.html': 'illustrations/story-tuanzi.png',
-        'story-xiaochen.html': 'illustrations/story-xiaochen.png',
-        'story-xiaoli.html': 'illustrations/story-xiaoli.png',
-        'story-xiuxiu.html': 'illustrations/story-xiuxiu.png',
-        'story-zixingche.html': 'illustrations/story-zixingche.png',
-        'story-bingbing.html': 'illustrations/story-bingbing.png'
-      };
-
-      const storyRecommendations = {
-        high_reappraisal_low_suppression: { title: '曲奇：真空里的野蛮生长', url: 'story-detail.html', img: 'illustrations/story-queqie.png' },
-        high_reappraisal_high_suppression: { title: '小李：她决定在精密结构里，自己养一颗星星', url: 'story-xiaoli.html', img: 'illustrations/story-xiaoli.png' },
-        low_reappraisal_high_suppression: { title: '自行车：30岁却像15岁的赛博格', url: 'story-zixingche.html', img: 'illustrations/story-zixingche.png' },
-        low_reappraisal_low_suppression: { title: '嗅嗅：在北京，允许不长大', url: 'story-xiuxiu.html', img: 'illustrations/story-xiuxiu.png' }
-      };
-
-      function updateStoryBar(rec) {
-        const titleEl = document.querySelector('#storyRec .story-rec-title');
-        const goBtn = document.querySelector('#storyRec .story-rec-btn');
-        if (!storyRec || !titleEl || !goBtn || !rec) return;
-        const imgEl = document.querySelector('#storyRec .story-rec-img');
-        const illustrationPath = rec.img || storyIllustrations[rec.url];
-        titleEl.textContent = rec.title;
-        goBtn.href = rec.url;
-        if (imgEl && illustrationPath) {
-          imgEl.style.background = `url('${illustrationPath}') center/cover no-repeat`;
-        }
-        if (storyRec) storyRec.style.display = 'block';
-      }
-
-      function showResult() {
-        introEl.classList.add("hidden");
-        quizEl.classList.add("hidden");
-        resultEl.classList.remove("hidden");
-
-        const reappraisalItems = [1,3,5,7,8,10].map(id => state.answers[id - 1]);
-        const suppressionItems = [2,4,6,9].map(id => state.answers[id - 1]);
-        const rScore = mean(reappraisalItems);
-        const sScore = mean(suppressionItems);
-
-        const highR = rScore >= 4.5;
-        const highS = sScore >= 4.5;
-        const key = `${highR ? "high" : "low"}_reappraisal_${highS ? "high" : "low"}_suppression`;
-        const r = DATA.results[key];
-        const summaryMap = { high_reappraisal_low_suppression: "思考派", high_reappraisal_high_suppression: "双管派", low_reappraisal_high_suppression: "压下去派", low_reappraisal_low_suppression: "随流派" };
-        const rec = storyRecommendations[key];
-        const reappraisalText = highR
-          ? '情绪涌来时，你会调整自己看待这件事的方式。给它一个新的解读框架，让它有地方去。这种能力让情绪有出口，也让你不那么容易被困住。'
-          : '你不太习惯在情绪里做认知上的翻转。感受来了就是来了，你更倾向于直接承受它，而不是先给它换个故事。';
-        const suppressionText = highS
-          ? '你经常控制情绪的外在表现——让自己看起来没事，撑住，不让感受泄露出来。这需要持续消耗能量，即使别人看不出来。'
-          : '你不太会刻意压住情绪的外在表现。感受到什么，脸上和身体里基本同步。少了一层消耗。';
-
-        progressBar.style.width = "100%";
-        progressText.textContent = "完成";
-
-        if (window.SheProfileStore) {
-          const regulation = Math.max(0, Math.min(5, rScore - (sScore - 1) * 0.35));
-          window.SheProfileStore.saveResult({
-            moduleId: "erq",
-            moduleName: "情绪调节",
-            summary: summaryMap[key] || r.label,
-            score: { reappraisal: rScore, suppression: sScore, regulation },
-            topDimension: rScore >= sScore ? "reappraisal" : "suppression"
-          });
-        }
-
-        const vizRows = [
-          { label: '认知重评', value: rScore, percent: ((rScore - 1) / 6) * 100 },
-          { label: '表达抑制', value: sScore, percent: ((sScore - 1) / 6) * 100 }
-        ];
-
-        resultEl.innerHTML = `
-          <div id="result-capture" class="result-capture-card">
-          <div class="result-viz">${buildScoreRows(vizRows)}</div>
-          <div class="r-head"><h2 class="r-type" data-subtitle="${r.subtitle || r.tagline || ''}">${r.label}</h2></div>
-          <p class="r-score-line">认知重评 ${rScore.toFixed(2)} ｜ 表达抑制 ${sScore.toFixed(2)}</p>
-          <ul class="result-tags"><li class="result-tag">认知重评</li><li class="result-tag">表达抑制</li><li class="result-tag">ERQ-10</li></ul>
-          <div class="r-quote" id="rQuote">${r.subtitle || r.tagline || ''}</div>
-          <div class="r-divider"></div>
-          <div class="r-desc">${formatParagraphs(r.desc)}<p>这是你当下的模式，不是诊断，也不是定论。</p></div>
-          <div class="r-divider"></div>
-          <div class="r-axis-section">
-            <p class="r-axis-title">两个维度解读</p>
-            <div class="r-axis-block">
-              <span class="r-axis-label">认知重评 [分数 ${rScore.toFixed(1)} / 7]</span>
-              <p class="r-axis-text">${reappraisalText}</p>
+        <!-- Section 2: Deep Analysis -->
+        <section style="background:#f6f3f0;padding:1.5rem 0.75rem;border-radius:0.5rem;position:relative;overflow:hidden;margin-bottom:4rem;">
+          <div style="position:absolute;top:0;right:0;width:8rem;height:8rem;background:rgba(51,24,92,0.04);border-radius:9999px;transform:translate(50%,-50%);filter:blur(48px);"></div>
+          <div style="border-left:4px solid #33185c;padding-left:1rem;">
+            <div style="margin-bottom:1.5rem;">
+              <h3 style="font-family:'Noto Serif SC',serif;font-size:1.5rem;color:#33185c;margin:0;">深度解析</h3>
+              <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:rgba(51,24,92,0.35);margin:0.25rem 0 0;">The Editorial Reflection</p>
             </div>
-            <div class="r-axis-block">
-              <span class="r-axis-label">表达抑制 [分数 ${sScore.toFixed(1)} / 7]</span>
-              <p class="r-axis-text">${suppressionText}</p>
-            </div>
+            <div id="rDesc" style="font-family:'Noto Serif SC',serif;font-size:0.95rem;line-height:1.9;color:#1c1c1a;margin-bottom:1.5rem;"></div>
+            <!-- Dimensions -->
+            <div id="dimensionSection"></div>
           </div>
-          <div class="r-divider"></div>
-          <div class="r-pattern-section">
-            <p class="r-axis-title">你的调节方式</p>
-            <p class="r-axis-text">${r.regulation}</p>
+        </section>
+
+        <!-- Section 3: Pattern + Question -->
+        <section style="margin-bottom:4rem;" id="patternSection"></section>
+
+      </div><!-- /.result-capture-card -->
+
+      <!-- Score line -->
+      <p id="rScoreLine" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:#7b7580;margin:0 0 2.5rem;"></p>
+
+      <!-- CTA Section -->
+      <section style="border-top:1px solid rgba(204,196,209,0.3);padding-top:2.5rem;display:flex;flex-direction:column;align-items:flex-start;text-align:left;">
+        <div style="margin-bottom:2rem;">
+          <p style="font-family:'Noto Serif SC',serif;font-size:1.5rem;color:#33185c;margin:0;">开启你的旅程</p>
+          <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:rgba(51,24,92,0.4);margin:0.5rem 0 0;">Start Your Journey</p>
+        </div>
+        <div style="width:100%;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="display:flex;gap:0.75rem;">
+            <button id="shareLongBtn" onclick="shareLongImage()" style="flex:1;padding:1rem;border-radius:9999px;background:#33185c;color:#ffffff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;border:none;cursor:pointer;box-shadow:0 8px 24px rgba(51,24,92,0.15);transition:all 0.2s;">
+              结果长图
+            </button>
+            <button id="saveResultBtn" onclick="goShareCard()" style="flex:1;padding:1rem;border-radius:9999px;background:#f0edea;color:#33185c;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.2s;">
+              分享卡片
+            </button>
           </div>
-          <div class="r-divider"></div>
-          <div class="r-pattern-section">
-            <p class="r-axis-title">在日常里</p>
-            ${formatListParagraphs(r.daily)}
+          <!-- Story Rec -->
+          <div id="storyRec" style="display:none;background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);border-radius:1rem;padding:1.5rem;border:1px solid rgba(229,226,223,0.5);margin-top:0.5rem;text-align:left;">
+            <p style="font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#9c3c62;font-weight:600;margin:0 0 0.5rem;">你可能会有共鸣</p>
+            <h3 class="story-rec-title" style="font-family:'Noto Serif SC',serif;font-size:1.1rem;color:#33185c;margin:0 0 0.75rem;"></h3>
+            <a class="story-rec-btn" href="#" style="font-size:12px;color:#33185c;font-weight:500;text-decoration:none;">读这个故事 →</a>
           </div>
-          <div class="r-divider"></div>
-          <div class="r-question-section">
-            <p class="r-axis-title">值得想一想</p>
-            <p class="r-question-text">${r.question}</p>
-          </div>
-          </div>
-<div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><div class="story-rec" id="storyRec" style="display:none;">
-  <div class="story-rec-img"></div>
-  <div class="story-rec-content">
-    <p class="story-rec-hint">你可能会有共鸣</p>
-    <h3 class="story-rec-title">故事标题</h3>
-    <a class="story-rec-btn" href="#">读这个故事 →</a>
+          <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:rgba(28,28,26,0.5);margin:1rem 0;line-height:1.6;">
+            Share your emotional landscape with the world.<br>Find your sisters in reflection.
+          </p>
+          <p class="result-guide">这是你心理画像的一部分 · <a href="/assessment">查看全部测评</a></p>
+          <a href="/" style="display:block;text-align:center;padding:0.75rem;color:#7b7580;font-size:12px;text-decoration:none;">返回首页</a>
+          <button id="redoBtn" onclick="restart()" style="padding:0.75rem;background:transparent;color:#7b7580;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;border:none;cursor:pointer;">再做一次</button>
+        </div>
+      </section>
+    </div>
   </div>
-</div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>
-        `;
 
-        updateStoryBar(rec);
-        document.getElementById("redoBtn").onclick = restart;
-      }
+</div><!-- /.page -->
 
-      function startQuiz() {
-        state.index = 0;
-        introEl.classList.add("hidden");
-        resultEl.classList.add("hidden");
-        if (storyRec) storyRec.style.display = 'none';
-        quizEl.classList.remove("hidden");
-        if (storyRec) storyRec.style.display = 'none';
-        renderQuestion();
-      }
-
-      function restart() {
-        state.index = -1;
-        state.answers = Array(DATA.questions.length).fill(null);
-        resultEl.classList.add("hidden");
-        if (storyRec) storyRec.style.display = 'none';
-        quizEl.classList.add("hidden");
-        introEl.classList.remove("hidden");
-        syncSliderValue(4);
-        updateProgress();
-      }
-
-      answerSlider.addEventListener("input", function () {
-        syncSliderValue(Number(this.value));
-      });
-      document.getElementById('startBtn').onclick = () => {
-        document.querySelector('.test-intro').style.display = 'none';
-        const testBody = document.getElementById('testBody');
-        testBody.style.display = 'block';
-        testBody.getBoundingClientRect();
-        testBody.style.opacity = '0.99';
-        setTimeout(() => { testBody.style.opacity = ''; }, 20);
-      };
-      document.getElementById("beginQuizBtn").onclick = startQuiz;
-      document.getElementById("prevBtn").onclick = goPrev;
-      document.getElementById("nextBtn").onclick = nextQuestion;
-      document.getElementById("restartBtn").onclick = restart;
-      maybeRestoreSavedResult();
-
-
-      function downloadResult() {
-  const button = document.getElementById('saveResultBtn');
-  const originalText = button ? button.textContent : '分享结果';
-  if (button) {
-    button.disabled = true;
-    button.textContent = '保存中…';
-  }
-  try {
-    generateResultCard({
-      testName: '情绪调节测评 · ERQ',
-      resultType: document.querySelector('#result-capture .r-type')?.textContent?.trim() || '测试结果',
-      resultSubtitle: document.querySelector('#result-capture .r-type')?.dataset?.subtitle || '',
-      quote: document.getElementById('rQuote')?.textContent?.trim() || extractResultCardQuote(document.querySelector('#result-capture .r-desc')?.innerHTML, '你习惯换个角度看事情。'),
-      score: document.querySelector('#result-capture .r-score-line')?.textContent?.trim() || '',
-      fileName: 'erq-result'
-    });
-  } finally {
-    if (button) {
-      button.disabled = false;
-      button.textContent = originalText;
+<script src="assets/profile-utils.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+const DATA = {
+  questions: [
+    { id: 1, text: "情景：朋友迟到了一小时，你本来很烦。\n\n陈述：我会先想想他是不是有什么原因，让自己平静下来。", dimension: "reappraisal" },
+    { id: 2, text: "情景：和同事开会，有人说了一件让你不舒服的话。\n\n陈述：我不会让别人看出来我有情绪。", dimension: "suppression" },
+    { id: 3, text: "情景：工作上出了一个你觉得不该发生的错误，你很沮丧。\n\n陈述：我会换一个角度看它——也许这是个机会，让我搞清楚哪里还有漏洞。", dimension: "reappraisal" },
+    { id: 4, text: "情景：收到了一个好消息，你其实很激动。\n\n陈述：我会克制自己，不在公开场合表露这种兴奋。", dimension: "suppression" },
+    { id: 5, text: "情景：你面临一个让你焦虑的重要决定。\n\n陈述：我会告诉自己：不管结果怎样，我能处理的。", dimension: "reappraisal" },
+    { id: 6, text: "情景：你心里很乱，但现场需要你保持冷静。\n\n陈述：我的做法是什么都不表现出来，先撑过这一段。", dimension: "suppression" },
+    { id: 7, text: "情景：一件开心的事情发生了，但你有点不敢相信。\n\n陈述：我会让自己好好感受这份高兴，而不是马上想「会不会哪里有问题」。", dimension: "reappraisal" },
+    { id: 8, text: "情景：和重要的人发生了争吵，你很难受。\n\n陈述：我会在脑子里重新组织这件事：我们只是观点不同，不是关系坏了。", dimension: "reappraisal" },
+    { id: 9, text: "情景：你感到委屈，但不想让对方知道。\n\n陈述：我会把那些情绪压下去，就算再难受也不会表露出来。", dimension: "suppression" },
+    { id: 10, text: "情景：你被批评了，感觉很受伤。\n\n陈述：我会试着把这个评价当作信息，而不是对我这个人的否定。", dimension: "reappraisal" }
+  ],
+  results: {
+    high_reappraisal_low_suppression: {
+      label: "思考派",
+      subtitle: "情绪来了，你会先去看看它的另一面。这种本能，帮你在很多风浪里保持了清醒。",
+      quote: "能把难过想通，也允许自己在想通之前先哭一会。",
+      quoteEn: "You can think your way through the pain — and still let yourself cry before you get there.",
+      tags: ["认知重评", "情绪弹性", "自我理解", "低压制"],
+      desc: "<p>情绪来的时候，你有一种本能——去看看它的另一面。难过的事情发生了，你会试着理解它，给它一个新的位置。</p><p>更难得的是，你很少把感受硬生生按下去。眼泪该流就流，愤怒来了你也允许它在。你和情绪之间有一种比较坦诚的关系。</p><p>情绪经过你，被你看见、被你消化，然后真的过去了。很少有什么东西会在你心里淤积太久。</p>",
+      regulation: "你的系统像一个会主动重新布局的棋手——局势不利的时候，你会先想想能不能换个走法，而不是把棋子推倒。这让你在压力下依然能保持某种运转。",
+      daily: ["朋友找你倾诉时，你往往是那个能帮对方换个角度的人。但有时候对方只是想被听见，你可能比自己意识到的更早进入「解题模式」。", "你处理完情绪之后，真的能放下它。但偶尔也会有那种感觉：事情好像过去得太快，自己还没有完整地经历它就已经翻篇了。"],
+      question: "有没有哪件事，你给它换了很多角度，但有一种感受你其实从来没有正面待过？"
+    },
+    high_reappraisal_high_suppression: {
+      label: "双管派",
+      subtitle: "你的头脑走在感受前面——已经想通了，但心里那团东西还没散。",
+      quote: "道理全都懂，但还是习惯把眼泪咽回去再讲道理。",
+      quoteEn: "You understand everything. You still swallow the tears first, then talk it through.",
+      tags: ["认知重评", "表达抑制", "双系统", "高消耗"],
+      desc: "<p>你的内心有一套很强的翻译系统。情绪涌上来，你会迅速找到另一个角度去理解它——换个框架，换个故事，让它变得可以承受。</p><p>但与此同时，你也在用力地压着什么。表面上已经想通了，身体里却还有一团没有被释放的东西。</p><p>这种状态有点像一边在疗愈，一边在封锁。头脑说「我懂了」，心里说「我还没好」。两股力量同时运转，让你有时候觉得累，却说不清累在哪里。</p>",
+      regulation: "你同时在做两件事：用认知重建情绪，用意志压住表达。外人看到的是一个处理得很好的人，你自己感受到的，是两套系统同时在跑。",
+      daily: ["一件事发生了，你很快就能找到「其实也没那么糟」——但深夜躺下来，那种感受还是在那里。", "你可能比很多人更会安慰别人，因为你练就了一套把痛苦重新框架的能力。只是对自己用的时候，有时候用过头了。"],
+      question: "你上一次让自己真的爆发或者哭出来，是什么时候？那之后你是什么感觉？"
+    },
+    low_reappraisal_high_suppression: {
+      label: "压下去派",
+      subtitle: "你把很多东西压进了很深的地方。忍过去和真的过去，是两件事。",
+      quote: "情绪是真实的，只是你不习惯让它们被看见。",
+      quoteEn: "The feelings are real. You're just not used to letting them be seen.",
+      tags: ["表达抑制", "情绪封锁", "能扛", "高成本"],
+      desc: "<p>你处理情绪的方式，更像是把它们压进一个很深的抽屉。感受来了，你的第一反应是收住、忍住、撑住。让自己看起来没事，让生活继续运转。</p><p>你很少去拆解那些情绪——它为什么来，它在告诉你什么。对你来说，情绪更像是一种需要被管理的麻烦。</p><p>那些被压下去的东西并没有消失。它们在某个角落慢慢积累，偶尔在某个深夜、某句话、某个瞬间突然涌出来。</p>",
+      regulation: "你的系统基本靠意志力在运转——既不重新解读，也不让它表达出来，就是压住。这需要大量能量，而且情绪并没有因此被处理，只是被延后了。",
+      daily: ["在需要保持冷静的场合，你能做到。但代价往往是回家之后异常疲惫，却说不清在哪里累的。", "你可能会在某个不相关的小事上突然情绪失控——因为那个抽屉已经满了，最后一件小事只是触发了开关。"],
+      question: "那个抽屉里，现在装着什么？"
+    },
+    low_reappraisal_low_suppression: {
+      label: "随流派",
+      subtitle: "情绪在你身上来去得很自然，没有太多滤镜。只是偶尔，可以在它面前多停一会儿。",
+      quote: "情绪来了，你不太分析，也不太压，就这么让它过去。",
+      quoteEn: "When feelings arrive, you don't analyze them, don't suppress them — you just let them pass.",
+      tags: ["自然流动", "低过滤", "诚实", "轻盈"],
+      desc: "<p>情绪在你身上来去得很自然。你不太会刻意压制它，也不太会去分析它。它来了，你感受到了，然后它就走了。</p><p>你和自己的感受之间没有太多滤镜，没有太多加工。开心就是开心，难过就是难过。</p><p>但有时候你可能会发现，情绪像天气一样不断变换，却很少留下什么。你经历了很多感受，却不太确定自己从中带走了什么。</p>",
+      regulation: "你的情绪系统没有太多主动干预——既不重新解读，也不压制表达，基本随它。这有一种原始的诚实，但也意味着情绪在你这里经过，却很少被真正接住过。",
+      daily: ["你的情绪恢复速度可能比你自己意识到的快——但这也让你有时候不太确定，自己到底有没有认真经历过那件事。", "身边的人可能觉得你好说话，情绪起伏不大。你自己知道，那些感受都有过，只是不太留痕迹。"],
+      question: "有没有一种情绪，你觉得自己「处理好了」，但其实只是等它自己走了？"
     }
   }
+};
+
+const storyRecommendations = {
+  high_reappraisal_low_suppression: { title: '曲奇：真空里的野蛮生长', url: 'story-detail.html', img: 'illustrations/story-queqie.png' },
+  high_reappraisal_high_suppression: { title: '小李：她决定在精密结构里，自己养一颗星星', url: 'story-xiaoli.html', img: 'illustrations/story-xiaoli.png' },
+  low_reappraisal_high_suppression: { title: '自行车：30岁却像15岁的赛博格', url: 'story-zixingche.html', img: 'illustrations/story-zixingche.png' },
+  low_reappraisal_low_suppression: { title: '嗅嗅：在北京，允许不长大', url: 'story-xiuxiu.html', img: 'illustrations/story-xiuxiu.png' }
+};
+
+const state = { index: 0, answers: Array(DATA.questions.length).fill(null) };
+const $ = id => document.getElementById(id);
+
+function updateProgress() {
+  const done = state.answers.filter(v => v !== null).length;
+  $('counter').innerHTML = `${state.index + 1} <span style="font-size:1rem;color:rgba(204,196,209,1);font-family:'Plus Jakarta Sans',sans-serif;">/ ${DATA.questions.length}</span>`;
+  $('progressText').innerHTML = `已完成 ${done} / ${DATA.questions.length}`;
+  $('bar').style.width = `${(done / DATA.questions.length) * 100}%`;
 }
 
-window.downloadResult = downloadResult;
+function renderQuestion() {
+  const q = DATA.questions[state.index];
+  $('questionId').textContent = `第 ${q.id} 题`;
+  $('questionText').innerHTML = q.text.replace(/\n\n/g, '<br><br>');
+  const val = state.answers[state.index] || 4;
+  $('answerSlider').value = val;
+  $('currentValue').textContent = `当前：${val}`;
+  updateProgress();
+  $('prevBtn').style.opacity = state.index === 0 ? '0.4' : '1';
+  $('prevBtn').disabled = state.index === 0;
+}
+
+$('answerSlider').addEventListener('input', function() {
+  $('currentValue').textContent = `当前：${this.value}`;
+});
+
+$('prevBtn').onclick = () => {
+  if (state.index <= 0) return;
+  state.answers[state.index] = Number($('answerSlider').value);
+  state.index--;
+  renderQuestion();
+};
+
+$('nextBtn').onclick = () => {
+  state.answers[state.index] = Number($('answerSlider').value);
+  if (state.index < DATA.questions.length - 1) {
+    state.index++;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+};
+
+$('restartBtn').onclick = restart;
+
+function restart() {
+  state.index = 0;
+  state.answers = Array(DATA.questions.length).fill(null);
+  $('resultPanel').style.display = 'none';
+  $('quizPanel').style.display = 'flex';
+  $('answerSlider').value = 4;
+  renderQuestion();
+  window.scrollTo(0, 0);
+}
+
+function mean(arr) { return arr.reduce((a, b) => a + b, 0) / arr.length; }
+
+function formatParagraphs(html) {
+  if (!html) return '';
+  if (/<p[\s>]/i.test(html)) return html;
+  return html.split(/\n+/).filter(Boolean).map(s => `<p>${s}</p>`).join('');
+}
+
+function showResult() {
+  const reappraisalItems = [1,3,5,7,8,10].map(id => state.answers[id - 1] || 4);
+  const suppressionItems = [2,4,6,9].map(id => state.answers[id - 1] || 4);
+  const rScore = mean(reappraisalItems);
+  const sScore = mean(suppressionItems);
+  const highR = rScore >= 4.5;
+  const highS = sScore >= 4.5;
+  const key = `${highR ? 'high' : 'low'}_reappraisal_${highS ? 'high' : 'low'}_suppression`;
+  const r = DATA.results[key];
+
+  // Save to profile store
+  if (window.SheProfileStore) {
+    const summaryMap = {
+      high_reappraisal_low_suppression: '思考派',
+      high_reappraisal_high_suppression: '双管派',
+      low_reappraisal_high_suppression: '压下去派',
+      low_reappraisal_low_suppression: '随流派'
+    };
+    const regulation = Math.max(0, Math.min(5, rScore - (sScore - 1) * 0.35));
+    window.SheProfileStore.saveResult({
+      moduleId: 'erq',
+      moduleName: '情绪调节',
+      summary: summaryMap[key] || r.label,
+      score: { reappraisal: rScore, suppression: sScore, regulation },
+      topDimension: rScore >= sScore ? 'reappraisal' : 'suppression'
+    });
+  }
+
+  // Save to localStorage for share card
+  try {
+    localStorage.setItem('sheIs_test_erq', JSON.stringify({ key, rScore, sScore }));
+  } catch(e) {}
+
+  // Populate result
+  $('rType').textContent = r.label;
+  $('rQuote').textContent = r.quote;
+  $('rScoreLine').textContent = `认知重评 ${rScore.toFixed(2)} ｜ 表达抑制 ${sScore.toFixed(2)} / 7`;
+
+  // Tags
+  $('resultTags').innerHTML = r.tags.map(t =>
+    `<li class="result-tag">${t}</li>`
+  ).join('');
+
+  // Score viz
+  $('scoreViz').innerHTML = `
+    <div class="score-row">
+      <span class="score-label">认知重评</span>
+      <div class="score-bar-bg"><div class="score-bar-fill" style="width:${((rScore-1)/6*100).toFixed(0)}%"></div></div>
+      <span class="score-val">${rScore.toFixed(1)}</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">表达抑制</span>
+      <div class="score-bar-bg"><div class="score-bar-fill" style="width:${((sScore-1)/6*100).toFixed(0)}%;background:#9c3c62;"></div></div>
+      <span class="score-val" style="color:#9c3c62;">${sScore.toFixed(1)}</span>
+    </div>
+  `;
+
+  // Deep analysis
+  $('rDesc').innerHTML = formatParagraphs(r.desc);
+
+  const reappraisalText = highR
+    ? '情绪涌来时，你会调整自己看待这件事的方式。给它一个新的解读框架，让它有地方去。这种能力让情绪有出口，也让你不那么容易被困住。'
+    : '你不太习惯在情绪里做认知上的翻转。感受来了就是来了，你更倾向于直接承受它，而不是先给它换个故事。';
+  const suppressionText = highS
+    ? '你经常控制情绪的外在表现——让自己看起来没事，撑住，不让感受泄露出来。这需要持续消耗能量，即使别人看不出来。'
+    : '你不太会刻意压住情绪的外在表现。感受到什么，脸上和身体里基本同步。少了一层消耗。';
+
+  $('dimensionSection').innerHTML = `
+    <div style="margin-bottom:1.25rem;">
+      <p class="r-axis-title">两个维度解读</p>
+      <div style="margin-bottom:1rem;">
+        <p style="font-size:11px;color:#9c3c62;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;margin:0 0 0.5rem;">认知重评 · ${rScore.toFixed(1)} / 7</p>
+        <p class="r-axis-text">${reappraisalText}</p>
+      </div>
+      <div>
+        <p style="font-size:11px;color:#33185c;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;margin:0 0 0.5rem;">表达抑制 · ${sScore.toFixed(1)} / 7</p>
+        <p class="r-axis-text">${suppressionText}</p>
+      </div>
+    </div>
+  `;
+
+  // Pattern + Question
+  $('patternSection').innerHTML = `
+    <div style="margin-bottom:2.5rem;">
+      <p class="r-axis-title" style="margin-bottom:1rem;">你的调节方式</p>
+      <p class="r-axis-text">${r.regulation}</p>
+    </div>
+    <div class="r-divider"></div>
+    <div style="margin-bottom:2.5rem;">
+      <p class="r-axis-title" style="margin-bottom:1rem;">在日常里</p>
+      ${r.daily.map(d => `<p class="r-axis-text" style="padding-bottom:0.75rem;border-bottom:1px solid rgba(204,196,209,0.15);">— ${d}</p>`).join('')}
+    </div>
+    <div class="r-divider"></div>
+    <div>
+      <p class="r-axis-title" style="margin-bottom:1rem;">值得想一想</p>
+      <p class="r-question-text">${r.question}</p>
+    </div>
+  `;
+
+  // Story rec
+  const rec = storyRecommendations[key];
+  if (rec) {
+    const storyRec = $('storyRec');
+    storyRec.querySelector('.story-rec-title').textContent = rec.title;
+    storyRec.querySelector('.story-rec-btn').href = rec.url;
+    storyRec.style.display = 'block';
+  }
+
+  $('quizPanel').style.display = 'none';
+  $('resultPanel').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function goShareCard() {
+  window.location.href = 'erq-share-card.html';
+}
+window.goShareCard = goShareCard;
+
+function shareLongImage() {
+  const captureEl = document.getElementById('result-capture');
+  if (!captureEl) return;
+  const button = $('shareLongBtn');
+  if (button) { button.disabled = true; button.textContent = '生成中…'; }
+  const oldOverlay = document.getElementById('longImageOverlay');
+  if (oldOverlay) oldOverlay.remove();
+  html2canvas(captureEl, { scale: 2, backgroundColor: '#fcf9f6', useCORS: true }).then(canvas => {
+    const imgUrl = canvas.toDataURL('image/png');
+    const overlay = document.createElement('div');
+    overlay.id = 'longImageOverlay';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:2rem 1rem;overflow-y:auto;-webkit-overflow-scrolling:touch;';
+    const hint = document.createElement('p');
+    hint.textContent = '长按图片保存 / Long press to save';
+    hint.style.cssText = 'color:rgba(255,255,255,0.7);font-size:13px;margin:0 0 1rem;font-family:"Plus Jakarta Sans",sans-serif;letter-spacing:0.1em;';
+    overlay.appendChild(hint);
+    const img = document.createElement('img');
+    img.src = imgUrl;
+    img.style.cssText = 'width:100%;max-width:360px;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,0.3);';
+    overlay.appendChild(img);
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '✕ 关闭';
+    closeBtn.style.cssText = 'margin-top:1.5rem;padding:0.75rem 2rem;border-radius:9999px;background:rgba(255,255,255,0.15);color:#ffffff;border:1px solid rgba(255,255,255,0.3);font-size:13px;cursor:pointer;';
+    closeBtn.onclick = () => overlay.remove();
+    overlay.appendChild(closeBtn);
+    document.body.appendChild(overlay);
+  }).finally(() => {
+    if (button) { button.disabled = false; button.textContent = '结果长图'; }
+  });
+}
+window.shareLongImage = shareLongImage;
 
 function renderStoredResult(record) {
   if (!record) return false;
@@ -990,29 +698,33 @@ function renderStoredResult(record) {
   const r = DATA.results[key];
   const rScore = Number(record?.score?.reappraisal || 0);
   const sScore = Number(record?.score?.suppression || 0);
-  resultEl.innerHTML = `
-    <div id="result-capture" class="result-capture-card">
-    <div class="result-viz"></div>
-    <div class="r-head"><h2 class="r-type" data-subtitle="${r.subtitle || r.tagline || ''}">${r.label}</h2></div>
-    <p class="r-score-line">认知重评 ${rScore ? rScore.toFixed(2) : '--'} ｜ 表达抑制 ${sScore ? sScore.toFixed(2) : '--'}</p>
-    <ul class="result-tags"><li class="result-tag">认知重评</li><li class="result-tag">表达抑制</li><li class="result-tag">ERQ-10</li></ul>
-    <div class="r-quote" id="rQuote">${r.subtitle || r.tagline || ''}</div>
-    <div class="r-divider"></div>
-    <div class="r-desc">${formatParagraphs(r.desc)}<p>这是你上次保存的结果详情。</p></div>
-    <div class="r-divider"></div>
-    <div class="r-pattern-section"><p class="r-axis-title">你的调节方式</p><p class="r-axis-text">${r.regulation}</p></div>
-    <div class="r-divider"></div>
-    <div class="r-pattern-section"><p class="r-axis-title">在日常里</p>${formatListParagraphs(r.daily)}</div>
-    <div class="r-divider"></div>
-    <div class="r-question-section"><p class="r-axis-title">值得想一想</p><p class="r-question-text">${r.question}</p></div>
+  $('rType').textContent = r.label;
+  $('rQuote').textContent = r.quote;
+  $('rScoreLine').textContent = `认知重评 ${rScore ? rScore.toFixed(2) : '--'} ｜ 表达抑制 ${sScore ? sScore.toFixed(2) : '--'} / 7`;
+  $('resultTags').innerHTML = r.tags.map(t => `<li class="result-tag">${t}</li>`).join('');
+  $('scoreViz').innerHTML = '';
+  $('rDesc').innerHTML = formatParagraphs(r.desc);
+  $('dimensionSection').innerHTML = '';
+  $('patternSection').innerHTML = `
+    <div style="margin-bottom:2.5rem;">
+      <p class="r-axis-title" style="margin-bottom:1rem;">你的调节方式</p>
+      <p class="r-axis-text">${r.regulation}</p>
     </div>
-<div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><div class="story-rec" id="storyRec" style="display:none;"><div class="story-rec-img"></div><div class="story-rec-content"><p class="story-rec-hint">你可能会有共鸣</p><h3 class="story-rec-title">故事标题</h3><a class="story-rec-btn" href="#">读这个故事 →</a></div></div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>`;
-  document.getElementById('redoBtn').onclick = startQuiz;
+    <div class="r-divider"></div>
+    <div style="margin-bottom:2.5rem;">
+      <p class="r-axis-title" style="margin-bottom:1rem;">在日常里</p>
+      ${r.daily.map(d => `<p class="r-axis-text">— ${d}</p>`).join('')}
+    </div>
+    <div class="r-divider"></div>
+    <div>
+      <p class="r-axis-title" style="margin-bottom:1rem;">值得想一想</p>
+      <p class="r-question-text">${r.question}</p>
+    </div>
+  `;
   document.querySelector('.test-intro').style.display = 'none';
-  document.getElementById('testBody').style.display = 'block';
-  introEl.classList.add('hidden'); quizEl.classList.add('hidden'); resultEl.classList.remove('hidden');
-  if (storyRec) storyRec.style.display = 'none';
-  progressBar.style.width = '100%'; progressText.textContent = '完成';
+  $('testBody').style.display = 'block';
+  $('quizPanel').style.display = 'none';
+  $('resultPanel').style.display = 'block';
   return true;
 }
 
@@ -1020,39 +732,28 @@ function maybeRestoreSavedResult() {
   if (!window.SheProfileStore) return;
   const record = window.SheProfileStore.getResult('erq');
   if (!record) return;
-  const startBtn = document.getElementById('startBtn');
-  if (startBtn && !document.getElementById('viewLastResultBtn')) {
+  const startBtn = $('startBtn');
+  if (startBtn && !$('viewLastResultBtn')) {
     const btn = document.createElement('button');
-    btn.id = 'viewLastResultBtn'; btn.type = 'button'; btn.className = 'ghost'; btn.textContent = '查看上次结果';
+    btn.id = 'viewLastResultBtn';
+    btn.type = 'button';
+    btn.textContent = '查看上次结果';
+    btn.style.cssText = 'margin-top:1rem;padding:0.75rem 2rem;border-radius:9999px;background:transparent;border:1px solid rgba(51,24,92,0.25);color:#33185c;font-family:"Plus Jakarta Sans",sans-serif;font-size:13px;cursor:pointer;';
     btn.onclick = () => renderStoredResult(record);
     startBtn.insertAdjacentElement('afterend', btn);
   }
   if (window.SheProfileStore.wantsResultView()) renderStoredResult(record);
 }
 
-function shareLongImage() {
-  const button = document.getElementById('shareLongBtn');
-  if (button) {
-    button.disabled = true;
-    button.textContent = '生成中…';
-  }
-  generateLongCard({
-    captureSelector: '#result-capture',
-    testName: '情绪调节测评 · ERQ',
-    fileName: 'erq-long'
-  }).finally(() => {
-    if (button) {
-      button.disabled = false;
-      button.textContent = '结果长图';
-    }
-  });
-}
+// Init
+document.getElementById('startBtn').addEventListener('click', function() {
+  document.querySelector('.test-intro').style.display = 'none';
+  const testBody = $('testBody');
+  testBody.style.display = 'block';
+  renderQuestion();
+});
 
-window.shareLongImage = shareLongImage;
-
-      updateProgress();
-    </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
+maybeRestoreSavedResult();
+</script>
 </body>
 </html>
