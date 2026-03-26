@@ -347,15 +347,130 @@
   text-decoration: none;
 }
 
-        </style>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+        
+    /* === Stitch Visual Override === */
+    :root {
+      --bg: #fcf9f6 !important;
+      --surface: #fcf9f6 !important;
+      --card: #fffdfa !important;
+      --ink: #1c1c1a !important;
+      --muted: #7b7580 !important;
+      --line: #e7dfd6 !important;
+      --primary: #33185c !important;
+      --secondary: #9c3c62 !important;
+      --gold: #33185c !important;
+    }
+    body {
+      background: #fcf9f6 !important;
+      font-family: "Plus Jakarta Sans", "Noto Serif SC", sans-serif !important;
+    }
+    h1, h2, h3, h4 {
+      font-family: "Noto Serif SC", serif !important;
+    }
+    .glass-player {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(229,226,223,0.5) !important;
+      border-radius: 1rem;
+      box-shadow: 0 10px 40px -10px rgba(51,24,92,0.08);
+    }
+    .editorial-shadow {
+      box-shadow: 0 1px 3px rgba(51,24,92,0.06), 0 8px 32px -4px rgba(51,24,92,0.1);
+    }
+    /* Question text: centered, smaller */
+    .question-text {
+      text-align: center !important;
+      font-size: 1.1rem !important;
+      line-height: 1.7 !important;
+    }
+    /* Panel gets glass-player treatment */
+    .panel {
+      background: rgba(255,255,255,0.6) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(229,226,223,0.5) !important;
+      box-shadow: 0 10px 40px -10px rgba(51,24,92,0.08) !important;
+    }
+    /* Primary button */
+    .primary, button.primary, .btn-primary {
+      background: #33185c !important;
+      color: #fff !important;
+      border-color: #33185c !important;
+    }
+    /* Active option */
+    .option:hover, .option.active {
+      background: #33185c !important;
+      border-color: #33185c !important;
+      color: #fff !important;
+    }
+    /* Progress bar */
+    .topline > span {
+      background: linear-gradient(90deg, #33185c, #9c3c62) !important;
+    }
+    /* === End Stitch Override === */
+
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@400;500;700\&family=Plus+Jakarta+Sans:wght@300;400;500;600;700" rel="stylesheet">
   <link rel="stylesheet" href="css/font-override.css" />
   <script src="assets/result-card.js"></script>
 </head>
   <body>
+<header style="position:fixed;top:0;width:100%;z-index:50;background:rgba(252,249,246,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 20px;width:100%;">
+<a href="/assessment" style="text-decoration:none;display:flex;align-items:center;">
+<span aria-hidden="true" style="color:#33185c;font-size:22px;line-height:1;">←</span>
+</a>
+<div style="display:flex;align-items:center;gap:6px;">
+<span style="font-family:'Noto Serif SC',serif;font-weight:700;font-size:1.25rem;color:#33185c;">女也</span>
+<span style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;font-weight:300;color:#33185c;opacity:0.6;">She Is</span>
+</div>
+<div style="width:2rem;height:2rem;border-radius:9999px;background:linear-gradient(135deg,#4a3073,#9c3c62);flex-shrink:0;"></div>
+</div>
+<div style="background:#f0edea;height:1px;width:100%;opacity:0.2;"></div>
+</header>
     <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
     <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
-    <main class="page">
+    <div class="test-intro" style="min-height:100dvh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:3.5rem 2rem 1.6rem 2rem; position:relative; overflow:hidden; background:#fcf9f6;">
+  <!-- Background Soft Texture -->
+  <div style="position:absolute;inset:0;pointer-events:none;opacity:0.4;">
+    <div style="position:absolute;top:-10%;right:-10%;width:80%;height:60%;border-radius:9999px;background:linear-gradient(to bottom right,rgba(236,220,255,0.3),transparent);filter:blur(60px);"></div>
+    <div style="position:absolute;bottom:-10%;left:-10%;width:70%;height:50%;border-radius:9999px;background:linear-gradient(to top right,rgba(229,226,223,0.5),transparent);filter:blur(60px);"></div>
+  </div>
+  <!-- Content -->
+  <div style="width:100%;max-width:28rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:2rem;position:relative;z-index:10;">
+    <!-- Header -->
+    <div style="display:flex;flex-direction:column;gap:0.6rem;align-items:center;">
+      <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.4em;color:#9c3c62;font-weight:600;">Self Discovery</span>
+      <h2 style="font-family:'Noto Serif SC',serif;font-size:2rem;line-height:1.2;color:#33185c;margin:0;">
+        Today's Mood<br>
+        <span style="display:block;margin-top:0.5rem;font-weight:400;opacity:0.9;">今日情绪快照</span>
+      </h2>
+      <div style="height:1px;width:3rem;background:#ccc4d1;"></div>
+      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;letter-spacing:0.15em;color:#4a454f;text-transform:uppercase;margin:0;">
+        TMM · Today Mood Mapping
+      </p>
+    </div>
+    <!-- Reflective Text -->
+    <div style="max-width:20rem;display:flex;flex-direction:column;gap:1.25rem;">
+      <p style="font-family:'Noto Serif SC',serif;font-size:1.15rem;font-style:italic;line-height:1.7;color:rgba(28,28,26,0.8);margin:0;">
+        "How are you, really — right now?"
+      </p>
+      <p style="font-family:'Noto Serif SC',serif;font-size:0.85rem;color:rgba(74,69,79,0.8);line-height:1.6;font-weight:300;margin:0;">
+        不是"还好"，是真的怎么样。此刻的你，在哪个频道上？
+      </p>
+    </div>
+    <!-- CTA Button -->
+    <div style="width:100%;padding-top:1.2rem;">
+      <button id="startBtn" style="width:100%;height:4rem;background:linear-gradient(to right,#33185c,#4a3073);color:#ffffff;border:none;border-radius:0.75rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;letter-spacing:0.2em;font-size:0.85rem;text-transform:uppercase;cursor:pointer;box-shadow:0 20px 40px rgba(51,24,92,0.2);transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+        Ready / 准备好了 →
+      </button>
+      <p style="margin-top:1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;color:#7b7580;letter-spacing:0.15em;text-transform:uppercase;">Approx. 2-3 Minutes</p>
+    </div>
+  </div>
+  </div>
+<div id="testBody" style="display:none">
+<main class="page">
       <a class="nav-back" href="assessment.html">← back</a>
       <div class="topline"><span id="progressBar"></span></div>
       <div class="meta"><span id="progressText">准备开始</span><span>Today Mood Map</span></div>
@@ -365,7 +480,7 @@
         <h1 class="title">今日情绪地图</h1>
         <p class="subtitle" id="introDesc"></p>
         <div class="intro-note">一题一页，像把手电筒一格一格打在自己身上。别急着做对，只选那个让你心里轻轻点头的答案。</div>
-        <button class="primary" id="startBtn">准备好了</button>
+        <button class="primary" id="beginQuizBtn">准备好了</button>
       </section>
 
       <section class="panel view hidden" id="quizView">
@@ -410,6 +525,8 @@
 
 
       function downloadResult() {
+  window.location.href = 'today-mood-share-card.html';
+  return;
   const button = document.getElementById('saveResultBtn');
   const originalText = button ? button.textContent : '保存结果图片';
   if (button) {
@@ -827,12 +944,34 @@ window.downloadResult = downloadResult;
         renderQuestion();
       }
 
-      document.getElementById('startBtn').addEventListener('click', startQuiz);
+      var _bqb = document.getElementById('beginQuizBtn'); if(_bqb) _bqb.addEventListener('click', startQuiz);
       document.getElementById('restartBtn').addEventListener('click', startQuiz);
       storyRec.style.display = 'none';
 
       updateProgress();
     </script>
 
+</div><!-- /testBody -->
+<script>
+(function() {
+  function initHeroStart() {
+    var btn = document.getElementById('startBtn');
+    var hero = document.querySelector('.test-intro');
+    var testBody = document.getElementById('testBody');
+    if (btn && hero && testBody) {
+      // Override: hero startBtn shows testBody
+      btn.addEventListener('click', function() {
+        hero.style.display = 'none';
+        testBody.style.display = 'block';
+      });
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroStart);
+  } else {
+    initHeroStart();
+  }
+})();
+</script>
 </body>
 </html>

@@ -451,29 +451,129 @@
   text-decoration: none;
 }
 
-</style>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    /* === Stitch Visual Override === */
+    :root {
+      --bg: #fcf9f6 !important;
+      --surface: #fcf9f6 !important;
+      --card: #fffdfa !important;
+      --ink: #1c1c1a !important;
+      --muted: #7b7580 !important;
+      --line: #e7dfd6 !important;
+      --primary: #33185c !important;
+      --secondary: #9c3c62 !important;
+      --gold: #33185c !important;
+    }
+    body {
+      background: #fcf9f6 !important;
+      font-family: "Plus Jakarta Sans", "Noto Serif SC", sans-serif !important;
+    }
+    h1, h2, h3, h4 {
+      font-family: "Noto Serif SC", serif !important;
+    }
+    .glass-player {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(229,226,223,0.5) !important;
+      border-radius: 1rem;
+      box-shadow: 0 10px 40px -10px rgba(51,24,92,0.08);
+    }
+    .editorial-shadow {
+      box-shadow: 0 1px 3px rgba(51,24,92,0.06), 0 8px 32px -4px rgba(51,24,92,0.1);
+    }
+    /* Question text: centered, smaller */
+    .question-text {
+      text-align: center !important;
+      font-size: 1.1rem !important;
+      line-height: 1.7 !important;
+    }
+    /* Panel gets glass-player treatment */
+    .panel {
+      background: rgba(255,255,255,0.6) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(229,226,223,0.5) !important;
+      box-shadow: 0 10px 40px -10px rgba(51,24,92,0.08) !important;
+    }
+    /* Primary button */
+    .primary, button.primary, .btn-primary {
+      background: #33185c !important;
+      color: #fff !important;
+      border-color: #33185c !important;
+    }
+    /* Active option */
+    .option:hover, .option.active {
+      background: #33185c !important;
+      border-color: #33185c !important;
+      color: #fff !important;
+    }
+    /* Progress bar */
+    .topline > span {
+      background: linear-gradient(90deg, #33185c, #9c3c62) !important;
+    }
+    /* === End Stitch Override === */
+
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@400;500;700\&family=Plus+Jakarta+Sans:wght@300;400;500;600;700" rel="stylesheet">
   <link rel="stylesheet" href="css/font-override.css" />
   <script src="assets/result-card.js"></script>
 </head>
   <body>
+<header style="position:fixed;top:0;width:100%;z-index:50;background:rgba(252,249,246,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 20px;width:100%;">
+<a href="/assessment" style="text-decoration:none;display:flex;align-items:center;">
+<span aria-hidden="true" style="color:#33185c;font-size:22px;line-height:1;">←</span>
+</a>
+<div style="display:flex;align-items:center;gap:6px;">
+<span style="font-family:'Noto Serif SC',serif;font-weight:700;font-size:1.25rem;color:#33185c;">女也</span>
+<span style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;font-weight:300;color:#33185c;opacity:0.6;">She Is</span>
+</div>
+<div style="width:2rem;height:2rem;border-radius:9999px;background:linear-gradient(135deg,#4a3073,#9c3c62);flex-shrink:0;"></div>
+</div>
+<div style="background:#f0edea;height:1px;width:100%;opacity:0.2;"></div>
+</header>
     <div class="vi-glow vi-glow--top" aria-hidden="true"></div>
     <div class="vi-glow vi-glow--bottom" aria-hidden="true"></div>
     <div class="page">
-  <div class="test-intro">
-        <div class="test-intro-card">
-          <div class="test-intro-accent"></div>
-          <div class="test-intro-content">
-            <p class="test-intro-source">基于 C.G. Jung 认知功能理论 + Dario Nardi 八维认知功能模型（快速版）</p>
-            <div class="test-intro-rule"></div>
-            <h2 class="test-intro-scale">荣格八维认知功能（48题快速版）</h2>
-            <div class="test-intro-rule"></div>
-            <p class="test-intro-body">你有没有发现，有些人靠直觉做决定，有些人必须把逻辑链条走完才安心？有些人活在细节里，有些人脑子里永远在跑"如果……会怎样"。<br><br>这不是给你归类，而是把脑海里那些总在自动运行的路线图慢慢显影。有人先抓住细节，有人先看见趋势；有人用逻辑铺路，有人靠价值感校准方向。<br><br>认知功能想做的，是让你知道：你之所以这样理解世界，并不是偶然。</p>
-            <p class="test-intro-note">看清你天然的思维方式，理解为什么你和别人看同一件事会有那么大的差异</p>
-            <button class="test-intro-btn" id="startBtn">准备好了</button>
-          </div>
-        </div>
-      </div>
+  <div class="test-intro" style="min-height:100dvh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:3.5rem 2rem 1.6rem 2rem; position:relative; overflow:hidden; background:#fcf9f6;">
+  <!-- Background Soft Texture -->
+  <div style="position:absolute;inset:0;pointer-events:none;opacity:0.4;">
+    <div style="position:absolute;top:-10%;right:-10%;width:80%;height:60%;border-radius:9999px;background:linear-gradient(to bottom right,rgba(236,220,255,0.3),transparent);filter:blur(60px);"></div>
+    <div style="position:absolute;bottom:-10%;left:-10%;width:70%;height:50%;border-radius:9999px;background:linear-gradient(to top right,rgba(229,226,223,0.5),transparent);filter:blur(60px);"></div>
+  </div>
+  <!-- Content -->
+  <div style="width:100%;max-width:28rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:2rem;position:relative;z-index:10;">
+    <!-- Header -->
+    <div style="display:flex;flex-direction:column;gap:0.6rem;align-items:center;">
+      <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.4em;color:#9c3c62;font-weight:600;">Self Discovery</span>
+      <h2 style="font-family:'Noto Serif SC',serif;font-size:2rem;line-height:1.2;color:#33185c;margin:0;">
+        Jung Cognitive (Quick)<br>
+        <span style="display:block;margin-top:0.5rem;font-weight:400;opacity:0.9;">荣格认知功能 · 快速版</span>
+      </h2>
+      <div style="height:1px;width:3rem;background:#ccc4d1;"></div>
+      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;letter-spacing:0.15em;color:#4a454f;text-transform:uppercase;margin:0;">
+        MBTI-CF Quick · 48 Questions
+      </p>
+    </div>
+    <!-- Reflective Text -->
+    <div style="max-width:20rem;display:flex;flex-direction:column;gap:1.25rem;">
+      <p style="font-family:'Noto Serif SC',serif;font-size:1.15rem;font-style:italic;line-height:1.7;color:rgba(28,28,26,0.8);margin:0;">
+        "A faster lens on how your mind naturally moves."
+      </p>
+      <p style="font-family:'Noto Serif SC',serif;font-size:0.85rem;color:rgba(74,69,79,0.8);line-height:1.6;font-weight:300;margin:0;">
+        用更短的时间，探索你的认知风格与思维偏好。
+      </p>
+    </div>
+    <!-- CTA Button -->
+    <div style="width:100%;padding-top:1.2rem;">
+      <button id="startBtn" style="width:100%;height:4rem;background:linear-gradient(to right,#33185c,#4a3073);color:#ffffff;border:none;border-radius:0.75rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;letter-spacing:0.2em;font-size:0.85rem;text-transform:uppercase;cursor:pointer;box-shadow:0 20px 40px rgba(51,24,92,0.2);transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+        Ready / 准备好了 →
+      </button>
+      <p style="margin-top:1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;color:#7b7580;letter-spacing:0.15em;text-transform:uppercase;">Approx. 5-8 Minutes</p>
+    </div>
+  </div>
+  </div>
       <div class="test-body" id="testBody" style="display:none">
     <main class="page">
       <a class="nav-back" href="assessment.html">← back</a>
@@ -1244,6 +1344,8 @@ const cognitiveLongDesc = {
       maybeRestoreSavedResult();
 
       function downloadResult() {
+  window.location.href = 'cognitive-48-share-card.html';
+  return;
   const button = document.getElementById('saveResultBtn');
   const originalText = button ? button.textContent : '分享结果';
   if (button) {

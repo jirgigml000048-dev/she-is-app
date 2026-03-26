@@ -545,8 +545,71 @@
   text-decoration: none;
 }
 
-</style>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    /* === Stitch Visual Override === */
+    :root {
+      --bg: #fcf9f6 !important;
+      --surface: #fcf9f6 !important;
+      --card: #fffdfa !important;
+      --ink: #1c1c1a !important;
+      --muted: #7b7580 !important;
+      --line: #e7dfd6 !important;
+      --primary: #33185c !important;
+      --secondary: #9c3c62 !important;
+      --gold: #33185c !important;
+    }
+    body {
+      background: #fcf9f6 !important;
+      font-family: "Plus Jakarta Sans", "Noto Serif SC", sans-serif !important;
+    }
+    h1, h2, h3, h4 {
+      font-family: "Noto Serif SC", serif !important;
+    }
+    .glass-player {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(229,226,223,0.5) !important;
+      border-radius: 1rem;
+      box-shadow: 0 10px 40px -10px rgba(51,24,92,0.08);
+    }
+    .editorial-shadow {
+      box-shadow: 0 1px 3px rgba(51,24,92,0.06), 0 8px 32px -4px rgba(51,24,92,0.1);
+    }
+    /* Question text: centered, smaller */
+    .question-text {
+      text-align: center !important;
+      font-size: 1.1rem !important;
+      line-height: 1.7 !important;
+    }
+    /* Panel gets glass-player treatment */
+    .panel {
+      background: rgba(255,255,255,0.6) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(229,226,223,0.5) !important;
+      box-shadow: 0 10px 40px -10px rgba(51,24,92,0.08) !important;
+    }
+    /* Primary button */
+    .primary, button.primary, .btn-primary {
+      background: #33185c !important;
+      color: #fff !important;
+      border-color: #33185c !important;
+    }
+    /* Active option */
+    .option:hover, .option.active {
+      background: #33185c !important;
+      border-color: #33185c !important;
+      color: #fff !important;
+    }
+    /* Progress bar */
+    .topline > span {
+      background: linear-gradient(90deg, #33185c, #9c3c62) !important;
+    }
+    /* === End Stitch Override === */
+
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@400;500;700\&family=Plus+Jakarta+Sans:wght@300;400;500;600;700" rel="stylesheet">
   <link rel="stylesheet" href="css/font-override.css" />
   <script src="assets/result-card.js"></script>
 </head>
