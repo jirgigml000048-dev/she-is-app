@@ -50,12 +50,29 @@
   <main class="pb-32 pt-16">
     <section class="relative isolate flex h-[70vh] min-h-[520px] items-end overflow-hidden">
       <div class="absolute inset-0 bg-[linear-gradient(135deg,#33185c_0%,#5c2c73_36%,#9c3c62_72%,#f0d6d8_100%)]"></div>
-      <img src="illustrations/story-bingbing.png" alt="冰冰：穿百褶裙的机甲驾驶员" class="absolute inset-0 h-full w-full object-cover opacity-30">
+      <img src="assets/covers/cover-005-bingbing.png" alt="冰冰：穿百褶裙的机甲驾驶员" class="absolute inset-0 h-full w-full object-cover opacity-30">
       <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-[#fcf9f6]"></div>
       <div class="relative z-10 mx-auto w-full max-w-5xl px-6 pb-12 sm:px-8 md:pb-14">
-        <p class="mb-4 text-sm uppercase tracking-[0.35em] text-white/80">Vol.005 / Stitch Edition</p>
-        <h1 class="max-w-4xl font-headline text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">冰冰：穿百褶裙的机甲驾驶员</h1>
-        <p class="mt-4 font-headline text-xl italic text-white/78 sm:text-2xl">Mecha in a Pleated Skirt</p>
+        <span class="font-label text-sm uppercase tracking-[0.3em] text-primary mb-4">Volume 005 / 100位女孩</span>
+        <h2 class="font-headline text-4xl md:text-5xl text-primary leading-tight font-bold max-w-[90%] mb-2">穿百褶裙的机甲驾驶员</h2>
+        <span class="font-headline text-xl md:text-2xl text-primary/70 font-normal tracking-normal">Mecha in a Pleated Skirt</span>
+      </div>
+    </section>
+
+    <section class="px-6 mb-8 max-w-3xl mx-auto">
+      <div class="glass-player p-6 rounded-lg editorial-shadow flex flex-col gap-4 border border-outline-variant/10">
+        <div class="flex items-center gap-4">
+          <button class="w-14 h-14 rounded-full bg-primary text-on-primary flex items-center justify-center active:scale-90 transition-transform">
+            <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+          </button>
+          <div class="flex-1">
+            <p class="font-label text-xs uppercase tracking-widest text-primary font-bold mb-1">Background Music / 背景音乐</p>
+            <p class="text-sm text-on-surface-variant font-medium">6 min read</p>
+          </div>
+        </div>
+        <div class="relative w-full h-1 bg-surface-container rounded-full overflow-hidden">
+          <div class="absolute left-0 top-0 h-full w-0 bg-secondary rounded-full"></div>
+        </div>
       </div>
     </section>
 
@@ -107,6 +124,43 @@
 <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">在这个巨大的、有时候像废墟一样的城市里，有多少人像她一样？外表穿着得体的铠甲，内心却在小心翼翼地护着一朵小花。</p>
 <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">如果你在 CBD 的人群中，看到一个眼神清澈、正在把青椒挑出饭盒的女孩，请记得：她可能正坐在驾驶舱里，等一个属于自己的起飞窗口。</p>
       </div>
+
+<section class="mt-24 rounded-[2rem] border border-[#33185c]/10 bg-[#f0edea] p-8 shadow-[0_30px_80px_rgba(51,24,92,0.07)]">
+  <div class="mb-8">
+    <h5 class="font-headline text-2xl text-[#33185c] font-bold mb-1">A Moment for You</h5>
+    <p class="font-headline text-sm text-[#33185c]/40 mb-3">心灵寄语</p>
+    <div class="w-12 h-1 bg-[#9c3c62] rounded-full"></div>
+  </div>
+  <p class="text-[#4a454f] leading-relaxed mb-2">你有没有一个"薛定谔的梦想"——只要不去看它的现状，它就永远活着？</p>
+  <p class="text-[#4a454f]/60 text-sm italic leading-relaxed mb-6">Do you have a Schrödinger's dream — one that stays alive as long as you don't open the box?</p>
+  <p class="text-[#4a454f] text-sm leading-relaxed mb-8">如果你愿意，写下那个你还没打开的盒子。</p>
+  <div class="relative mb-4">
+    <textarea class="w-full bg-white/60 border-0 border-b border-[#ccc4d1] focus:ring-0 focus:bg-white rounded-none py-4 px-0 min-h-[120px] text-[#1c1c1a] placeholder:text-[#7b7580]/40 font-body" placeholder="写点什么..."></textarea>
+  </div>
+  <div class="flex items-center gap-3">
+    <button class="flex-1 min-w-0 flex items-center justify-center gap-1.5 px-3 py-3 rounded-full bg-[#33185c] text-white text-[10px] font-label font-bold uppercase tracking-wide whitespace-nowrap transition-colors" onclick="this.dataset.public = this.dataset.public === 'true' ? 'false' : 'true'; const isPublic = this.dataset.public === 'true'; this.querySelector('.icon').textContent = isPublic ? 'public' : 'lock'; this.querySelector('.label-text').textContent = isPublic ? 'Public / 公开' : 'Private / 仅自己';" data-public="true">
+      <span class="material-symbols-outlined text-sm icon">public</span>
+      <span class="label-text whitespace-nowrap">Public / 公开</span>
+    </button>
+    <button class="flex-1 min-w-0 py-3 px-3 bg-white/70 text-[#1c1c1a] rounded-full font-label uppercase tracking-wide text-[10px] font-bold shadow-sm active:scale-95 transition-transform text-center whitespace-nowrap border border-[#7b7580]/20">
+      Save / 留下感悟
+    </button>
+  </div>
+</section>
+
+<section class="mt-12 space-y-6">
+  <h5 class="font-headline text-xl text-[#33185c] font-bold mb-2">Reflections <span class="text-base font-normal text-[#33185c]/40">/ 读者感悟</span></h5>
+
+  <article class="rounded-xl border border-[#ccc4d1]/40 bg-white/70 p-6 shadow-sm">
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-7 h-7 rounded-full bg-[#33185c]/10 flex items-center justify-center">
+        <span class="text-[10px] font-bold text-[#33185c]">?</span>
+      </div>
+      <span class="font-label text-[10px] uppercase tracking-widest text-[#4a454f]/60">Waiting for you</span>
+    </div>
+    <p class="font-body text-sm text-[#4a454f] leading-relaxed">你的感受，也许会照亮下一个读到这里的人。</p>
+  </article>
+</section>
     </article>
   </main>
 
@@ -132,5 +186,28 @@
       }
     });
   </script>
+  <audio id="bgAudio" loop>
+    <source src="audio/story-bingbing.mp3" type="audio/mpeg">
+  </audio>
+  <script>
+    (function() {
+      const audio = document.getElementById('bgAudio');
+      audio.volume = 0.35;
+      audio.muted = true;
+      audio.play().catch(function(){});
+      var unmuted = false;
+      function unmute() {
+        if (!unmuted) {
+          audio.muted = false;
+          unmuted = true;
+        }
+        document.removeEventListener('click', unmute);
+        document.removeEventListener('touchstart', unmute);
+      }
+      document.addEventListener('click', unmute);
+      document.addEventListener('touchstart', unmute);
+    })();
+  </script>
+
 </body>
 </html>
