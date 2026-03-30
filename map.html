@@ -120,15 +120,13 @@ tailwind.config = {
 </head>
 <body>
 
-<header id="header" style="position: fixed; top: 0; width: 100%; max-width: 680px; z-index: 50; background: rgba(250,247,244,0.85); backdrop-filter: blur(16px); display: flex; justify-content: space-between; align-items: center; padding: 0 24px; height: 64px; border-bottom: 1px solid rgba(74,48,115,0.06); opacity: 0; transition: opacity 1.2s ease;">
-  <span class="material-symbols-outlined" style="color: var(--accent); font-size: 22px; opacity: 0.7;">menu</span>
-  <div style="text-align: center;">
-    <h1 style="font-family: 'Noto Serif SC', serif; font-size: 22px; letter-spacing: 6px; color: var(--accent); font-weight: 700; font-style: italic;">女也 She Is</h1>
+<header id="header" class="fixed top-0 w-full z-50 bg-[#fcf9f6]/80 backdrop-blur-xl flex justify-between items-center px-6 h-16" style="opacity: 0; transition: opacity 1.2s ease;">
+  <div class="flex items-center gap-4">
+    <span class="material-symbols-outlined text-primary text-2xl">menu</span>
   </div>
-  <div style="width: 32px; height: 32px; border-radius: 50%; overflow: hidden; border: 1px solid rgba(74,48,115,0.15);">
-    <div id="avatarCircle" style="width:100%; height:100%; background: rgba(74,48,115,0.12); display:flex; align-items:center; justify-content:center;">
-      <span class="material-symbols-outlined" style="font-size:18px; color: var(--accent); opacity:0.5;">person</span>
-    </div>
+  <h1 class="font-serif text-2xl tracking-widest text-[#33185c] font-bold italic">女也 She Is</h1>
+  <div id="avatarCircle" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/30 flex items-center justify-center bg-primary/10">
+    <span class="material-symbols-outlined text-primary" style="font-size:18px;">person</span>
   </div>
 </header>
 
