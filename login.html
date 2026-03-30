@@ -291,9 +291,11 @@
       smsBtn.textContent = '进入空间 / ENTER SPACE';
       return;
     }
-    // 写入 session
-    if (!window.sb) { showError(smsError, '客户端初始化失败，请刷新重试'); smsBtn.disabled = false; return; }
-    await window.sb.auth.setSession(data.session);
+    // 写入 session（直接写 localStorage，绕过 sb client 兼容性问题）
+    if (data.session) {
+      const storageKey = 'sb-xagmrtiajoyznquzehqd-auth-token';
+      localStorage.setItem(storageKey, JSON.stringify(data.session));
+    }
     window.location.href = getRedirectTarget();
   }
 
