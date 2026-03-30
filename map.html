@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>内在地形图 · She Is</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,300;1,400&family=Noto+Serif+SC:wght@300;400&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #FAF7F4;
+      --accent: #4A3073;
+      --accent-hover: #3D2565;
+      --text: #1E1628;
+      --text-muted: rgba(30,22,40,0.5);
+      --border: rgba(74,48,115,0.12);
+      --btn-bg: rgba(180,155,225,0.22);
+      --btn-border: rgba(190,165,235,0.45);
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Serif SC', Georgia, serif;
+      min-height: 100vh;
+      max-width: 680px;
+      margin: 0 auto;
+      padding-bottom: 80px;
+    }
+    header {
+      text-align: center;
+      padding: 48px 24px 16px;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    header.visible { opacity: 1; }
+    .brand-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .brand-cn { font-size: 15px; letter-spacing: 6px; color: var(--accent); font-weight: 300; }
+    .brand-en { font-size: 9px; letter-spacing: 5px; color: var(--accent); opacity: 0.5; font-family: 'Lora', serif; font-style: italic; text-transform: uppercase; }
+    .page-title { font-family: 'Lora', serif; font-style: italic; font-size: 26px; letter-spacing: 4px; font-weight: 300; color: var(--text); margin-bottom: 6px; }
+    .page-title-en { font-size: 9px; letter-spacing: 6px; font-family: 'Lora', serif; font-style: italic; color: var(--text-muted); text-transform: uppercase; }
+    .user-row { text-align: center; padding: 12px 24px 0; opacity: 0; transition: opacity 1.2s ease 0.4s; }
+    .user-row.visible { opacity: 1; }
+    .user-name { font-size: 13px; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 4px; }
+    .user-meta { font-size: 11px; color: rgba(30,22,40,0.3); letter-spacing: 1px; font-family: 'Noto Sans SC', sans-serif; }
+    .map-container { padding: 16px; position: relative; }
+    .map-container svg { width: 100%; height: auto; display: block; }
+    .hint { text-align: center; font-size: 11px; color: var(--text-muted); letter-spacing: 1px; margin-top: -4px; font-family: 'Noto Sans SC', sans-serif; }
+    .detail-panel {
+      margin: 8px 24px 0;
+      padding: 20px 24px;
+      background: #fff;
+      border-radius: 14px;
+      border-left: 3px solid var(--accent);
+      border-right: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      animation: fadeUp 0.4s ease;
+      display: none;
+    }
+    .detail-panel.active { display: block; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .panel-header { display: flex; align-items: center; gap: 8px; font-size: 14px; letter-spacing: 2px; color: var(--text); margin-bottom: 16px; font-weight: 300; }
+    .panel-icon { font-size: 10px; color: var(--accent); opacity: 0.6; }
+    .panel-subtitle { font-size: 10px; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 12px; font-family: 'Noto Sans SC', sans-serif; }
+    .fn-stack { display: flex; flex-direction: column; gap: 10px; }
+    .fn-row { display: flex; align-items: center; gap: 10px; }
+    .fn-label { font-size: 13px; font-family: 'Lora', serif; font-style: italic; font-weight: 400; width: 28px; color: var(--accent); letter-spacing: 1px; }
+    .fn-bar-bg { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .fn-bar { height: 100%; background: var(--accent); border-radius: 2px; opacity: 0.5; transition: width 1s ease; }
+    .fn-desc { font-size: 10px; color: var(--text-muted); width: 70px; text-align: right; letter-spacing: 0.5px; font-family: 'Noto Sans SC', sans-serif; }
+    .type-tag { margin-top: 16px; font-size: 11px; color: var(--accent); letter-spacing: 3px; text-align: center; padding: 8px 0; border-top: 1px solid var(--border); font-family: 'Noto Sans SC', sans-serif; }
+    .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 4px; }
+    .metric-card { text-align: center; padding: 12px 6px; background: rgba(74,48,115,0.04); border-radius: 8px; }
+    .metric-value { font-size: 18px; font-family: 'Lora', serif; font-style: italic; font-weight: 300; color: var(--accent); margin-bottom: 4px; }
+    .metric-label { font-size: 9px; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 2px; font-family: 'Noto Sans SC', sans-serif; }
+    .metric-zone { font-size: 9px; color: rgba(30,22,40,0.3); letter-spacing: 0.5px; font-family: 'Noto Sans SC', sans-serif; }
+    .disc-row { display: flex; justify-content: center; gap: 20px; margin-top: 12px; }
+    .disc-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .disc-bar-bg { width: 18px; height: 50px; background: var(--border); border-radius: 2px; display: flex; align-items: flex-end; overflow: hidden; }
+    .disc-bar { width: 100%; background: var(--accent); border-radius: 2px; opacity: 0.4; transition: height 0.8s ease; }
+    .disc-label { font-size: 11px; font-family: 'Lora', serif; font-style: italic; color: var(--accent); }
+    .mood-section { margin: 24px 24px 0; }
+    .mood-title { font-size: 10px; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 12px; text-align: center; font-family: 'Noto Sans SC', sans-serif; text-transform: uppercase; }
+    .mood-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; }
+    .mood-cell { aspect-ratio: 1; border-radius: 2px; display: flex; align-items: center; justify-content: center; }
+    .mood-day { font-size: 7px; color: rgba(74,48,115,0.4); font-family: 'Lora', serif; }
+    .narrative-section { margin: 32px 24px 0; opacity: 0; transition: opacity 2s ease; }
+    .narrative-section.visible { opacity: 1; }
+    .narrative-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+    .narrative-line { flex: 1; height: 1px; background: var(--border); }
+    .narrative-tag { font-size: 9px; letter-spacing: 3px; color: var(--text-muted); white-space: nowrap; font-family: 'Lora', serif; font-style: italic; text-transform: uppercase; }
+    .narrative-text { font-size: 13px; line-height: 2; color: var(--text); font-weight: 300; letter-spacing: 0.3px; }
+    .cta-section { margin: 24px 24px 0; }
+    .cta-card { padding: 16px 20px; border: 1px solid var(--border); border-radius: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-decoration: none; color: var(--text); transition: background 0.2s; }
+    .cta-card:hover { background: rgba(74,48,115,0.04); }
+    .cta-label { font-size: 12px; letter-spacing: 1px; }
+    .cta-sub { font-size: 10px; color: var(--text-muted); margin-top: 3px; font-family: 'Noto Sans SC', sans-serif; }
+    .cta-arrow { font-size: 14px; color: var(--accent); opacity: 0.5; }
+    .share-section { margin: 40px 24px; display: flex; flex-direction: column; align-items: center; }
+    .share-card { width: 240px; padding: 1px; background: linear-gradient(135deg, rgba(74,48,115,0.3), rgba(74,48,115,0.1)); border-radius: 14px; }
+    .share-card-inner { background: var(--bg); border-radius: 13px; padding: 24px 20px; text-align: center; }
+    .share-brand { font-size: 8px; letter-spacing: 4px; color: var(--accent); margin-bottom: 16px; opacity: 0.6; font-family: 'Noto Sans SC', sans-serif; }
+    .share-name { font-size: 20px; font-family: 'Lora', serif; font-style: italic; font-weight: 300; color: var(--text); margin-bottom: 6px; letter-spacing: 3px; }
+    .share-type { font-size: 9px; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 16px; font-family: 'Noto Sans SC', sans-serif; }
+    .share-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin-bottom: 16px; }
+    .share-tag-item { font-size: 8px; padding: 3px 8px; border: 1px solid var(--border); border-radius: 12px; color: var(--text-muted); letter-spacing: 0.5px; font-family: 'Noto Sans SC', sans-serif; }
+    .share-footer { font-size: 7px; color: rgba(30,22,40,0.2); letter-spacing: 2px; }
+    .share-hint { font-size: 9px; color: var(--text-muted); margin-top: 12px; letter-spacing: 1px; font-family: 'Noto Sans SC', sans-serif; }
+    footer { text-align: center; padding: 32px 24px; font-size: 9px; color: rgba(30,22,40,0.2); letter-spacing: 3px; font-family: 'Noto Sans SC', sans-serif; }
+    .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 680px; background: rgba(250,247,244,0.92); backdrop-filter: blur(12px); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 12px 0 18px; z-index: 100; }
+    .nav-item { font-size: 10px; letter-spacing: 1.5px; color: var(--text-muted); text-decoration: none; font-family: 'Noto Sans SC', sans-serif; padding: 4px 8px; }
+    .nav-item.active { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<header id="header">
+  <div class="brand-row">
+    <span class="brand-cn">女也</span>
+    <span class="brand-en">SHE IS</span>
+  </div>
+  <div class="page-title">内在地形图</div>
+  <div class="page-title-en">Inner Landscape</div>
+</header>
+
+<div class="user-row" id="userRow">
+  <div class="user-name" id="userName">— 的内在画像</div>
+  <div class="user-meta" id="userMeta">加载中…</div>
+</div>
+
+<div class="map-container">
+  <svg id="mapSvg" viewBox="0 0 640 520"></svg>
+  <div class="hint" id="mapHint">轻触已探索的区域，查看维度详情</div>
+</div>
+
+<div class="detail-panel" id="detailPanel"></div>
+
+<div class="mood-section" id="moodSection" style="display:none">
+  <div class="mood-title">情绪地形 · Emotional Terrain · 近30天</div>
+  <div class="mood-grid" id="moodGrid"></div>
+</div>
+
+<div class="narrative-section" id="narrativeSection" style="display:none">
+  <div class="narrative-header">
+    <div class="narrative-line"></div>
+    <span class="narrative-tag">Cross Reading · 交叉解读</span>
+    <div class="narrative-line"></div>
+  </div>
+  <p class="narrative-text" id="narrativeText"></p>
+</div>
+
+<div class="cta-section" id="ctaSection"></div>
+
+<div class="share-section" id="shareSection" style="display:none">
+  <div class="share-card">
+    <div class="share-card-inner">
+      <div class="share-brand">女也 · SHE IS</div>
+      <div class="share-name" id="shareName">—</div>
+      <div class="share-type" id="shareType">—</div>
+      <div class="share-tags" id="shareTags"></div>
+      <div class="share-footer">she-is-app.netlify.app</div>
+    </div>
+  </div>
+  <div class="share-hint">内在画像卡片 · 长按保存</div>
+</div>
+
+<footer>女也 She Is · Inner Landscape v0.2</footer>
+
+<nav class="bottom-nav">
+  <a class="nav-item" href="index.html">首页</a>
+  <a class="nav-item" href="stories.html">故事</a>
+  <a class="nav-item" href="assessment.html">测评</a>
+  <a class="nav-item active" href="map.html">地图</a>
+  <a class="nav-item" href="mailbox.html">来信</a>
+</nav>
+
+<script src="assets/profile-utils.js"></script>
+<script>
+  // ─── VI Colors ──────────────────────────────────────────────
+  const ACCENT = '#4A3073';
+  const ACCENT_LIGHT = 'rgba(74,48,115,0.45)';
+  const ACCENT_FAINT = 'rgba(74,48,115,0.18)';
+  const BG = '#FAF7F4';
+
+  // ─── Region definitions ──────────────────────────────────────
+  const REGION_DEFS = [
+    { id: 'trait',      label: '特质轴', labelEn: 'Trait Axis',      cx: 200, cy: 180, baseRadius: 130, description: '认知功能的山脊线', moduleIds: ['cognitive', 'cognitive-48'], color: ACCENT },
+    { id: 'emotion',    label: '情绪轴', labelEn: 'Emotion Axis',    cx: 420, cy: 200, baseRadius: 140, description: '情感的深水区',     moduleIds: ['hsp', 'ecr', 'erq'],            color: ACCENT },
+    { id: 'behavior',   label: '行为轴', labelEn: 'Behavior Axis',   cx: 300, cy: 380, baseRadius: 120, description: '行为的河床与纹路', moduleIds: ['fmps', 'boundary-sense', 'disc'], color: ACCENT },
+    { id: 'motivation', label: '动机轴', labelEn: 'Motivation Axis', cx: 480, cy: 400, baseRadius: 110, description: '尚未探索的区域', moduleIds: ['abm-love-animal', 'ideal-boyfriend'], color: 'rgba(30,22,40,0.25)' },
+  ];
+
+  function loadResults() {
+    if (!window.SheProfileStore) return {};
+    const all = window.SheProfileStore.readAllResults();
+    const map = {};
+    all.forEach(r => { map[r.moduleId] = r; });
+    return map;
+  }
+
+  function buildRegions(results) {
+    return REGION_DEFS.map(def => {
+      const hasAny = def.moduleIds.some(id => results[id]);
+      const completed = hasAny;
+      let seed = def.id === 'trait' ? 1.7 : def.id === 'emotion' ? 3.2 : def.id === 'behavior' ? 5.1 : 2.4;
+      let layers = 5;
+      let radius = def.baseRadius;
+      if (completed) {
+        const scores = def.moduleIds.map(id => results[id]?.score).filter(s => s != null);
+        if (scores.length > 0) {
+          const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+          const norm = Math.min(1, avg / 100);
+          layers = Math.round(4 + norm * 5);
+          radius = def.baseRadius * (0.85 + norm * 0.25);
+          seed = def.id.split('').reduce((a, c) => a + c.charCodeAt(0), 0) / 100 + avg / 50;
+        }
+      }
+      return { ...def, completed, seed, layers, radius };
+    });
+  }
+
+  function generateContourPaths(seed, layers, cx, cy, radius) {
+    const paths = [];
+    for (let i = 0; i < layers; i++) {
+      const r = radius - i * (radius / layers) * 0.65;
+      const points = 14;
+      let d = 'M ';
+      for (let j = 0; j <= points; j++) {
+        const angle = (j / points) * Math.PI * 2;
+        const noise = Math.sin(seed * 3 + j * 2.1 + i * 1.3) * r * 0.15
+                    + Math.cos(seed * 2 + j * 1.7 + i * 0.9) * r * 0.10;
+        const x = cx + (r + noise) * Math.cos(angle);
+        const y = cy + (r + noise) * Math.sin(angle);
+        d += j === 0 ? `${x} ${y} ` : `L ${x} ${y} `;
+      }
+      d += 'Z';
+      const baseOpacity = 0.08 + (i / layers) * 0.22;
+      paths.push({ d, opacity: baseOpacity });
+    }
+    return paths;
+  }
+
+  let activeRegion = null;
+
+  function renderMap(regions) {
+    const svg = document.getElementById('mapSvg');
+    svg.innerHTML = '';
+
+    for (let row = 0; row < 18; row++) {
+      for (let col = 0; col < 23; col++) {
+        const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        c.setAttribute('cx', col * 30 + 12);
+        c.setAttribute('cy', row * 30 + 12);
+        c.setAttribute('r', 0.6);
+        c.setAttribute('fill', ACCENT);
+        c.setAttribute('opacity', 0.07);
+        svg.appendChild(c);
+      }
+    }
+
+    const completed = regions.filter(r => r.completed);
+    for (let i = 0; i < completed.length - 1; i++) {
+      for (let j = i + 1; j < completed.length; j++) {
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', completed[i].cx);
+        line.setAttribute('y1', completed[i].cy);
+        line.setAttribute('x2', completed[j].cx);
+        line.setAttribute('y2', completed[j].cy);
+        line.setAttribute('stroke', ACCENT);
+        line.setAttribute('stroke-width', 0.5);
+        line.setAttribute('opacity', 0.08);
+        line.setAttribute('stroke-dasharray', '3 8');
+        svg.appendChild(line);
+      }
+    }
+
+    const compassG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    compassG.setAttribute('opacity', 0.18);
+    const compassLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    compassLine.setAttribute('x1', 590); compassLine.setAttribute('y1', 28);
+    compassLine.setAttribute('x2', 590); compassLine.setAttribute('y2', 55);
+    compassLine.setAttribute('stroke', ACCENT); compassLine.setAttribute('stroke-width', 0.8);
+    const compassN = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    compassN.setAttribute('x', 590); compassN.setAttribute('y', 23);
+    compassN.setAttribute('text-anchor', 'middle'); compassN.setAttribute('fill', ACCENT);
+    compassN.setAttribute('font-size', '8'); compassN.setAttribute('font-family', "'Lora', serif");
+    compassN.setAttribute('font-style', 'italic'); compassN.textContent = 'N';
+    compassG.appendChild(compassLine); compassG.appendChild(compassN);
+    svg.appendChild(compassG);
+
+    regions.forEach((region, idx) => {
+      const contours = generateContourPaths(region.seed, region.layers, region.cx, region.cy, region.radius);
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      g.style.cursor = region.completed ? 'pointer' : 'default';
+
+      contours.forEach((c, i) => {
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', c.d);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', region.color);
+        path.setAttribute('stroke-width', region.completed ? 1.2 : 0.5);
+        path.setAttribute('opacity', 0);
+        path.setAttribute('stroke-dasharray', region.completed ? 'none' : '4 6');
+        path.style.transition = `opacity 1.2s ease ${i * 0.08 + idx * 0.3}s`;
+        g.appendChild(path);
+        setTimeout(() => { path.setAttribute('opacity', region.completed ? c.opacity : c.opacity * 0.25); }, 100);
+      });
+
+      if (activeRegion === region.id && region.completed) {
+        const glow = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        glow.setAttribute('cx', region.cx); glow.setAttribute('cy', region.cy);
+        glow.setAttribute('r', region.radius * 0.55);
+        glow.setAttribute('fill', region.color); glow.setAttribute('opacity', 0.05);
+        g.appendChild(glow);
+      }
+
+      const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      label.setAttribute('x', region.cx); label.setAttribute('y', region.cy - 10);
+      label.setAttribute('text-anchor', 'middle'); label.setAttribute('fill', region.color);
+      label.setAttribute('font-size', '12'); label.setAttribute('font-family', "'Noto Serif SC', serif");
+      label.setAttribute('opacity', 0); label.setAttribute('letter-spacing', '2');
+      label.textContent = region.label;
+      label.style.transition = `opacity 1.5s ease ${0.6 + idx * 0.3}s`;
+      g.appendChild(label);
+
+      const labelEn = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      labelEn.setAttribute('x', region.cx); labelEn.setAttribute('y', region.cy + 8);
+      labelEn.setAttribute('text-anchor', 'middle'); labelEn.setAttribute('fill', region.color);
+      labelEn.setAttribute('font-size', '8'); labelEn.setAttribute('font-family', "'Lora', serif");
+      labelEn.setAttribute('font-style', 'italic'); labelEn.setAttribute('opacity', 0);
+      labelEn.setAttribute('letter-spacing', '2'); labelEn.textContent = region.labelEn;
+      labelEn.style.transition = `opacity 1.5s ease ${0.8 + idx * 0.3}s`;
+      g.appendChild(labelEn);
+
+      if (!region.completed) {
+        const fog = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        fog.setAttribute('x', region.cx); fog.setAttribute('y', region.cy + 26);
+        fog.setAttribute('text-anchor', 'middle'); fog.setAttribute('fill', region.color);
+        fog.setAttribute('font-size', '9'); fog.setAttribute('font-family', "'Noto Serif SC', serif");
+        fog.setAttribute('opacity', 0);
+        fog.style.transition = `opacity 1.5s ease ${1 + idx * 0.3}s`;
+        fog.textContent = '云雾未开';
+        g.appendChild(fog);
+      }
+
+      setTimeout(() => {
+        g.querySelectorAll('text').forEach(t =>
+          t.setAttribute('opacity', region.completed ? (t === label ? '0.85' : '0.45') : '0.28')
+        );
+      }, 100);
+
+      if (region.completed) {
+        g.addEventListener('click', () => {
+          activeRegion = activeRegion === region.id ? null : region.id;
+          renderMap(regions);
+          renderDetail(region, results);
+        });
+      }
+      svg.appendChild(g);
+    });
+  }
+
+  let results = {};
+
+  function renderDetail(region, results) {
+    const panel = document.getElementById('detailPanel');
+    if (!activeRegion) { panel.classList.remove('active'); return; }
+    let html = '';
+    if (region.id === 'trait') {
+      const cog = results['cognitive'] || results['cognitive-48'];
+      if (cog) {
+        html = `
+          <div class="panel-header"><span class="panel-icon">◇</span> 特质轴 · Trait Axis</div>
+          <div class="panel-subtitle">荣格认知功能 · ${cog.summary || ''}</div>
+          <div class="fn-stack">
+            ${(cog.topDimension ? [{ fn: cog.topDimension, label: '主导功能', w: 92 }] :
+              [{ fn: 'Fi', label: '内在价值', w: 85 }, { fn: 'Ne', label: '可能性感知', w: 70 },
+               { fn: 'Si', label: '经验沉淀', w: 52 }, { fn: 'Te', label: '外部逻辑', w: 30 }]
+            ).map(item => `
+              <div class="fn-row">
+                <span class="fn-label">${item.fn}</span>
+                <div class="fn-bar-bg"><div class="fn-bar" style="width:${item.w}%"></div></div>
+                <span class="fn-desc">${item.label}</span>
+              </div>`).join('')}
+          </div>
+          <div class="type-tag">${cog.summary || '人格类型'}</div>`;
+      } else {
+        html = renderEmptyAxis('特质轴', 'Trait Axis', '◇', 'assessment.html?module=cognitive');
+      }
+    } else if (region.id === 'emotion') {
+      const hsp = results['hsp'], ecr = results['ecr'], erq = results['erq'];
+      if (hsp || ecr || erq) {
+        html = `
+          <div class="panel-header"><span class="panel-icon">◈</span> 情绪轴 · Emotion Axis</div>
+          <div class="metric-grid">
+            ${hsp ? `<div class="metric-card"><div class="metric-value">${hsp.score || '—'}</div><div class="metric-label">HSP 高敏感度</div><div class="metric-zone">${hsp.summary || ''}</div></div>` : ''}
+            ${ecr ? `<div class="metric-card"><div class="metric-value">${ecr.topDimension || '—'}</div><div class="metric-label">依恋类型</div><div class="metric-zone">${ecr.summary || ''}</div></div>` : ''}
+            ${erq ? `<div class="metric-card"><div class="metric-value">${erq.score || '—'}</div><div class="metric-label">情绪调节</div><div class="metric-zone">${erq.summary || ''}</div></div>` : ''}
+          </div>`;
+      } else {
+        html = renderEmptyAxis('情绪轴', 'Emotion Axis', '◈', 'assessment.html?module=hsp');
+      }
+    } else if (region.id === 'behavior') {
+      const fmps = results['fmps'], boundary = results['boundary-sense'];
+      if (fmps || boundary) {
+        html = `
+          <div class="panel-header"><span class="panel-icon">◆</span> 行为轴 · Behavior Axis</div>
+          <div class="metric-grid">
+            ${fmps ? `<div class="metric-card"><div class="metric-value">${fmps.score || '—'}</div><div class="metric-label">完美主义倾向</div><div class="metric-zone">${fmps.summary || ''}</div></div>` : ''}
+            ${boundary ? `<div class="metric-card"><div class="metric-value">${boundary.score || '—'}</div><div class="metric-label">边界感</div><div class="metric-zone">${boundary.summary || ''}</div></div>` : ''}
+          </div>`;
+      } else {
+        html = renderEmptyAxis('行为轴', 'Behavior Axis', '◆', 'assessment.html');
+      }
+    }
+    panel.innerHTML = html;
+    panel.classList.add('active');
+  }
+
+  function renderEmptyAxis(label, labelEn, icon, href) {
+    return `
+      <div class="panel-header"><span class="panel-icon">${icon}</span> ${label} · ${labelEn}</div>
+      <div style="text-align:center; padding: 20px 0; font-size:12px; color:var(--text-muted); letter-spacing:1px;">
+        尚未完成此维度测评<br>
+        <a href="${href}" style="color:var(--accent); text-decoration:none; font-size:11px; letter-spacing:2px; margin-top:12px; display:inline-block;">前往测评 →</a>
+      </div>`;
+  }
+
+  function generateNarrative(results) {
+    const parts = [];
+    const cog = results['cognitive'] || results['cognitive-48'];
+    const hsp = results['hsp'], ecr = results['ecr'];
+    const fmps = results['fmps'], boundary = results['boundary-sense'];
+    if (cog) parts.push(`你的认知类型是 ${cog.summary || '未知类型'}，内在价值坐标精密，对可能性高度敏感。`);
+    if (hsp) parts.push(`HSP 得分 ${hsp.score}，${hsp.summary || ''}——你对情绪信号有极高的分辨率。`);
+    if (ecr) parts.push(`依恋类型偏向${ecr.topDimension || '未知'}，${ecr.summary || ''}。`);
+    if (fmps && boundary) parts.push(`完美主义倾向（${fmps.score}）与边界感（${boundary.score}）构成了一组张力：高标准与渗透性边界并存。`);
+    if (parts.length === 0) return null;
+    return parts.join('') + ' 这张地图在持续生长，每完成一个测评，它就会更接近真实的你。';
+  }
+
+  function renderMoodCalendar() {
+    const grid = document.getElementById('moodGrid');
+    const section = document.getElementById('moodSection');
+    for (let i = 1; i <= 30; i++) {
+      const val = 0.3 + Math.abs(Math.sin(i * 0.7 + 1.3)) * 0.7;
+      const cell = document.createElement('div');
+      cell.className = 'mood-cell';
+      cell.style.background = `rgba(74,48,115,${0.05 + val * 0.22})`;
+      const daySpan = document.createElement('span');
+      daySpan.className = 'mood-day';
+      daySpan.textContent = i;
+      cell.appendChild(daySpan);
+      grid.appendChild(cell);
+    }
+    section.style.display = 'block';
+  }
+
+  function buildShareCard(results) {
+    const section = document.getElementById('shareSection');
+    const tags = [];
+    const cog = results['cognitive'] || results['cognitive-48'];
+    const hsp = results['hsp'], ecr = results['ecr'], fmps = results['fmps'];
+    if (cog) tags.push(cog.summary || '特质型');
+    if (hsp && hsp.score > 60) tags.push('高敏感');
+    if (ecr) tags.push(ecr.topDimension || '依恋型');
+    if (fmps && fmps.score > 60) tags.push('完美主义');
+    if (tags.length === 0) return;
+    document.getElementById('shareName').textContent = '我的内在';
+    document.getElementById('shareType').textContent = tags.slice(0, 3).join(' · ');
+    const tagsEl = document.getElementById('shareTags');
+    tags.forEach(t => {
+      const span = document.createElement('span');
+      span.className = 'share-tag-item';
+      span.textContent = t;
+      tagsEl.appendChild(span);
+    });
+    section.style.display = 'flex';
+  }
+
+  function buildCTA(regions) {
+    const section = document.getElementById('ctaSection');
+    const incomplete = regions.filter(r => !r.completed && r.id !== 'motivation');
+    if (incomplete.length === 0) return;
+    const next = incomplete[0];
+    section.innerHTML = `
+      <a class="cta-card" href="assessment.html">
+        <div>
+          <div class="cta-label">${next.label} · 待探索</div>
+          <div class="cta-sub">${next.description} → 开始测评</div>
+        </div>
+        <span class="cta-arrow">›</span>
+      </a>`;
+  }
+
+  function init() {
+    results = loadResults();
+    const regions = buildRegions(results);
+    setTimeout(() => {
+      document.getElementById('header').classList.add('visible');
+      document.getElementById('userRow').classList.add('visible');
+    }, 100);
+    const completedCount = regions.filter(r => r.completed).length;
+    document.getElementById('userMeta').textContent = `已探索 ${completedCount}/4 个维度 · 地图持续生长中`;
+    renderMap(regions);
+    renderMoodCalendar();
+    const narrative = generateNarrative(results);
+    if (narrative) {
+      const ns = document.getElementById('narrativeSection');
+      document.getElementById('narrativeText').textContent = narrative;
+      ns.style.display = 'block';
+      setTimeout(() => ns.classList.add('visible'), 2000);
+    }
+    buildCTA(regions);
+    buildShareCard(results);
+    window._mapRegions = regions;
+    window._mapResults = results;
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
