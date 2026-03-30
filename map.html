@@ -6,8 +6,10 @@
   <title>内在地形图 · She Is</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,300;1,400&family=Noto+Serif+SC:wght@300;400&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; font-family: 'Material Symbols Outlined'; }
     :root {
       --bg: #FAF7F4;
       --accent: #4A3073;
@@ -26,29 +28,9 @@
       max-width: 680px;
       margin: 0 auto;
       padding-bottom: 80px;
+      padding-top: 72px;
     }
-    header {
-      text-align: center;
-      padding: 48px 24px 16px;
-      opacity: 0;
-      transition: opacity 1.2s ease;
-    }
-    header.visible { opacity: 1; }
-    .brand-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .brand-cn { font-size: 15px; letter-spacing: 6px; color: var(--accent); font-weight: 300; }
-    .brand-en { font-size: 9px; letter-spacing: 5px; color: var(--accent); opacity: 0.5; font-family: 'Lora', serif; font-style: italic; text-transform: uppercase; }
-    .page-title { font-family: 'Lora', serif; font-style: italic; font-size: 26px; letter-spacing: 4px; font-weight: 300; color: var(--text); margin-bottom: 6px; }
-    .page-title-en { font-size: 9px; letter-spacing: 6px; font-family: 'Lora', serif; font-style: italic; color: var(--text-muted); text-transform: uppercase; }
-    .user-row { text-align: center; padding: 12px 24px 0; opacity: 0; transition: opacity 1.2s ease 0.4s; }
-    .user-row.visible { opacity: 1; }
-    .user-name { font-size: 13px; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 4px; }
-    .user-meta { font-size: 11px; color: rgba(30,22,40,0.3); letter-spacing: 1px; font-family: 'Noto Sans SC', sans-serif; }
+    header.visible { opacity: 1 !important; }
     .map-container { padding: 16px; position: relative; }
     .map-container svg { width: 100%; height: auto; display: block; }
     .hint { text-align: center; font-size: 11px; color: var(--text-muted); letter-spacing: 1px; margin-top: -4px; font-family: 'Noto Sans SC', sans-serif; }
@@ -117,26 +99,27 @@
     .share-footer { font-size: 7px; color: rgba(30,22,40,0.2); letter-spacing: 2px; }
     .share-hint { font-size: 9px; color: var(--text-muted); margin-top: 12px; letter-spacing: 1px; font-family: 'Noto Sans SC', sans-serif; }
     footer { text-align: center; padding: 32px 24px; font-size: 9px; color: rgba(30,22,40,0.2); letter-spacing: 3px; font-family: 'Noto Sans SC', sans-serif; }
-    .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 680px; background: rgba(250,247,244,0.92); backdrop-filter: blur(12px); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 12px 0 18px; z-index: 100; }
-    .nav-item { font-size: 10px; letter-spacing: 1.5px; color: var(--text-muted); text-decoration: none; font-family: 'Noto Sans SC', sans-serif; padding: 4px 8px; }
-    .nav-item.active { color: var(--accent); }
+    .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 680px; height: 80px; display: flex; justify-content: space-around; align-items: center; padding: 0 16px 16px; background: rgba(250,247,244,0.92); backdrop-filter: blur(20px); border-radius: 40px 40px 0 0; box-shadow: 0 -4px 20px rgba(28,28,26,0.04); z-index: 100; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-decoration: none; color: rgba(74,48,115,0.45); padding: 4px 8px; transition: color 0.2s; }
+    .nav-item.active { color: var(--accent); font-weight: 500; }
+    .nav-item .material-symbols-outlined { font-size: 22px; }
+    .nav-item span:last-child { font-size: 9px; letter-spacing: 1px; font-family: 'Noto Sans SC', sans-serif; text-transform: uppercase; }
   </style>
 </head>
 <body>
 
-<header id="header">
-  <div class="brand-row">
-    <span class="brand-cn">女也</span>
-    <span class="brand-en">SHE IS</span>
+<header id="header" style="position: fixed; top: 0; width: 100%; max-width: 680px; z-index: 50; background: rgba(250,247,244,0.85); backdrop-filter: blur(16px); display: flex; justify-content: space-between; align-items: center; padding: 0 24px; height: 64px; border-bottom: 1px solid rgba(74,48,115,0.06); opacity: 0; transition: opacity 1.2s ease;">
+  <span class="material-symbols-outlined" style="color: var(--accent); font-size: 22px; opacity: 0.7;">menu</span>
+  <div style="text-align: center;">
+    <div style="font-family: 'Lora', serif; font-style: italic; font-size: 18px; letter-spacing: 3px; color: var(--accent); font-weight: 400;">女也 She Is</div>
+    <div style="font-family: 'Noto Sans SC', sans-serif; font-size: 9px; letter-spacing: 4px; color: var(--text-muted); text-transform: uppercase; margin-top: 1px;">Inner Landscape</div>
   </div>
-  <div class="page-title">内在地形图</div>
-  <div class="page-title-en">Inner Landscape</div>
+  <div style="width: 32px; height: 32px; border-radius: 50%; overflow: hidden; border: 1px solid rgba(74,48,115,0.15);">
+    <div id="avatarCircle" style="width:100%; height:100%; background: rgba(74,48,115,0.12); display:flex; align-items:center; justify-content:center;">
+      <span class="material-symbols-outlined" style="font-size:18px; color: var(--accent); opacity:0.5;">person</span>
+    </div>
+  </div>
 </header>
-
-<div class="user-row" id="userRow">
-  <div class="user-name" id="userName">— 的内在画像</div>
-  <div class="user-meta" id="userMeta">加载中…</div>
-</div>
 
 <div class="map-container">
   <svg id="mapSvg" viewBox="0 0 640 520"></svg>
@@ -177,11 +160,26 @@
 <footer>女也 She Is · Inner Landscape v0.2</footer>
 
 <nav class="bottom-nav">
-  <a class="nav-item" href="index.html">首页</a>
-  <a class="nav-item" href="stories.html">故事</a>
-  <a class="nav-item" href="assessment.html">测评</a>
-  <a class="nav-item active" href="map.html">地图</a>
-  <a class="nav-item" href="mailbox.html">来信</a>
+  <a class="nav-item" href="index.html">
+    <span class="material-symbols-outlined">home</span>
+    <span>首页</span>
+  </a>
+  <a class="nav-item" href="stories.html">
+    <span class="material-symbols-outlined">auto_stories</span>
+    <span>故事</span>
+  </a>
+  <a class="nav-item" href="assessment.html">
+    <span class="material-symbols-outlined">explore</span>
+    <span>测评</span>
+  </a>
+  <a class="nav-item active" href="map.html">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;">map</span>
+    <span>地图</span>
+  </a>
+  <a class="nav-item" href="mailbox.html">
+    <span class="material-symbols-outlined">mail</span>
+    <span>来信</span>
+  </a>
 </nav>
 
 <script src="assets/profile-utils.js"></script>
@@ -527,10 +525,8 @@
     const regions = buildRegions(results);
     setTimeout(() => {
       document.getElementById('header').classList.add('visible');
-      document.getElementById('userRow').classList.add('visible');
     }, 100);
     const completedCount = regions.filter(r => r.completed).length;
-    document.getElementById('userMeta').textContent = `已探索 ${completedCount}/4 个维度 · 地图持续生长中`;
     renderMap(regions);
     renderMoodCalendar();
     const narrative = generateNarrative(results);
