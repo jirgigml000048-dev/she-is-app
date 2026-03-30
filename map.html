@@ -192,6 +192,18 @@
   const ACCENT_FAINT = 'rgba(74,48,115,0.18)';
   const BG = '#FAF7F4';
 
+  function safeScore(result) {
+    if (!result) return '—';
+    const s = result.score;
+    if (s == null) return '—';
+    if (typeof s === 'object') return JSON.stringify(s);
+    return String(Math.round(Number(s)));
+  }
+  function safeSummary(result) {
+    if (!result) return '';
+    return result.summary || result.topDimension || '';
+  }
+
   // ─── Region definitions ──────────────────────────────────────
   const REGION_DEFS = [
     { id: 'trait',      label: '特质轴', labelEn: 'Trait Axis',      cx: 200, cy: 180, baseRadius: 130, description: '认知功能的山脊线', moduleIds: ['cognitive', 'cognitive-48'], color: ACCENT },
@@ -216,13 +228,20 @@
       let layers = 5;
       let radius = def.baseRadius;
       if (completed) {
-        const scores = def.moduleIds.map(id => results[id]?.score).filter(s => s != null);
+        const scores = def.moduleIds.map(id => {
+          const s = results[id]?.score;
+          if (s == null) return null;
+          const n = typeof s === 'object' ? Object.values(s)[0] : Number(s);
+          return isNaN(n) ? null : n;
+        }).filter(s => s != null);
         if (scores.length > 0) {
           const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
-          const norm = Math.min(1, avg / 100);
-          layers = Math.round(4 + norm * 5);
-          radius = def.baseRadius * (0.85 + norm * 0.25);
-          seed = def.id.split('').reduce((a, c) => a + c.charCodeAt(0), 0) / 100 + avg / 50;
+          if (!isNaN(avg) && avg > 0) {
+            const norm = Math.min(1, avg / 100);
+            layers = Math.round(4 + norm * 5);
+            radius = def.baseRadius * (0.85 + norm * 0.25);
+            seed = def.id.split('').reduce((a, c) => a + c.charCodeAt(0), 0) / 100 + avg / 50;
+          }
         }
       }
       return { ...def, completed, seed, layers, radius };
@@ -403,9 +422,9 @@
         html = `
           <div class="panel-header"><span class="panel-icon">◈</span> 情绪轴 · Emotion Axis</div>
           <div class="metric-grid">
-            ${hsp ? `<div class="metric-card"><div class="metric-value">${hsp.score || '—'}</div><div class="metric-label">HSP 高敏感度</div><div class="metric-zone">${hsp.summary || ''}</div></div>` : ''}
+            ${hsp ? `<div class="metric-card"><div class="metric-value">${safeScore(hsp)}</div><div class="metric-label">HSP 高敏感度</div><div class="metric-zone">${safeSummary(hsp)}</div></div>` : ''}
             ${ecr ? `<div class="metric-card"><div class="metric-value">${ecr.topDimension || '—'}</div><div class="metric-label">依恋类型</div><div class="metric-zone">${ecr.summary || ''}</div></div>` : ''}
-            ${erq ? `<div class="metric-card"><div class="metric-value">${erq.score || '—'}</div><div class="metric-label">情绪调节</div><div class="metric-zone">${erq.summary || ''}</div></div>` : ''}
+            ${erq ? `<div class="metric-card"><div class="metric-value">${safeScore(erq)}</div><div class="metric-label">情绪调节</div><div class="metric-zone">${safeSummary(erq)}</div></div>` : ''}
           </div>`;
       } else {
         html = renderEmptyAxis('情绪轴', 'Emotion Axis', '◈', 'assessment.html?module=hsp');
@@ -416,8 +435,8 @@
         html = `
           <div class="panel-header"><span class="panel-icon">◆</span> 行为轴 · Behavior Axis</div>
           <div class="metric-grid">
-            ${fmps ? `<div class="metric-card"><div class="metric-value">${fmps.score || '—'}</div><div class="metric-label">完美主义倾向</div><div class="metric-zone">${fmps.summary || ''}</div></div>` : ''}
-            ${boundary ? `<div class="metric-card"><div class="metric-value">${boundary.score || '—'}</div><div class="metric-label">边界感</div><div class="metric-zone">${boundary.summary || ''}</div></div>` : ''}
+            ${fmps ? `<div class="metric-card"><div class="metric-value">${safeScore(fmps)}</div><div class="metric-label">完美主义倾向</div><div class="metric-zone">${safeSummary(fmps)}</div></div>` : ''}
+            ${boundary ? `<div class="metric-card"><div class="metric-value">${safeScore(boundary)}</div><div class="metric-label">边界感</div><div class="metric-zone">${safeSummary(boundary)}</div></div>` : ''}
           </div>`;
       } else {
         html = renderEmptyAxis('行为轴', 'Behavior Axis', '◆', 'assessment.html');
