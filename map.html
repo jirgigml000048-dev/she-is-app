@@ -197,7 +197,7 @@
     { id: 'trait',      label: '特质轴', labelEn: 'Trait Axis',      cx: 200, cy: 180, baseRadius: 130, description: '认知功能的山脊线', moduleIds: ['cognitive', 'cognitive-48'], color: ACCENT },
     { id: 'emotion',    label: '情绪轴', labelEn: 'Emotion Axis',    cx: 420, cy: 200, baseRadius: 140, description: '情感的深水区',     moduleIds: ['hsp', 'ecr', 'erq'],            color: ACCENT },
     { id: 'behavior',   label: '行为轴', labelEn: 'Behavior Axis',   cx: 300, cy: 380, baseRadius: 120, description: '行为的河床与纹路', moduleIds: ['fmps', 'boundary-sense', 'disc'], color: ACCENT },
-    { id: 'motivation', label: '动机轴', labelEn: 'Motivation Axis', cx: 480, cy: 400, baseRadius: 110, description: '尚未探索的区域', moduleIds: ['abm-love-animal', 'ideal-boyfriend'], color: 'rgba(30,22,40,0.25)' },
+    { id: 'motivation', label: '动机轴', labelEn: 'Motivation Axis', cx: 480, cy: 400, baseRadius: 110, description: '尚未探索的区域', moduleIds: ['abm-love-animal', 'ideal-boyfriend'], color: 'rgba(74,48,115,0.35)' },
   ];
 
   function loadResults() {
@@ -244,7 +244,7 @@
         d += j === 0 ? `${x} ${y} ` : `L ${x} ${y} `;
       }
       d += 'Z';
-      const baseOpacity = 0.08 + (i / layers) * 0.22;
+      const baseOpacity = 0.15 + (i / layers) * 0.35;
       paths.push({ d, opacity: baseOpacity });
     }
     return paths;
@@ -308,12 +308,12 @@
         path.setAttribute('d', c.d);
         path.setAttribute('fill', 'none');
         path.setAttribute('stroke', region.color);
-        path.setAttribute('stroke-width', region.completed ? 1.2 : 0.5);
+        path.setAttribute('stroke-width', region.completed ? 1.4 : 0.8);
         path.setAttribute('opacity', 0);
         path.setAttribute('stroke-dasharray', region.completed ? 'none' : '4 6');
         path.style.transition = `opacity 1.2s ease ${i * 0.08 + idx * 0.3}s`;
         g.appendChild(path);
-        setTimeout(() => { path.setAttribute('opacity', region.completed ? c.opacity : c.opacity * 0.25); }, 100);
+        setTimeout(() => { path.setAttribute('opacity', region.completed ? c.opacity : c.opacity * 0.55); }, 100);
       });
 
       if (activeRegion === region.id && region.completed) {
