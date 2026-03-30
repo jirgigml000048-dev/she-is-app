@@ -7,7 +7,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js"></script>
 <script id="tailwind-config">
   tailwind.config = {
     darkMode: "class",
@@ -173,8 +173,13 @@
 <script>
   const SUPABASE_URL = 'https://xagmrtiajoyznquzehqd.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_VrywoMuwI8TJoZMIrhT-5A_A0I1yltP';
-  const { createClient } = supabase;
-  window.sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+  try {
+    const { createClient } = window.supabase || supabase;
+    window.sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+    console.log('[login] window.sb initialized:', !!window.sb?.auth);
+  } catch(e) {
+    console.error('[login] supabase init failed:', e);
+  }
 
   function getRedirectTarget() {
     const params = new URLSearchParams(window.location.search);
@@ -287,6 +292,7 @@
       return;
     }
     // 写入 session
+    if (!window.sb) { showError(smsError, '客户端初始化失败，请刷新重试'); smsBtn.disabled = false; return; }
     await window.sb.auth.setSession(data.session);
     window.location.href = getRedirectTarget();
   }
