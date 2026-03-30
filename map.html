@@ -138,9 +138,14 @@ tailwind.config = {
 </div>
 
 
-<div class="mood-section" id="moodSection" style="display:none">
-  <div class="mood-title">情绪地形 · Emotional Terrain · 近30天</div>
-  <div class="mood-grid" id="moodGrid"></div>
+<!-- 四轴卡片区 -->
+<div class="axes-section" id="axesSection">
+  <div class="axes-header">
+    <div class="axes-line"></div>
+    <span class="axes-tag">四轴画像 · Four Axes</span>
+    <div class="axes-line"></div>
+  </div>
+  <div class="axes-list" id="axesList"></div>
 </div>
 
 <div class="narrative-section" id="narrativeSection" style="display:none">
@@ -154,14 +159,9 @@ tailwind.config = {
 
 <div class="cta-section" id="ctaSection"></div>
 
-<!-- 四轴卡片区 -->
-<div class="axes-section" id="axesSection">
-  <div class="axes-header">
-    <div class="axes-line"></div>
-    <span class="axes-tag">四轴画像 · Four Axes</span>
-    <div class="axes-line"></div>
-  </div>
-  <div class="axes-list" id="axesList"></div>
+<div class="mood-section" id="moodSection" style="display:none">
+  <div class="mood-title">情绪地形 · Emotional Terrain · 近30天</div>
+  <div class="mood-grid" id="moodGrid"></div>
 </div>
 
 <!-- CTA -->
@@ -496,19 +496,19 @@ tailwind.config = {
     const list = document.getElementById('axesList');
     if (!list) return;
     const axes = [
-      { id: 'trait', name: '特质轴', nameEn: 'Trait Axis', desc: '深度解读人格底层架构', tests: [
+      { id: 'trait', name: '特质轴', nameEn: 'Trait Axis', desc: '你如何感知、思考、做决策——这是你最底层的操作系统', tests: [
         { id: 'cognitive', name: '八维人格', nameEn: 'Cognitive Functions', scoreKey: 'summary' },
       ]},
-      { id: 'emotion', name: '情绪轴', nameEn: 'Emotion Axis', desc: '感知、调节与依恋深度', tests: [
+      { id: 'emotion', name: '情绪轴', nameEn: 'Emotion Axis', desc: '你如何感受、消化、应对情绪——这里藏着你消耗最多能量的地方', tests: [
         { id: 'hsp', name: '高敏感测评', nameEn: 'High Sensitivity Test', scoreKey: 'score' },
         { id: 'erq', name: '情绪调节测评', nameEn: 'Emotion Regulation', scoreKey: 'score' },
         { id: 'ecr', name: '依恋风格测评', nameEn: 'Attachment Style', scoreKey: 'topDimension' },
       ]},
-      { id: 'behavior', name: '行为轴', nameEn: 'Behavior Axis', desc: '外显反应与应对机制', tests: [
+      { id: 'behavior', name: '行为轴', nameEn: 'Behavior Axis', desc: '你如何行动、设标准、划边界——这决定了你和世界的互动方式', tests: [
         { id: 'fmps', name: '完美主义测评', nameEn: 'Perfectionism', scoreKey: 'score' },
         { id: 'boundary-sense', name: '边界感测评', nameEn: 'Boundary Sense', scoreKey: 'score' },
       ]},
-      { id: 'motivation', name: '动机轴', nameEn: 'Motivation Axis', desc: '行为背后的核心驱动', tests: [
+      { id: 'motivation', name: '动机轴', nameEn: 'Motivation Axis', desc: '你为什么是这样的你——驱动力和恐惧的根源（即将上线）', tests: [
         { id: 'abm-love-animal', name: '爱情动物测评', nameEn: 'Love Animal', scoreKey: 'topDimension' },
       ]},
     ];
