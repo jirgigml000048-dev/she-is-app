@@ -534,7 +534,7 @@
       <div class="topline"><span id="progressBar"></span></div>
       <div class="meta"><span id="progressText">准备开始</span><span>Boundary Sense</span></div>
 
-      <section class="panel view" id="introView">
+      <section class="panel view hidden" id="introView">
         <p class="eyebrow">Light Quiz</p>
         <h1 class="title">边界感测评</h1>
         <p class="subtitle" id="introDesc"></p>
@@ -542,12 +542,39 @@
         <button class="primary" id="beginQuizBtn">准备好了</button>
       </section>
 
-      <section class="panel view hidden" id="quizView">
-        <div class="question-id" id="questionCounter"></div>
-        <h2 class="question-text" id="questionText"></h2>
-        <p class="question-desc">单选 · 选完自动进入下一题</p>
-        <div class="options" id="options"></div>
-      </section>
+      <div id="quizPanel" style="display:none;padding:5rem 1.5rem 8rem;min-height:100dvh;flex-direction:column;align-items:center;max-width:28rem;margin:0 auto;">
+        <!-- Progress -->
+        <div style="width:100%;margin-bottom:2.5rem;text-align:center;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1rem;">
+            <span id="counter" style="font-family:'Noto Serif SC',serif;font-size:2.5rem;color:rgba(51,24,92,0.8);"></span>
+            <div style="text-align:right;">
+              <p style="font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:#7b7580;font-weight:600;margin:0 0 4px;">进度 / STATUS</p>
+              <p id="answered" style="font-size:12px;color:rgba(51,24,92,0.6);font-weight:500;margin:0;"></p>
+            </div>
+          </div>
+          <div style="width:100%;height:4px;background:#f0edea;border-radius:9999px;overflow:hidden;">
+            <div id="bar" style="height:100%;background:#9c3c62;border-radius:9999px;transition:width 0.25s;width:0%;"></div>
+          </div>
+        </div>
+        <!-- Question Card -->
+        <div style="width:100%;position:relative;">
+          <div style="position:absolute;top:-1rem;right:-1rem;width:8rem;height:8rem;background:rgba(236,220,255,0.3);border-radius:9999px;filter:blur(48px);z-index:-1;"></div>
+          <div style="background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);border-radius:1rem;padding:2rem;margin-bottom:2.5rem;border:1px solid rgba(229,226,223,0.5);box-shadow:0 10px 40px -10px rgba(51,24,92,0.08);display:flex;flex-direction:column;align-items:center;text-align:center;">
+            <div style="width:3rem;height:2px;background:rgba(51,24,92,0.15);border-radius:9999px;margin-bottom:2.5rem;"></div>
+            <h2 id="qText" style="font-family:'Noto Serif SC',serif;font-size:1.5rem;line-height:1.6;color:#1c1c1a;margin:0 0 1rem;padding:0 0.5rem;"></h2>
+            <p id="qTextEn" style="font-family:'Noto Serif SC',serif;font-size:1rem;color:rgba(51,24,92,0.5);line-height:1.5;margin:0 0 2rem;font-style:italic;"></p>
+            <div id="choiceOptions" style="width:100%;display:flex;flex-direction:column;gap:0.75rem;"></div>
+          </div>
+        </div>
+        <!-- Action Buttons -->
+        <div style="width:100%;display:flex;flex-direction:column;gap:1rem;">
+          <div style="display:flex;gap:1rem;width:100%;">
+            <button id="prevBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#f0edea;color:#7b7580;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:all 0.2s;">← 上一题</button>
+            <button id="nextBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;box-shadow:0 4px 16px rgba(51,24,92,0.15);transition:all 0.2s;">下一题 →</button>
+          </div>
+          <button id="submitBtn" disabled style="width:100%;padding:1.25rem;border-radius:0.75rem;border:1px solid rgba(204,196,209,0.3);color:#33185c;font-weight:500;font-size:12px;letter-spacing:0.1em;background:rgba(246,243,240,0.4);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.75rem;transition:all 0.2s;">✦ 翻开这一页 / Flip this page</button>
+        </div>
+      </div>
 
       <section class="panel view hidden" id="resultView">
         <p class="eyebrow">Result</p>
@@ -662,6 +689,7 @@ function generateResultCard() {
     {
       "id": 1,
       "text": "伴侣说想周末一起出去，你其实更想一个人待着。你更可能：",
+      "text_en": "Your partner suggests going out this weekend, but you'd rather be alone. You'd most likely:",
       "options": [
         { "value": "A", "text": "跟他说这周需要独处，下次再约", "tag": "边界感比较稳固" },
         { "value": "B", "text": "答应去，因为不想让他失望", "tag": "情感型边界缺失" },
@@ -672,6 +700,7 @@ function generateResultCard() {
     {
       "id": 2,
       "text": "朋友讲了一个小时，你已经很疲了。你更可能：",
+      "text_en": "Your friend has been talking for an hour and you're exhausted. You'd most likely:",
       "options": [
         { "value": "A", "text": "说一声「我现在有点累了，我们改天继续聊」", "tag": "边界感比较稳固" },
         { "value": "B", "text": "不确定自己是真累了还是今天状态差，就这么撑着", "tag": "自我认知型边界缺失" },
@@ -682,6 +711,7 @@ function generateResultCard() {
     {
       "id": 3,
       "text": "有人问你想去哪里吃饭，你最常出现的反应：",
+      "text_en": "Someone asks where you want to eat. Your most common response:",
       "options": [
         { "value": "A", "text": "说出一个你真正想吃的地方", "tag": "边界感比较稳固" },
         { "value": "B", "text": "附和呼声最高的那个", "tag": "社交型边界缺失" },
@@ -692,6 +722,7 @@ function generateResultCard() {
     {
       "id": 4,
       "text": "你拒绝了一个邀请，对方沉默了一会儿。你接下来：",
+      "text_en": "You declined an invitation, and the other person goes silent. What happens next:",
       "options": [
         { "value": "A", "text": "觉得这是正常反应，等一等", "tag": "边界感比较稳固" },
         { "value": "B", "text": "开始怀疑自己的决定，明明刚才想拒绝，现在又不确定了", "tag": "自我认知型边界缺失" },
@@ -702,6 +733,7 @@ function generateResultCard() {
     {
       "id": 5,
       "text": "同事把不属于你的活推过来，说“你最靠谱”。你通常：",
+      "text_en": "A colleague pushes their work to you, saying 'you're the most reliable.' You usually:",
       "options": [
         { "value": "A", "text": "当场说清楚这个不在你职责范围内", "tag": "边界感比较稳固" },
         { "value": "B", "text": "接下来了，事后才意识到这根本不是你的事", "tag": "自我认知型边界缺失" },
@@ -712,6 +744,7 @@ function generateResultCard() {
     {
       "id": 6,
       "text": "你在亲密关系里很少说「我不想」。如果深究，更像是：",
+      "text_en": "You rarely say 'I don't want to' in close relationships. If you dig deeper, it's more like:",
       "options": [
         { "value": "A", "text": "不是不说，你说得出来", "tag": "边界感比较稳固" },
         { "value": "B", "text": "到了那个时刻，你不太确定自己到底想不想", "tag": "自我认知型边界缺失" },
@@ -722,6 +755,7 @@ function generateResultCard() {
     {
       "id": 7,
       "text": "家人叫你帮忙，你其实很累。你更可能：",
+      "text_en": "Family asks for help, but you're really tired. You'd most likely:",
       "options": [
         { "value": "A", "text": "说你现在状态不好，等会再帮", "tag": "边界感比较稳固" },
         { "value": "B", "text": "站起来帮了，不确定是真的愿意还是习惯性反应", "tag": "自我认知型边界缺失" },
@@ -732,6 +766,7 @@ function generateResultCard() {
     {
       "id": 8,
       "text": "答应了某件事，后来发现自己根本不想做。这种情况：",
+      "text_en": "You agreed to something, then realized you really don't want to do it. This happens:",
       "options": [
         { "value": "A", "text": "不太常发生，答应之前你会先想清楚", "tag": "边界感比较稳固" },
         { "value": "B", "text": "挺常见，答应的时候其实就没想清楚", "tag": "自我认知型边界缺失" },
@@ -742,6 +777,7 @@ function generateResultCard() {
     {
       "id": 9,
       "text": "你正在休息，有人发消息说“你现在有空吗”。你通常：",
+      "text_en": "You're resting and someone texts 'are you free right now?' You usually:",
       "options": [
         { "value": "A", "text": "如果没空就说没空", "tag": "边界感比较稳固" },
         { "value": "B", "text": "说有空，然后心里有点不情愿", "tag": "自我认知型边界缺失" },
@@ -752,6 +788,7 @@ function generateResultCard() {
     {
       "id": 10,
       "text": "最近一次感到「被自己委屈了」，根源更像是：",
+      "text_en": "The last time you felt 'wronged by yourself,' the root was more like:",
       "options": [
         { "value": "A", "text": "没怎么有这种感觉", "tag": "边界感比较稳固" },
         { "value": "B", "text": "当时照顾了别人的感受，没人注意到你", "tag": "情感型边界缺失" },
@@ -813,14 +850,11 @@ function generateResultCard() {
 };
       const state = { index: -1, answers: [], counts: {} };
       const introView = document.getElementById('introView');
-      const quizView = document.getElementById('quizView');
+      const quizView = document.getElementById('quizPanel');
       const resultView = document.getElementById('resultView');
       const progressBar = document.getElementById('progressBar');
       const progressText = document.getElementById('progressText');
       const introDesc = document.getElementById('introDesc');
-      const questionCounter = document.getElementById('questionCounter');
-      const questionText = document.getElementById('questionText');
-      const options = document.getElementById('options');
       const resultTag = document.getElementById('resultTag');
       const resultTitle = document.getElementById('resultTitle');
       const resultDesc = document.getElementById('resultDesc');
@@ -829,6 +863,7 @@ function generateResultCard() {
       const storyRec = document.getElementById('storyRec');
       const storyTitleEl = storyRec.querySelector('.story-rec-title');
       const storyLinkEl = storyRec.querySelector('.story-rec-btn');
+      const $ = id => document.getElementById(id);
       const storyIllustrations = {
         'story-detail.html': 'illustrations/story-queqie.png',
         'story-tuanzi-v3.html': 'illustrations/story-tuanzi.png',
@@ -859,47 +894,47 @@ function generateResultCard() {
       introDesc.textContent = `${testData.description} 共 ${testData.questions.length} 题。`;
 
       function setView(view) {
-        [introView, quizView, resultView].forEach((el) => el.classList.add('hidden'));
-        view.classList.remove('hidden');
-      }
-
-      function updateProgress() {
-        const total = testData.questions.length;
-        if (state.index < 0) {
-          progressText.textContent = '准备开始';
-          progressBar.style.width = '0%';
-          return;
-        }
-        if (state.index >= total) {
-          progressText.textContent = `已完成 · 共${total}题`;
-          progressBar.style.width = '100%';
-          return;
-        }
-        progressText.textContent = `第${state.index + 1}题 / 共${total}题`;
-        progressBar.style.width = `${((state.index + 1) / total) * 100}%`;
+        introView.classList.add('hidden');
+        resultView.classList.add('hidden');
+        quizView.style.display = 'none';
+        if (view === quizView) quizView.style.display = 'flex';
+        else view.classList.remove('hidden');
       }
 
       function renderQuestion() {
-        updateProgress();
+        const total = testData.questions.length;
+        const done = state.answers.filter(v => v !== null && v !== undefined).length;
         const question = testData.questions[state.index];
-        questionCounter.textContent = `Question ${state.index + 1}`;
-        questionText.textContent = question.text;
-        options.innerHTML = '';
+        $('qText').textContent = question.text;
+        $('qTextEn').textContent = question.text_en || '';
+        $('counter').innerHTML = `${state.index + 1} <span style="font-size:1rem;color:rgba(204,196,209,1);font-family:'Plus Jakarta Sans',sans-serif;">/ ${total}</span>`;
+        $('answered').innerHTML = `已完成 ${done} / ${total} <span style="opacity:0.6;">/ Completed ${done} / ${total}</span>`;
+        $('bar').style.width = `${(done / total) * 100}%`;
+        if (progressBar) progressBar.style.width = `${(done / total) * 100}%`;
+        $('prevBtn').disabled = state.index === 0;
+        $('prevBtn').style.opacity = state.index === 0 ? '0.4' : '1';
+        $('nextBtn').disabled = state.index === total - 1;
+        $('nextBtn').style.opacity = state.index === total - 1 ? '0.4' : '1';
+        $('submitBtn').disabled = done !== total;
+        $('submitBtn').style.opacity = done === total ? '1' : '0.5';
+        const container = $('choiceOptions');
+        container.innerHTML = '';
         question.options.forEach((option) => {
-          const button = document.createElement('button');
-          button.className = 'option';
-          button.type = 'button';
-          button.innerHTML = `<span class="option-mark">${option.value}</span><span class="option-copy">${option.text}</span>`;
-          button.addEventListener('click', () => chooseOption(option));
-          options.appendChild(button);
+          const b = document.createElement('button');
+          const isSelected = state.answers[state.index] === option.tag;
+          b.style.cssText = isSelected
+            ? 'width:100%;padding:1rem 1.25rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-family:\'Noto Serif SC\',sans-serif;font-size:14px;text-align:left;border:none;cursor:pointer;transition:all 0.2s;'
+            : 'width:100%;padding:1rem 1.25rem;border-radius:0.75rem;background:rgba(255,255,255,0.8);color:#1c1c1a;font-family:\'Noto Serif SC\',sans-serif;font-size:14px;text-align:left;border:1px solid rgba(229,226,223,0.8);cursor:pointer;transition:all 0.2s;';
+          b.textContent = option.text;
+          b.addEventListener('click', () => chooseOption(option));
+          container.appendChild(b);
         });
       }
 
       function chooseOption(option) {
         state.answers[state.index] = option.tag;
         state.counts[option.tag] = (state.counts[option.tag] || 0) + 1;
-        const active = options.children;
-        for (const item of active) item.disabled = true;
+        renderQuestion();
         setTimeout(() => {
           state.index += 1;
           if (state.index >= testData.questions.length) {
@@ -907,7 +942,7 @@ function generateResultCard() {
           } else {
             renderQuestion();
           }
-        }, 220);
+        }, 300);
       }
 
       function getTopTag() {
@@ -981,6 +1016,15 @@ function generateResultCard() {
         renderQuestion();
       }
 
+      document.addEventListener('DOMContentLoaded', () => {
+        const prevBtn = $('prevBtn');
+        const nextBtn = $('nextBtn');
+        const submitBtn = $('submitBtn');
+        if (prevBtn) prevBtn.onclick = () => { if (state.index > 0) { state.index--; renderQuestion(); } };
+        if (nextBtn) nextBtn.onclick = () => { if (state.index < testData.questions.length - 1) { state.index++; renderQuestion(); } };
+        if (submitBtn) submitBtn.onclick = renderResult;
+      });
+
       function renderStoredResult(record) {
         if (!record) return false;
         const tag = record.topDimension || record.summary || '边界感比较稳固';
@@ -1032,6 +1076,8 @@ function generateResultCard() {
       btn.addEventListener('click', function() {
         hero.style.display = 'none';
         testBody.style.display = 'block';
+        var bqb = document.getElementById('beginQuizBtn');
+        if (bqb) bqb.click();
       });
     }
   }

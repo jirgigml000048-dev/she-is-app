@@ -18,7 +18,7 @@ async function getUser() {
 async function signInWithGoogle() {
   await sb.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: window.location.origin + '/index.html' }
+    options: { redirectTo: window.location.href }
   });
 }
 
@@ -26,7 +26,7 @@ async function signInWithGoogle() {
 async function signInWithEmail(email) {
   const { error } = await sb.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: window.location.origin + '/index.html' }
+    options: { emailRedirectTo: window.location.href }
   });
   return error;
 }
@@ -220,10 +220,11 @@ function resetLoginModal() {
 }
 
 function openLoginModal() {
-  injectLoginModal();
-  document.getElementById('loginModal').style.display = 'flex';
+  const next = encodeURIComponent(window.location.pathname.replace(/^\//, '') + window.location.search);
+  window.location.href = 'login.html?next=' + next;
 }
 
 function closeLoginModal() {
-  document.getElementById('loginModal').style.display = 'none';
+  const modal = document.getElementById('loginModal');
+  if (modal) modal.style.display = 'none';
 }

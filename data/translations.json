@@ -1,0 +1,769 @@
+{
+  "_meta": {
+    "description": "English translations for She Is assessment questions and options",
+    "generated": "2026-03-27",
+    "format": "Each file has questions array with id, text (Chinese), text_en (English). Options also translated where applicable."
+  },
+
+  "test-erq.html": {
+    "testName": "Emotion Regulation Questionnaire",
+    "testName_en": "Emotion Regulation Questionnaire · ERQ",
+    "scaleLabels": {
+      "1": { "text": "非常不同意", "text_en": "Strongly Disagree" },
+      "7": { "text": "非常同意", "text_en": "Strongly Agree" }
+    },
+    "questions": [
+      {
+        "id": 1,
+        "text": "情景：朋友迟到了一小时，你本来很烦。\n\n陈述：我会先想想他是不是有什么原因，让自己平静下来。",
+        "text_en": "Scenario: A friend is an hour late, and you're annoyed.\n\nStatement: I'd first consider whether something came up, to calm myself down."
+      },
+      {
+        "id": 2,
+        "text": "情景：和同事开会，有人说了一件让你不舒服的话。\n\n陈述：我不会让别人看出来我有情绪。",
+        "text_en": "Scenario: In a meeting, a colleague says something that bothers you.\n\nStatement: I wouldn't let others see that I'm upset."
+      },
+      {
+        "id": 3,
+        "text": "情景：工作上出了一个你觉得不该发生的错误，你很沮丧。\n\n陈述：我会换一个角度看它——也许这是个机会，让我搞清楚哪里还有漏洞。",
+        "text_en": "Scenario: A mistake happened at work that shouldn't have, and you feel frustrated.\n\nStatement: I'd try to see it differently — maybe it's a chance to figure out what gaps remain."
+      },
+      {
+        "id": 4,
+        "text": "情景：收到了一个好消息，你其实很激动。\n\n陈述：我会克制自己，不在公开场合表露这种兴奋。",
+        "text_en": "Scenario: You receive great news and feel genuinely excited.\n\nStatement: I'd hold back and not show my excitement in public."
+      },
+      {
+        "id": 5,
+        "text": "情景：你面临一个让你焦虑的重要决定。\n\n陈述：我会告诉自己：不管结果怎样，我能处理的。",
+        "text_en": "Scenario: You're facing an important decision that makes you anxious.\n\nStatement: I'd tell myself: whatever the outcome, I can handle it."
+      },
+      {
+        "id": 6,
+        "text": "情景：你心里很乱，但现场需要你保持冷静。\n\n陈述：我的做法是什么都不表现出来，先撑过这一段。",
+        "text_en": "Scenario: You're in turmoil inside, but the situation requires you to stay composed.\n\nStatement: I'd show nothing and just push through."
+      },
+      {
+        "id": 7,
+        "text": "情景：一件开心的事情发生了，但你有点不敢相信。\n\n陈述：我会让自己好好感受这份高兴，而不是马上想「会不会哪里有问题」。",
+        "text_en": "Scenario: Something wonderful happens, but you almost can't believe it.\n\nStatement: I'd let myself fully enjoy the happiness instead of immediately wondering if something's wrong."
+      },
+      {
+        "id": 8,
+        "text": "情景：和重要的人发生了争吵，你很难受。\n\n陈述：我会在脑子里重新组织这件事：我们只是观点不同，不是关系坏了。",
+        "text_en": "Scenario: You've had an argument with someone important to you, and it hurts.\n\nStatement: I'd reframe it in my mind: we just disagree — the relationship isn't broken."
+      },
+      {
+        "id": 9,
+        "text": "情景：你感到委屈，但不想让对方知道。\n\n陈述：我会把那些情绪压下去，就算再难受也不会表露出来。",
+        "text_en": "Scenario: You feel wronged, but you don't want the other person to know.\n\nStatement: I'd suppress those feelings — no matter how much it hurts, I wouldn't show it."
+      },
+      {
+        "id": 10,
+        "text": "情景：你被批评了，感觉很受伤。\n\n陈述：我会试着把这个评价当作信息，而不是对我这个人的否定。",
+        "text_en": "Scenario: You've been criticized, and it stings.\n\nStatement: I'd try to treat the feedback as information, not as a rejection of who I am."
+      }
+    ]
+  },
+
+  "test-ecr.html": {
+    "testName": "成人依恋类型",
+    "testName_en": "Attachment Style · ECR",
+    "scaleLabels": {
+      "1": { "text": "非常不同意", "text_en": "Strongly Disagree" },
+      "7": { "text": "非常同意", "text_en": "Strongly Agree" }
+    },
+    "questions": [
+      { "id": 1, "text": "总的来说，我不喜欢让恋人知道自己内心深处的感觉", "text_en": "Generally, I prefer not to let my partner know how I truly feel deep down." },
+      { "id": 2, "text": "我担心我会被抛弃", "text_en": "I worry about being abandoned." },
+      { "id": 3, "text": "我觉得跟恋人亲近是一件惬意的事情", "text_en": "I find it comfortable to be close to my partner." },
+      { "id": 4, "text": "我很担心我的恋爱关系", "text_en": "I worry a lot about my romantic relationship." },
+      { "id": 5, "text": "当恋人开始要跟我亲近时，我发现我自己在退缩", "text_en": "When my partner starts getting close, I find myself pulling away." },
+      { "id": 6, "text": "我担心恋人不会像我关心他/她那样地关心我", "text_en": "I worry that my partner won't care about me as much as I care about them." },
+      { "id": 7, "text": "当恋人希望跟我非常亲近时，我会觉得不自在", "text_en": "I feel uneasy when my partner wants to be very close." },
+      { "id": 8, "text": "我有点担心会失去恋人", "text_en": "I'm somewhat worried about losing my partner." },
+      { "id": 9, "text": "我觉得对恋人开诚布公，不是一件很舒服的事情", "text_en": "Being completely open with my partner doesn't feel comfortable." },
+      { "id": 10, "text": "我常常希望恋人对我的感情和我对恋人的感情一样强烈", "text_en": "I often wish my partner's feelings for me were as strong as mine for them." },
+      { "id": 11, "text": "我想与恋人亲近，但我又总是会退缩不前", "text_en": "I want to get close to my partner, but I keep pulling back." },
+      { "id": 12, "text": "我常常想与恋人形影不离，但有时这样会把恋人吓跑", "text_en": "I often want to be inseparable from my partner, but sometimes that scares them away." },
+      { "id": 13, "text": "当恋人跟我过分亲密的时候，我会感到内心紧张", "text_en": "When my partner gets too intimate, I feel tense inside." },
+      { "id": 14, "text": "我担心一个人独处", "text_en": "I worry about being alone." },
+      { "id": 15, "text": "我愿意把我内心的想法和感觉告诉恋人，我觉得这是一件自在的事情", "text_en": "I'm comfortable sharing my inner thoughts and feelings with my partner." },
+      { "id": 16, "text": "我想跟恋人非常亲密的愿望，有时会把恋人吓跑", "text_en": "My desire for extreme closeness sometimes scares my partner away." },
+      { "id": 17, "text": "我试图避免与恋人变得太亲近", "text_en": "I try to avoid getting too close to my partner." },
+      { "id": 18, "text": "我需要我的恋人一再地保证他/她是爱我的", "text_en": "I need my partner to repeatedly reassure me that they love me." },
+      { "id": 19, "text": "我觉得我比较容易与恋人亲近", "text_en": "I find it relatively easy to get close to my partner." },
+      { "id": 20, "text": "我觉得自己在要求恋人把更多的感觉，以及对恋爱关系的投入程度表现出来", "text_en": "I feel like I'm always asking my partner to show more feelings and commitment." },
+      { "id": 21, "text": "我发现让我依赖恋人，是一件困难的事情", "text_en": "I find it hard to let myself depend on my partner." },
+      { "id": 22, "text": "我并不是常常担心被恋人抛弃", "text_en": "I don't often worry about being abandoned by my partner." },
+      { "id": 23, "text": "我倾向于不跟恋人过分亲密", "text_en": "I tend to avoid being overly close to my partner." },
+      { "id": 24, "text": "如果我无法得到恋人的注意和关心，我会心烦意乱或者生气", "text_en": "If I can't get my partner's attention and care, I get upset or angry." },
+      { "id": 25, "text": "我跟恋人什么事情都讲", "text_en": "I tell my partner everything." },
+      { "id": 26, "text": "我发现恋人并不愿意像我所想的那样跟我亲近", "text_en": "I find that my partner doesn't want to be as close as I'd like." },
+      { "id": 27, "text": "我经常与恋人讨论我所遇到的问题以及我关心的事情", "text_en": "I often discuss my problems and concerns with my partner." },
+      { "id": 28, "text": "如果我还没有恋人的话，我会感到有点焦虑和不安", "text_en": "When I'm not in a relationship, I feel somewhat anxious and uneasy." },
+      { "id": 29, "text": "我觉得依赖恋人是很自在的事情", "text_en": "I feel comfortable depending on my partner." },
+      { "id": 30, "text": "如果恋人不能像我所希望的那样在我身边时，我会感到灰心丧气", "text_en": "When my partner can't be with me as much as I'd like, I feel discouraged." },
+      { "id": 31, "text": "我并不在意从恋人那里寻找安慰、听取劝告、得到帮助", "text_en": "I don't mind turning to my partner for comfort, advice, and help." },
+      { "id": 32, "text": "如果在我需要的时候，恋人却不在我身边，我会感到沮丧", "text_en": "When I need my partner and they're not there, I feel frustrated." },
+      { "id": 33, "text": "在需要的时候，我向恋人求助，是很有用的", "text_en": "Reaching out to my partner for help when I need it works well." },
+      { "id": 34, "text": "当恋人不赞同我时，我觉得确实是我不好", "text_en": "When my partner disagrees with me, I feel like it's my fault." },
+      { "id": 35, "text": "我会在很多事情上向恋人求助，包括寻求安慰和得到承诺", "text_en": "I turn to my partner for many things, including comfort and reassurance." },
+      { "id": 36, "text": "当恋人不花时间和我在一起时，我会感到怨恨", "text_en": "When my partner doesn't spend time with me, I feel resentful." }
+    ]
+  },
+
+  "test-fmps.html": {
+    "testName": "完美主义倾向",
+    "testName_en": "Perfectionism · FMPS",
+    "scaleLabels": {
+      "1": { "text": "完全不符合", "text_en": "Not at All Like Me" },
+      "2": { "text": "不太符合", "text_en": "Slightly Like Me" },
+      "3": { "text": "不确定", "text_en": "Uncertain" },
+      "4": { "text": "比较符合", "text_en": "Mostly Like Me" },
+      "5": { "text": "完全符合", "text_en": "Exactly Like Me" }
+    },
+    "questions": [
+      { "id": 1, "text": "做事或学习的时候若是有部分的失败，我会觉得自己完全失败了", "text_en": "If I partly fail at something, I feel like a complete failure." },
+      { "id": 2, "text": "假如我犯错误，人们很可能会轻看我", "text_en": "If I make a mistake, people are likely to think less of me." },
+      { "id": 3, "text": "如果我不能做得跟别人一样好，说明我是个低人一等的人", "text_en": "If I can't do as well as others, it means I'm an inferior person." },
+      { "id": 4, "text": "做事有条理有系统对我是十分重要的", "text_en": "Being organized and systematic is very important to me." },
+      { "id": 5, "text": "整洁对我来说是十分重要的", "text_en": "Neatness is very important to me." },
+      { "id": 6, "text": "我是一个有条理的人", "text_en": "I am an organized person." },
+      { "id": 7, "text": "我的父母曾给我定下很高的标准", "text_en": "My parents set very high standards for me." },
+      { "id": 8, "text": "我的父母曾经期望我做得特别出色", "text_en": "My parents expected me to excel." },
+      { "id": 9, "text": "我从不觉得自己能达到我父母为我定下的标准", "text_en": "I never felt I could meet the standards my parents set for me." },
+      { "id": 10, "text": "比起大多数人，我定下更高的目标", "text_en": "I set higher goals for myself than most people do." },
+      { "id": 11, "text": "我厌恶做事不能做得最佳", "text_en": "I hate not being able to do my best." },
+      { "id": 12, "text": "我有极高的目标", "text_en": "I have extremely high goals." },
+      { "id": 13, "text": "尽管我小心翼翼地做事，还是经常感到自己做得不太正确", "text_en": "Even when I'm careful, I often feel like I haven't done things right." },
+      { "id": 14, "text": "我经常对一些日常小事也犹豫不决", "text_en": "I often hesitate over everyday decisions." },
+      { "id": 15, "text": "为了把一件事情做好，我需要花较长的时间", "text_en": "I need a long time to do something well." }
+    ]
+  },
+
+  "test-disc.html": {
+    "testName": "行为风格测评",
+    "testName_en": "DISC Behavioral Style Assessment",
+    "questions": [
+      {
+        "id": 1,
+        "text": "团队要做一个决定，但大家迟迟没有进展。你更可能：",
+        "text_en": "The team needs to make a decision, but no one's moving forward. You'd most likely:",
+        "options": [
+          { "text": "先把所有选项的利弊列清楚，再讨论", "text_en": "List the pros and cons of every option before discussing" },
+          { "text": "先把大家的想法都摆出来，让气氛活起来", "text_en": "Get everyone's ideas out in the open and energize the room" },
+          { "text": "直接说出你的判断，推动做决定", "text_en": "State your judgment directly and push for a decision" },
+          { "text": "等大家都说完，再给出你的看法", "text_en": "Wait until everyone has spoken, then share your view" }
+        ]
+      },
+      {
+        "id": 2,
+        "text": "你被交代了一个任务，但给的信息不够完整。你更可能：",
+        "text_en": "You're assigned a task, but the information given is incomplete. You'd most likely:",
+        "options": [
+          { "text": "等信息更完整再开始，不想做一半重来", "text_en": "Wait for more complete info — don't want to redo things halfway" },
+          { "text": "先动起来，边做边调整", "text_en": "Start moving, adjust as you go" },
+          { "text": "整理出所有不确定的地方，逐一确认后再做", "text_en": "Map out all uncertainties, confirm each one, then begin" },
+          { "text": "先去找相关的人聊聊，搞清楚背景", "text_en": "Talk to the relevant people first to understand the context" }
+        ]
+      },
+      {
+        "id": 3,
+        "text": "和别人发生了分歧，对方坚持他的观点。你更可能：",
+        "text_en": "You disagree with someone, and they insist on their point. You'd most likely:",
+        "options": [
+          { "text": "试着找到你们之间的共同点，把气氛缓和下来", "text_en": "Try to find common ground and ease the tension" },
+          { "text": "用数据或逻辑来支撑你的观点", "text_en": "Support your point with data or logic" },
+          { "text": "退一步，看看对方的角度有没有道理", "text_en": "Step back and consider whether their perspective has merit" },
+          { "text": "把你的理由再说一遍，更直接地坚持", "text_en": "Restate your reasoning more directly and hold your ground" }
+        ]
+      },
+      {
+        "id": 4,
+        "text": "你在一个新环境里认识了一群陌生人。你更可能：",
+        "text_en": "You're meeting a group of strangers in a new setting. You'd most likely:",
+        "options": [
+          { "text": "很快找到你想深入交流的人，主动建立连接", "text_en": "Quickly identify who you want to connect with and reach out" },
+          { "text": "先观察，等有人来和你说话", "text_en": "Observe first, wait for someone to approach you" },
+          { "text": "很快和很多人聊起来，让整个场子活跃", "text_en": "Chat with many people quickly and liven up the room" },
+          { "text": "更关注观察这群人的互动模式，少说多看", "text_en": "Focus on observing how the group interacts — watch more, say less" }
+        ]
+      },
+      {
+        "id": 5,
+        "text": "你负责的一件事出了问题。你更可能：",
+        "text_en": "Something you're responsible for goes wrong. You'd most likely:",
+        "options": [
+          { "text": "第一反应是和团队说清楚，保持透明", "text_en": "First instinct: be transparent with the team about what happened" },
+          { "text": "马上找到解决方案，优先把问题解决", "text_en": "Immediately find a solution — fixing the problem comes first" },
+          { "text": "先搞清楚问题的根本原因，再决定怎么做", "text_en": "Figure out the root cause before deciding on next steps" },
+          { "text": "先稳住情绪和局面，再一步步处理", "text_en": "Stabilize the situation and emotions first, then address things step by step" }
+        ]
+      },
+      {
+        "id": 6,
+        "text": "别人给你反馈说你做的东西有不足。你更可能：",
+        "text_en": "Someone gives you feedback that your work has shortcomings. You'd most likely:",
+        "options": [
+          { "text": "把反馈记下来，对照自己的标准仔细想", "text_en": "Note it down and carefully compare it against your own standards" },
+          { "text": "看对方说的方式，如果方式不对你会先有情绪", "text_en": "Focus on how they said it — if the delivery is off, you'll feel it first" },
+          { "text": "听完就想怎么改进，不太在意对方的措辞", "text_en": "Listen and immediately think about how to improve — wording doesn't matter" },
+          { "text": "认真听，会想很久对方说的对不对", "text_en": "Listen carefully and spend a long time reflecting on whether they're right" }
+        ]
+      },
+      {
+        "id": 7,
+        "text": "工作节奏突然加快，事情一下子多了很多。你更可能：",
+        "text_en": "Work suddenly picks up pace with a flood of tasks. You'd most likely:",
+        "options": [
+          { "text": "默默扛着，不太会说自己的压力", "text_en": "Quietly shoulder it — you rarely voice your stress" },
+          { "text": "把所有事情列出来，有系统地一件件处理", "text_en": "List everything out and tackle them systematically" },
+          { "text": "保持乐观，想办法把团队的士气带起来", "text_en": "Stay optimistic and find ways to boost team morale" },
+          { "text": "分出轻重缓急，优先搞定最重要的", "text_en": "Prioritize by urgency and importance — tackle what matters most" }
+        ]
+      },
+      {
+        "id": 8,
+        "text": "你参与一个长期项目，中途方向变了。你更可能：",
+        "text_en": "You're on a long-term project and the direction changes midway. You'd most likely:",
+        "options": [
+          { "text": "想清楚变化带来的每一个影响，再决定", "text_en": "Think through every impact of the change before deciding" },
+          { "text": "需要时间适应，不喜欢半途改变", "text_en": "Need time to adjust — you don't like changes midway" },
+          { "text": "快速评估新方向，决定要不要跟着变", "text_en": "Quickly assess the new direction and decide whether to adapt" },
+          { "text": "先关心团队的状态，确认大家都还在一起", "text_en": "First check on the team — make sure everyone's still on board" }
+        ]
+      },
+      {
+        "id": 9,
+        "text": "你有一个新想法，但还不成熟。你更可能：",
+        "text_en": "You have a new idea, but it's not fully formed. You'd most likely:",
+        "options": [
+          { "text": "先找几个信任的人聊，感受他们的反应", "text_en": "Run it by a few trusted people to gauge their reaction" },
+          { "text": "先自己想清楚，觉得稳妥了再说", "text_en": "Think it through on your own — only share when it feels solid" },
+          { "text": "先把逻辑梳理好，有了框架再提出来", "text_en": "Get the logic straight and build a framework before presenting" },
+          { "text": "先说出来，在讨论中完善", "text_en": "Put it out there and refine it through discussion" }
+        ]
+      },
+      {
+        "id": 10,
+        "text": "做一件事，你更在意的是：",
+        "text_en": "When doing something, what matters most to you:",
+        "options": [
+          { "text": "结果——做完了，达到目标了没", "text_en": "Results — is it done? Did we hit the goal?" },
+          { "text": "质量——每个细节有没有到位", "text_en": "Quality — is every detail in place?" },
+          { "text": "稳定——不出乱子，大家都好", "text_en": "Stability — no chaos, everyone's okay" },
+          { "text": "过程中的感受——和谁一起做，气氛怎样", "text_en": "The experience — who am I working with, what's the vibe?" }
+        ]
+      },
+      {
+        "id": 11,
+        "text": "别人说你「太……了」，你猜最可能是哪个：",
+        "text_en": "If someone said you're 'too ___', what would it most likely be:",
+        "options": [
+          { "text": "太没主见了", "text_en": "Too indecisive" },
+          { "text": "太强势了", "text_en": "Too assertive" },
+          { "text": "太话多了", "text_en": "Too talkative" },
+          { "text": "太挑剔了", "text_en": "Too picky" }
+        ]
+      },
+      {
+        "id": 12,
+        "text": "一天结束时，什么样的感觉会让你觉得「今天值了」：",
+        "text_en": "At the end of the day, what makes you feel 'today was worth it':",
+        "options": [
+          { "text": "把一件复杂的事情理清楚了，做对了", "text_en": "Untangled something complex and got it right" },
+          { "text": "帮到了需要帮助的人，关系还在", "text_en": "Helped someone who needed it — the connection still stands" },
+          { "text": "推动了一件重要的事，往前走了一步", "text_en": "Moved something important forward, one step closer" },
+          { "text": "和人有真实的连接，彼此都打开了", "text_en": "Had genuine connection with people — we both opened up" }
+        ]
+      }
+    ]
+  },
+
+  "test-boundary-sense.html": {
+    "testName": "边界感测评",
+    "testName_en": "Boundary Sense Assessment",
+    "questions": [
+      {
+        "id": 1,
+        "text": "伴侣说想周末一起出去，你其实更想一个人待着。你更可能：",
+        "text_en": "Your partner suggests going out this weekend, but you'd rather be alone. You'd most likely:",
+        "options": [
+          { "text": "跟他说这周需要独处，下次再约", "text_en": "Tell them you need alone time this week — next time" },
+          { "text": "答应去，因为不想让他失望", "text_en": "Agree to go, because you don't want to disappoint them" },
+          { "text": "答应去，然后在心里模糊觉得有点不对劲", "text_en": "Agree to go, then vaguely sense something feels off" },
+          { "text": "如果大家都在说周末计划，你更难开口说自己不去", "text_en": "If everyone's talking about weekend plans, it's harder to say you're not going" }
+        ]
+      },
+      {
+        "id": 2,
+        "text": "朋友讲了一个小时，你已经很疲了。你更可能：",
+        "text_en": "Your friend has been talking for an hour and you're exhausted. You'd most likely:",
+        "options": [
+          { "text": "说一声「我现在有点累了，我们改天继续聊」", "text_en": "Say 'I'm a bit tired now, let's continue another time'" },
+          { "text": "不确定自己是真累了还是今天状态差，就这么撑着", "text_en": "Not sure if you're truly tired or just off today — so you keep going" },
+          { "text": "继续听，怕她觉得你不在乎", "text_en": "Keep listening — afraid she'll think you don't care" },
+          { "text": "如果其他人也在场，你更不会先开口说要走", "text_en": "If others are around, you're even less likely to speak up first" }
+        ]
+      },
+      {
+        "id": 3,
+        "text": "有人问你想去哪里吃饭，你最常出现的反应：",
+        "text_en": "Someone asks where you want to eat. Your most common response:",
+        "options": [
+          { "text": "说出一个你真正想吃的地方", "text_en": "Name a place you actually want to go" },
+          { "text": "附和呼声最高的那个", "text_en": "Go along with whatever's most popular" },
+          { "text": "随便说一个，主要是不想让对方为难", "text_en": "Pick something random — mainly to not make it awkward for others" },
+          { "text": "真的答不上来，不是客气，是想不出来自己想要什么", "text_en": "Genuinely can't answer — it's not politeness, you just can't figure out what you want" }
+        ]
+      },
+      {
+        "id": 4,
+        "text": "你拒绝了一个邀请，对方沉默了一会儿。你接下来：",
+        "text_en": "You declined an invitation, and the other person goes silent. What happens next:",
+        "options": [
+          { "text": "觉得这是正常反应，等一等", "text_en": "Consider it a normal reaction — just wait" },
+          { "text": "开始怀疑自己的决定，明明刚才想拒绝，现在又不确定了", "text_en": "Start doubting your decision — you wanted to say no, but now you're unsure" },
+          { "text": "发消息解释，怕他生气或觉得你不重视他", "text_en": "Send a message explaining — worried they're upset or feel unvalued" },
+          { "text": "如果群里没人回应你，会坐立难安", "text_en": "If no one responds in the group, you feel restless" }
+        ]
+      },
+      {
+        "id": 5,
+        "text": "同事把不属于你的活推过来，说「你最靠谱」。你通常：",
+        "text_en": "A colleague pushes their work to you, saying 'you're the most reliable.' You usually:",
+        "options": [
+          { "text": "当场说清楚这个不在你职责范围内", "text_en": "Clarify on the spot that it's outside your responsibilities" },
+          { "text": "接下来了，事后才意识到这根本不是你的事", "text_en": "Take it on, then realize later it wasn't yours to do" },
+          { "text": "不忍心让他失望，就接了", "text_en": "Can't bear to let them down, so you accept" },
+          { "text": "如果当时组里其他人都在，更难直接拒绝", "text_en": "If the team is watching, it's even harder to refuse" }
+        ]
+      },
+      {
+        "id": 6,
+        "text": "你在亲密关系里很少说「我不想」。如果深究，更像是：",
+        "text_en": "You rarely say 'I don't want to' in close relationships. If you dig deeper, it's more like:",
+        "options": [
+          { "text": "不是不说，你说得出来", "text_en": "It's not that you can't — you do say it" },
+          { "text": "到了那个时刻，你不太确定自己到底想不想", "text_en": "In the moment, you're not sure whether you actually want to or not" },
+          { "text": "说了怕对方情绪受影响，不划算", "text_en": "Afraid it'll affect their mood — not worth the cost" },
+          { "text": "两个人相处时你更倾向维持和气，不想成为破坏氛围的那个", "text_en": "You lean toward keeping the peace — don't want to be the one who breaks the mood" }
+        ]
+      },
+      {
+        "id": 7,
+        "text": "家人叫你帮忙，你其实很累。你更可能：",
+        "text_en": "Family asks for help, but you're really tired. You'd most likely:",
+        "options": [
+          { "text": "说你现在状态不好，等会再帮", "text_en": "Tell them you're not up for it right now — you'll help later" },
+          { "text": "站起来帮了，不确定是真的愿意还是习惯性反应", "text_en": "Get up and help — not sure if you genuinely want to or it's just habit" },
+          { "text": "即使很累，也不想让他们觉得你冷漠", "text_en": "Even when exhausted, you don't want them to think you're cold" },
+          { "text": "当着大家的面，更容易马上站起来", "text_en": "In front of everyone, you're more likely to jump up immediately" }
+        ]
+      },
+      {
+        "id": 8,
+        "text": "答应了某件事，后来发现自己根本不想做。这种情况：",
+        "text_en": "You agreed to something, then realized you really don't want to do it. This happens:",
+        "options": [
+          { "text": "不太常发生，答应之前你会先想清楚", "text_en": "Rarely — you think it through before agreeing" },
+          { "text": "挺常见，答应的时候其实就没想清楚", "text_en": "Fairly often — you hadn't really thought it through when you said yes" },
+          { "text": "时常有，主要是当时没法让对方失望", "text_en": "Quite often — mostly because you couldn't let them down in the moment" },
+          { "text": "在多人场合更容易，事后一个人才反应过来", "text_en": "More common in group settings — you only realize when you're alone later" }
+        ]
+      },
+      {
+        "id": 9,
+        "text": "你正在休息，有人发消息说\"你现在有空吗\"。你通常：",
+        "text_en": "You're resting and someone texts 'are you free right now?' You usually:",
+        "options": [
+          { "text": "如果没空就说没空", "text_en": "If you're not free, you say so" },
+          { "text": "说有空，然后心里有点不情愿", "text_en": "Say yes, but feel a little reluctant inside" },
+          { "text": "说有空——怕对方等太久，或者觉得你在回避他", "text_en": "Say yes — afraid they'll wait too long or think you're avoiding them" },
+          { "text": "看对方是谁，如果是群里的人，更容易直接说有空", "text_en": "Depends on who it is — if it's from a group, you're more likely to just say yes" }
+        ]
+      },
+      {
+        "id": 10,
+        "text": "最近一次感到「被自己委屈了」，根源更像是：",
+        "text_en": "The last time you felt 'wronged by yourself,' the root was more like:",
+        "options": [
+          { "text": "没怎么有这种感觉", "text_en": "I don't really experience that" },
+          { "text": "当时照顾了别人的感受，没人注意到你", "text_en": "I took care of someone else's feelings, and no one noticed mine" },
+          { "text": "在场合里说不出真实想法，回来才憋屈", "text_en": "Couldn't speak my mind in the moment — only felt stifled later" },
+          { "text": "也有一部分是你当时不知道自己要什么，后来才清楚", "text_en": "Part of it was not knowing what I wanted until after the fact" }
+        ]
+      }
+    ]
+  },
+
+  "test-relationship-role.html": {
+    "testName": "关系角色测评",
+    "testName_en": "Relationship Role Assessment",
+    "questions": [
+      { "id": 1, "text": "朋友深夜突然发来一长串消息，说自己快撑不住了。你更像会：", "text_en": "A friend sends a long string of messages late at night, saying they can barely hold on. You'd most likely:", "options": [
+        { "text": "先认真看完，一边安慰一边陪她把情绪说出来", "text_en": "Read everything carefully, comfort her, and help her put her feelings into words" },
+        { "text": "马上问她在哪、要不要吃点东西，开始想怎么照顾她", "text_en": "Immediately ask where she is, if she needs food — start figuring out how to take care of her" },
+        { "text": "直接说出你的担心和想法，也会分享你类似的经历", "text_en": "Speak your concerns directly, and share your own similar experiences" }
+      ]},
+      { "id": 2, "text": "伴侣看起来明显心情不好，但只说「没事」。你通常会：", "text_en": "Your partner is clearly in a bad mood but says 'I'm fine.' You usually:", "options": [
+        { "text": "不逼问，陪在旁边等他愿意开口", "text_en": "Don't push — stay beside them and wait until they're ready to talk" },
+        { "text": "给他倒水、点外卖、把气氛先照顾好", "text_en": "Pour them water, order food, take care of the atmosphere first" },
+        { "text": "主动说「我感觉你不太对劲，我们聊聊吧」", "text_en": "Speak up: 'I can tell something's off — let's talk about it'" }
+      ]},
+      { "id": 3, "text": "你发现对方有点不对劲，但他什么都没说。你通常会：", "text_en": "You notice something's off with someone, but they haven't said anything. You usually:", "options": [
+        { "text": "先陪着，等他自己想说的时候再说", "text_en": "Stay with them, wait until they feel like talking" },
+        { "text": "想办法让他舒服一点，比如做点什么、照顾一下状态", "text_en": "Try to make them more comfortable — do something, tend to their state" },
+        { "text": "直接问他是不是发生了什么，不想一直猜", "text_en": "Ask directly if something happened — you don't want to keep guessing" }
+      ]},
+      { "id": 4, "text": "你和很亲近的人起了小误会，对方开始变冷淡。你的第一反应通常是：", "text_en": "A small misunderstanding with someone close, and they go cold. Your first reaction:", "options": [
+        { "text": "先回想是不是她最近也有别的压力，不急着追问", "text_en": "Reflect on whether they've been under other stress lately — no rush to press" },
+        { "text": "想着怎么补救、怎么让关系重新舒服一点", "text_en": "Think about how to fix things and restore comfort in the relationship" },
+        { "text": "忍不住先把自己的委屈和想法说清楚", "text_en": "Can't help but voice your own frustration and thoughts first" }
+      ]},
+      { "id": 5, "text": "朋友失恋后反复讲同一件事，已经说了很多遍。你更像会：", "text_en": "A friend keeps repeating the same story after a breakup. You'd most likely:", "options": [
+        { "text": "继续听她说，哪怕内容重复，也知道她还没过去", "text_en": "Keep listening, even if it's repetitive — you know she's not over it yet" },
+        { "text": "带她出门、陪她吃饭，想办法让她好受一点", "text_en": "Take her out, eat together, find ways to make her feel better" },
+        { "text": "温和但直接地说出你的判断，希望她早点走出来", "text_en": "Gently but directly share your honest take, hoping she'll move on sooner" }
+      ]},
+      { "id": 6, "text": "有人问你「你最近怎么样」，你心里其实有很多事。你通常会：", "text_en": "Someone asks 'how have you been?' and you actually have a lot going on. You usually:", "options": [
+        { "text": "笑笑带过，反而顺势问对方最近怎么样", "text_en": "Smile it off and ask them how they've been instead" },
+        { "text": "先说自己还好，担心一说出来会让别人也跟着累", "text_en": "Say you're fine — worried that sharing would burden them too" },
+        { "text": "停一下，挑几件真实的事讲出来", "text_en": "Pause, then share a few real things that are going on" }
+      ]},
+      { "id": 7, "text": "关系里出现卡住的时刻，你更常做的是：", "text_en": "When a relationship hits a stuck moment, you more often:", "options": [
+        { "text": "先听对方怎么说，再慢慢判断自己想回应什么", "text_en": "Listen to what they say first, then slowly decide how to respond" },
+        { "text": "先去修补气氛，让彼此别那么难受", "text_en": "Fix the atmosphere first — make it less painful for both" },
+        { "text": "先把问题摊开，不想让误会一直悬着", "text_en": "Lay the issue out — don't want misunderstandings hanging in the air" }
+      ]},
+      { "id": 8, "text": "一段关系里出现沉默期，对方不主动，你也难受。你更可能：", "text_en": "A silent stretch in a relationship — they don't reach out, and you're hurting. You'd most likely:", "options": [
+        { "text": "等一等，觉得也许他需要空间", "text_en": "Wait — maybe they need space" },
+        { "text": "还是会关心他有没有吃饭、最近忙不忙", "text_en": "Still check in — have they eaten, are they busy" },
+        { "text": "先发消息把话题挑开，不想一直猜", "text_en": "Text first to break the silence — can't keep guessing" }
+      ]},
+      { "id": 9, "text": "朋友来找你，多半不是为了要建议，而是想被接住。你通常会：", "text_en": "A friend comes to you — not for advice, but to feel held. You usually:", "options": [
+        { "text": "很自然地进入「听她说」的状态", "text_en": "Naturally slip into listening mode" },
+        { "text": "一边听一边照顾细节，比如递纸巾、点热饮、安排后续", "text_en": "Listen while tending to details — tissues, a warm drink, making plans" },
+        { "text": "会先回应她，也会把自己的感觉和理解说出来", "text_en": "Respond to her, and also share your own feelings and understanding" }
+      ]},
+      { "id": 10, "text": "回想重要关系里的你，最常出现的遗憾是：", "text_en": "Looking back at important relationships, your most common regret is:", "options": [
+        { "text": "听了很多，却很少让别人真正知道我的感受", "text_en": "I listened a lot but rarely let others truly know how I felt" },
+        { "text": "总顾着对方舒不舒服，后来才发现自己也有点累", "text_en": "Always focusing on their comfort — only later realizing I was tired too" },
+        { "text": "当下说得太快太满，事后又反复回想是不是说多了", "text_en": "Said too much too fast in the moment — then replayed it wondering if I overshared" }
+      ]}
+    ]
+  },
+
+  "test-today-mood.html": {
+    "testName": "今日情绪地图",
+    "testName_en": "Today's Mood Map",
+    "questions": [
+      { "id": 1, "text": "今天醒来后的前十分钟，你更像是：", "text_en": "In the first ten minutes after waking today, you were more like:", "options": [
+        { "text": "身体已经在动了，心里却还在说\"再缓一下吧\"", "text_en": "Body's already moving, but your mind is still saying 'just a little more rest'" },
+        { "text": "起床了，但整个人有点空，像还没真正上线", "text_en": "You got up, but you feel hollow — like you haven't really come online yet" },
+        { "text": "一睁眼就想到好多事，心里有点绷着", "text_en": "Eyes opened and thoughts flooded in — a tightness already building" },
+        { "text": "虽然不一定特别兴奋，但能感觉自己清楚地醒着", "text_en": "Not necessarily excited, but clearly awake and present" }
+      ]},
+      { "id": 2, "text": "今天有人来找你说话时，你更接近哪种状态：", "text_en": "When someone came to talk to you today, you were closer to:", "options": [
+        { "text": "能回应，但要打起一点精神", "text_en": "Can respond, but need to muster some energy" },
+        { "text": "听见了，却有点像隔着一层雾", "text_en": "Heard them, but it felt like listening through fog" },
+        { "text": "会下意识紧一下，怕又有什么事要处理", "text_en": "Tensed up instinctively — worried about more things to deal with" },
+        { "text": "能自然接住对话，也不太费力", "text_en": "Could engage naturally without much effort" }
+      ]},
+      { "id": 3, "text": "看手机消息时，今天的你更像：", "text_en": "When checking phone messages today, you were more like:", "options": [
+        { "text": "知道该回，但总想再晚一点", "text_en": "Know you should reply, but keep putting it off" },
+        { "text": "划来划去，像在看，又像什么都没进心里", "text_en": "Scrolling back and forth — looking but nothing really lands" },
+        { "text": "一有未读就有点烦，怕漏掉什么", "text_en": "Unread messages bring a twinge of anxiety — afraid of missing something" },
+        { "text": "能按自己的节奏处理，不急也不逃", "text_en": "Handle things at your own pace — no rush, no avoidance" }
+      ]},
+      { "id": 4, "text": "今天独处时，你和自己的关系更像：", "text_en": "When alone today, your relationship with yourself was more like:", "options": [
+        { "text": "想休息，但脑子和身体都还在硬撑", "text_en": "Want to rest, but both mind and body are still pushing through" },
+        { "text": "没什么特别情绪，只是有点轻飘飘的", "text_en": "No particular emotion — just a bit floaty" },
+        { "text": "明明安静了，心里还是停不下来", "text_en": "It's quiet, yet your mind still won't stop" },
+        { "text": "能感觉到自己在这里，哪怕只是发一会儿呆", "text_en": "Can feel yourself here — even if just spacing out for a moment" }
+      ]},
+      { "id": 5, "text": "如果今天临时多出一件小事要处理，你更可能：", "text_en": "If an extra small task came up today, you'd more likely:", "options": [
+        { "text": "第一反应是\"好累\"，但还是会继续做", "text_en": "First thought: 'so tired' — but you'd still do it" },
+        { "text": "有点迟钝，好像事情来了也没什么波澜", "text_en": "Feel a bit numb — even when something comes, there's barely a ripple" },
+        { "text": "立刻开始紧张，哪怕事情其实不大", "text_en": "Tense up immediately, even though it's really not a big deal" },
+        { "text": "评估一下再处理，不会一下子乱掉", "text_en": "Assess first, then handle — wouldn't be thrown off" }
+      ]},
+      { "id": 6, "text": "今天吃东西、走路、洗手这些小事，你更像：", "text_en": "Eating, walking, washing hands — small things today felt more like:", "options": [
+        { "text": "都在做，但像靠惯性完成", "text_en": "Going through the motions on autopilot" },
+        { "text": "做过了，却很难留下什么感受", "text_en": "Done them, but hard to recall any feeling from it" },
+        { "text": "人正在做，脑子却一直在别处盘旋", "text_en": "Body doing it, mind circling somewhere else entirely" },
+        { "text": "偶尔能真的感觉到水温、风、食物的味道", "text_en": "Occasionally actually feeling the water temperature, the breeze, the taste of food" }
+      ]},
+      { "id": 7, "text": "想到今晚要结束这一天时，你现在最接近：", "text_en": "Thinking about tonight and ending the day, you're closest to:", "options": [
+        { "text": "只想赶快躺下，什么都不想再管", "text_en": "Just want to lie down and not deal with anything else" },
+        { "text": "没有特别期待，也没有特别抗拒", "text_en": "No particular anticipation, no particular resistance" },
+        { "text": "已经开始担心还有没有没做完的事", "text_en": "Already worrying about unfinished tasks" },
+        { "text": "想把今天慢慢收住，结束得安稳一点", "text_en": "Want to gently wind things down and end the day peacefully" }
+      ]},
+      { "id": 8, "text": "如果要用一句很轻的话形容今天的自己，你会更选：", "text_en": "If you had to describe today's self in one gentle sentence, you'd choose:", "options": [
+        { "text": "我有点累，但还在往前走", "text_en": "I'm a little tired, but I'm still moving forward" },
+        { "text": "我今天像一团淡淡的云", "text_en": "Today I'm like a faint cloud" },
+        { "text": "我没有出事，只是一直有点紧", "text_en": "Nothing happened — I've just been a little tense all day" },
+        { "text": "我今天基本在自己的生活里", "text_en": "Today I was mostly present in my own life" }
+      ]}
+    ]
+  },
+
+  "test-cognitive.html": {
+    "testName": "荣格八维认知功能",
+    "testName_en": "Jung Cognitive Functions (80Q)",
+    "scaleLabels": {
+      "1": { "text": "完全不符合", "text_en": "Not at All Like Me" },
+      "2": { "text": "不太符合", "text_en": "Slightly Unlike Me" },
+      "3": { "text": "有时符合", "text_en": "Sometimes Like Me" },
+      "4": { "text": "比较符合", "text_en": "Mostly Like Me" },
+      "5": { "text": "完全符合", "text_en": "Exactly Like Me" }
+    },
+    "dimensions": [
+      { "id": "Se", "name": "外感觉 Se", "name_en": "Extraverted Sensing (Se)" },
+      { "id": "Si", "name": "内感觉 Si", "name_en": "Introverted Sensing (Si)" },
+      { "id": "Ne", "name": "外直觉 Ne", "name_en": "Extraverted Intuition (Ne)" },
+      { "id": "Ni", "name": "内直觉 Ni", "name_en": "Introverted Intuition (Ni)" },
+      { "id": "Te", "name": "外思维 Te", "name_en": "Extraverted Thinking (Te)" },
+      { "id": "Ti", "name": "内思维 Ti", "name_en": "Introverted Thinking (Ti)" },
+      { "id": "Fe", "name": "外情感 Fe", "name_en": "Extraverted Feeling (Fe)" },
+      { "id": "Fi", "name": "内情感 Fi", "name_en": "Introverted Feeling (Fi)" }
+    ],
+    "questions": [
+      { "id": 1, "text": "我通常会先注意到眼前环境中的变化，而不是先思考它的意义。", "text_en": "I usually notice changes in my immediate surroundings before thinking about what they mean." },
+      { "id": 2, "text": "比起长时间设想未来，我更愿意直接投入现实情境中行动。", "text_en": "Rather than spending time envisioning the future, I'd rather jump into action in the real world." },
+      { "id": 3, "text": "我对声音、颜色、气味、动作等感官信息相当敏感。", "text_en": "I'm quite sensitive to sensory details like sounds, colors, smells, and movement." },
+      { "id": 4, "text": "遇到突发情况时，我往往能快速根据现场情况做出反应。", "text_en": "In unexpected situations, I can usually react quickly based on what's happening right now." },
+      { "id": 5, "text": "我喜欢通过亲身体验来理解事物，而不是只看理论说明。", "text_en": "I prefer understanding things through hands-on experience rather than theory alone." },
+      { "id": 6, "text": "在生活中，我容易被新鲜、有冲击力或有趣的现实体验吸引。", "text_en": "I'm easily drawn to fresh, stimulating, or interesting real-world experiences." },
+      { "id": 7, "text": "我做决定时，常会参考此时此刻最真实、最直接的信息。", "text_en": "When making decisions, I often rely on the most immediate and direct information available." },
+      { "id": 8, "text": "我喜欢边做边调整，而不是事先把所有步骤都想清楚。", "text_en": "I prefer adjusting as I go rather than planning every step in advance." },
+      { "id": 9, "text": "别人可能会觉得我在现场感、临场反应或动手能力上比较强。", "text_en": "Others might see me as strong in situational awareness, quick reactions, or hands-on ability." },
+      { "id": 10, "text": "当生活过于单调、缺乏刺激时，我会明显感到无聊或不满足。", "text_en": "When life gets too monotonous or lacks stimulation, I clearly feel bored or unsatisfied." },
+      { "id": 11, "text": "我会自然地把当前经历与过去类似的经验进行比较。", "text_en": "I naturally compare current experiences with similar ones from the past." },
+      { "id": 12, "text": "熟悉的流程、环境或做法，会让我更安心、更容易发挥。", "text_en": "Familiar processes, environments, or methods make me feel more at ease and capable." },
+      { "id": 13, "text": "我对细节变化很敏感，常能发现\"这次和以前不一样\"。", "text_en": "I'm sensitive to small changes in detail — I often notice when things differ from before." },
+      { "id": 14, "text": "面对新事物时，我通常会先想：以前有没有类似情况可参考。", "text_en": "Facing something new, my first thought is usually: has there been a similar situation I can reference?" },
+      { "id": 15, "text": "我习惯保留对自己有用的经验，并在以后重复使用。", "text_en": "I tend to preserve useful experiences and reuse them later." },
+      { "id": 16, "text": "我重视生活中的稳定、规律和可预期性。", "text_en": "I value stability, routine, and predictability in life." },
+      { "id": 17, "text": "我常凭借记忆中的具体印象来判断一件事是否可靠。", "text_en": "I often judge reliability based on concrete impressions from memory." },
+      { "id": 18, "text": "别人随意改变既定安排时，我往往会感到不适或被打乱。", "text_en": "When others casually change established plans, I tend to feel unsettled." },
+      { "id": 19, "text": "我倾向于一步一步地确认信息，而不是直接跳到结论。", "text_en": "I tend to verify information step by step rather than jumping to conclusions." },
+      { "id": 20, "text": "我通常认为，经过时间验证的方法比全新的做法更值得信赖。", "text_en": "I generally trust time-tested methods more than entirely new approaches." },
+      { "id": 21, "text": "一个想法常常会让我联想到更多不同的可能性。", "text_en": "One idea often triggers associations with many different possibilities." },
+      { "id": 22, "text": "我喜欢从看似无关的事物之间发现新联系。", "text_en": "I enjoy discovering new connections between seemingly unrelated things." },
+      { "id": 23, "text": "当别人提出问题时，我脑中常会一下子冒出很多种解法。", "text_en": "When someone raises a problem, multiple solutions often pop into my head at once." },
+      { "id": 24, "text": "我对未知、变化和新奇的概念通常抱有好奇心。", "text_en": "I'm usually curious about the unknown, change, and novel concepts." },
+      { "id": 25, "text": "我比起维持单一路线，更喜欢探索替代方案。", "text_en": "I prefer exploring alternatives over sticking to a single path." },
+      { "id": 26, "text": "我容易被概念、隐喻、创意点子或脑洞式讨论激发灵感。", "text_en": "I'm easily inspired by concepts, metaphors, creative ideas, or speculative discussions." },
+      { "id": 27, "text": "在对话中，我常会突然想到一个别人没提过的方向。", "text_en": "In conversations, I often suddenly think of a direction no one else has mentioned." },
+      { "id": 28, "text": "我喜欢让事情保持开放，不急着过早定论。", "text_en": "I like keeping things open rather than rushing to a premature conclusion." },
+      { "id": 29, "text": "同一件事在我看来，往往不只有一种解释。", "text_en": "The same event usually has more than one interpretation in my view." },
+      { "id": 30, "text": "我经常因为想到新的可能性，而临时改变原本的计划。", "text_en": "I often change plans on the fly because a new possibility came to mind." },
+      { "id": 31, "text": "我常会从纷杂的信息中突然形成一个整体性的判断。", "text_en": "I often suddenly form a holistic judgment from scattered information." },
+      { "id": 32, "text": "很多时候，我先有一种\"就是这样\"的直觉，之后才说得清理由。", "text_en": "Many times I first have a 'this is it' intuition, and only later can I articulate why." },
+      { "id": 33, "text": "我倾向关注事情背后的模式、趋势或深层含义。", "text_en": "I tend to focus on the patterns, trends, or deeper meanings behind things." },
+      { "id": 34, "text": "面对复杂局面时，我更想找出核心线索，而不是处理所有表面细节。", "text_en": "In complex situations, I'd rather find the core thread than handle every surface detail." },
+      { "id": 35, "text": "我常会思考一件事在更长时间尺度上会如何发展。", "text_en": "I often think about how something will unfold over a longer time horizon." },
+      { "id": 36, "text": "我会被象征、隐喻、主题或\"隐藏信息\"所吸引。", "text_en": "I'm drawn to symbols, metaphors, themes, and hidden meanings." },
+      { "id": 37, "text": "我倾向把零散现象收束成一个统一的理解框架。", "text_en": "I tend to consolidate scattered observations into a unified framework." },
+      { "id": 38, "text": "别人可能觉得我看问题比较深，常能看到事情的另一层。", "text_en": "Others may see me as someone who looks deeper and often notices another layer." },
+      { "id": 39, "text": "当方向感明确时，我可以长期围绕一个核心目标持续投入。", "text_en": "When the direction is clear, I can commit to a core goal over the long term." },
+      { "id": 40, "text": "我更重视洞察是否抓住本质，而不是是否覆盖了所有可能。", "text_en": "I care more about whether an insight captures the essence than whether it covers all possibilities." },
+      { "id": 41, "text": "我习惯先明确目标、标准和完成条件，再开始做事。", "text_en": "I usually define goals, standards, and completion criteria before starting work." },
+      { "id": 42, "text": "我会自然地思考怎样安排资源，才能更高效地推进任务。", "text_en": "I naturally think about how to allocate resources for maximum efficiency." },
+      { "id": 43, "text": "我重视结果是否可衡量、可验证，而不只是\"感觉不错\"。", "text_en": "I value whether outcomes are measurable and verifiable, not just 'feels right.'" },
+      { "id": 44, "text": "发现流程低效时，我会想办法优化它。", "text_en": "When I spot an inefficient process, I look for ways to optimize it." },
+      { "id": 45, "text": "在团队中，我常会主动推动分工、排期或执行节奏。", "text_en": "In a team, I often take the initiative in dividing tasks, scheduling, or driving execution." },
+      { "id": 46, "text": "我倾向依据事实、数据或客观证据来判断方案优劣。", "text_en": "I prefer judging plans based on facts, data, or objective evidence." },
+      { "id": 47, "text": "如果讨论迟迟没有结论，我通常会想办法把它收束到可执行层面。", "text_en": "If a discussion stalls without conclusion, I try to bring it to an actionable level." },
+      { "id": 48, "text": "我通常认为，一个好方案应该既清晰又能真正落地。", "text_en": "I believe a good plan should be both clear and truly executable." },
+      { "id": 49, "text": "我不太介意显得直接，只要这能提高效率或减少混乱。", "text_en": "I don't mind being direct, as long as it improves efficiency or reduces confusion." },
+      { "id": 50, "text": "当别人表达含糊时，我会希望把要求、规则或标准说清楚。", "text_en": "When others are vague, I want to clarify the requirements, rules, or standards." },
+      { "id": 51, "text": "我喜欢先弄清一个概念的定义，再继续讨论。", "text_en": "I like to clarify a concept's definition before continuing the discussion." },
+      { "id": 52, "text": "面对问题时，我会先分析其中的结构与逻辑关系。", "text_en": "Facing a problem, I first analyze its structure and logical relationships." },
+      { "id": 53, "text": "如果一个说法在逻辑上不一致，我很难直接接受它。", "text_en": "If an argument is logically inconsistent, I find it hard to accept." },
+      { "id": 54, "text": "我经常会在心里把复杂问题拆成几个更基础的部分。", "text_en": "I often mentally break complex problems down into more fundamental parts." },
+      { "id": 55, "text": "我倾向独立思考，直到自己真正想明白为止。", "text_en": "I tend to think independently until I've truly figured things out for myself." },
+      { "id": 56, "text": "我关心的不只是结论对不对，还包括推理过程是否严密。", "text_en": "I care not just about whether the conclusion is right, but whether the reasoning is rigorous." },
+      { "id": 57, "text": "当别人用模糊、笼统的表达时，我会想进一步厘清其中的含义。", "text_en": "When others use vague or general language, I want to clarify the precise meaning." },
+      { "id": 58, "text": "我喜欢建立一套自己能自洽解释问题的理论框架。", "text_en": "I enjoy building a self-consistent theoretical framework to explain problems." },
+      { "id": 59, "text": "哪怕别人都同意，我也会继续检验一个观点是否真的说得通。", "text_en": "Even when everyone agrees, I'll keep testing whether a viewpoint truly holds up." },
+      { "id": 60, "text": "我常因追求更准确的理解，而在细节上反复推敲。", "text_en": "I often refine details repeatedly in pursuit of more precise understanding." },
+      { "id": 61, "text": "我会自然关注他人的情绪变化，以及现场氛围是否融洽。", "text_en": "I naturally notice others' emotional shifts and whether the atmosphere feels harmonious." },
+      { "id": 62, "text": "在群体中，我常会根据场合调整自己的表达方式。", "text_en": "In groups, I often adjust how I express myself based on the social context." },
+      { "id": 63, "text": "如果有人被冷落或尴尬，我通常会想办法缓和局面。", "text_en": "If someone is left out or embarrassed, I usually try to smooth things over." },
+      { "id": 64, "text": "我重视别人是否感到被理解、被尊重、被妥善对待。", "text_en": "I care about whether others feel understood, respected, and well-treated." },
+      { "id": 65, "text": "做决定时，我会考虑这会对关系和整体氛围产生什么影响。", "text_en": "When deciding, I consider how it will affect relationships and the overall atmosphere." },
+      { "id": 66, "text": "我常能察觉别人没有说出口的情绪需求。", "text_en": "I can often sense emotional needs that others haven't voiced." },
+      { "id": 67, "text": "我愿意为了维持合作和谐，适度调整自己的做法。", "text_en": "I'm willing to adjust my approach to maintain group harmony." },
+      { "id": 68, "text": "当沟通出现冲突时，我通常会先寻找双方都能接受的表达。", "text_en": "When communication turns conflicting, I usually look for language both sides can accept." },
+      { "id": 69, "text": "我会在意自己的行为是否符合场合中的人际期待。", "text_en": "I'm mindful of whether my behavior meets the interpersonal expectations of the situation." },
+      { "id": 70, "text": "别人可能会觉得我在人际互动中比较体贴、会顾全大局。", "text_en": "Others might see me as considerate in social interactions, mindful of the bigger picture." },
+      { "id": 71, "text": "我做决定时，很看重这是否真正符合自己的内心。", "text_en": "When making decisions, I place great weight on whether it truly aligns with my heart." },
+      { "id": 72, "text": "即使别人都认同，我也不会轻易违背自己的价值判断。", "text_en": "Even when everyone else agrees, I won't easily go against my own values." },
+      { "id": 73, "text": "我对\"真实\"很敏感，不喜欢违心的表达或表演式互动。", "text_en": "I'm sensitive to authenticity — I dislike insincere expressions or performative interactions." },
+      { "id": 74, "text": "我会认真分辨自己的感受，而不是只顺着外界期待行动。", "text_en": "I carefully discern my own feelings rather than simply following external expectations." },
+      { "id": 75, "text": "我倾向尊重每个人独特的处境和个人选择。", "text_en": "I tend to respect each person's unique circumstances and personal choices." },
+      { "id": 76, "text": "当某件事触及我深层认同的价值时，我会非常坚定。", "text_en": "When something touches a deeply held value, I become very firm." },
+      { "id": 77, "text": "我通常不会轻易公开情绪，但内心体验其实很深。", "text_en": "I don't easily show emotions publicly, but my inner experience runs very deep." },
+      { "id": 78, "text": "我更在意一件事是否\"对我来说是对的\"，而不只是是否合群。", "text_en": "I care more about whether something 'feels right to me' than whether it fits the group." },
+      { "id": 79, "text": "我会对不公、虚伪或违背原则的事情产生强烈反应。", "text_en": "I have strong reactions to injustice, hypocrisy, or violations of principle." },
+      { "id": 80, "text": "我希望自己做出的选择，能够忠于真实的自我而非外在压力。", "text_en": "I want my choices to stay true to my authentic self rather than external pressure." }
+    ]
+  },
+
+  "test-cognitive-48.html": {
+    "testName": "荣格八维认知功能（48题快速版）",
+    "testName_en": "Jung Cognitive Functions (48Q Quick)",
+    "note": "Questions 1-48 are a subset of the 80-question version. See test-cognitive.html translations for questions 1-50 (shared IDs). The 48Q version uses IDs 1-6 for Se, 7-12 for Si, 13-18 for Ne, 19-24 for Ni, 25-30 for Te, 31-36 for Ti, 37-42 for Fe, 43-48 for Fi.",
+    "scaleLabels": {
+      "1": { "text": "完全不符合", "text_en": "Not at All Like Me" },
+      "2": { "text": "不太符合", "text_en": "Slightly Unlike Me" },
+      "3": { "text": "有时符合", "text_en": "Sometimes Like Me" },
+      "4": { "text": "比较符合", "text_en": "Mostly Like Me" },
+      "5": { "text": "完全符合", "text_en": "Exactly Like Me" }
+    },
+    "questions": [
+      { "id": 1, "text": "我通常会先注意到眼前环境中的变化，而不是先思考它的意义。", "text_en": "I usually notice changes in my immediate surroundings before thinking about what they mean." },
+      { "id": 2, "text": "比起长时间设想未来，我更愿意直接投入现实情境中行动。", "text_en": "Rather than spending time envisioning the future, I'd rather jump into action in the real world." },
+      { "id": 3, "text": "我对声音、颜色、气味、动作等感官信息相当敏感。", "text_en": "I'm quite sensitive to sensory details like sounds, colors, smells, and movement." },
+      { "id": 4, "text": "遇到突发情况时，我往往能快速根据现场情况做出反应。", "text_en": "In unexpected situations, I can usually react quickly based on what's happening right now." },
+      { "id": 5, "text": "我喜欢通过亲身体验来理解事物，而不是只看理论说明。", "text_en": "I prefer understanding things through hands-on experience rather than theory alone." },
+      { "id": 6, "text": "在生活中，我容易被新鲜、有冲击力或有趣的现实体验吸引。", "text_en": "I'm easily drawn to fresh, stimulating, or interesting real-world experiences." },
+      { "id": 7, "text": "我会自然地把当前经历与过去类似的经验进行比较。", "text_en": "I naturally compare current experiences with similar ones from the past." },
+      { "id": 8, "text": "熟悉的流程、环境或做法，会让我更安心、更容易发挥。", "text_en": "Familiar processes, environments, or methods make me feel more at ease and capable." },
+      { "id": 9, "text": "我对细节变化很敏感，常能发现\"这次和以前不一样\"。", "text_en": "I'm sensitive to small changes in detail — I often notice when things differ from before." },
+      { "id": 10, "text": "面对新事物时，我通常会先想：以前有没有类似情况可参考。", "text_en": "Facing something new, my first thought is usually: has there been a similar situation I can reference?" },
+      { "id": 11, "text": "我习惯保留对自己有用的经验，并在以后重复使用。", "text_en": "I tend to preserve useful experiences and reuse them later." },
+      { "id": 12, "text": "我重视生活中的稳定、规律和可预期性。", "text_en": "I value stability, routine, and predictability in life." },
+      { "id": 13, "text": "一个想法常常会让我联想到更多不同的可能性。", "text_en": "One idea often triggers associations with many different possibilities." },
+      { "id": 14, "text": "我喜欢从看似无关的事物之间发现新联系。", "text_en": "I enjoy discovering new connections between seemingly unrelated things." },
+      { "id": 15, "text": "当别人提出问题时，我脑中常会一下子冒出很多种解法。", "text_en": "When someone raises a problem, multiple solutions often pop into my head at once." },
+      { "id": 16, "text": "我对未知、变化和新奇的概念通常抱有好奇心。", "text_en": "I'm usually curious about the unknown, change, and novel concepts." },
+      { "id": 17, "text": "我比起维持单一路线，更喜欢探索替代方案。", "text_en": "I prefer exploring alternatives over sticking to a single path." },
+      { "id": 18, "text": "我容易被概念、隐喻、创意点子或脑洞式讨论激发灵感。", "text_en": "I'm easily inspired by concepts, metaphors, creative ideas, or speculative discussions." },
+      { "id": 19, "text": "我常会从纷杂的信息中突然形成一个整体性的判断。", "text_en": "I often suddenly form a holistic judgment from scattered information." },
+      { "id": 20, "text": "很多时候，我先有一种\"就是这样\"的直觉，之后才说得清理由。", "text_en": "Many times I first have a 'this is it' intuition, and only later can I articulate why." },
+      { "id": 21, "text": "我倾向关注事情背后的模式、趋势或深层含义。", "text_en": "I tend to focus on the patterns, trends, or deeper meanings behind things." },
+      { "id": 22, "text": "面对复杂局面时，我更想找出核心线索，而不是处理所有表面细节。", "text_en": "In complex situations, I'd rather find the core thread than handle every surface detail." },
+      { "id": 23, "text": "我常会思考一件事在更长时间尺度上会如何发展。", "text_en": "I often think about how something will unfold over a longer time horizon." },
+      { "id": 24, "text": "我会被象征、隐喻、主题或\"隐藏信息\"所吸引。", "text_en": "I'm drawn to symbols, metaphors, themes, and hidden meanings." },
+      { "id": 25, "text": "我习惯先明确目标、标准和完成条件，再开始做事。", "text_en": "I usually define goals, standards, and completion criteria before starting work." },
+      { "id": 26, "text": "我会自然地思考怎样安排资源，才能更高效地推进任务。", "text_en": "I naturally think about how to allocate resources for maximum efficiency." },
+      { "id": 27, "text": "我重视结果是否可衡量、可验证，而不只是\"感觉不错\"。", "text_en": "I value whether outcomes are measurable and verifiable, not just 'feels right.'" },
+      { "id": 28, "text": "发现流程低效时，我会想办法优化它。", "text_en": "When I spot an inefficient process, I look for ways to optimize it." },
+      { "id": 29, "text": "在团队中，我常会主动推动分工、排期或执行节奏。", "text_en": "In a team, I often take the initiative in dividing tasks, scheduling, or driving execution." },
+      { "id": 30, "text": "我倾向依据事实、数据或客观证据来判断方案优劣。", "text_en": "I prefer judging plans based on facts, data, or objective evidence." },
+      { "id": 31, "text": "我喜欢先弄清一个概念的定义，再继续讨论。", "text_en": "I like to clarify a concept's definition before continuing the discussion." },
+      { "id": 32, "text": "面对问题时，我会先分析其中的结构与逻辑关系。", "text_en": "Facing a problem, I first analyze its structure and logical relationships." },
+      { "id": 33, "text": "如果一个说法在逻辑上不一致，我很难直接接受它。", "text_en": "If an argument is logically inconsistent, I find it hard to accept." },
+      { "id": 34, "text": "我经常会在心里把复杂问题拆成几个更基础的部分。", "text_en": "I often mentally break complex problems down into more fundamental parts." },
+      { "id": 35, "text": "我倾向独立思考，直到自己真正想明白为止。", "text_en": "I tend to think independently until I've truly figured things out for myself." },
+      { "id": 36, "text": "我关心的不只是结论对不对，还包括推理过程是否严密。", "text_en": "I care not just about whether the conclusion is right, but whether the reasoning is rigorous." },
+      { "id": 37, "text": "我会自然关注他人的情绪变化，以及现场氛围是否融洽。", "text_en": "I naturally notice others' emotional shifts and whether the atmosphere feels harmonious." },
+      { "id": 38, "text": "在群体中，我常会根据场合调整自己的表达方式。", "text_en": "In groups, I often adjust how I express myself based on the social context." },
+      { "id": 39, "text": "如果有人被冷落或尴尬，我通常会想办法缓和局面。", "text_en": "If someone is left out or embarrassed, I usually try to smooth things over." },
+      { "id": 40, "text": "我重视别人是否感到被理解、被尊重、被妥善对待。", "text_en": "I care about whether others feel understood, respected, and well-treated." },
+      { "id": 41, "text": "做决定时，我会考虑这会对关系和整体氛围产生什么影响。", "text_en": "When deciding, I consider how it will affect relationships and the overall atmosphere." },
+      { "id": 42, "text": "我常能察觉别人没有说出口的情绪需求。", "text_en": "I can often sense emotional needs that others haven't voiced." },
+      { "id": 43, "text": "我做决定时，很看重这是否真正符合自己的内心。", "text_en": "When making decisions, I place great weight on whether it truly aligns with my heart." },
+      { "id": 44, "text": "即使别人都认同，我也不会轻易违背自己的价值判断。", "text_en": "Even when everyone else agrees, I won't easily go against my own values." },
+      { "id": 45, "text": "我对\"真实\"很敏感，不喜欢违心的表达或表演式互动。", "text_en": "I'm sensitive to authenticity — I dislike insincere expressions or performative interactions." },
+      { "id": 46, "text": "我会认真分辨自己的感受，而不是只顺着外界期待行动。", "text_en": "I carefully discern my own feelings rather than simply following external expectations." },
+      { "id": 47, "text": "我倾向尊重每个人独特的处境和个人选择。", "text_en": "I tend to respect each person's unique circumstances and personal choices." },
+      { "id": 48, "text": "当某件事触及我深层认同的价值时，我会非常坚定。", "text_en": "When something touches a deeply held value, I become very firm." }
+    ]
+  },
+
+  "test-abm-love-animal.html": {
+    "testName": "ABM 恋爱动物性格",
+    "testName_en": "ABM Love Animal Personality",
+    "scaleLabels": {
+      "1": { "text": "非常不同意", "text_en": "Strongly Disagree" },
+      "7": { "text": "非常同意", "text_en": "Strongly Agree" }
+    },
+    "questions": [
+      { "id": 1, "text": "进入一段关系后，我依然需要大量属于自己的空间。", "text_en": "Even in a relationship, I still need a lot of personal space." },
+      { "id": 2, "text": "我会很在意对方有没有稳定地回应、兑现承诺。", "text_en": "I pay close attention to whether my partner responds consistently and keeps promises." },
+      { "id": 3, "text": "我通常不会立刻袒露自己，而是先观察对方靠不靠谱。", "text_en": "I don't usually open up right away — I observe first to see if they're trustworthy." },
+      { "id": 4, "text": "对方情绪一有变化，我往往很快就能感觉到。", "text_en": "I can usually sense my partner's emotional shifts very quickly." },
+      { "id": 5, "text": "如果对方太快靠近，我会本能地想往后退一点。", "text_en": "If someone gets close too fast, I instinctively want to pull back a little." },
+      { "id": 6, "text": "比起热烈起伏，我更相信长期一致的陪伴。", "text_en": "I trust long-term steady companionship more than intense highs and lows." },
+      { "id": 7, "text": "我常常会先通过细节判断对方有没有隐藏的信息。", "text_en": "I often read small details to determine if someone is hiding something." },
+      { "id": 8, "text": "关系里如果出现误会，我会先去体谅对方当时的情绪。", "text_en": "When misunderstandings arise, I first try to empathize with what they were feeling." },
+      { "id": 9, "text": "我希望即使很亲密，我们也能各自保有自己的世界。", "text_en": "Even in deep intimacy, I hope we can each keep our own world." },
+      { "id": 10, "text": "我一旦认定关系，就会很愿意长期投入和守护。", "text_en": "Once I commit to a relationship, I'm very willing to invest and protect it long-term." },
+      { "id": 11, "text": "我会通过一点点试探，来确认自己在对方心里的位置。", "text_en": "I test the waters bit by bit to confirm where I stand in their heart." },
+      { "id": 12, "text": "关系里只要气氛不对，我就容易把感受放在心上很久。", "text_en": "When the mood in a relationship feels off, I tend to carry that feeling for a long time." }
+    ]
+  },
+
+  "test-ideal-boyfriend.html": {
+    "testName": "你的理想型男友",
+    "testName_en": "Your Ideal Boyfriend Archetype",
+    "questions": [
+      { "id": 1, "text": "一次疲惫又混乱的日子结束后，你最希望他怎么接住你？", "text_en": "After an exhausting, chaotic day, how do you most want him to receive you?", "options": [
+        { "text": "先给我稳定的安顿和照顾", "text_en": "Settle and take care of me first — stability above all" },
+        { "text": "拉我出去透气，让状态重新流动起来", "text_en": "Pull me outside for fresh air, get things flowing again" },
+        { "text": "陪我把情绪说清楚，认真听我讲", "text_en": "Sit with me and help me talk through my feelings — really listen" }
+      ]},
+      { "id": 2, "text": "你更容易被哪种靠近方式打动？", "text_en": "What approach to getting closer moves you most?", "options": [
+        { "text": "持续、靠谱、不忽冷忽热", "text_en": "Consistent, reliable, never hot-and-cold" },
+        { "text": "自然有趣，不按套路但很真", "text_en": "Naturally fun, unconventional but genuine" },
+        { "text": "一开口就像懂你很久", "text_en": "Speaks as if they've understood you for years" }
+      ]},
+      { "id": 3, "text": "如果一起旅行，你最期待他带来的感受是？", "text_en": "If traveling together, what feeling do you most want from him?", "options": [
+        { "text": "行程安心，不用我操心太多", "text_en": "A worry-free itinerary — I don't have to think too much" },
+        { "text": "有点冒险感，临时改计划也无妨", "text_en": "A sense of adventure — spontaneous plan changes are welcome" },
+        { "text": "路上会聊很多，像一起穿过内心", "text_en": "Deep conversations on the road, like traveling through each other's inner worlds" }
+      ]},
+      { "id": 4, "text": "当你脆弱时，最怕遇到怎样的人？", "text_en": "When you're vulnerable, what kind of person do you fear most?", "options": [
+        { "text": "嘴上关心，行动却总是缺席", "text_en": "Says they care but is always absent in action" },
+        { "text": "过于控制，让我无法呼吸", "text_en": "Too controlling — makes it hard to breathe" },
+        { "text": "只给建议，却没有真正理解我", "text_en": "Only gives advice without truly understanding me" }
+      ]},
+      { "id": 5, "text": "你希望亲密关系更像哪种画面？", "text_en": "What picture do you want your intimate relationship to look like?", "options": [
+        { "text": "厨房有灯，回家有人等", "text_en": "A light in the kitchen, someone waiting when I come home" },
+        { "text": "一起上路，世界很大也敢去", "text_en": "On the road together — the world is big and we dare to explore" },
+        { "text": "坐在窗边，把心事慢慢讲完", "text_en": "Sitting by the window, slowly telling each other everything" }
+      ]},
+      { "id": 6, "text": "在你心里，成熟更接近以下哪一种？", "text_en": "In your heart, maturity is closest to:", "options": [
+        { "text": "答应的事情会做到", "text_en": "Keeping promises — following through on commitments" },
+        { "text": "有自己的方向，也尊重我的边界", "text_en": "Having their own direction while respecting my boundaries" },
+        { "text": "能表达感受，也能理解复杂情绪", "text_en": "Can express feelings and understand complex emotions" }
+      ]},
+      { "id": 7, "text": "你最想从一段爱里得到什么？", "text_en": "What do you most want from love?", "options": [
+        { "text": "被稳稳接住的安全感", "text_en": "The safety of being securely held" },
+        { "text": "一起活得更开阔的生命力", "text_en": "A shared vitality that expands how we live" },
+        { "text": "被深深理解后的放松", "text_en": "The relief of being deeply understood" }
+      ]},
+      { "id": 8, "text": "如果他发来一条消息，你最容易因为什么心动？", "text_en": "If he texts you, what's most likely to make your heart skip?", "options": [
+        { "text": "内容很简单，但总在我需要时出现", "text_en": "Simple words, but always arriving when I need them" },
+        { "text": "一句话就让我想笑，像风吹开窗", "text_en": "One line that makes me laugh — like wind blowing open a window" },
+        { "text": "他记得我说过的细节，还愿意继续聊下去", "text_en": "He remembers details I mentioned and wants to keep talking" }
+      ]},
+      { "id": 9, "text": "你更欣赏他身上的哪种力量？", "text_en": "What kind of strength in him do you admire most?", "options": [
+        { "text": "沉着、稳定、关键时刻不掉线", "text_en": "Calm, steady, never drops the ball in critical moments" },
+        { "text": "敢冒险，有一点野，也有一点光", "text_en": "Dares to take risks — a bit wild, a bit luminous" },
+        { "text": "有观察力，也有表达的诚意", "text_en": "Observant, with a genuine willingness to articulate feelings" }
+      ]},
+      { "id": 10, "text": "你理想中的约会，更像下面哪一项？", "text_en": "Your ideal date looks more like:", "options": [
+        { "text": "一起做饭、散步、看很普通却温柔的夜", "text_en": "Cooking together, walking, a quiet evening that feels warm" },
+        { "text": "说走就走，去看陌生的风景", "text_en": "Spontaneous trip to see unfamiliar scenery" },
+        { "text": "找一家安静的店，从天黑聊到打烊", "text_en": "A quiet café, talking from dusk until closing time" }
+      ]},
+      { "id": 11, "text": "当关系进入平稳期，你最希望它保留什么？", "text_en": "When a relationship settles into a steady phase, what do you most want to keep?", "options": [
+        { "text": "照旧可靠的陪伴和行动", "text_en": "The same reliable companionship and follow-through" },
+        { "text": "仍然有惊喜，不被日常困住", "text_en": "Still having surprises — not trapped by routine" },
+        { "text": "依旧愿意交换真实想法与感受", "text_en": "Still willing to share real thoughts and feelings" }
+      ]},
+      { "id": 12, "text": "最后，你觉得真正让你爱上的，通常是什么？", "text_en": "Finally, what usually makes you truly fall in love?", "options": [
+        { "text": "他让我觉得生活可以被托付", "text_en": "He makes me feel life can be entrusted to someone" },
+        { "text": "他让我看见更自由、更有趣的自己", "text_en": "He helps me see a freer, more interesting version of myself" },
+        { "text": "他让我感到灵魂有回声", "text_en": "He makes my soul feel like it has an echo" }
+      ]}
+    ]
+  }
+}

@@ -483,12 +483,31 @@
         <button class="primary" id="beginQuizBtn">准备好了</button>
       </section>
 
-      <section class="panel view hidden" id="quizView">
-        <div class="question-id" id="questionCounter"></div>
-        <h2 class="question-text" id="questionText"></h2>
-        <p class="question-desc">单选 · 选完自动进入下一题</p>
-        <div class="options" id="options"></div>
-      </section>
+      <div id="quizView" style="display:none;padding:5rem 1.5rem 8rem;min-height:100dvh;flex-direction:column;align-items:center;max-width:28rem;margin:0 auto;">
+        <!-- Progress -->
+        <div style="width:100%;margin-bottom:2.5rem;text-align:center;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1rem;">
+            <span id="counter" style="font-family:'Noto Serif SC',serif;font-size:2.5rem;color:rgba(51,24,92,0.8);"></span>
+            <div style="text-align:right;">
+              <p style="font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:#7b7580;font-weight:600;margin:0 0 4px;">进度 / STATUS</p>
+              <p id="answered" style="font-size:12px;color:rgba(51,24,92,0.6);font-weight:500;margin:0;"></p>
+            </div>
+          </div>
+          <div style="width:100%;height:4px;background:#f0edea;border-radius:9999px;overflow:hidden;">
+            <div id="bar" style="height:100%;background:#9c3c62;border-radius:9999px;transition:width 0.25s;width:0%;"></div>
+          </div>
+        </div>
+        <!-- Question Card -->
+        <div style="width:100%;position:relative;">
+          <div style="position:absolute;top:-1rem;right:-1rem;width:8rem;height:8rem;background:rgba(236,220,255,0.3);border-radius:9999px;filter:blur(48px);z-index:-1;"></div>
+          <div style="background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);border-radius:1rem;padding:2rem;margin-bottom:2.5rem;border:1px solid rgba(229,226,223,0.5);box-shadow:0 10px 40px -10px rgba(51,24,92,0.08);display:flex;flex-direction:column;align-items:center;text-align:center;">
+            <div style="width:3rem;height:2px;background:rgba(51,24,92,0.15);border-radius:9999px;margin-bottom:2.5rem;"></div>
+            <div id="questionCounter" style="display:none;"></div>
+            <h2 id="questionText" style="font-family:'Noto Serif SC',serif;font-size:1.5rem;line-height:1.6;color:#1c1c1a;margin:0 0 2.5rem;padding:0 0.5rem;"></h2>
+            <div id="options" style="width:100%;display:flex;flex-direction:column;gap:0.75rem;"></div>
+          </div>
+        </div>
+      </div>
 
       <section class="panel view hidden" id="resultView">
         <p class="eyebrow">Result</p>
@@ -560,6 +579,7 @@ window.downloadResult = downloadResult;
     {
       "id": 1,
       "text": "今天醒来后的前十分钟，你更像是：",
+      "text_en": "In the first ten minutes after waking today, you were more like:",
       "options": [
         {
           "value": "A",
@@ -586,6 +606,7 @@ window.downloadResult = downloadResult;
     {
       "id": 2,
       "text": "今天有人来找你说话时，你更接近哪种状态：",
+      "text_en": "When someone came to talk to you today, you were closer to:",
       "options": [
         {
           "value": "A",
@@ -612,6 +633,7 @@ window.downloadResult = downloadResult;
     {
       "id": 3,
       "text": "看手机消息时，今天的你更像：",
+      "text_en": "When checking phone messages today, you were more like:",
       "options": [
         {
           "value": "A",
@@ -638,6 +660,7 @@ window.downloadResult = downloadResult;
     {
       "id": 4,
       "text": "今天独处时，你和自己的关系更像：",
+      "text_en": "When alone today, your relationship with yourself was more like:",
       "options": [
         {
           "value": "A",
@@ -664,6 +687,7 @@ window.downloadResult = downloadResult;
     {
       "id": 5,
       "text": "如果今天临时多出一件小事要处理，你更可能：",
+      "text_en": "If an extra small task came up today, you'd more likely:",
       "options": [
         {
           "value": "A",
@@ -690,6 +714,7 @@ window.downloadResult = downloadResult;
     {
       "id": 6,
       "text": "今天吃东西、走路、洗手这些小事，你更像：",
+      "text_en": "Eating, walking, washing hands — small things today felt more like:",
       "options": [
         {
           "value": "A",
@@ -716,6 +741,7 @@ window.downloadResult = downloadResult;
     {
       "id": 7,
       "text": "想到今晚要结束这一天时，你现在最接近：",
+      "text_en": "Thinking about tonight and ending the day, you're closest to:",
       "options": [
         {
           "value": "A",
@@ -742,6 +768,7 @@ window.downloadResult = downloadResult;
     {
       "id": 8,
       "text": "如果要用一句很轻的话形容今天的自己，你会更选：",
+      "text_en": "If you had to describe today's self in one gentle sentence, you'd choose:",
       "options": [
         {
           "value": "A",
@@ -838,8 +865,13 @@ window.downloadResult = downloadResult;
       introDesc.textContent = `${testData.description} 共 ${testData.questions.length} 题。`;
 
       function setView(view) {
-        [introView, quizView, resultView].forEach((el) => el.classList.add('hidden'));
-        view.classList.remove('hidden');
+        [introView, resultView].forEach((el) => el.classList.add('hidden'));
+        quizView.style.display = 'none';
+        if (view === quizView) {
+          quizView.style.display = 'flex';
+        } else {
+          view.classList.remove('hidden');
+        }
       }
 
       function updateProgress() {
@@ -860,17 +892,27 @@ window.downloadResult = downloadResult;
 
       function renderQuestion() {
         updateProgress();
+        const total = testData.questions.length;
+        const done = state.answers.filter(v => v !== null && v !== undefined).length;
         const question = testData.questions[state.index];
-        questionCounter.textContent = `Question ${state.index + 1}`;
-        questionText.textContent = question.text;
-        options.innerHTML = '';
+        const counterEl = document.getElementById('counter');
+        const answeredEl = document.getElementById('answered');
+        const barEl = document.getElementById('bar');
+        if (counterEl) counterEl.innerHTML = `${state.index + 1} <span style="font-size:1rem;color:rgba(204,196,209,1);font-family:'Plus Jakarta Sans',sans-serif;">/ ${total}</span>`;
+        if (answeredEl) answeredEl.innerHTML = `已完成 ${done} / ${total} <span style="opacity:0.6;">/ Completed ${done} / ${total}</span>`;
+        if (barEl) barEl.style.width = `${(done / total) * 100}%`;
+        if (progressBar) progressBar.style.width = `${(done / total) * 100}%`;
+        if (questionCounter) questionCounter.textContent = `Question ${state.index + 1}`;
+        document.getElementById('questionText').textContent = question.text;
+        const opts = document.getElementById('options');
+        opts.innerHTML = '';
         question.options.forEach((option) => {
           const button = document.createElement('button');
-          button.className = 'option';
           button.type = 'button';
-          button.innerHTML = `<span class="option-mark">${option.value}</span><span class="option-copy">${option.text}</span>`;
+          button.style.cssText = 'width:100%;padding:1rem 1.25rem;border-radius:0.75rem;background:rgba(255,255,255,0.8);color:#1c1c1a;font-family:\'Noto Serif SC\',sans-serif;font-size:14px;text-align:left;border:1px solid rgba(229,226,223,0.8);cursor:pointer;transition:all 0.2s;';
+          button.textContent = option.text;
           button.addEventListener('click', () => chooseOption(option));
-          options.appendChild(button);
+          opts.appendChild(button);
         });
       }
 

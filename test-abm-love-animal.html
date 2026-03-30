@@ -418,28 +418,53 @@
             <button class="primary" id="beginQuizBtn">开始</button>
           </section>
 
-          <section class="panel hidden" id="quiz">
-            <div class="question-wrap" id="questionWrap">
-              <div class="question-id" id="questionId"></div>
-              <h2 class="question-text" id="questionText"></h2>
-              <div class="slider-card">
-                <div class="slider-header">
-                  <span class="slider-caption">请在 1-7 之间滑动选择</span>
-                  <span class="slider-value" id="currentValue">当前选择：4</span>
-                </div>
-                <div class="slider-wrap">
-                  <div class="scale-labels"><span>非常不同意</span><span>非常同意</span></div>
-                  <input class="answer-slider" id="answerSlider" type="range" min="1" max="7" step="1" value="4" />
-                  <div class="slider-ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></div>
+          <div id="quiz" style="display:none;padding:5rem 1.5rem 8rem;min-height:100dvh;flex-direction:column;align-items:center;max-width:28rem;margin:0 auto;">
+            <!-- Progress -->
+            <div style="width:100%;margin-bottom:2.5rem;text-align:center;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1rem;">
+                <span id="counter" style="font-family:'Noto Serif SC',serif;font-size:2.5rem;color:rgba(51,24,92,0.8);"></span>
+                <div style="text-align:right;">
+                  <p style="font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:#7b7580;font-weight:600;margin:0 0 4px;">进度 / STATUS</p>
+                  <p id="answered" style="font-size:12px;color:rgba(51,24,92,0.6);font-weight:500;margin:0;"></p>
                 </div>
               </div>
-              <div class="actions">
-                <button class="ghost" id="prevBtn">← 上一题</button>
-                <button class="ghost" id="nextBtn">确认本题</button>
-                <button class="ghost" id="restartBtn">重新开始</button>
+              <div style="width:100%;height:4px;background:#f0edea;border-radius:9999px;overflow:hidden;">
+                <div id="bar" style="height:100%;background:#9c3c62;border-radius:9999px;transition:width 0.25s;width:0%;"></div>
               </div>
             </div>
-          </section>
+            <!-- Question Card -->
+            <div style="width:100%;position:relative;">
+              <div style="position:absolute;top:-1rem;right:-1rem;width:8rem;height:8rem;background:rgba(236,220,255,0.3);border-radius:9999px;filter:blur(48px);z-index:-1;"></div>
+              <div id="questionWrap" style="background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);border-radius:1rem;padding:2rem;margin-bottom:2.5rem;border:1px solid rgba(229,226,223,0.5);box-shadow:0 10px 40px -10px rgba(51,24,92,0.08);display:flex;flex-direction:column;align-items:center;text-align:center;">
+                <div style="width:3rem;height:2px;background:rgba(51,24,92,0.15);border-radius:9999px;margin-bottom:2.5rem;"></div>
+                <div id="questionId" style="font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:#7b7580;font-weight:600;margin-bottom:1rem;"></div>
+                <h2 id="questionText" style="font-family:'Noto Serif SC',serif;font-size:1.5rem;line-height:1.6;color:#1c1c1a;margin:0 0 2rem;padding:0 0.5rem;"></h2>
+                <!-- Slider -->
+                <div style="width:100%;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+                    <span style="font-size:10px;color:#7b7580;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;">1-7 选择</span>
+                    <span id="currentValue" style="font-size:12px;color:#33185c;font-weight:600;">当前选择：4</span>
+                  </div>
+                  <input id="answerSlider" type="range" min="1" max="7" step="1" value="4" style="width:100%;accent-color:#9c3c62;height:4px;margin-bottom:0.5rem;" />
+                  <div style="display:flex;justify-content:space-between;">
+                    <span style="font-size:10px;color:#7b7580;">非常不同意</span>
+                    <span style="font-size:10px;color:#7b7580;">非常同意</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;margin-top:0.25rem;">
+                    <span style="font-size:9px;color:rgba(123,117,128,0.5);">1</span><span style="font-size:9px;color:rgba(123,117,128,0.5);">2</span><span style="font-size:9px;color:rgba(123,117,128,0.5);">3</span><span style="font-size:9px;color:rgba(123,117,128,0.5);">4</span><span style="font-size:9px;color:rgba(123,117,128,0.5);">5</span><span style="font-size:9px;color:rgba(123,117,128,0.5);">6</span><span style="font-size:9px;color:rgba(123,117,128,0.5);">7</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Navigation -->
+            <div style="width:100%;display:flex;flex-direction:column;gap:1rem;">
+              <div style="display:flex;gap:1rem;width:100%;">
+                <button id="prevBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#f0edea;color:#7b7580;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:all 0.2s;">← 上一题</button>
+                <button id="nextBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;box-shadow:0 4px 16px rgba(51,24,92,0.15);transition:all 0.2s;">确认本题 →</button>
+              </div>
+              <button id="restartBtn" style="padding:0.75rem;background:transparent;color:#7b7580;font-size:12px;border:none;cursor:pointer;">重新开始</button>
+            </div>
+          </div>
 
           <section class="panel hidden" id="result"></section>
         </main>
@@ -484,18 +509,18 @@
         }
       };
       const QUESTIONS = [
-        { id: 1, text: '进入一段关系后，我依然需要大量属于自己的空间。', map: { cat: 1, dog: -0.2, fox: 0.2, deer: -0.4 } },
-        { id: 2, text: '我会很在意对方有没有稳定地回应、兑现承诺。', map: { dog: 1, deer: 0.2, fox: 0.1, cat: -0.2 } },
-        { id: 3, text: '我通常不会立刻袒露自己，而是先观察对方靠不靠谱。', map: { fox: 1, cat: 0.4, dog: -0.2, deer: -0.1 } },
-        { id: 4, text: '对方情绪一有变化，我往往很快就能感觉到。', map: { deer: 1, fox: 0.3, dog: 0.1, cat: -0.2 } },
-        { id: 5, text: '如果对方太快靠近，我会本能地想往后退一点。', map: { cat: 1, fox: 0.4, deer: -0.2, dog: -0.3 } },
-        { id: 6, text: '比起热烈起伏，我更相信长期一致的陪伴。', map: { dog: 1, deer: 0.2, cat: 0.1, fox: -0.2 } },
-        { id: 7, text: '我常常会先通过细节判断对方有没有隐藏的信息。', map: { fox: 1, deer: 0.2, cat: 0.2, dog: -0.3 } },
-        { id: 8, text: '关系里如果出现误会，我会先去体谅对方当时的情绪。', map: { deer: 1, dog: 0.3, fox: -0.2, cat: -0.2 } },
-        { id: 9, text: '我希望即使很亲密，我们也能各自保有自己的世界。', map: { cat: 1, fox: 0.1, dog: -0.2, deer: -0.2 } },
-        { id: 10, text: '我一旦认定关系，就会很愿意长期投入和守护。', map: { dog: 1, deer: 0.3, cat: -0.1, fox: -0.2 } },
-        { id: 11, text: '我会通过一点点试探，来确认自己在对方心里的位置。', map: { fox: 1, deer: 0.2, cat: 0.2, dog: -0.3 } },
-        { id: 12, text: '关系里只要气氛不对，我就容易把感受放在心上很久。', map: { deer: 1, fox: 0.2, dog: 0.1, cat: -0.3 } }
+        { id: 1, text: '进入一段关系后，我依然需要大量属于自己的空间。', text_en: 'Even in a relationship, I still need a lot of personal space.', map: { cat: 1, dog: -0.2, fox: 0.2, deer: -0.4 } },
+        { id: 2, text: '我会很在意对方有没有稳定地回应、兑现承诺。', text_en: 'I pay close attention to whether my partner responds consistently and keeps promises.', map: { dog: 1, deer: 0.2, fox: 0.1, cat: -0.2 } },
+        { id: 3, text: '我通常不会立刻袒露自己，而是先观察对方靠不靠谱。', text_en: 'I don\'t usually open up right away — I observe first to see if they\'re trustworthy.', map: { fox: 1, cat: 0.4, dog: -0.2, deer: -0.1 } },
+        { id: 4, text: '对方情绪一有变化，我往往很快就能感觉到。', text_en: 'I can usually sense my partner\'s emotional shifts very quickly.', map: { deer: 1, fox: 0.3, dog: 0.1, cat: -0.2 } },
+        { id: 5, text: '如果对方太快靠近，我会本能地想往后退一点。', text_en: 'If someone gets close too fast, I instinctively want to pull back a little.', map: { cat: 1, fox: 0.4, deer: -0.2, dog: -0.3 } },
+        { id: 6, text: '比起热烈起伏，我更相信长期一致的陪伴。', text_en: 'I trust long-term steady companionship more than intense highs and lows.', map: { dog: 1, deer: 0.2, cat: 0.1, fox: -0.2 } },
+        { id: 7, text: '我常常会先通过细节判断对方有没有隐藏的信息。', text_en: 'I often read small details to determine if someone is hiding something.', map: { fox: 1, deer: 0.2, cat: 0.2, dog: -0.3 } },
+        { id: 8, text: '关系里如果出现误会，我会先去体谅对方当时的情绪。', text_en: 'When misunderstandings arise, I first try to empathize with what they were feeling.', map: { deer: 1, dog: 0.3, fox: -0.2, cat: -0.2 } },
+        { id: 9, text: '我希望即使很亲密，我们也能各自保有自己的世界。', text_en: 'Even in deep intimacy, I hope we can each keep our own world.', map: { cat: 1, fox: 0.1, dog: -0.2, deer: -0.2 } },
+        { id: 10, text: '我一旦认定关系，就会很愿意长期投入和守护。', text_en: 'Once I commit to a relationship, I\'m very willing to invest and protect it long-term.', map: { dog: 1, deer: 0.3, cat: -0.1, fox: -0.2 } },
+        { id: 11, text: '我会通过一点点试探，来确认自己在对方心里的位置。', text_en: 'I test the waters bit by bit to confirm where I stand in their heart.', map: { fox: 1, deer: 0.2, cat: 0.2, dog: -0.3 } },
+        { id: 12, text: '关系里只要气氛不对，我就容易把感受放在心上很久。', text_en: 'When the mood in a relationship feels off, I tend to carry that feeling for a long time.', map: { deer: 1, fox: 0.2, dog: 0.1, cat: -0.3 } }
       ];
 
       const state = { index: -1, answers: Array(QUESTIONS.length).fill(null) };
@@ -538,9 +563,17 @@
 
       function renderQuestion() {
         const q = QUESTIONS[state.index];
+        const total = QUESTIONS.length;
+        const done = state.answers.filter(v => v !== null).length;
         qId.textContent = `第 ${q.id} 题`;
         qText.textContent = q.text;
         syncSliderValue(state.answers[state.index] || 4);
+        const counterEl = document.getElementById('counter');
+        const answeredEl = document.getElementById('answered');
+        const barEl = document.getElementById('bar');
+        if (counterEl) counterEl.innerHTML = `${state.index + 1} <span style="font-size:1rem;color:rgba(204,196,209,1);font-family:'Plus Jakarta Sans',sans-serif;">/ ${total}</span>`;
+        if (answeredEl) answeredEl.innerHTML = `已完成 ${done} / ${total} <span style="opacity:0.6;">/ Completed ${done} / ${total}</span>`;
+        if (barEl) barEl.style.width = `${(done / total) * 100}%`;
         setStoryRecDisplay('none');
         updateProgress();
       }
@@ -642,7 +675,7 @@
 
       function showResult() {
         introEl.classList.add('hidden');
-        quizEl.classList.add('hidden');
+        quizEl.style.display = 'none';
         resultEl.classList.remove('hidden');
         progressBar.style.width = '100%';
         progressText.textContent = '完成';
@@ -718,8 +751,7 @@
         introEl.classList.add('hidden');
         resultEl.classList.add('hidden');
         setStoryRecDisplay('none');
-        quizEl.classList.remove('hidden');
-        setStoryRecDisplay('none');
+        quizEl.style.display = 'flex';
         renderQuestion();
       }
 
@@ -728,7 +760,7 @@
         state.answers = Array(QUESTIONS.length).fill(null);
         resultEl.classList.add('hidden');
         setStoryRecDisplay('none');
-        quizEl.classList.add('hidden');
+        quizEl.style.display = 'none';
         introEl.classList.remove('hidden');
         syncSliderValue(4);
         updateProgress();

@@ -580,7 +580,7 @@
       <div class="topline"><span id="progressBar"></span></div>
       <div class="meta"><span id="progressText">准备开始</span><span id="metaCode">Cognitive Functions · Quick 48</span></div>
 
-      <section class="panel" id="intro">
+      <section class="panel hidden" id="intro">
         <h1 class="title">荣格八维认知功能</h1>
         <p class="subtitle">48题 · 8页 · 每页6题</p>
         <p class="desc" id="introDesc">加载中…</p>
@@ -590,6 +590,20 @@
       </section>
 
       <section class="panel hidden" id="quiz">
+        <!-- Quiz Progress Header -->
+        <div style="width:100%;margin-bottom:2rem;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0.75rem;">
+            <span id="quizCounter" style="font-family:'Noto Serif SC',serif;font-size:2rem;color:rgba(51,24,92,0.8);"></span>
+            <div style="text-align:right;">
+              <p style="font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:#7b7580;font-weight:600;margin:0 0 4px;">进度 / STATUS</p>
+              <p id="quizAnswered" style="font-size:12px;color:rgba(51,24,92,0.6);font-weight:500;margin:0;"></p>
+            </div>
+          </div>
+          <div style="width:100%;height:4px;background:#f0edea;border-radius:9999px;overflow:hidden;">
+            <div id="quizBar" style="height:100%;background:#9c3c62;border-radius:9999px;transition:width 0.25s;width:0%;"></div>
+          </div>
+        </div>
+        <div style="width:3rem;height:2px;background:rgba(51,24,92,0.15);border-radius:9999px;margin-bottom:1.5rem;"></div>
         <div class="question-wrap" id="questionWrap">
           <div class="question-id" id="pageTitle"></div>
           <h2 id="dimensionTitle"></h2>
@@ -678,241 +692,289 @@
             {
                   "id": 1,
                   "text": "我通常会先注意到眼前环境中的变化，而不是先思考它的意义。",
+                  "text_en": "I usually notice changes in my immediate surroundings before thinking about what they mean.",
                   "dimension": "Se"
             },
             {
                   "id": 2,
                   "text": "比起长时间设想未来，我更愿意直接投入现实情境中行动。",
+                  "text_en": "Rather than spending time envisioning the future, I'd rather jump into action in the real world.",
                   "dimension": "Se"
             },
             {
                   "id": 3,
                   "text": "我对声音、颜色、气味、动作等感官信息相当敏感。",
+                  "text_en": "I'm quite sensitive to sensory details like sounds, colors, smells, and movement.",
                   "dimension": "Se"
             },
             {
                   "id": 4,
                   "text": "遇到突发情况时，我往往能快速根据现场情况做出反应。",
+                  "text_en": "In unexpected situations, I can usually react quickly based on what's happening right now.",
                   "dimension": "Se"
             },
             {
                   "id": 5,
                   "text": "我喜欢通过亲身体验来理解事物，而不是只看理论说明。",
+                  "text_en": "I prefer understanding things through hands-on experience rather than theory alone.",
                   "dimension": "Se"
             },
             {
                   "id": 6,
                   "text": "在生活中，我容易被新鲜、有冲击力或有趣的现实体验吸引。",
+                  "text_en": "I'm easily drawn to fresh, stimulating, or interesting real-world experiences.",
                   "dimension": "Se"
             },
             {
                   "id": 7,
                   "text": "我会自然地把当前经历与过去类似的经验进行比较。",
+                  "text_en": "I naturally compare current experiences with similar ones from the past.",
                   "dimension": "Si"
             },
             {
                   "id": 8,
                   "text": "熟悉的流程、环境或做法，会让我更安心、更容易发挥。",
+                  "text_en": "Familiar processes, environments, or methods make me feel more at ease and capable.",
                   "dimension": "Si"
             },
             {
                   "id": 9,
                   "text": "我对细节变化很敏感，常能发现\"这次和以前不一样\"。",
+                  "text_en": "I'm sensitive to small changes in detail — I often notice when things differ from before.",
                   "dimension": "Si"
             },
             {
                   "id": 10,
                   "text": "面对新事物时，我通常会先想：以前有没有类似情况可参考。",
+                  "text_en": "Facing something new, my first thought is usually: has there been a similar situation I can reference?",
                   "dimension": "Si"
             },
             {
                   "id": 11,
                   "text": "我习惯保留对自己有用的经验，并在以后重复使用。",
+                  "text_en": "I tend to preserve useful experiences and reuse them later.",
                   "dimension": "Si"
             },
             {
                   "id": 12,
                   "text": "我重视生活中的稳定、规律和可预期性。",
+                  "text_en": "I value stability, routine, and predictability in life.",
                   "dimension": "Si"
             },
             {
                   "id": 13,
                   "text": "一个想法常常会让我联想到更多不同的可能性。",
+                  "text_en": "One idea often triggers associations with many different possibilities.",
                   "dimension": "Ne"
             },
             {
                   "id": 14,
                   "text": "我喜欢从看似无关的事物之间发现新联系。",
+                  "text_en": "I enjoy discovering new connections between seemingly unrelated things.",
                   "dimension": "Ne"
             },
             {
                   "id": 15,
                   "text": "当别人提出问题时，我脑中常会一下子冒出很多种解法。",
+                  "text_en": "When someone raises a problem, multiple solutions often pop into my head at once.",
                   "dimension": "Ne"
             },
             {
                   "id": 16,
                   "text": "我对未知、变化和新奇的概念通常抱有好奇心。",
+                  "text_en": "I'm usually curious about the unknown, change, and novel concepts.",
                   "dimension": "Ne"
             },
             {
                   "id": 17,
                   "text": "我比起维持单一路线，更喜欢探索替代方案。",
+                  "text_en": "I prefer exploring alternatives over sticking to a single path.",
                   "dimension": "Ne"
             },
             {
                   "id": 18,
                   "text": "我容易被概念、隐喻、创意点子或脑洞式讨论激发灵感。",
+                  "text_en": "I'm easily inspired by concepts, metaphors, creative ideas, or speculative discussions.",
                   "dimension": "Ne"
             },
             {
                   "id": 19,
                   "text": "我常会从纷杂的信息中突然形成一个整体性的判断。",
+                  "text_en": "I often suddenly form a holistic judgment from scattered information.",
                   "dimension": "Ni"
             },
             {
                   "id": 20,
                   "text": "很多时候，我先有一种\"就是这样\"的直觉，之后才说得清理由。",
+                  "text_en": "Many times I first have a 'this is it' intuition, and only later can I articulate why.",
                   "dimension": "Ni"
             },
             {
                   "id": 21,
                   "text": "我倾向关注事情背后的模式、趋势或深层含义。",
+                  "text_en": "I tend to focus on the patterns, trends, or deeper meanings behind things.",
                   "dimension": "Ni"
             },
             {
                   "id": 22,
                   "text": "面对复杂局面时，我更想找出核心线索，而不是处理所有表面细节。",
+                  "text_en": "In complex situations, I'd rather find the core thread than handle every surface detail.",
                   "dimension": "Ni"
             },
             {
                   "id": 23,
                   "text": "我常会思考一件事在更长时间尺度上会如何发展。",
+                  "text_en": "I often think about how something will unfold over a longer time horizon.",
                   "dimension": "Ni"
             },
             {
                   "id": 24,
                   "text": "我会被象征、隐喻、主题或\"隐藏信息\"所吸引。",
+                  "text_en": "I'm drawn to symbols, metaphors, themes, and hidden meanings.",
                   "dimension": "Ni"
             },
             {
                   "id": 25,
                   "text": "我习惯先明确目标、标准和完成条件，再开始做事。",
+                  "text_en": "I usually define goals, standards, and completion criteria before starting work.",
                   "dimension": "Te"
             },
             {
                   "id": 26,
                   "text": "我会自然地思考怎样安排资源，才能更高效地推进任务。",
+                  "text_en": "I naturally think about how to allocate resources for maximum efficiency.",
                   "dimension": "Te"
             },
             {
                   "id": 27,
                   "text": "我重视结果是否可衡量、可验证，而不只是\"感觉不错\"。",
+                  "text_en": "I value whether outcomes are measurable and verifiable, not just 'feels right.'",
                   "dimension": "Te"
             },
             {
                   "id": 28,
                   "text": "发现流程低效时，我会想办法优化它。",
+                  "text_en": "When I spot an inefficient process, I look for ways to optimize it.",
                   "dimension": "Te"
             },
             {
                   "id": 29,
                   "text": "在团队中，我常会主动推动分工、排期或执行节奏。",
+                  "text_en": "In a team, I often take the initiative in dividing tasks, scheduling, or driving execution.",
                   "dimension": "Te"
             },
             {
                   "id": 30,
                   "text": "我倾向依据事实、数据或客观证据来判断方案优劣。",
+                  "text_en": "I prefer judging plans based on facts, data, or objective evidence.",
                   "dimension": "Te"
             },
             {
                   "id": 31,
                   "text": "我喜欢先弄清一个概念的定义，再继续讨论。",
+                  "text_en": "I like to clarify a concept's definition before continuing the discussion.",
                   "dimension": "Ti"
             },
             {
                   "id": 32,
                   "text": "面对问题时，我会先分析其中的结构与逻辑关系。",
+                  "text_en": "Facing a problem, I first analyze its structure and logical relationships.",
                   "dimension": "Ti"
             },
             {
                   "id": 33,
                   "text": "如果一个说法在逻辑上不一致，我很难直接接受它。",
+                  "text_en": "If an argument is logically inconsistent, I find it hard to accept.",
                   "dimension": "Ti"
             },
             {
                   "id": 34,
                   "text": "我经常会在心里把复杂问题拆成几个更基础的部分。",
+                  "text_en": "I often mentally break complex problems down into more fundamental parts.",
                   "dimension": "Ti"
             },
             {
                   "id": 35,
                   "text": "我倾向独立思考，直到自己真正想明白为止。",
+                  "text_en": "I tend to think independently until I've truly figured things out for myself.",
                   "dimension": "Ti"
             },
             {
                   "id": 36,
                   "text": "我关心的不只是结论对不对，还包括推理过程是否严密。",
+                  "text_en": "I care not just about whether the conclusion is right, but whether the reasoning is rigorous.",
                   "dimension": "Ti"
             },
             {
                   "id": 37,
                   "text": "我会自然关注他人的情绪变化，以及现场氛围是否融洽。",
+                  "text_en": "I naturally notice others' emotional shifts and whether the atmosphere feels harmonious.",
                   "dimension": "Fe"
             },
             {
                   "id": 38,
                   "text": "在群体中，我常会根据场合调整自己的表达方式。",
+                  "text_en": "In groups, I often adjust how I express myself based on the social context.",
                   "dimension": "Fe"
             },
             {
                   "id": 39,
                   "text": "如果有人被冷落或尴尬，我通常会想办法缓和局面。",
+                  "text_en": "If someone is left out or embarrassed, I usually try to smooth things over.",
                   "dimension": "Fe"
             },
             {
                   "id": 40,
                   "text": "我重视别人是否感到被理解、被尊重、被妥善对待。",
+                  "text_en": "I care about whether others feel understood, respected, and well-treated.",
                   "dimension": "Fe"
             },
             {
                   "id": 41,
                   "text": "做决定时，我会考虑这会对关系和整体氛围产生什么影响。",
+                  "text_en": "When deciding, I consider how it will affect relationships and the overall atmosphere.",
                   "dimension": "Fe"
             },
             {
                   "id": 42,
                   "text": "我常能察觉别人没有说出口的情绪需求。",
+                  "text_en": "I can often sense emotional needs that others haven't voiced.",
                   "dimension": "Fe"
             },
             {
                   "id": 43,
                   "text": "我做决定时，很看重这是否真正符合自己的内心。",
+                  "text_en": "When making decisions, I place great weight on whether it truly aligns with my heart.",
                   "dimension": "Fi"
             },
             {
                   "id": 44,
                   "text": "即使别人都认同，我也不会轻易违背自己的价值判断。",
+                  "text_en": "Even when everyone else agrees, I won't easily go against my own values.",
                   "dimension": "Fi"
             },
             {
                   "id": 45,
                   "text": "我对\"真实\"很敏感，不喜欢违心的表达或表演式互动。",
+                  "text_en": "I'm sensitive to authenticity — I dislike insincere expressions or performative interactions.",
                   "dimension": "Fi"
             },
             {
                   "id": 46,
                   "text": "我会认真分辨自己的感受，而不是只顺着外界期待行动。",
+                  "text_en": "I carefully discern my own feelings rather than simply following external expectations.",
                   "dimension": "Fi"
             },
             {
                   "id": 47,
                   "text": "我倾向尊重每个人独特的处境和个人选择。",
+                  "text_en": "I tend to respect each person's unique circumstances and personal choices.",
                   "dimension": "Fi"
             },
             {
                   "id": 48,
                   "text": "当某件事触及我深层认同的价值时，我会非常坚定。",
+                  "text_en": "When something touches a deeply held value, I become very firm.",
                   "dimension": "Fi"
             }
       ]
@@ -1015,7 +1077,9 @@ const cognitiveLongDesc = {
       function renderPage() {
         const dimension = state.data.dimensions[state.page];
         const questions = getQuestionsForPage(state.page);
-        pageTitle.textContent = `维度 ${state.page + 1} / ${getPageCount()}`;
+        const total = getPageCount();
+        const done = answeredCount();
+        pageTitle.textContent = `维度 ${state.page + 1} / ${total}`;
         dimensionTitle.textContent = dimension.name;
         dimensionDesc.textContent = dimension.description;
         renderScaleLabels(state.data.scale.labels);
@@ -1023,8 +1087,14 @@ const cognitiveLongDesc = {
         questions.forEach(q => questionGroup.appendChild(renderQuestionCard(q)));
         prevBtn.disabled = state.page === 0;
         prevBtn.style.opacity = state.page === 0 ? '.45' : '1';
-        nextBtn.textContent = state.page === getPageCount() - 1 ? '翻开这一页' : '下一页 →';
+        nextBtn.textContent = state.page === total - 1 ? '翻开这一页' : '下一页 →';
         setStoryRecDisplay('none');
+        const counterEl = document.getElementById('quizCounter');
+        const answeredEl = document.getElementById('quizAnswered');
+        const barEl = document.getElementById('quizBar');
+        if (counterEl) counterEl.innerHTML = `${state.page + 1} <span style="font-size:1rem;color:rgba(204,196,209,1);font-family:'Plus Jakarta Sans',sans-serif;">/ ${total}</span>`;
+        if (answeredEl) answeredEl.innerHTML = `已完成 ${done} / ${state.data.total} <span style="opacity:0.6;">/ Completed ${done} / ${state.data.total}</span>`;
+        if (barEl) barEl.style.width = `${(done / state.data.total) * 100}%`;
         updateProgress();
       }
 
@@ -1326,6 +1396,7 @@ const cognitiveLongDesc = {
       document.getElementById('startBtn').onclick = () => {
         document.querySelector('.test-intro').style.display = 'none';
         document.getElementById('testBody').style.display = 'block';
+        beginQuizBtn.click();
       };
 
       beginQuizBtn.onclick = () => {

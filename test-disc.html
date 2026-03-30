@@ -720,20 +720,39 @@
       <button class="primary-btn" id="startBtn">开始测评</button>
     </section>
 
-    <section id="quizScreen" class="screen">
-      <div class="progress-meta">
-        <span id="progressText">01 / 12</span>
-        <span>DISC</span>
+    <div id="quizPanel" style="display:none;padding:5rem 1.5rem 8rem;min-height:100dvh;flex-direction:column;align-items:center;max-width:28rem;margin:0 auto;">
+      <!-- Progress -->
+      <div style="width:100%;margin-bottom:2.5rem;text-align:center;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1rem;">
+          <span id="counter" style="font-family:'Noto Serif SC',serif;font-size:2.5rem;color:rgba(51,24,92,0.8);"></span>
+          <div style="text-align:right;">
+            <p style="font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:#7b7580;font-weight:600;margin:0 0 4px;">进度 / STATUS</p>
+            <p id="answered" style="font-size:12px;color:rgba(51,24,92,0.6);font-weight:500;margin:0;"></p>
+          </div>
+        </div>
+        <div style="width:100%;height:4px;background:#f0edea;border-radius:9999px;overflow:hidden;">
+          <div id="bar" style="height:100%;background:#9c3c62;border-radius:9999px;transition:width 0.25s;width:0%;"></div>
+        </div>
       </div>
-      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      <div class="question-label" id="questionLabel">Q1</div>
-      <h2 class="question-text" id="questionText"></h2>
-      <div class="options" id="options"></div>
-      <div class="nav-row">
-        <button class="secondary-btn" id="prevBtn" type="button">上一题</button>
-        <button class="primary-btn" id="nextBtn" type="button">下一题</button>
+      <!-- Question Card -->
+      <div style="width:100%;position:relative;">
+        <div style="position:absolute;top:-1rem;right:-1rem;width:8rem;height:8rem;background:rgba(236,220,255,0.3);border-radius:9999px;filter:blur(48px);z-index:-1;"></div>
+        <div style="background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);border-radius:1rem;padding:2rem;margin-bottom:2.5rem;border:1px solid rgba(229,226,223,0.5);box-shadow:0 10px 40px -10px rgba(51,24,92,0.08);display:flex;flex-direction:column;align-items:center;text-align:center;">
+          <div style="width:3rem;height:2px;background:rgba(51,24,92,0.15);border-radius:9999px;margin-bottom:2.5rem;"></div>
+          <h2 id="qText" style="font-family:'Noto Serif SC',serif;font-size:1.5rem;line-height:1.6;color:#1c1c1a;margin:0 0 1rem;padding:0 0.5rem;"></h2>
+          <p id="qTextEn" style="font-family:'Noto Serif SC',serif;font-size:1rem;color:rgba(51,24,92,0.5);line-height:1.5;margin:0 0 2rem;font-style:italic;"></p>
+          <div id="choiceOptions" style="width:100%;display:flex;flex-direction:column;gap:0.75rem;"></div>
+        </div>
       </div>
-    </section>
+      <!-- Action Buttons -->
+      <div style="width:100%;display:flex;flex-direction:column;gap:1rem;">
+        <div style="display:flex;gap:1rem;width:100%;">
+          <button id="prevBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#f0edea;color:#7b7580;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:all 0.2s;">← 上一题</button>
+          <button id="nextBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;box-shadow:0 4px 16px rgba(51,24,92,0.15);transition:all 0.2s;">下一题 →</button>
+        </div>
+        <button id="submitBtn" disabled style="width:100%;padding:1.25rem;border-radius:0.75rem;border:1px solid rgba(204,196,209,0.3);color:#33185c;font-weight:500;font-size:12px;letter-spacing:0.1em;background:rgba(246,243,240,0.4);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.75rem;transition:all 0.2s;">✦ 翻开这一页 / Flip this page</button>
+      </div>
+    </div>
 
     <section id="resultScreen" class="screen">
       <div id="result-capture" class="result-capture"></div>
@@ -762,6 +781,7 @@
       {
         id: 1,
         text: '团队要做一个决定，但大家迟迟没有进展。你更可能：',
+        text_en: 'The team needs to make a decision, but no one\'s moving forward. You\'d most likely:',
         options: [
           { dim: 'C', text: '先把所有选项的利弊列清楚，再讨论' },
           { dim: 'I', text: '先把大家的想法都摆出来，让气氛活起来' },
@@ -772,6 +792,7 @@
       {
         id: 2,
         text: '你被交代了一个任务，但给的信息不够完整。你更可能：',
+        text_en: 'You\'re assigned a task, but the information given is incomplete. You\'d most likely:',
         options: [
           { dim: 'S', text: '等信息更完整再开始，不想做一半重来' },
           { dim: 'D', text: '先动起来，边做边调整' },
@@ -782,6 +803,7 @@
       {
         id: 3,
         text: '和别人发生了分歧，对方坚持他的观点。你更可能：',
+        text_en: 'You disagree with someone, and they insist on their point. You\'d most likely:',
         options: [
           { dim: 'I', text: '试着找到你们之间的共同点，把气氛缓和下来' },
           { dim: 'C', text: '用数据或逻辑来支撑你的观点' },
@@ -792,6 +814,7 @@
       {
         id: 4,
         text: '你在一个新环境里认识了一群陌生人。你更可能：',
+        text_en: 'You\'re meeting a group of strangers in a new setting. You\'d most likely:',
         options: [
           { dim: 'D', text: '很快找到你想深入交流的人，主动建立连接' },
           { dim: 'S', text: '先观察，等有人来和你说话' },
@@ -802,6 +825,7 @@
       {
         id: 5,
         text: '你负责的一件事出了问题。你更可能：',
+        text_en: 'Something you\'re responsible for goes wrong. You\'d most likely:',
         options: [
           { dim: 'I', text: '第一反应是和团队说清楚，保持透明' },
           { dim: 'D', text: '马上找到解决方案，优先把问题解决' },
@@ -812,6 +836,7 @@
       {
         id: 6,
         text: '别人给你反馈说你做的东西有不足。你更可能：',
+        text_en: 'Someone gives you feedback that your work has shortcomings. You\'d most likely:',
         options: [
           { dim: 'C', text: '把反馈记下来，对照自己的标准仔细想' },
           { dim: 'I', text: '看对方说的方式，如果方式不对你会先有情绪' },
@@ -822,6 +847,7 @@
       {
         id: 7,
         text: '工作节奏突然加快，事情一下子多了很多。你更可能：',
+        text_en: 'Work suddenly picks up pace with a flood of tasks. You\'d most likely:',
         options: [
           { dim: 'S', text: '默默扛着，不太会说自己的压力' },
           { dim: 'C', text: '把所有事情列出来，有系统地一件件处理' },
@@ -832,6 +858,7 @@
       {
         id: 8,
         text: '你参与一个长期项目，中途方向变了。你更可能：',
+        text_en: 'You\'re on a long-term project and the direction changes midway. You\'d most likely:',
         options: [
           { dim: 'C', text: '想清楚变化带来的每一个影响，再决定' },
           { dim: 'S', text: '需要时间适应，不喜欢半途改变' },
@@ -842,6 +869,7 @@
       {
         id: 9,
         text: '你有一个新想法，但还不成熟。你更可能：',
+        text_en: 'You have a new idea, but it\'s not fully formed. You\'d most likely:',
         options: [
           { dim: 'I', text: '先找几个信任的人聊，感受他们的反应' },
           { dim: 'S', text: '先自己想清楚，觉得稳妥了再说' },
@@ -852,6 +880,7 @@
       {
         id: 10,
         text: '做一件事，你更在意的是：',
+        text_en: 'When doing something, what matters most to you:',
         options: [
           { dim: 'D', text: '结果——做完了，达到目标了没' },
           { dim: 'C', text: '质量——每个细节有没有到位' },
@@ -862,6 +891,7 @@
       {
         id: 11,
         text: '别人说你“太……了”，你猜最可能是哪个：',
+        text_en: 'If someone said you\'re \'too ___\', what would it most likely be:',
         options: [
           { dim: 'S', text: '太没主见了' },
           { dim: 'D', text: '太强势了' },
@@ -872,6 +902,7 @@
       {
         id: 12,
         text: '一天结束时，什么样的感觉会让你觉得「今天值了」：',
+        text_en: 'At the end of the day, what makes you feel \'today was worth it\':',
         options: [
           { dim: 'C', text: '把一件复杂的事情理清楚了，做对了' },
           { dim: 'S', text: '帮到了需要帮助的人，关系还在' },
@@ -1077,37 +1108,50 @@
     };
 
     const introScreen = document.getElementById('introScreen');
-    const quizScreen = document.getElementById('quizScreen');
     const resultScreen = document.getElementById('resultScreen');
-    const progressText = document.getElementById('progressText');
-    const progressFill = document.getElementById('progressFill');
-    const questionLabel = document.getElementById('questionLabel');
-    const questionText = document.getElementById('questionText');
-    const optionsEl = document.getElementById('options');
+    const quizPanel = document.getElementById('quizPanel');
     const resultCapture = document.getElementById('result-capture');
     const modal = document.getElementById('shareModal');
     const modalImage = document.getElementById('modalImage');
+    const $ = id => document.getElementById(id);
 
     function showScreen(name) {
-      [introScreen, quizScreen, resultScreen].forEach(el => el.classList.remove('active'));
-      if (name === 'intro') introScreen.classList.add('active');
-      if (name === 'quiz') quizScreen.classList.add('active');
-      if (name === 'result') resultScreen.classList.add('active');
+      introScreen.style.display = name === 'intro' ? '' : 'none';
+      quizPanel.style.display = name === 'quiz' ? 'flex' : 'none';
+      resultScreen.style.display = name === 'result' ? '' : 'none';
     }
 
     function renderQuestion() {
       const q = QUESTIONS[state.index];
-      questionLabel.textContent = `Q${q.id}`;
-      questionText.textContent = q.text;
-      progressText.textContent = `${String(state.index + 1).padStart(2, '0')} / ${QUESTIONS.length}`;
-      progressFill.style.width = `${((state.index) / QUESTIONS.length) * 100}%`;
-      optionsEl.innerHTML = q.options.map((opt, idx) => {
-        const selected = state.answers[state.index] === idx ? 'selected' : '';
-        return `<button type="button" class="option ${selected}" data-index="${idx}"><small>${opt.dim}</small>${opt.text}</button>`;
-      }).join('');
-      document.getElementById('prevBtn').disabled = state.index === 0;
-      document.getElementById('prevBtn').style.opacity = state.index === 0 ? '.45' : '1';
-      document.getElementById('nextBtn').textContent = state.index === QUESTIONS.length - 1 ? '查看结果' : '下一题';
+      const total = QUESTIONS.length;
+      const done = state.answers.filter(v => v !== null).length;
+      $('qText').textContent = q.text;
+      $('qTextEn').textContent = q.text_en || '';
+      $('counter').innerHTML = `${state.index + 1} <span style="font-size:1rem;color:rgba(204,196,209,1);font-family:'Plus Jakarta Sans',sans-serif;">/ ${total}</span>`;
+      $('answered').innerHTML = `已完成 ${done} / ${total} <span style="opacity:0.6;">/ Completed ${done} / ${total}</span>`;
+      $('bar').style.width = `${(done / total) * 100}%`;
+      $('prevBtn').disabled = state.index === 0;
+      $('prevBtn').style.opacity = state.index === 0 ? '0.4' : '1';
+      $('nextBtn').disabled = state.index === total - 1;
+      $('nextBtn').style.opacity = state.index === total - 1 ? '0.4' : '1';
+      $('submitBtn').disabled = done !== total;
+      $('submitBtn').style.opacity = done === total ? '1' : '0.5';
+      const container = $('choiceOptions');
+      container.innerHTML = '';
+      q.options.forEach((opt, idx) => {
+        const b = document.createElement('button');
+        const isSelected = state.answers[state.index] === idx;
+        b.style.cssText = isSelected
+          ? 'width:100%;padding:1rem 1.25rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-family:\'Noto Serif SC\',sans-serif;font-size:14px;text-align:left;border:none;cursor:pointer;transition:all 0.2s;'
+          : 'width:100%;padding:1rem 1.25rem;border-radius:0.75rem;background:rgba(255,255,255,0.8);color:#1c1c1a;font-family:\'Noto Serif SC\',sans-serif;font-size:14px;text-align:left;border:1px solid rgba(229,226,223,0.8);cursor:pointer;transition:all 0.2s;';
+        b.textContent = opt.text;
+        b.onclick = () => {
+          state.answers[state.index] = idx;
+          renderQuestion();
+          if (state.index < total - 1) setTimeout(() => { state.index++; renderQuestion(); }, 300);
+        };
+        container.appendChild(b);
+      });
     }
 
     function getScores() {
@@ -1207,30 +1251,25 @@
         }));
       }
 
-      progressFill.style.width = '100%';
       showScreen('result');
     }
 
     function nextQuestion() {
-      if (state.answers[state.index] === null) return;
-      if (state.index === QUESTIONS.length - 1) {
-        renderResult();
-        return;
+      if (state.index < QUESTIONS.length - 1) {
+        state.index++;
+        renderQuestion();
       }
-      state.index += 1;
-      renderQuestion();
     }
 
     function previousQuestion() {
       if (state.index === 0) return;
-      state.index -= 1;
+      state.index--;
       renderQuestion();
     }
 
     function restartQuiz() {
       state.index = 0;
       state.answers = Array(QUESTIONS.length).fill(null);
-      progressFill.style.width = '0%';
       showScreen('intro');
     }
 
@@ -1374,15 +1413,9 @@
       renderQuestion();
     });
 
-    document.getElementById('options').addEventListener('click', (event) => {
-      const btn = event.target.closest('.option');
-      if (!btn) return;
-      state.answers[state.index] = Number(btn.dataset.index);
-      renderQuestion();
-    });
-
     document.getElementById('nextBtn').addEventListener('click', nextQuestion);
     document.getElementById('prevBtn').addEventListener('click', previousQuestion);
+    $('submitBtn').addEventListener('click', renderResult);
     document.getElementById('restartBtn').addEventListener('click', restartQuiz);
     document.getElementById('shareLongBtn').addEventListener('click', shareLongImage);
     document.getElementById('shareQuoteBtn').addEventListener('click', shareQuoteCard);

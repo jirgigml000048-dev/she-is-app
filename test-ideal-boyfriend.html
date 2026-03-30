@@ -466,15 +466,36 @@
         </div>
       </section>
 
-      <section class="panel hidden" id="quizView">
-        <div class="question-no" id="questionNo"></div>
-        <h2 class="question-title" id="questionTitle"></h2>
-        <div class="options" id="options"></div>
-        <div class="btn-row">
-          <button class="ghost" id="prevBtn">上一题</button>
-          <button class="primary" id="nextBtn">下一题</button>
+      <div id="quizView" style="display:none;padding:5rem 1.5rem 8rem;min-height:100dvh;flex-direction:column;align-items:center;max-width:28rem;margin:0 auto;">
+        <!-- Progress -->
+        <div style="width:100%;margin-bottom:2.5rem;text-align:center;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1rem;">
+            <span id="counter" style="font-family:'Noto Serif SC',serif;font-size:2.5rem;color:rgba(51,24,92,0.8);"></span>
+            <div style="text-align:right;">
+              <p style="font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:#7b7580;font-weight:600;margin:0 0 4px;">进度 / STATUS</p>
+              <p id="answered" style="font-size:12px;color:rgba(51,24,92,0.6);font-weight:500;margin:0;"></p>
+            </div>
+          </div>
+          <div style="width:100%;height:4px;background:#f0edea;border-radius:9999px;overflow:hidden;">
+            <div id="bar" style="height:100%;background:#9c3c62;border-radius:9999px;transition:width 0.25s;width:0%;"></div>
+          </div>
         </div>
-      </section>
+        <!-- Question Card -->
+        <div style="width:100%;position:relative;">
+          <div style="position:absolute;top:-1rem;right:-1rem;width:8rem;height:8rem;background:rgba(236,220,255,0.3);border-radius:9999px;filter:blur(48px);z-index:-1;"></div>
+          <div style="background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);border-radius:1rem;padding:2rem;margin-bottom:2.5rem;border:1px solid rgba(229,226,223,0.5);box-shadow:0 10px 40px -10px rgba(51,24,92,0.08);display:flex;flex-direction:column;align-items:center;text-align:center;">
+            <div style="width:3rem;height:2px;background:rgba(51,24,92,0.15);border-radius:9999px;margin-bottom:2.5rem;"></div>
+            <div id="questionNo" style="display:none;"></div>
+            <h2 id="questionTitle" style="font-family:'Noto Serif SC',serif;font-size:1.5rem;line-height:1.6;color:#1c1c1a;margin:0 0 2rem;padding:0 0.5rem;"></h2>
+            <div id="options" style="width:100%;display:flex;flex-direction:column;gap:0.75rem;"></div>
+          </div>
+        </div>
+        <!-- Navigation -->
+        <div style="width:100%;display:flex;gap:1rem;">
+          <button id="prevBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#f0edea;color:#7b7580;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:all 0.2s;">← 上一题</button>
+          <button id="nextBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;box-shadow:0 4px 16px rgba(51,24,92,0.15);transition:all 0.2s;">下一题 →</button>
+        </div>
+      </div>
 
       <section class="panel hidden" id="resultView"></section>
     </main>
@@ -521,6 +542,7 @@
       const questions = [
         {
           text: '一次疲惫又混乱的日子结束后，你最希望他怎么接住你？',
+          text_en: 'After an exhausting, chaotic day, how do you most want him to receive you?',
           options: [
             { text: '先给我稳定的安顿和照顾', tag: '安稳', scores: { keeper: 2, nest: 1 } },
             { text: '拉我出去透气，让状态重新流动起来', tag: '松动', scores: { wild: 2, midnight: 1 } },
@@ -529,6 +551,7 @@
         },
         {
           text: '你更容易被哪种靠近方式打动？',
+          text_en: 'What approach to getting closer moves you most?',
           options: [
             { text: '持续、靠谱、不忽冷忽热', tag: '持续', scores: { keeper: 2, nest: 1 } },
             { text: '自然有趣，不按套路但很真', tag: '鲜活', scores: { wild: 2, mirror: 1 } },
@@ -537,6 +560,7 @@
         },
         {
           text: '如果一起旅行，你最期待他带来的感受是？',
+          text_en: 'If traveling together, what feeling do you most want from him?',
           options: [
             { text: '行程安心，不用我操心太多', tag: '可靠', scores: { keeper: 2, nest: 1 } },
             { text: '有点冒险感，临时改计划也无妨', tag: '自由', scores: { wild: 2, midnight: 1 } },
@@ -545,6 +569,7 @@
         },
         {
           text: '当你脆弱时，最怕遇到怎样的人？',
+          text_en: 'When you\'re vulnerable, what kind of person do you fear most?',
           options: [
             { text: '嘴上关心，行动却总是缺席', tag: '失约', scores: { keeper: 2 } },
             { text: '过于控制，让我无法呼吸', tag: '压迫', scores: { wild: 2, nest: 1 } },
@@ -553,6 +578,7 @@
         },
         {
           text: '你希望亲密关系更像哪种画面？',
+          text_en: 'What picture do you want your intimate relationship to look like?',
           options: [
             { text: '厨房有灯，回家有人等', tag: '灯火', scores: { keeper: 2, nest: 1 } },
             { text: '一起上路，世界很大也敢去', tag: '远方', scores: { wild: 2 } },
@@ -561,6 +587,7 @@
         },
         {
           text: '在你心里，成熟更接近以下哪一种？',
+          text_en: 'In your heart, maturity is closest to:',
           options: [
             { text: '答应的事情会做到', tag: '兑现', scores: { keeper: 2 } },
             { text: '有自己的方向，也尊重我的边界', tag: '松弛', scores: { wild: 2, nest: 1 } },
@@ -569,6 +596,7 @@
         },
         {
           text: '你最想从一段爱里得到什么？',
+          text_en: 'What do you most want from love?',
           options: [
             { text: '被稳稳接住的安全感', tag: '安全', scores: { keeper: 2, nest: 1 } },
             { text: '一起活得更开阔的生命力', tag: '活力', scores: { wild: 2 } },
@@ -577,6 +605,7 @@
         },
         {
           text: '如果他发来一条消息，你最容易因为什么心动？',
+          text_en: 'If he texts you, what\'s most likely to make your heart skip?',
           options: [
             { text: '内容很简单，但总在我需要时出现', tag: '在场', scores: { keeper: 2, nest: 1 } },
             { text: '一句话就让我想笑，像风吹开窗', tag: '轻盈', scores: { wild: 2 } },
@@ -585,6 +614,7 @@
         },
         {
           text: '你更欣赏他身上的哪种力量？',
+          text_en: 'What kind of strength in him do you admire most?',
           options: [
             { text: '沉着、稳定、关键时刻不掉线', tag: '定力', scores: { keeper: 2, nest: 1 } },
             { text: '敢冒险，有一点野，也有一点光', tag: '锋芒', scores: { wild: 2 } },
@@ -593,6 +623,7 @@
         },
         {
           text: '你理想中的约会，更像下面哪一项？',
+          text_en: 'Your ideal date looks more like:',
           options: [
             { text: '一起做饭、散步、看很普通却温柔的夜', tag: '日常', scores: { nest: 2, keeper: 1 } },
             { text: '说走就走，去看陌生的风景', tag: '冒险', scores: { wild: 2 } },
@@ -601,6 +632,7 @@
         },
         {
           text: '当关系进入平稳期，你最希望它保留什么？',
+          text_en: 'When a relationship settles into a steady phase, what do you most want to keep?',
           options: [
             { text: '照旧可靠的陪伴和行动', tag: '恒定', scores: { keeper: 2, nest: 1 } },
             { text: '仍然有惊喜，不被日常困住', tag: '流动', scores: { wild: 2 } },
@@ -609,6 +641,7 @@
         },
         {
           text: '最后，你觉得真正让你爱上的，通常是什么？',
+          text_en: 'Finally, what usually makes you truly fall in love?',
           options: [
             { text: '他让我觉得生活可以被托付', tag: '托付', scores: { keeper: 2, nest: 1 } },
             { text: '他让我看见更自由、更有趣的自己', tag: '打开', scores: { wild: 2 } },
@@ -653,33 +686,37 @@
       }
 
       function renderQuestion() {
+        const total = questions.length;
+        const done = state.answers.filter(v => v !== null).length;
         const question = questions[state.current];
-        questionNo.textContent = 'QUESTION ' + (state.current + 1);
-        questionTitle.textContent = question.text;
+        const counterEl = document.getElementById('counter');
+        const answeredEl = document.getElementById('answered');
+        const barEl = document.getElementById('bar');
+        if (counterEl) counterEl.innerHTML = `${state.current + 1} <span style="font-size:1rem;color:rgba(204,196,209,1);font-family:'Plus Jakarta Sans',sans-serif;">/ ${total}</span>`;
+        if (answeredEl) answeredEl.innerHTML = `已完成 ${done} / ${total} <span style="opacity:0.6;">/ Completed ${done} / ${total}</span>`;
+        if (barEl) barEl.style.width = `${(done / total) * 100}%`;
+        if (progressBar) progressBar.style.width = `${((state.current + 1) / total) * 100}%`;
+        if (questionNo) questionNo.textContent = 'QUESTION ' + (state.current + 1);
+        if (questionTitle) questionTitle.textContent = question.text;
         optionsEl.innerHTML = '';
 
         question.options.forEach((option, index) => {
-          const label = document.createElement('label');
-          label.className = 'option';
-          if (state.answers[state.current] === index) {
-            label.classList.add('selected');
-          }
-          label.innerHTML = `
-            <input type="radio" name="answer" value="${index}" ${state.answers[state.current] === index ? 'checked' : ''}>
-            <div class="option-top">
-              <span class="option-label">${option.text}</span>
-              <span class="option-tag">${option.tag}</span>
-            </div>
-          `;
-          label.addEventListener('click', function () {
+          const isSelected = state.answers[state.current] === index;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.style.cssText = isSelected
+            ? 'width:100%;padding:1rem 1.25rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-family:\'Noto Serif SC\',sans-serif;font-size:14px;text-align:left;border:none;cursor:pointer;transition:all 0.2s;'
+            : 'width:100%;padding:1rem 1.25rem;border-radius:0.75rem;background:rgba(255,255,255,0.8);color:#1c1c1a;font-family:\'Noto Serif SC\',sans-serif;font-size:14px;text-align:left;border:1px solid rgba(229,226,223,0.8);cursor:pointer;transition:all 0.2s;';
+          btn.textContent = option.text;
+          btn.addEventListener('click', function () {
             state.answers[state.current] = index;
             renderQuestion();
           });
-          optionsEl.appendChild(label);
+          optionsEl.appendChild(btn);
         });
 
-        prevBtn.style.visibility = state.current === 0 ? 'hidden' : 'visible';
-        nextBtn.textContent = state.current === questions.length - 1 ? '查看结果' : '下一题';
+        prevBtn.style.opacity = state.current === 0 ? '0.4' : '1';
+        nextBtn.textContent = state.current === questions.length - 1 ? '查看结果 →' : '下一题 →';
         setStoryRecDisplay('none');
         updateProgress();
       }
@@ -689,8 +726,7 @@
         introView.classList.add('hidden');
         resultView.classList.add('hidden');
         setStoryRecDisplay('none');
-        quizView.classList.remove('hidden');
-        setStoryRecDisplay('none');
+        quizView.style.display = 'flex';
         renderQuestion();
       }
 
@@ -752,7 +788,7 @@
         const active = archetypes[result.winner];
         const orderedScores = Object.entries(result.totals).sort((a, b) => b[1] - a[1]);
 
-        quizView.classList.add('hidden');
+        quizView.style.display = 'none';
         resultView.classList.remove('hidden');
         progressBar.style.width = '100%';
         progressText.textContent = 'RESULT';
@@ -788,7 +824,7 @@
       function restartQuiz() {
         state.current = -1;
         state.answers = new Array(questions.length).fill(null);
-        quizView.classList.add('hidden');
+        quizView.style.display = 'none';
         resultView.classList.add('hidden');
         setStoryRecDisplay('none');
         introView.classList.remove('hidden');

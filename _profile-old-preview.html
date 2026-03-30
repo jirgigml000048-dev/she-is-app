@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我的测试 | 女也 She Is</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-override.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/auth.js"></script>
+    <style>
+      :root {
+        --bg: #f5f0eb;
+        --surface: rgba(255, 255, 255, 0.92);
+        --surface-muted: rgba(74, 48, 115, 0.08);
+        --ink: #2e2e2e;
+        --body: #5e5651;
+        --muted: #8e857f;
+        --line: rgba(74, 48, 115, 0.12);
+        --brand: #4A3073;
+        --brand-hover: #3D2565;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 100%;
+        background: var(--bg);
+        color: var(--body);
+        font-family: "Noto Serif SC", "Source Han Serif SC", serif;
+      }
+
+      body {
+        background:
+          radial-gradient(ellipse at top left, rgba(74, 48, 115, 0.12), transparent 42%),
+          radial-gradient(ellipse at bottom right, rgba(74, 48, 115, 0.08), transparent 38%),
+          var(--bg);
+      }
+
+      a, button { transition: all 0.24s ease; }
+
+      .page {
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+        min-height: 100vh;
+        padding: 16px 24px 56px;
+      }
+
+      .header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        padding-top: 6px;
+      }
+
+      .logo {
+        text-decoration: none;
+        color: inherit;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .logo-cn {
+        display: block;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 28px;
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        color: #1c1c1c;
+      }
+
+      .logo-en {
+        display: block;
+        font-family: "Courier Prime", monospace;
+        font-size: 11px;
+        color: #888;
+        letter-spacing: 0.08em;
+        margin-top: 2px;
+      }
+
+      .header-link {
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--brand);
+        text-decoration: none;
+      }
+
+      .header-link:hover { opacity: 0.72; }
+
+      .header-rule {
+        height: 1px;
+        margin: 10px 0 34px;
+        background: linear-gradient(to right, transparent, rgba(74, 48, 115, 0.5) 25%, rgba(74, 48, 115, 0.5) 75%, transparent);
+        border: none;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 13px;
+        letter-spacing: 0.24em;
+        color: var(--brand);
+      }
+
+      .hero-title {
+        margin: 0;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 42px;
+        line-height: 1.02;
+        color: var(--ink);
+      }
+
+      .hero-copy {
+        margin: 14px 0 0;
+        font-size: 14px;
+        line-height: 1.9;
+        color: var(--muted);
+      }
+
+      .section {
+        margin-top: 32px;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: var(--surface);
+        padding: 22px 20px;
+        box-shadow: 0 18px 40px rgba(74, 48, 115, 0.06);
+      }
+
+      .user-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .user-kicker {
+        margin: 0 0 6px;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .user-name {
+        margin: 0;
+        font-size: 22px;
+        color: var(--ink);
+      }
+
+      .user-email {
+        margin: 6px 0 0;
+        font-size: 12px;
+        color: var(--muted);
+        word-break: break-all;
+      }
+
+      .ghost-btn,
+      .solid-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 0 16px;
+        border-radius: 999px;
+        font: inherit;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .ghost-btn {
+        border: 1px solid rgba(74, 48, 115, 0.24);
+        background: transparent;
+        color: var(--brand);
+      }
+
+      .ghost-btn:hover,
+      .solid-link:hover {
+        background: var(--brand-hover);
+        border-color: var(--brand-hover);
+        color: white;
+      }
+
+      .section-title {
+        margin: 0 0 10px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 30px;
+        color: var(--ink);
+      }
+
+      .section-copy {
+        margin: 0 0 18px;
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.85;
+      }
+
+      .cards {
+        display: grid;
+        gap: 14px;
+      }
+
+      .test-card {
+        border-radius: 22px;
+        padding: 18px 18px 16px;
+        border: 1px solid var(--line);
+      }
+
+      .test-card.completed {
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: 0 12px 28px rgba(74, 48, 115, 0.05);
+      }
+
+      .test-card.pending {
+        background: var(--surface-muted);
+      }
+
+      .card-meta {
+        margin: 0 0 8px;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .card-title {
+        margin: 0;
+        font-size: 18px;
+        color: var(--ink);
+        line-height: 1.55;
+      }
+
+      .card-result,
+      .card-time {
+        margin: 10px 0 0;
+        font-size: 13px;
+        color: var(--body);
+      }
+
+      .card-actions {
+        margin-top: 14px;
+      }
+
+      .solid-link {
+        border: 1px solid rgba(74, 48, 115, 0.18);
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--brand);
+      }
+
+      .empty-state,
+      .loading-state {
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 28px 22px;
+        background: rgba(255, 255, 255, 0.74);
+        text-align: center;
+      }
+
+      .empty-state h2,
+      .loading-state h2 {
+        margin: 0;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 30px;
+        color: var(--ink);
+      }
+
+      .empty-state p,
+      .loading-state p {
+        margin: 12px 0 0;
+        font-size: 13px;
+        line-height: 1.9;
+        color: var(--muted);
+      }
+
+      @media (max-width: 420px) {
+        .page { padding-left: 18px; padding-right: 18px; }
+        .hero-title { font-size: 36px; }
+        .user-row { flex-direction: column; align-items: flex-start; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="header">
+        <a class="logo" href="index.html" aria-label="返回首页">
+          <span class="logo-cn">女也</span>
+          <span class="logo-en">she is ______.</span>
+        </a>
+        <a class="header-link" href="index.html">返回首页</a>
+      </header>
+      <div class="header-rule"></div>
+
+      <section>
+        <p class="eyebrow">MY TESTS</p>
+        <h1 class="hero-title">你做过的测试，都在这里。</h1>
+        <p class="hero-copy">登录后，你的测评结果会按时间归档。做过的可以重新进入，没做过的也能直接补上。</p>
+      </section>
+
+      <section class="section" id="profileRoot">
+        <div class="loading-state">
+          <h2>正在读取你的结果…</h2>
+          <p>请稍等，页面正在检查登录状态并同步你的测试记录。</p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const testNameMap = {
+        'hsp': '感受力有多细腻',
+        'ecr': '你的依恋模式',
+        'erq': '压力来的时候',
+        'fmps': '你对做好的标准有多高',
+        'cognitive': '你的认知功能偏好',
+        'boundary-sense': '你的边界感',
+        'relationship-role': '你在关系里的角色',
+        'today-mood': '今日心情',
+        'abm-love-animal': '你是哪种爱情动物',
+        'ideal-boyfriend': '你的理想型男友'
+      };
+
+      const testFileMap = {
+        'hsp': 'test-hsp.html',
+        'ecr': 'test-ecr.html',
+        'erq': 'test-erq.html',
+        'fmps': 'test-fmps.html',
+        'cognitive': 'test-cognitive.html',
+        'boundary-sense': 'test-boundary-sense.html',
+        'relationship-role': 'test-relationship-role.html',
+        'today-mood': 'test-today-mood.html',
+        'abm-love-animal': 'test-abm-love-animal.html',
+        'ideal-boyfriend': 'test-ideal-boyfriend.html'
+      };
+
+      const orderedTestNames = Object.keys(testNameMap);
+      const profileRoot = document.getElementById('profileRoot');
+
+      function escapeHtml(value) {
+        return String(value || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function formatTime(value) {
+        if (!value) return '时间未记录';
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return '时间未记录';
+        return new Intl.DateTimeFormat('zh-CN', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        }).format(date);
+      }
+
+      function getDisplayName(user) {
+        return user?.user_metadata?.name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || '你';
+      }
+
+      function normalizeResults(results) {
+        const resultMap = new Map();
+        (results || []).forEach((item) => {
+          if (!item || !item.test_name || resultMap.has(item.test_name)) return;
+          resultMap.set(item.test_name, item);
+        });
+        return resultMap;
+      }
+
+      function renderLoginPrompt() {
+        profileRoot.innerHTML = `
+          <div class="empty-state">
+            <h2>先登录，再看你的测试记录</h2>
+            <p>我们需要先确认你的身份，才能把你做过的结果调出来。登录弹窗会自动打开，如果没有弹出，请手动点击下方按钮。</p>
+            <div class="card-actions" style="margin-top:18px;">
+              <button class="ghost-btn" type="button" onclick="openLoginModal()">立即登录</button>
+            </div>
+          </div>
+        `;
+        openLoginModal();
+      }
+
+      function renderProfile(user, results) {
+        const resultMap = normalizeResults(results);
+        const cards = orderedTestNames.map((testName) => {
+          const result = resultMap.get(testName);
+          const href = testFileMap[testName] || '#';
+          const title = escapeHtml(testNameMap[testName] || testName);
+
+          if (result) {
+            const resultType = escapeHtml(result.result_type || '已完成');
+            const completedAt = escapeHtml(formatTime(result.completed_at));
+            return `
+              <article class="test-card completed">
+                <p class="card-meta">completed</p>
+                <h3 class="card-title">${title}</h3>
+                <p class="card-result">结果类型：${resultType}</p>
+                <p class="card-time">完成时间：${completedAt}</p>
+                <div class="card-actions">
+                  <a class="solid-link" href="${href}">重新测试</a>
+                </div>
+              </article>
+            `;
+          }
+
+          return `
+            <article class="test-card pending">
+              <p class="card-meta">not yet</p>
+              <h3 class="card-title">${title}</h3>
+              <div class="card-actions">
+                <a class="solid-link" href="${href}">去测试</a>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        profileRoot.innerHTML = `
+          <section class="panel">
+            <div class="user-row">
+              <div>
+                <p class="user-kicker">ACCOUNT</p>
+                <h2 class="user-name">${escapeHtml(getDisplayName(user))}</h2>
+                <p class="user-email">${escapeHtml(user.email || '')}</p>
+              </div>
+              <button class="ghost-btn" id="logoutBtn" type="button">退出登录</button>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">我的测试结果</h2>
+            <p class="section-copy">白色卡片表示你已经完成，灰色卡片表示还没开始。所有入口都可以直接继续。</p>
+            <div class="cards">${cards}</div>
+          </section>
+        `;
+
+        document.getElementById('logoutBtn').addEventListener('click', signOut);
+      }
+
+      async function initProfilePage() {
+        try {
+          const user = await getUser();
+          if (!user) {
+            renderLoginPrompt();
+            return;
+          }
+          const results = await getUserResults();
+          renderProfile(user, results);
+        } catch (error) {
+          console.error('Failed to initialize profile page:', error);
+          profileRoot.innerHTML = `
+            <div class="empty-state">
+              <h2>结果暂时没有加载出来</h2>
+              <p>请刷新页面再试一次。如果你刚完成登录，等几秒再回来通常就能同步成功。</p>
+            </div>
+          `;
+        }
+      }
+
+      initProfilePage();
+    </script>
+  </body>
+</html>

@@ -674,25 +674,58 @@
       <div class="topline"><span id="progressBar"></span></div>
       <div class="meta"><span id="progressText">准备开始</span><span>FMPS-15</span></div>
 
-      <section class="panel" id="intro">
+      <section class="panel hidden" id="intro">
         <h1 class="title">完美主义测评</h1>
         <p class="subtitle">完美主义探索 · 15题 · 约4分钟</p>
         <p class="desc">别替那个理智、懂事、会表现的自己作答。只回答一句：这到底像不像我。</p>
         <button class="primary" id="beginQuizBtn">开始</button>
       </section>
 
-      <section class="panel hidden" id="quiz">
-        <div class="question-wrap" id="questionWrap">
-          <div class="question-id" id="questionId"></div>
-          <h2 class="question-text" id="questionText"></h2>
-          <div class="scale-labels"><span>完全不符合</span><span>不确定</span><span>完全符合</span></div>
-          <div class="options" id="options"></div>
-          <div class="actions">
-            <button class="ghost" id="prevBtn">← 上一题</button>
-            <button class="ghost" id="restartBtn">重新开始</button>
+      <div id="quizPanel" style="display:none;padding:2rem 1.5rem 8rem;min-height:60vh;flex-direction:column;align-items:center;max-width:28rem;margin:0 auto;">
+        <!-- Progress -->
+        <div style="width:100%;margin-bottom:2.5rem;text-align:center;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1rem;">
+            <span id="counter" style="font-family:'Noto Serif SC',serif;font-size:2.5rem;color:rgba(51,24,92,0.8);"></span>
+            <div style="text-align:right;">
+              <p style="font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:#7b7580;font-weight:600;margin:0 0 4px;">进度 / STATUS</p>
+              <p id="answered" style="font-size:12px;color:rgba(51,24,92,0.6);font-weight:500;margin:0;"></p>
+            </div>
+          </div>
+          <div style="width:100%;height:4px;background:#f0edea;border-radius:9999px;overflow:hidden;">
+            <div id="bar" style="height:100%;background:#9c3c62;border-radius:9999px;transition:width 0.25s;width:0%;"></div>
           </div>
         </div>
-      </section>
+        <!-- Question Card -->
+        <div style="width:100%;position:relative;">
+          <div style="position:absolute;top:-1rem;right:-1rem;width:8rem;height:8rem;background:rgba(236,220,255,0.3);border-radius:9999px;filter:blur(48px);z-index:-1;"></div>
+          <div style="background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);border-radius:1rem;padding:2rem;margin-bottom:2.5rem;border:1px solid rgba(229,226,223,0.5);box-shadow:0 10px 40px -10px rgba(51,24,92,0.08);display:flex;flex-direction:column;align-items:center;text-align:center;">
+            <div style="width:3rem;height:2px;background:rgba(51,24,92,0.15);border-radius:9999px;margin-bottom:2.5rem;"></div>
+            <h2 id="qText" style="font-family:'Noto Serif SC',serif;font-size:1.5rem;line-height:1.6;color:#1c1c1a;margin:0 0 1rem;padding:0 0.5rem;"></h2>
+            <p id="qTextEn" style="font-family:'Noto Serif SC',serif;font-size:1rem;color:rgba(51,24,92,0.5);line-height:1.5;margin:0 0 3rem;font-style:italic;"></p>
+            <div style="width:100%;">
+              <div id="likert" style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 4px;"></div>
+              <div style="display:flex;justify-content:space-between;width:100%;padding:0 4px;margin-top:1rem;">
+                <div style="width:6rem;text-align:left;">
+                  <p style="font-size:10px;color:#7b7580;font-weight:700;text-transform:uppercase;margin:0;">1 完全不符合</p>
+                  <p style="font-size:8px;color:rgba(123,117,128,0.6);text-transform:uppercase;letter-spacing:-0.02em;font-weight:500;margin:2px 0 0;">Completely Disagree</p>
+                </div>
+                <div style="width:6rem;text-align:right;">
+                  <p style="font-size:10px;color:#7b7580;font-weight:700;text-transform:uppercase;margin:0;">5 完全符合</p>
+                  <p style="font-size:8px;color:rgba(123,117,128,0.6);text-transform:uppercase;letter-spacing:-0.02em;font-weight:500;margin:2px 0 0;">Completely Agree</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Action Buttons -->
+        <div style="width:100%;display:flex;flex-direction:column;gap:1rem;">
+          <div style="display:flex;gap:1rem;width:100%;">
+            <button id="prevBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#f0edea;color:#7b7580;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:all 0.2s;">← 上一题</button>
+            <button id="nextBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;box-shadow:0 4px 16px rgba(51,24,92,0.15);transition:all 0.2s;">下一题 →</button>
+          </div>
+          <button id="submitBtn" disabled style="width:100%;padding:1.25rem;border-radius:0.75rem;border:1px solid rgba(204,196,209,0.3);color:#33185c;font-weight:500;font-size:12px;letter-spacing:0.1em;background:rgba(246,243,240,0.4);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.75rem;transition:all 0.2s;">✦ 翻开这一页 / Flip this page</button>
+        </div>
+      </div>
 
       <section class="panel hidden" id="result"></section>
     </main>
@@ -735,21 +768,21 @@
           { id: "DA", name: "行动疑虑", items: [13, 14, 15] }
         ],
         questions: [
-          { id: 1, dimension: "CM", text: "做事或学习的时候若是有部分的失败，我会觉得自己完全失败了" },
-          { id: 2, dimension: "CM", text: "假如我犯错误，人们很可能会轻看我" },
-          { id: 3, dimension: "CM", text: "如果我不能做得跟别人一样好，说明我是个低人一等的人" },
-          { id: 4, dimension: "OR", text: "做事有条理有系统对我是十分重要的" },
-          { id: 5, dimension: "OR", text: "整洁对我来说是十分重要的" },
-          { id: 6, dimension: "OR", text: "我是一个有条理的人" },
-          { id: 7, dimension: "PE", text: "我的父母曾给我定下很高的标准" },
-          { id: 8, dimension: "PE", text: "我的父母曾经期望我做得特别出色" },
-          { id: 9, dimension: "PE", text: "我从不觉得自己能达到我父母为我定下的标准" },
-          { id: 10, dimension: "PS", text: "比起大多数人，我定下更高的目标" },
-          { id: 11, dimension: "PS", text: "我厌恶做事不能做得最佳" },
-          { id: 12, dimension: "PS", text: "我有极高的目标" },
-          { id: 13, dimension: "DA", text: "尽管我小心翼翼地做事，还是经常感到自己做得不太正确" },
-          { id: 14, dimension: "DA", text: "我经常对一些日常小事也犹豫不决" },
-          { id: 15, dimension: "DA", text: "为了把一件事情做好，我需要花较长的时间" }
+          { id: 1, dimension: "CM", text: "做事或学习的时候若是有部分的失败，我会觉得自己完全失败了", text_en: "If I partly fail at something, I feel like a complete failure." },
+          { id: 2, dimension: "CM", text: "假如我犯错误，人们很可能会轻看我", text_en: "If I make a mistake, people are likely to think less of me." },
+          { id: 3, dimension: "CM", text: "如果我不能做得跟别人一样好，说明我是个低人一等的人", text_en: "If I can't do as well as others, it means I'm an inferior person." },
+          { id: 4, dimension: "OR", text: "做事有条理有系统对我是十分重要的", text_en: "Being organized and systematic is very important to me." },
+          { id: 5, dimension: "OR", text: "整洁对我来说是十分重要的", text_en: "Neatness is very important to me." },
+          { id: 6, dimension: "OR", text: "我是一个有条理的人", text_en: "I am an organized person." },
+          { id: 7, dimension: "PE", text: "我的父母曾给我定下很高的标准", text_en: "My parents set very high standards for me." },
+          { id: 8, dimension: "PE", text: "我的父母曾经期望我做得特别出色", text_en: "My parents expected me to excel." },
+          { id: 9, dimension: "PE", text: "我从不觉得自己能达到我父母为我定下的标准", text_en: "I never felt I could meet the standards my parents set for me." },
+          { id: 10, dimension: "PS", text: "比起大多数人，我定下更高的目标", text_en: "I set higher goals for myself than most people do." },
+          { id: 11, dimension: "PS", text: "我厌恶做事不能做得最佳", text_en: "I hate not being able to do my best." },
+          { id: 12, dimension: "PS", text: "我有极高的目标", text_en: "I have extremely high goals." },
+          { id: 13, dimension: "DA", text: "尽管我小心翼翼地做事，还是经常感到自己做得不太正确", text_en: "Even when I'm careful, I often feel like I haven't done things right." },
+          { id: 14, dimension: "DA", text: "我经常对一些日常小事也犹豫不决", text_en: "I often hesitate over everyday decisions." },
+          { id: 15, dimension: "DA", text: "为了把一件事情做好，我需要花较长的时间", text_en: "I need a long time to do something well." }
         ],
         results: {
           high_cm_da: {
@@ -841,60 +874,55 @@
 
       const state = { index: -1, answers: Array(DATA.questions.length).fill(null) };
       const introEl = document.getElementById("intro");
-      const quizEl = document.getElementById("quiz");
+      const quizEl = document.getElementById("quizPanel");
       const resultEl = document.getElementById("result");
-      const qWrap = document.getElementById("questionWrap");
-      const qId = document.getElementById("questionId");
-      const qText = document.getElementById("questionText");
-      const options = document.getElementById("options");
       const progressBar = document.getElementById("progressBar");
       const progressText = document.getElementById("progressText");
-
-      function updateProgress() {
-        if (state.index < 0) {
-          progressBar.style.width = "0%";
-          progressText.textContent = "准备开始";
-          return;
-        }
-        const done = state.answers.filter(v => v !== null).length;
-        progressBar.style.width = `${(done / DATA.questions.length) * 100}%`;
-        progressText.textContent = `${Math.min(state.index + 1, DATA.questions.length)}/${DATA.questions.length}`;
-      }
+      const $ = id => document.getElementById(id);
 
       function renderQuestion() {
         const q = DATA.questions[state.index];
-        qId.textContent = `第 ${q.id} 题 · ${q.dimension}`;
-        qText.textContent = q.text;
-        options.innerHTML = "";
-        for (let i = 1; i <= 5; i++) {
-          const btn = document.createElement("button");
-          btn.className = "option" + (state.answers[state.index] === i ? " active" : "");
-          btn.textContent = i;
-          btn.onclick = () => selectAnswer(i);
-          options.appendChild(btn);
-        }
+        const total = DATA.questions.length;
+        const done = state.answers.filter(v => v !== null).length;
+        $('qText').textContent = q.text;
+        $('qTextEn').textContent = q.text_en || '';
+        $('counter').innerHTML = `${state.index + 1} <span style="font-size:1rem;color:rgba(204,196,209,1);font-family:'Plus Jakarta Sans',sans-serif;">/ ${total}</span>`;
+        $('answered').innerHTML = `已完成 ${done} / ${total} <span style="opacity:0.6;">/ Completed ${done} / ${total}</span>`;
+        $('bar').style.width = `${(done / total) * 100}%`;
+        if (progressBar) progressBar.style.width = `${(done / total) * 100}%`;
+        $('prevBtn').disabled = state.index === 0;
+        $('prevBtn').style.opacity = state.index === 0 ? '0.4' : '1';
+        $('nextBtn').disabled = state.index === total - 1;
+        $('nextBtn').style.opacity = state.index === total - 1 ? '0.4' : '1';
+        $('submitBtn').disabled = done !== total;
+        $('submitBtn').style.opacity = done === total ? '1' : '0.5';
         if (storyRec) storyRec.style.display = 'none';
-        updateProgress();
-      }
-
-      function transition(next) {
-        qWrap.classList.add("fade-out");
-        setTimeout(() => {
-          next();
-          qWrap.classList.remove("fade-out");
-        }, 260);
+        const likert = $('likert');
+        likert.innerHTML = '';
+        for (let i = 1; i <= 5; i++) {
+          const b = document.createElement('button');
+          const isActive = state.answers[state.index] === i;
+          b.textContent = i;
+          b.style.cssText = isActive
+            ? 'width:2.5rem;height:2.5rem;border-radius:9999px;background:#33185c;color:#ffffff;font-size:14px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 12px rgba(51,24,92,0.25);transform:scale(1.15);transition:all 0.2s;'
+            : 'width:2rem;height:2rem;border-radius:9999px;background:transparent;color:#7b7580;font-size:12px;font-weight:600;border:1px solid #ccc4d1;cursor:pointer;transition:all 0.2s;';
+          b.onclick = () => selectAnswer(i);
+          likert.appendChild(b);
+        }
       }
 
       function selectAnswer(score) {
         state.answers[state.index] = score;
-        const isLast = state.index === DATA.questions.length - 1;
-        if (isLast) transition(showResult);
-        else transition(() => { state.index += 1; renderQuestion(); });
+        renderQuestion();
+        if (state.index < DATA.questions.length - 1) {
+          setTimeout(() => { state.index++; renderQuestion(); }, 300);
+        }
       }
 
       function goPrev() {
         if (state.index <= 0) return;
-        transition(() => { state.index -= 1; renderQuestion(); });
+        state.index--;
+        renderQuestion();
       }
 
       function mean(arr) { return arr.reduce((a, b) => a + b, 0) / arr.length; }
@@ -1042,7 +1070,7 @@
 
       function showResult() {
         introEl.classList.add("hidden");
-        quizEl.classList.add("hidden");
+        quizEl.style.display = 'none';
         resultEl.classList.remove("hidden");
 
         const scores = calcDimensionScores();
@@ -1103,7 +1131,7 @@
         introEl.classList.add("hidden");
         resultEl.classList.add("hidden");
         if (storyRec) storyRec.style.display = 'none';
-        quizEl.classList.remove("hidden");
+        quizEl.style.display = 'flex';
         renderQuestion();
       }
 
@@ -1112,18 +1140,19 @@
         state.answers = Array(DATA.questions.length).fill(null);
         resultEl.classList.add("hidden");
         if (storyRec) storyRec.style.display = 'none';
-        quizEl.classList.add("hidden");
+        quizEl.style.display = 'none';
         introEl.classList.remove("hidden");
-        updateProgress();
       }
 
       document.getElementById('startBtn').onclick = () => {
         document.querySelector('.test-intro').style.display = 'none';
         document.getElementById('testBody').style.display = 'block';
+        startQuiz();
       };
       document.getElementById("beginQuizBtn").onclick = startQuiz;
       document.getElementById("prevBtn").onclick = goPrev;
-      document.getElementById("restartBtn").onclick = restart;
+      document.getElementById("nextBtn").onclick = () => { if (state.index < DATA.questions.length - 1) { state.index++; renderQuestion(); } };
+      $('submitBtn').onclick = showResult;
       maybeRestoreSavedResult();
 
 
@@ -1170,7 +1199,7 @@ function renderStoredResult(record) {
   resultEl.innerHTML = `<div id="result-capture" class="result-capture-card"><div class="r-head"><h2 class="r-type" data-subtitle="最突出维度：${top2.join(' · ')}">${RESULT_TYPE_NAMES[resultId] || r.title}</h2></div><p class="tagline">${r.title}</p><p class="r-score-line">最突出维度：${top2.join(' · ')}</p><ul class="result-tags"><li class="result-tag">FMPS-15</li><li class="result-tag">完美主义</li><li class="result-tag">心理画像</li></ul><div class="r-quote" id="rQuote">${r.quote}</div><div class="result-section"><div class="section-title">五维度解读</div><div class="dimension-list">${buildDimensionRows(scores)}</div></div><div class="r-desc">${r.body}</div><section class="result-section"><div class="section-title">${r.modeTitle}</div><p class="mode-copy">${r.mode}</p></section><section class="result-section"><div class="section-title">${r.dailyTitle}</div><div class="daily-list">${r.daily.map(item => `<div class="daily-item">${item}</div>`).join('')}</div></section><section class="result-section"><div class="section-title">${r.reflectionTitle}</div><p class="reflection">${r.reflection}</p></section></div><div class="result-actions"><div class="share-btn-row"><button class="result-share-long-btn" id="shareLongBtn" type="button" onclick="shareLongImage()">结果长图</button><button class="result-save-btn" id="saveResultBtn" type="button" onclick="downloadResult()">分享卡片</button></div><div class="story-rec" id="storyRec" style="display:none;"><div class="story-rec-img"></div><div class="story-rec-content"><p class="story-rec-hint">你可能会有共鸣</p><h3 class="story-rec-title">故事标题</h3><a class="story-rec-btn" href="#">读这个故事 →</a></div></div><p class="result-guide">这是你心理画像的一部分 · <a href="index.html#assessment">查看全部测评</a></p><a href="index.html" class="result-back-btn">返回首页</a><button class="result-retry-btn ghost" id="redoBtn" type="button">再做一次</button></div>`;
   storyRec = document.getElementById('storyRec');
   document.getElementById('redoBtn').onclick = startQuiz;
-  document.querySelector('.test-intro').style.display = 'none'; document.getElementById('testBody').style.display = 'block'; introEl.classList.add('hidden'); quizEl.classList.add('hidden'); resultEl.classList.remove('hidden');
+  document.querySelector('.test-intro').style.display = 'none'; document.getElementById('testBody').style.display = 'block'; introEl.classList.add('hidden'); quizEl.style.display = 'none'; resultEl.classList.remove('hidden');
   return true;
 }
 

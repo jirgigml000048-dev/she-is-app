@@ -531,12 +531,36 @@
         <button class="primary" id="beginQuizBtn">准备好了</button>
       </section>
 
-      <section class="panel view hidden" id="quizView">
-        <div class="question-id" id="questionCounter"></div>
-        <h2 class="question-text" id="questionText"></h2>
-        <p class="question-desc">单选 · 选完自动进入下一题</p>
-        <div class="options" id="options"></div>
-      </section>
+      <div id="quizPanel" style="display:none;padding:5rem 1.5rem 8rem;min-height:100dvh;flex-direction:column;align-items:center;max-width:28rem;margin:0 auto;">
+        <div style="width:100%;margin-bottom:2.5rem;text-align:center;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1rem;">
+            <span id="counter" style="font-family:'Noto Serif SC',serif;font-size:2.5rem;color:rgba(51,24,92,0.8);"></span>
+            <div style="text-align:right;">
+              <p style="font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:#7b7580;font-weight:600;margin:0 0 4px;">进度 / STATUS</p>
+              <p id="answered" style="font-size:12px;color:rgba(51,24,92,0.6);font-weight:500;margin:0;"></p>
+            </div>
+          </div>
+          <div style="width:100%;height:4px;background:#f0edea;border-radius:9999px;overflow:hidden;">
+            <div id="bar" style="height:100%;background:#9c3c62;border-radius:9999px;transition:width 0.25s;width:0%;"></div>
+          </div>
+        </div>
+        <div style="width:100%;position:relative;">
+          <div style="position:absolute;top:-1rem;right:-1rem;width:8rem;height:8rem;background:rgba(236,220,255,0.3);border-radius:9999px;filter:blur(48px);z-index:-1;"></div>
+          <div style="background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);border-radius:1rem;padding:2rem;margin-bottom:2.5rem;border:1px solid rgba(229,226,223,0.5);box-shadow:0 10px 40px -10px rgba(51,24,92,0.08);display:flex;flex-direction:column;align-items:center;text-align:center;">
+            <div style="width:3rem;height:2px;background:rgba(51,24,92,0.15);border-radius:9999px;margin-bottom:2.5rem;"></div>
+            <h2 id="qText" style="font-family:'Noto Serif SC',serif;font-size:1.5rem;line-height:1.6;color:#1c1c1a;margin:0 0 1rem;padding:0 0.5rem;"></h2>
+            <p id="qTextEn" style="font-family:'Noto Serif SC',serif;font-size:1rem;color:rgba(51,24,92,0.5);line-height:1.5;margin:0 0 2rem;font-style:italic;"></p>
+            <div id="choiceOptions" style="width:100%;display:flex;flex-direction:column;gap:0.75rem;"></div>
+          </div>
+        </div>
+        <div style="width:100%;display:flex;flex-direction:column;gap:1rem;">
+          <div style="display:flex;gap:1rem;width:100%;">
+            <button id="prevBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#f0edea;color:#7b7580;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:all 0.2s;">← 上一题</button>
+            <button id="nextBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;box-shadow:0 4px 16px rgba(51,24,92,0.15);transition:all 0.2s;">下一题 →</button>
+          </div>
+          <button id="submitBtn" disabled style="width:100%;padding:1.25rem;border-radius:0.75rem;border:1px solid rgba(204,196,209,0.3);color:#33185c;font-weight:500;font-size:12px;letter-spacing:0.1em;background:rgba(246,243,240,0.4);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.75rem;transition:all 0.2s;">✦ 翻开这一页 / Flip this page</button>
+        </div>
+      </div>
 
       <section class="panel view hidden" id="resultView">
         <p class="eyebrow">Result</p>
@@ -657,16 +681,16 @@ function generateResultCard() {
   "description": "看见你在一段关系里习惯扮演什么角色，那个角色是你选的还是被推上去的",
   "type": "choice",
   "questions": [
-    {"id":1,"text":"朋友深夜突然发来一长串消息，说自己快撑不住了。你更像会：","options":[{"value":"A","text":"先认真看完，一边安慰一边陪她把情绪说出来","tag":"倾听者"},{"value":"B","text":"马上问她在哪、要不要吃点东西，开始想怎么照顾她","tag":"照顾者"},{"value":"C","text":"直接说出你的担心和想法，也会分享你类似的经历","tag":"表达者"}]},
-    {"id":2,"text":"伴侣看起来明显心情不好，但只说「没事」。你通常会：","options":[{"value":"A","text":"不逼问，陪在旁边等他愿意开口","tag":"倾听者"},{"value":"B","text":"给他倒水、点外卖、把气氛先照顾好","tag":"照顾者"},{"value":"C","text":"主动说「我感觉你不太对劲，我们聊聊吧」","tag":"表达者"}]},
-    {"id":3,"text":"你发现对方有点不对劲，但他什么都没说。你通常会：","options":[{"value":"A","text":"先陪着，等他自己想说的时候再说","tag":"倾听者"},{"value":"B","text":"想办法让他舒服一点，比如做点什么、照顾一下状态","tag":"照顾者"},{"value":"C","text":"直接问他是不是发生了什么，不想一直猜","tag":"表达者"}]},
-    {"id":4,"text":"你和很亲近的人起了小误会，对方开始变冷淡。你的第一反应通常是：","options":[{"value":"A","text":"先回想是不是她最近也有别的压力，不急着追问","tag":"倾听者"},{"value":"B","text":"想着怎么补救、怎么让关系重新舒服一点","tag":"照顾者"},{"value":"C","text":"忍不住先把自己的委屈和想法说清楚","tag":"表达者"}]},
-    {"id":5,"text":"朋友失恋后反复讲同一件事，已经说了很多遍。你更像会：","options":[{"value":"A","text":"继续听她说，哪怕内容重复，也知道她还没过去","tag":"倾听者"},{"value":"B","text":"带她出门、陪她吃饭，想办法让她好受一点","tag":"照顾者"},{"value":"C","text":"温和但直接地说出你的判断，希望她早点走出来","tag":"表达者"}]},
-    {"id":6,"text":"有人问你「你最近怎么样」，你心里其实有很多事。你通常会：","options":[{"value":"A","text":"笑笑带过，反而顺势问对方最近怎么样","tag":"倾听者"},{"value":"B","text":"先说自己还好，担心一说出来会让别人也跟着累","tag":"照顾者"},{"value":"C","text":"停一下，挑几件真实的事讲出来","tag":"表达者"}]},
-    {"id":7,"text":"关系里出现卡住的时刻，你更常做的是：","options":[{"value":"A","text":"先听对方怎么说，再慢慢判断自己想回应什么","tag":"倾听者"},{"value":"B","text":"先去修补气氛，让彼此别那么难受","tag":"照顾者"},{"value":"C","text":"先把问题摊开，不想让误会一直悬着","tag":"表达者"}]},
-    {"id":8,"text":"一段关系里出现沉默期，对方不主动，你也难受。你更可能：","options":[{"value":"A","text":"等一等，觉得也许他需要空间","tag":"倾听者"},{"value":"B","text":"还是会关心他有没有吃饭、最近忙不忙","tag":"照顾者"},{"value":"C","text":"先发消息把话题挑开，不想一直猜","tag":"表达者"}]},
-    {"id":9,"text":"朋友来找你，多半不是为了要建议，而是想被接住。你通常会：","options":[{"value":"A","text":"很自然地进入「听她说」的状态","tag":"倾听者"},{"value":"B","text":"一边听一边照顾细节，比如递纸巾、点热饮、安排后续","tag":"照顾者"},{"value":"C","text":"会先回应她，也会把自己的感觉和理解说出来","tag":"表达者"}]},
-    {"id":10,"text":"回想重要关系里的你，最常出现的遗憾是：","options":[{"value":"A","text":"听了很多，却很少让别人真正知道我的感受","tag":"倾听者"},{"value":"B","text":"总顾着对方舒不舒服，后来才发现自己也有点累","tag":"照顾者"},{"value":"C","text":"当下说得太快太满，事后又反复回想是不是说多了","tag":"表达者"}]}
+    {"id":1,"text":"朋友深夜突然发来一长串消息，说自己快撑不住了。你更像会：","text_en":"A friend sends a long string of messages late at night, saying they can barely hold on. You'd most likely:","options":[{"value":"A","text":"先认真看完，一边安慰一边陪她把情绪说出来","tag":"倾听者"},{"value":"B","text":"马上问她在哪、要不要吃点东西，开始想怎么照顾她","tag":"照顾者"},{"value":"C","text":"直接说出你的担心和想法，也会分享你类似的经历","tag":"表达者"}]},
+    {"id":2,"text":"伴侣看起来明显心情不好，但只说「没事」。你通常会：","text_en":"Your partner is clearly in a bad mood but says 'I'm fine.' You usually:","options":[{"value":"A","text":"不逼问，陪在旁边等他愿意开口","tag":"倾听者"},{"value":"B","text":"给他倒水、点外卖、把气氛先照顾好","tag":"照顾者"},{"value":"C","text":"主动说「我感觉你不太对劲，我们聊聊吧」","tag":"表达者"}]},
+    {"id":3,"text":"你发现对方有点不对劲，但他什么都没说。你通常会：","text_en":"You notice something's off with someone, but they haven't said anything. You usually:","options":[{"value":"A","text":"先陪着，等他自己想说的时候再说","tag":"倾听者"},{"value":"B","text":"想办法让他舒服一点，比如做点什么、照顾一下状态","tag":"照顾者"},{"value":"C","text":"直接问他是不是发生了什么，不想一直猜","tag":"表达者"}]},
+    {"id":4,"text":"你和很亲近的人起了小误会，对方开始变冷淡。你的第一反应通常是：","text_en":"A small misunderstanding with someone close, and they go cold. Your first reaction:","options":[{"value":"A","text":"先回想是不是她最近也有别的压力，不急着追问","tag":"倾听者"},{"value":"B","text":"想着怎么补救、怎么让关系重新舒服一点","tag":"照顾者"},{"value":"C","text":"忍不住先把自己的委屈和想法说清楚","tag":"表达者"}]},
+    {"id":5,"text":"朋友失恋后反复讲同一件事，已经说了很多遍。你更像会：","text_en":"A friend keeps repeating the same story after a breakup. You'd most likely:","options":[{"value":"A","text":"继续听她说，哪怕内容重复，也知道她还没过去","tag":"倾听者"},{"value":"B","text":"带她出门、陪她吃饭，想办法让她好受一点","tag":"照顾者"},{"value":"C","text":"温和但直接地说出你的判断，希望她早点走出来","tag":"表达者"}]},
+    {"id":6,"text":"有人问你「你最近怎么样」，你心里其实有很多事。你通常会：","text_en":"Someone asks 'how have you been?' and you actually have a lot going on. You usually:","options":[{"value":"A","text":"笑笑带过，反而顺势问对方最近怎么样","tag":"倾听者"},{"value":"B","text":"先说自己还好，担心一说出来会让别人也跟着累","tag":"照顾者"},{"value":"C","text":"停一下，挑几件真实的事讲出来","tag":"表达者"}]},
+    {"id":7,"text":"关系里出现卡住的时刻，你更常做的是：","text_en":"When a relationship hits a stuck moment, you more often:","options":[{"value":"A","text":"先听对方怎么说，再慢慢判断自己想回应什么","tag":"倾听者"},{"value":"B","text":"先去修补气氛，让彼此别那么难受","tag":"照顾者"},{"value":"C","text":"先把问题摊开，不想让误会一直悬着","tag":"表达者"}]},
+    {"id":8,"text":"一段关系里出现沉默期，对方不主动，你也难受。你更可能：","text_en":"A silent stretch in a relationship — they don't reach out, and you're hurting. You'd most likely:","options":[{"value":"A","text":"等一等，觉得也许他需要空间","tag":"倾听者"},{"value":"B","text":"还是会关心他有没有吃饭、最近忙不忙","tag":"照顾者"},{"value":"C","text":"先发消息把话题挑开，不想一直猜","tag":"表达者"}]},
+    {"id":9,"text":"朋友来找你，多半不是为了要建议，而是想被接住。你通常会：","text_en":"A friend comes to you — not for advice, but to feel held. You usually:","options":[{"value":"A","text":"很自然地进入「听她说」的状态","tag":"倾听者"},{"value":"B","text":"一边听一边照顾细节，比如递纸巾、点热饮、安排后续","tag":"照顾者"},{"value":"C","text":"会先回应她，也会把自己的感觉和理解说出来","tag":"表达者"}]},
+    {"id":10,"text":"回想重要关系里的你，最常出现的遗憾是：","text_en":"Looking back at important relationships, your most common regret is:","options":[{"value":"A","text":"听了很多，却很少让别人真正知道我的感受","tag":"倾听者"},{"value":"B","text":"总顾着对方舒不舒服，后来才发现自己也有点累","tag":"照顾者"},{"value":"C","text":"当下说得太快太满，事后又反复回想是不是说多了","tag":"表达者"}]}
   ],
   "results": {
     "倾听者": {"title":"LISTENER — 倾听者","subtitle":"你给了别人完整的空间。但你的声音，被挤到了很后面。","quote":"你给了别人完整的空间。但你的声音，被挤到了很后面。","desc":"在关系里，你总是先听。别人说话的时候，你在的方式很完整——你的眼神、你的沉默、你偶尔的回应，都在说「我在这里，你说」。\\n\\n你有一种让人放心开口的气场。很多人在你面前会说出他们不会对别人说的话。你接住了那些沉重的、脆弱的、凌乱的东西，而且你接得很稳。\\n\\n你的倾听不是被动的。你在听的时候，脑子里在理解、在感受、在整理。你给出的空间，是你主动创造的，是你选择的慷慨。\\n\\n只是有时候，你给了别人太多说话的空间，自己的声音就被挤到了很后面。","mode":"你在的方式很完整——眼神、沉默、偶尔的回应，都在告诉对方「你说，我在」。你有一种让人放心开口的气场，接住了很多沉重的、凌乱的东西。只是这种「接住别人」的能力，用在自己身上时，你不太会。","relationship":["你是很多人的树洞。但当你需要说的时候，你往往先想的是：会不会给别人添麻烦？","你习惯了做那个听的人，以至于当角色反转、有人想认真听你说话时，你反而不知道说什么了。"],"reflect":"你上一次认真说出自己的感受，是对谁说的？"},
@@ -676,15 +700,13 @@ function generateResultCard() {
 };
       const state = { index: -1, answers: [], counts: {} };
       const introView = document.getElementById('introView');
-      const quizView = document.getElementById('quizView');
+      const quizView = document.getElementById('quizPanel');
       const resultView = document.getElementById('resultView');
       const progressBar = document.getElementById('progressBar');
       const progressText = document.getElementById('progressText');
       const introDesc = document.getElementById('introDesc');
-      const questionCounter = document.getElementById('questionCounter');
-      const questionText = document.getElementById('questionText');
-      const options = document.getElementById('options');
       const resultTag = document.getElementById('resultTag');
+      const $ = id => document.getElementById(id);
       const resultTitle = document.getElementById('resultTitle');
       const resultDesc = document.getElementById('resultDesc');
       const resultTags = document.getElementById('resultTags');
@@ -722,47 +744,47 @@ function generateResultCard() {
       introDesc.textContent = `${testData.description} 共 ${testData.questions.length} 题。`;
 
       function setView(view) {
-        [introView, quizView, resultView].forEach((el) => el.classList.add('hidden'));
-        view.classList.remove('hidden');
-      }
-
-      function updateProgress() {
-        const total = testData.questions.length;
-        if (state.index < 0) {
-          progressText.textContent = '准备开始';
-          progressBar.style.width = '0%';
-          return;
-        }
-        if (state.index >= total) {
-          progressText.textContent = `已完成 · 共${total}题`;
-          progressBar.style.width = '100%';
-          return;
-        }
-        progressText.textContent = `第${state.index + 1}题 / 共${total}题`;
-        progressBar.style.width = `${((state.index + 1) / total) * 100}%`;
+        introView.classList.add('hidden');
+        resultView.classList.add('hidden');
+        quizView.style.display = 'none';
+        if (view === quizView) quizView.style.display = 'flex';
+        else view.classList.remove('hidden');
       }
 
       function renderQuestion() {
-        updateProgress();
+        const total = testData.questions.length;
+        const done = state.answers.filter(v => v !== null && v !== undefined).length;
         const question = testData.questions[state.index];
-        questionCounter.textContent = `Question ${state.index + 1}`;
-        questionText.textContent = question.text;
-        options.innerHTML = '';
+        $('qText').textContent = question.text;
+        $('qTextEn').textContent = question.text_en || '';
+        $('counter').innerHTML = `${state.index + 1} <span style="font-size:1rem;color:rgba(204,196,209,1);font-family:'Plus Jakarta Sans',sans-serif;">/ ${total}</span>`;
+        $('answered').innerHTML = `已完成 ${done} / ${total} <span style="opacity:0.6;">/ Completed ${done} / ${total}</span>`;
+        $('bar').style.width = `${(done / total) * 100}%`;
+        if (progressBar) progressBar.style.width = `${(done / total) * 100}%`;
+        $('prevBtn').disabled = state.index === 0;
+        $('prevBtn').style.opacity = state.index === 0 ? '0.4' : '1';
+        $('nextBtn').disabled = state.index === total - 1;
+        $('nextBtn').style.opacity = state.index === total - 1 ? '0.4' : '1';
+        $('submitBtn').disabled = done !== total;
+        $('submitBtn').style.opacity = done === total ? '1' : '0.5';
+        const container = $('choiceOptions');
+        container.innerHTML = '';
         question.options.forEach((option) => {
-          const button = document.createElement('button');
-          button.className = 'option';
-          button.type = 'button';
-          button.innerHTML = `<span class="option-mark">${option.value}</span><span class="option-copy">${option.text}</span>`;
-          button.addEventListener('click', () => chooseOption(option));
-          options.appendChild(button);
+          const b = document.createElement('button');
+          const isSelected = state.answers[state.index] === option.tag;
+          b.style.cssText = isSelected
+            ? 'width:100%;padding:1rem 1.25rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-family:\'Noto Serif SC\',sans-serif;font-size:14px;text-align:left;border:none;cursor:pointer;transition:all 0.2s;'
+            : 'width:100%;padding:1rem 1.25rem;border-radius:0.75rem;background:rgba(255,255,255,0.8);color:#1c1c1a;font-family:\'Noto Serif SC\',sans-serif;font-size:14px;text-align:left;border:1px solid rgba(229,226,223,0.8);cursor:pointer;transition:all 0.2s;';
+          b.textContent = option.text;
+          b.addEventListener('click', () => chooseOption(option));
+          container.appendChild(b);
         });
       }
 
       function chooseOption(option) {
         state.answers[state.index] = option.tag;
         state.counts[option.tag] = (state.counts[option.tag] || 0) + 1;
-        const active = options.children;
-        for (const item of active) item.disabled = true;
+        renderQuestion();
         setTimeout(() => {
           state.index += 1;
           if (state.index >= testData.questions.length) {
@@ -770,7 +792,7 @@ function generateResultCard() {
           } else {
             renderQuestion();
           }
-        }, 220);
+        }, 300);
       }
 
       function getTopTag() {
@@ -842,6 +864,15 @@ function generateResultCard() {
         storyRec.style.display = 'none';
         renderQuestion();
       }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const prevBtn = $('prevBtn');
+        const nextBtn = $('nextBtn');
+        const submitBtn = $('submitBtn');
+        if (prevBtn) prevBtn.onclick = () => { if (state.index > 0) { state.index--; renderQuestion(); } };
+        if (nextBtn) nextBtn.onclick = () => { if (state.index < testData.questions.length - 1) { state.index++; renderQuestion(); } };
+        if (submitBtn) submitBtn.onclick = renderResult;
+      });
 
       function renderStoredResult(record) {
         if (!record) return false;

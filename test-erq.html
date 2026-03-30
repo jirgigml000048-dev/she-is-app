@@ -274,7 +274,7 @@
           <span id="counter" style="font-family:'Noto Serif SC',serif;font-size:2.5rem;color:rgba(51,24,92,0.8);"></span>
           <div style="text-align:right;">
             <p style="font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:#7b7580;font-weight:600;margin:0 0 4px;">进度 / STATUS</p>
-            <p id="progressText" style="font-size:12px;color:rgba(51,24,92,0.6);font-weight:500;margin:0;"></p>
+            <p id="answered" style="font-size:12px;color:rgba(51,24,92,0.6);font-weight:500;margin:0;"></p>
           </div>
         </div>
         <div style="width:100%;height:4px;background:#f0edea;border-radius:9999px;overflow:hidden;">
@@ -287,16 +287,10 @@
         <div style="position:absolute;top:-1rem;right:-1rem;width:8rem;height:8rem;background:rgba(236,220,255,0.3);border-radius:9999px;filter:blur(48px);z-index:-1;"></div>
         <div class="glass-player" style="padding:2rem;margin-bottom:2.5rem;display:flex;flex-direction:column;align-items:center;text-align:center;">
           <div style="width:3rem;height:2px;background:rgba(51,24,92,0.15);border-radius:9999px;margin-bottom:2.5rem;"></div>
-          <p id="questionId" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:#9c3c62;font-weight:600;margin:0 0 1rem;"></p>
-          <h2 id="questionText" class="question-text-main" style="font-family:'Noto Serif SC',serif;font-size:1.1rem;line-height:1.65;color:#1c1c1a;margin:0 0 2rem;padding:0 0.5rem;text-align:center;"></h2>
-
-          <!-- Slider -->
+          <div id="qTextBlock" style="width:100%;text-align:left;margin:0 0 2rem;padding:0 0.25rem;"></div>
+          <!-- Likert Scale -->
           <div style="width:100%;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-              <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;color:#7b7580;letter-spacing:0.1em;">请在 1–7 之间滑动</span>
-              <span id="currentValue" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:#33185c;padding:4px 14px;border-radius:999px;background:rgba(51,24,92,0.08);">当前：4</span>
-            </div>
-            <input class="answer-slider" id="answerSlider" type="range" min="1" max="7" step="1" value="4" style="width:100%;" />
+            <div id="likert" style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 4px;"></div>
             <div style="display:flex;justify-content:space-between;width:100%;padding:0 4px;margin-top:1rem;">
               <div style="width:6rem;text-align:left;">
                 <p style="font-size:10px;color:#7b7580;font-weight:700;text-transform:uppercase;margin:0;">1 非常不同意</p>
@@ -318,12 +312,10 @@
             ← 上一题
           </button>
           <button id="nextBtn" style="flex:1;padding:1rem 1.5rem;border-radius:0.75rem;background:#33185c;color:#ffffff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;box-shadow:0 4px 16px rgba(51,24,92,0.15);transition:all 0.2s;">
-            确认本题 →
+            下一题 →
           </button>
         </div>
-        <button id="restartBtn" style="width:100%;padding:0.75rem;background:transparent;color:#7b7580;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;border:none;cursor:pointer;">
-          重新开始
-        </button>
+        <button id="submitBtn" disabled style="width:100%;padding:1.25rem;border-radius:0.75rem;border:1px solid rgba(204,196,209,0.3);color:#33185c;font-weight:500;font-size:12px;letter-spacing:0.1em;background:rgba(246,243,240,0.4);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.75rem;transition:all 0.2s;">✦ 翻开这一页 / Flip this page</button>
       </div>
     </div>
 
@@ -408,16 +400,16 @@
 <script>
 const DATA = {
   questions: [
-    { id: 1, text: "情景：朋友迟到了一小时，你本来很烦。\n\n陈述：我会先想想他是不是有什么原因，让自己平静下来。", dimension: "reappraisal" },
-    { id: 2, text: "情景：和同事开会，有人说了一件让你不舒服的话。\n\n陈述：我不会让别人看出来我有情绪。", dimension: "suppression" },
-    { id: 3, text: "情景：工作上出了一个你觉得不该发生的错误，你很沮丧。\n\n陈述：我会换一个角度看它——也许这是个机会，让我搞清楚哪里还有漏洞。", dimension: "reappraisal" },
-    { id: 4, text: "情景：收到了一个好消息，你其实很激动。\n\n陈述：我会克制自己，不在公开场合表露这种兴奋。", dimension: "suppression" },
-    { id: 5, text: "情景：你面临一个让你焦虑的重要决定。\n\n陈述：我会告诉自己：不管结果怎样，我能处理的。", dimension: "reappraisal" },
-    { id: 6, text: "情景：你心里很乱，但现场需要你保持冷静。\n\n陈述：我的做法是什么都不表现出来，先撑过这一段。", dimension: "suppression" },
-    { id: 7, text: "情景：一件开心的事情发生了，但你有点不敢相信。\n\n陈述：我会让自己好好感受这份高兴，而不是马上想「会不会哪里有问题」。", dimension: "reappraisal" },
-    { id: 8, text: "情景：和重要的人发生了争吵，你很难受。\n\n陈述：我会在脑子里重新组织这件事：我们只是观点不同，不是关系坏了。", dimension: "reappraisal" },
-    { id: 9, text: "情景：你感到委屈，但不想让对方知道。\n\n陈述：我会把那些情绪压下去，就算再难受也不会表露出来。", dimension: "suppression" },
-    { id: 10, text: "情景：你被批评了，感觉很受伤。\n\n陈述：我会试着把这个评价当作信息，而不是对我这个人的否定。", dimension: "reappraisal" }
+    { id: 1, text: "情景：朋友迟到了一小时，你本来很烦。\n\n陈述：我会先想想他是不是有什么原因，让自己平静下来。", text_en: "Scenario: A friend is an hour late, and you're annoyed.\n\nStatement: I'd first consider whether something came up, to calm myself down.", dimension: "reappraisal" },
+    { id: 2, text: "情景：和同事开会，有人说了一件让你不舒服的话。\n\n陈述：我不会让别人看出来我有情绪。", text_en: "Scenario: In a meeting, a colleague says something that bothers you.\n\nStatement: I wouldn't let others see that I'm upset.", dimension: "suppression" },
+    { id: 3, text: "情景：工作上出了一个你觉得不该发生的错误，你很沮丧。\n\n陈述：我会换一个角度看它——也许这是个机会，让我搞清楚哪里还有漏洞。", text_en: "Scenario: A mistake happened at work that shouldn't have, and you feel frustrated.\n\nStatement: I'd try to see it differently — maybe it's a chance to figure out what gaps remain.", dimension: "reappraisal" },
+    { id: 4, text: "情景：收到了一个好消息，你其实很激动。\n\n陈述：我会克制自己，不在公开场合表露这种兴奋。", text_en: "Scenario: You receive great news and feel genuinely excited.\n\nStatement: I'd hold back and not show my excitement in public.", dimension: "suppression" },
+    { id: 5, text: "情景：你面临一个让你焦虑的重要决定。\n\n陈述：我会告诉自己：不管结果怎样，我能处理的。", text_en: "Scenario: You're facing an important decision that makes you anxious.\n\nStatement: I'd tell myself: whatever the outcome, I can handle it.", dimension: "reappraisal" },
+    { id: 6, text: "情景：你心里很乱，但现场需要你保持冷静。\n\n陈述：我的做法是什么都不表现出来，先撑过这一段。", text_en: "Scenario: You're in turmoil inside, but the situation requires you to stay composed.\n\nStatement: I'd show nothing and just push through.", dimension: "suppression" },
+    { id: 7, text: "情景：一件开心的事情发生了，但你有点不敢相信。\n\n陈述：我会让自己好好感受这份高兴，而不是马上想「会不会哪里有问题」。", text_en: "Scenario: Something wonderful happens, but you almost can't believe it.\n\nStatement: I'd let myself fully enjoy the happiness instead of immediately wondering if something's wrong.", dimension: "reappraisal" },
+    { id: 8, text: "情景：和重要的人发生了争吵，你很难受。\n\n陈述：我会在脑子里重新组织这件事：我们只是观点不同，不是关系坏了。", text_en: "Scenario: You've had an argument with someone important to you, and it hurts.\n\nStatement: I'd reframe it in my mind: we just disagree — the relationship isn't broken.", dimension: "reappraisal" },
+    { id: 9, text: "情景：你感到委屈，但不想让对方知道。\n\n陈述：我会把那些情绪压下去，就算再难受也不会表露出来。", text_en: "Scenario: You feel wronged, but you don't want the other person to know.\n\nStatement: I'd suppress those feelings — no matter how much it hurts, I wouldn't show it.", dimension: "suppression" },
+    { id: 10, text: "情景：你被批评了，感觉很受伤。\n\n陈述：我会试着把这个评价当作信息，而不是对我这个人的否定。", text_en: "Scenario: You've been criticized, and it stings.\n\nStatement: I'd try to treat the feedback as information, not as a rejection of who I am.", dimension: "reappraisal" }
   ],
   results: {
     high_reappraisal_low_suppression: {
@@ -477,54 +469,69 @@ const storyRecommendations = {
 const state = { index: 0, answers: Array(DATA.questions.length).fill(null) };
 const $ = id => document.getElementById(id);
 
-function updateProgress() {
-  const done = state.answers.filter(v => v !== null).length;
-  $('counter').innerHTML = `${state.index + 1} <span style="font-size:1rem;color:rgba(204,196,209,1);font-family:'Plus Jakarta Sans',sans-serif;">/ ${DATA.questions.length}</span>`;
-  $('progressText').innerHTML = `已完成 ${done} / ${DATA.questions.length}`;
-  $('bar').style.width = `${(done / DATA.questions.length) * 100}%`;
-}
-
 function renderQuestion() {
   const q = DATA.questions[state.index];
-  $('questionId').textContent = `第 ${q.id} 题`;
-  $('questionText').innerHTML = q.text.replace(/\n\n/g, '<br><br>');
-  const val = state.answers[state.index] || 4;
-  $('answerSlider').value = val;
-  $('currentValue').textContent = `当前：${val}`;
-  updateProgress();
+  // Parse situation and statement from text (split by double newline)
+  const parts = q.text.split('\n\n');
+  const partsCN = parts.map(p => p.replace(/^情景：|^陈述：/, '').trim());
+  const partsEN = (q.text_en || '').split('\n\n').map(p => p.replace(/^Scenario: |^Statement: /, '').trim());
+  const block = $('qTextBlock');
+  block.innerHTML = `
+    <p style="font-family:'Noto Serif SC',serif;font-size:1.35rem;line-height:1.6;color:#1c1c1a;margin:0 0 0.15rem;">${partsCN[0] || ''}</p>
+    <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;color:rgba(51,24,92,0.45);line-height:1.5;font-style:italic;margin:0 0 1.1rem;">${partsEN[0] || ''}</p>
+    <p style="font-family:'Noto Serif SC',serif;font-size:1.1rem;line-height:1.6;color:#3a3540;margin:0 0 0.15rem;">${partsCN[1] || ''}</p>
+    <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.85rem;color:rgba(51,24,92,0.4);line-height:1.5;font-style:italic;margin:0;">${partsEN[1] || ''}</p>
+  `;
+  const done = state.answers.filter(v => v !== null).length;
+  const total = DATA.questions.length;
+  $('counter').innerHTML = `${state.index + 1} <span style="font-size:1rem;color:rgba(204,196,209,1);font-family:'Plus Jakarta Sans',sans-serif;">/ ${total}</span>`;
+  $('answered').innerHTML = `已完成 ${done} / ${total} <span style="opacity:0.6;">/ Completed ${done} / ${total}</span>`;
+  $('bar').style.width = `${(done / total) * 100}%`;
   $('prevBtn').style.opacity = state.index === 0 ? '0.4' : '1';
   $('prevBtn').disabled = state.index === 0;
+  $('nextBtn').disabled = state.index === total - 1;
+  $('nextBtn').style.opacity = state.index === total - 1 ? '0.4' : '1';
+  $('submitBtn').disabled = done !== total;
+  $('submitBtn').style.opacity = done === total ? '1' : '0.5';
+  // Likert buttons
+  const likert = $('likert');
+  likert.innerHTML = '';
+  for (let i = 1; i <= 7; i++) {
+    const b = document.createElement('button');
+    const isActive = state.answers[state.index] === i;
+    b.textContent = i;
+    b.style.cssText = isActive
+      ? 'width:2.5rem;height:2.5rem;border-radius:9999px;background:#33185c;color:#ffffff;font-size:14px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 12px rgba(51,24,92,0.25);transform:scale(1.15);transition:all 0.2s;'
+      : 'width:2rem;height:2rem;border-radius:9999px;background:transparent;color:#7b7580;font-size:12px;font-weight:600;border:1px solid #ccc4d1;cursor:pointer;transition:all 0.2s;';
+    b.onclick = () => {
+      state.answers[state.index] = i;
+      renderQuestion();
+      if (state.index < total - 1) setTimeout(() => { state.index++; renderQuestion(); }, 300);
+    };
+    likert.appendChild(b);
+  }
 }
-
-$('answerSlider').addEventListener('input', function() {
-  $('currentValue').textContent = `当前：${this.value}`;
-});
 
 $('prevBtn').onclick = () => {
   if (state.index <= 0) return;
-  state.answers[state.index] = Number($('answerSlider').value);
   state.index--;
   renderQuestion();
 };
 
 $('nextBtn').onclick = () => {
-  state.answers[state.index] = Number($('answerSlider').value);
   if (state.index < DATA.questions.length - 1) {
     state.index++;
     renderQuestion();
-  } else {
-    showResult();
   }
 };
 
-$('restartBtn').onclick = restart;
+$('submitBtn').onclick = showResult;
 
 function restart() {
   state.index = 0;
   state.answers = Array(DATA.questions.length).fill(null);
   $('resultPanel').style.display = 'none';
   $('quizPanel').style.display = 'flex';
-  $('answerSlider').value = 4;
   renderQuestion();
   window.scrollTo(0, 0);
 }
