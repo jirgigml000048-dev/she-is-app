@@ -99,6 +99,35 @@
     .share-footer { font-size: 7px; color: rgba(30,22,40,0.2); letter-spacing: 2px; }
     .share-hint { font-size: 9px; color: var(--text-muted); margin-top: 12px; letter-spacing: 1px; font-family: 'Noto Sans SC', sans-serif; }
     footer { text-align: center; padding: 32px 24px; font-size: 9px; color: rgba(30,22,40,0.2); letter-spacing: 3px; font-family: 'Noto Sans SC', sans-serif; }
+    .axes-section { margin: 32px 24px 0; }
+    .axes-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .axes-line { flex: 1; height: 1px; background: var(--border); }
+    .axes-tag { font-size: 9px; letter-spacing: 3px; color: var(--text-muted); white-space: nowrap; font-family: 'Lora', serif; font-style: italic; text-transform: uppercase; }
+    .axes-list { display: flex; flex-direction: column; gap: 8px; }
+    .axis-card { background: #fff; border-radius: 14px; border: 1px solid var(--border); overflow: hidden; cursor: pointer; transition: background 0.2s; }
+    .axis-card:hover { background: rgba(74,48,115,0.02); }
+    .axis-card.completed { border-left: 3px solid var(--accent); }
+    .axis-card-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; }
+    .axis-card-title { display: flex; flex-direction: column; gap: 3px; }
+    .axis-card-name { font-size: 15px; color: var(--text); letter-spacing: 1px; font-family: 'Noto Serif SC', serif; }
+    .axis-card-name-en { font-size: 10px; color: var(--text-muted); font-family: 'Lora', serif; font-style: italic; letter-spacing: 1px; }
+    .axis-card-desc { font-size: 10px; color: var(--text-muted); margin-top: 2px; font-family: 'Noto Sans SC', sans-serif; }
+    .axis-card-chevron { font-size: 18px; color: var(--accent); opacity: 0.4; transition: transform 0.2s; font-family: 'Material Symbols Outlined'; }
+    .axis-card.open .axis-card-chevron { transform: rotate(180deg); }
+    .axis-card-body { display: none; padding: 0 20px 16px; }
+    .axis-card.open .axis-card-body { display: block; }
+    .test-item { padding: 12px 0; border-top: 1px solid var(--border); }
+    .test-item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .test-item-name { font-size: 12px; color: var(--text); letter-spacing: 0.5px; }
+    .test-item-name-en { font-size: 9px; color: var(--text-muted); font-family: 'Noto Sans SC', sans-serif; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+    .test-item-badge { font-size: 9px; padding: 2px 8px; border-radius: 12px; background: rgba(74,48,115,0.08); color: var(--accent); letter-spacing: 0.5px; font-family: 'Noto Sans SC', sans-serif; white-space: nowrap; }
+    .test-item-badge.pending { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+    .progress-bar-bg { height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .progress-bar { height: 100%; background: var(--accent); border-radius: 2px; opacity: 0.5; transition: width 0.8s ease; }
+    .map-cta { margin: 32px 24px; text-align: center; }
+    .map-cta-btn { display: inline-block; padding: 14px 32px; background: var(--btn-bg); border: 1px solid var(--btn-border); border-radius: 50px; color: var(--accent); font-size: 12px; letter-spacing: 3px; font-family: 'Noto Sans SC', sans-serif; text-decoration: none; backdrop-filter: blur(8px); transition: background 0.2s; }
+    .map-cta-btn:hover { background: rgba(180,155,225,0.35); }
+    .map-cta-sub { font-size: 10px; color: var(--text-muted); margin-top: 12px; letter-spacing: 1px; font-family: 'Noto Sans SC', sans-serif; }
     .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 680px; height: 80px; display: flex; justify-content: space-around; align-items: center; padding: 0 16px 16px; background: rgba(250,247,244,0.92); backdrop-filter: blur(20px); border-radius: 40px 40px 0 0; box-shadow: 0 -4px 20px rgba(28,28,26,0.04); z-index: 100; }
     .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-decoration: none; color: rgba(74,48,115,0.45); padding: 4px 8px; transition: color 0.2s; }
     .nav-item.active { color: var(--accent); font-weight: 500; }
@@ -142,6 +171,22 @@
 </div>
 
 <div class="cta-section" id="ctaSection"></div>
+
+<!-- 四轴卡片区 -->
+<div class="axes-section" id="axesSection">
+  <div class="axes-header">
+    <div class="axes-line"></div>
+    <span class="axes-tag">四轴画像 · Four Axes</span>
+    <div class="axes-line"></div>
+  </div>
+  <div class="axes-list" id="axesList"></div>
+</div>
+
+<!-- CTA -->
+<div class="map-cta" id="mapCta">
+  <a href="assessment.html" class="map-cta-btn">开启探索 / Explore</a>
+  <p class="map-cta-sub">每完成一项测评，你的地图就更完整一点</p>
+</div>
 
 <div class="share-section" id="shareSection" style="display:none">
   <div class="share-card">
@@ -519,6 +564,72 @@
       </a>`;
   }
 
+  function renderAxesCards(results) {
+    const list = document.getElementById('axesList');
+    if (!list) return;
+    const axes = [
+      { id: 'trait', name: '特质轴', nameEn: 'Trait Axis', desc: '深度解读人格底层架构', tests: [
+        { id: 'cognitive', name: '八维人格', nameEn: 'Cognitive Functions', scoreKey: 'summary' },
+      ]},
+      { id: 'emotion', name: '情绪轴', nameEn: 'Emotion Axis', desc: '感知、调节与依恋深度', tests: [
+        { id: 'hsp', name: '高敏感测评', nameEn: 'High Sensitivity Test', scoreKey: 'score' },
+        { id: 'erq', name: '情绪调节测评', nameEn: 'Emotion Regulation', scoreKey: 'score' },
+        { id: 'ecr', name: '依恋风格测评', nameEn: 'Attachment Style', scoreKey: 'topDimension' },
+      ]},
+      { id: 'behavior', name: '行为轴', nameEn: 'Behavior Axis', desc: '外显反应与应对机制', tests: [
+        { id: 'fmps', name: '完美主义测评', nameEn: 'Perfectionism', scoreKey: 'score' },
+        { id: 'boundary-sense', name: '边界感测评', nameEn: 'Boundary Sense', scoreKey: 'score' },
+      ]},
+      { id: 'motivation', name: '动机轴', nameEn: 'Motivation Axis', desc: '行为背后的核心驱动', tests: [
+        { id: 'abm-love-animal', name: '爱情动物测评', nameEn: 'Love Animal', scoreKey: 'topDimension' },
+      ]},
+    ];
+    axes.forEach(axis => {
+      const completedTests = axis.tests.filter(t => results[t.id]);
+      const isCompleted = completedTests.length > 0;
+      const card = document.createElement('div');
+      card.className = `axis-card${isCompleted ? ' completed' : ''}`;
+      const header = document.createElement('div');
+      header.className = 'axis-card-header';
+      header.innerHTML = `
+        <div class="axis-card-title">
+          <div class="axis-card-name">${axis.name} <span class="axis-card-name-en">${axis.nameEn}</span></div>
+          <div class="axis-card-desc">${axis.desc}</div>
+        </div>
+        <span class="material-symbols-outlined axis-card-chevron">expand_more</span>
+      `;
+      const body = document.createElement('div');
+      body.className = 'axis-card-body';
+      axis.tests.forEach(test => {
+        const r = results[test.id];
+        const item = document.createElement('div');
+        item.className = 'test-item';
+        let badge = '';
+        let progressWidth = 0;
+        if (r) {
+          const val = r[test.scoreKey];
+          badge = val ? String(val).substring(0, 8) : '已完成';
+          progressWidth = typeof r.score === 'number' ? Math.min(100, r.score) : 70;
+        }
+        item.innerHTML = `
+          <div class="test-item-header">
+            <div>
+              <div class="test-item-name">${test.name}</div>
+              <div class="test-item-name-en">${test.nameEn}</div>
+            </div>
+            ${r ? `<span class="test-item-badge">${badge}</span>` : `<span class="test-item-badge pending">待探索</span>`}
+          </div>
+          ${r ? `<div class="progress-bar-bg"><div class="progress-bar" style="width:${progressWidth}%"></div></div>` : ''}
+        `;
+        body.appendChild(item);
+      });
+      header.addEventListener('click', () => { card.classList.toggle('open'); });
+      card.appendChild(header);
+      card.appendChild(body);
+      list.appendChild(card);
+    });
+  }
+
   function init() {
     results = loadResults();
     const regions = buildRegions(results);
@@ -535,7 +646,7 @@
       ns.style.display = 'block';
       setTimeout(() => ns.classList.add('visible'), 2000);
     }
-    buildCTA(regions);
+    renderAxesCards(results);
     buildShareCard(results);
     window._mapRegions = regions;
     window._mapResults = results;
