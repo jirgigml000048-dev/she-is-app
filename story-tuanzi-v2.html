@@ -335,6 +335,10 @@
       <header class="site-header">
         <a href="index.html" class="back-btn">← 返回</a>
         <div class="logo"><span class="logo-cn">女也</span><span class="logo-en">she is ______.</span></div>
+        <div id="headerAuthArea">
+          <a href="login.html" id="loginEntryBtn" style="font-size:11px;font-weight:600;color:rgba(51,24,92,0.7);text-decoration:none;letter-spacing:0.15em;text-transform:uppercase;display:none;">登录</a>
+          <a href="map.html" id="userAvatarBtn" style="width:28px;height:28px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,#4a3073,#9c3c62);"></a>
+        </div>
       </header>
 
       <section class="character-card">
@@ -483,5 +487,21 @@
         <a class="test-link" href="test-ecr.html"><strong>测试推荐</strong>：了解你的依恋风格 →</a>
       </footer>
     </main>
-  </body>
+  <script>
+  (async () => {
+    if (typeof getUser !== 'function') return;
+    const user = await getUser();
+    const loginBtn  = document.getElementById('loginEntryBtn');
+    const avatarBtn = document.getElementById('userAvatarBtn');
+    if (!loginBtn || !avatarBtn) return;
+    if (user) {
+      const name = user.user_metadata?.name || user.user_metadata?.full_name || user.email?.split('@')[0] || '我';
+      avatarBtn.textContent = name.charAt(0).toUpperCase();
+      avatarBtn.style.display = 'flex';
+    } else {
+      loginBtn.style.display = 'inline';
+    }
+  })();
+</script>
+</body>
 </html>

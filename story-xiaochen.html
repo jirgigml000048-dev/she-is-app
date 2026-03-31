@@ -59,6 +59,16 @@ tailwind.config = {
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
     .editorial-shadow { box-shadow: 0 32px 64px -12px rgba(28, 28, 26, 0.08); }
     .glass-player { background: rgba(255,255,255,0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    .mode-btn { padding: 6px 18px; border-radius: 999px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; border: none; cursor: pointer; transition: all 0.2s; background: transparent; color: #7b7580; }
+    .mode-btn.active { background: #4a3073; color: #fff; }
+    .story-audio-player { display: none; }
+    .story-audio-player.visible { display: flex; }
+    .speed-btn { padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; border: 1.5px solid #ccc4d1; background: transparent; color: #4a454f; cursor: pointer; transition: all 0.2s; }
+    .speed-btn.active { border-color: #4a3073; background: #4a3073; color: #fff; }
+    #storyProgress { -webkit-appearance: none; appearance: none; height: 4px; border-radius: 2px; background: linear-gradient(to right, #4a3073 var(--prog,0%), #e5e2df var(--prog,0%)); cursor: pointer; }
+    #storyProgress::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #4a3073; cursor: pointer; }
+    .article-listen-mode { transition: opacity 0.4s; }
+    .article-listen-mode.dimmed { opacity: 0.35; pointer-events: none; }
   </style>
 </head>
 <body class="bg-surface text-[#1c1c1a] font-body selection:bg-[#33185c]/20">
@@ -71,9 +81,15 @@ tailwind.config = {
         <div class="font-headline text-xl font-bold leading-none">女也</div>
         <div class="mt-1 text-[10px] uppercase tracking-[0.28em] text-[#33185c]/55">She Is</div>
       </div>
-      <button id="shareButton" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#33185c] transition hover:bg-[#33185c]/5" aria-label="分享故事">
-        <span class="material-symbols-outlined">share</span>
-      </button>
+      <div class="flex items-center gap-1">
+        <div id="headerAuthArea">
+          <a href="login.html" id="loginEntryBtn" class="text-xs font-label font-semibold text-[#33185c]/70 hover:text-[#33185c] tracking-widest uppercase transition-colors hidden">登录</a>
+          <a href="map.html" id="userAvatarBtn" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white hidden" style="background:linear-gradient(135deg,#4a3073,#9c3c62);"></a>
+        </div>
+        <button id="shareButton" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#33185c] transition hover:bg-[#33185c]/5" aria-label="分享故事">
+          <span class="material-symbols-outlined">share</span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -90,23 +106,54 @@ tailwind.config = {
     </section>
 
     <section class="px-6 mb-8 max-w-3xl mx-auto">
-      <div class="glass-player p-6 rounded-lg editorial-shadow flex flex-col gap-4 border border-outline-variant/10">
-        <div class="flex items-center gap-4">
-          <button class="w-14 h-14 rounded-full bg-primary text-on-primary flex items-center justify-center active:scale-90 transition-transform">
-            <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+            <!-- Mode Toggle -->
+      <div class="flex justify-center mb-4">
+        <div class="inline-flex gap-1 p-1 rounded-full bg-surface-container">
+          <button class="mode-btn active" data-mode="read" id="modeRead">阅读</button>
+          <button class="mode-btn" data-mode="listen" id="modeListen">听故事</button>
+        </div>
+      </div>
+
+      <!-- Background Music Player (read mode) -->
+      <div id="bgPlayerSection" class="glass-player p-4 rounded-lg editorial-shadow flex flex-col gap-2 border border-outline-variant/10">
+        <div class="flex items-center gap-3">
+          <button id="bgPlayBtn" class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center active:scale-90 transition-transform flex-shrink-0">
+            <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
           </button>
-          <div class="flex-1">
-            <p class="font-label text-xs uppercase tracking-widest text-primary font-bold mb-1">Background Music / 背景音乐</p>
-            <p class="text-sm text-on-surface-variant font-medium">6 min read</p>
+          <div class="flex-1 min-w-0">
+            <p class="font-label text-xs uppercase tracking-widest text-primary font-bold leading-tight">Background Music / 背景音乐</p>
+          </div>
+          <span id="bgTime" class="font-label text-xs text-on-surface-variant opacity-70 flex-shrink-0 tabular-nums">0:00 / --:--</span>
+        </div>
+        <input id="bgProgress" type="range" min="0" max="100" value="0" class="w-full h-1 rounded-full appearance-none cursor-pointer" style="accent-color:#4A3073;">
+      </div>
+
+      <!-- Story Audio Player (listen mode) -->
+      <audio id="storyAudio" src="assets/audio/story-xiaochen.mp3" preload="metadata"></audio>
+      <div id="storyPlayerSection" class="story-audio-player glass-player rounded-lg editorial-shadow flex-col gap-2 border border-outline-variant/10" style="padding: 12px 16px;">
+        <div class="flex items-center gap-3">
+          <button id="storyPlayBtn" class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center flex-shrink-0 active:scale-90 transition-transform">
+            <span id="storyPlayIcon" class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+          </button>
+          <div class="flex-1 min-w-0 flex items-center gap-2">
+            <span class="font-label text-primary font-bold whitespace-nowrap" style="font-size:13px;">听故事</span>
+            <span class="text-on-surface-variant" style="font-size:12px;opacity:0.6;"><span id="storyCurrentTime">0:00</span> / <span id="storyDuration">--:--</span></span>
+          </div>
+          <div class="flex gap-1 flex-shrink-0">
+            <button class="speed-btn active" data-speed="1">1x</button>
+            <button class="speed-btn" data-speed="1.5">1.5x</button>
+            <button class="speed-btn" data-speed="2">2x</button>
           </div>
         </div>
+        <input type="range" id="storyProgress" min="0" max="100" value="0" class="w-full" style="--prog:0%">
+      </div>
         <div class="relative w-full h-1 bg-surface-container rounded-full overflow-hidden">
           <div class="absolute left-0 top-0 h-full w-0 bg-secondary rounded-full"></div>
         </div>
       </div>
     </section>
 
-    <article class="mx-auto max-w-3xl px-6 py-12 sm:px-8">
+    <article id="storyArticle" class="mx-auto max-w-3xl px-6 py-12 sm:px-8 article-listen-mode">
         <blockquote class="border-l-[3px] border-[#9c3c62] pl-5 italic text-lg leading-[1.9] font-light text-[#33185c] mb-8">「女性最有魅力也最难的点，从来不是温柔，而是坚定。」</blockquote>
 <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">见到小陈第一眼，你绝对猜不到她是个&quot;刺头&quot;。戴着鸭舌帽，皮肤干净，看起来是家教很好的做题家。但只要她一开口，ENTP 特有的、噼里啪啦的生命力就挡不住了。她是学法律的，看着她边涮牛肉边拆解父权结构的样子，我心里暗暗感叹：这姑娘，未来可不是那种会坐在格子间里听话的人。我们几乎没有聊任何&quot;生活琐事&quot;。隔着热气腾腾的寿喜锅，我们聊了两个小时。关于愤怒，关于东亚家庭的&quot;潮湿&quot;，关于爱的博弈，以及女性在这个结构性世界里，到底该如何&quot;幸存&quot;。她像一把年轻锐利的剑，而我像一面久经沙场的盾。以下是这场对话中，那些让我反复回味的片段。</p>
 <section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">01</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">愤怒是对的</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">被讨厌 = 做对了</p></div></div></section>
@@ -216,7 +263,7 @@ tailwind.config = {
     });
   </script>
   <audio id="bgAudio" loop>
-    <source src="audio/story-xiaochen.mp3" type="audio/mpeg">
+    <source src="assets/audio/your-reflection.mp3" type="audio/mpeg">
   </audio>
   <script>
     (function() {
@@ -238,5 +285,21 @@ tailwind.config = {
     })();
   </script>
 
+  <script>
+  (async () => {
+    if (typeof getUser !== 'function') return;
+    const user = await getUser();
+    const loginBtn  = document.getElementById('loginEntryBtn');
+    const avatarBtn = document.getElementById('userAvatarBtn');
+    if (!loginBtn || !avatarBtn) return;
+    if (user) {
+      const name = user.user_metadata?.name || user.user_metadata?.full_name || user.email?.split('@')[0] || '我';
+      avatarBtn.textContent = name.charAt(0).toUpperCase();
+      avatarBtn.classList.remove('hidden');
+    } else {
+      loginBtn.classList.remove('hidden');
+    }
+  })();
+  </script>
 </body>
 </html>

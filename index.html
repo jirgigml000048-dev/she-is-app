@@ -3,7 +3,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>女也 She Is</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Noto+Serif+SC:wght@400;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&amp;family=Noto+Serif:wght@400;700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <script id="tailwind-config">
       tailwind.config = {
@@ -83,6 +83,64 @@
         body {
             min-height: max(884px, 100dvh);
         }
+        /* Letters horizontal scroll */
+        .letters-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 16px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 8px;
+        }
+        .letters-scroll::-webkit-scrollbar { display: none; }
+        .letter-card {
+            flex: 0 0 280px;
+            scroll-snap-align: start;
+        }
+        /* Mood check-in */
+        .mood-check-in { }
+        .mood-options { display: flex; flex-wrap: wrap; gap: 8px; }
+        .mood-options button {
+            padding: 7px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(74,48,115,0.2);
+            background: white;
+            font-size: 13px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            cursor: pointer;
+            color: #4a454f;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .mood-options button:hover {
+            border-color: #4a3073;
+            background: #4a3073;
+            color: #ffffff;
+        }
+        .mood-options button.selected {
+            border-color: transparent;
+        }
+        .mood-confirm {
+            transition: opacity 0.3s ease;
+        }
+        /* 中文主导基础样式 */
+        .zh-primary { font-family: 'Noto Serif SC', serif; font-weight: 500; }
+        .en-secondary {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 0.7em;
+            opacity: 0.55;
+            letter-spacing: 0.03em;
+            display: block;
+            margin-top: 2px;
+        }
+        /* 情绪按钮强制覆盖 */
+        .mood-options { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; }
+        .mood-options button { width: auto !important; flex: none !important; padding: 8px 14px !important; border-radius: 20px !important; font-size: 13px !important; }
+        /* 区块间距 */
+        main > section, main > .grid { margin-bottom: 32px; }
+        .section-divider { height: 1px; background: rgba(74,48,115,0.08); margin: 32px 0; }
     </style>
 </head>
 <body class="bg-background text-on-surface font-body selection:bg-primary-fixed min-h-screen soft-gradient-bg">
@@ -102,7 +160,8 @@
 </div>
 <div class="bg-[#f0edea] h-[1px] w-full opacity-20"></div>
 </header>
-<main class="pt-20 pb-32 px-6 max-w-screen-xl mx-auto space-y-12">
+<main class="pt-20 pb-32 px-6 max-w-screen-xl mx-auto space-y-12" style="padding-top:5rem;">
+<!-- Hero -->
 <section class="relative">
 <div class="flex flex-col md:flex-row gap-8 items-start">
 <div class="w-full md:w-1/2 space-y-4">
@@ -111,131 +170,162 @@
 <span class="text-[10px] text-outline/40">女也</span>
 </div>
 <div class="space-y-3">
-<h2 class="font-headline text-4xl md:text-6xl leading-tight text-primary">The inner gaze is a fierce act of love.</h2>
-<p class="font-headline text-xl md:text-2xl text-primary/60 italic">内心的注视是种无畏的爱。</p>
+<h2 class="font-headline leading-tight text-primary" style="font-family:'Noto Serif SC',serif;font-size:28px;font-weight:500;">内心的注视是种无畏的爱。</h2>
+<p class="font-headline text-sm text-primary/60" style="font-family:'Lora',serif;font-style:italic;font-size:13px;opacity:0.6;">The inner gaze is a fierce act of love.</p>
 </div>
-<p class="text-on-surface-variant max-w-md text-base mt-1 leading-relaxed">Welcome to your sanctuary. Take a breath and let the words find you.</p>
+<p class="text-on-surface-variant text-sm mt-2" style="opacity:0.65;">这是你的内在空间。</p>
 </div>
+<!-- C: 100 Girls photo with link to stories.html -->
 <div class="w-full md:w-1/2 relative">
-<a href="/stories">
+<a href="stories.html">
 <div class="bg-surface-container-high rounded-lg w-full aspect-[4/5] overflow-hidden asymmetric-clip shadow-xl">
 <img alt="100 Girls Abstract" class="w-full h-full object-cover mix-blend-multiply opacity-80" src="assets/hero-100girls.png">
 <div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
 <div class="absolute bottom-8 left-8 text-white">
-<span class="block font-label text-[10px] uppercase tracking-widest mb-1 opacity-80">Archive Series / 真实故事</span>
-<span class="block font-headline text-3xl">100 Girls / 一百位女孩</span>
+<span class="block font-label text-[10px] uppercase tracking-widest mb-1 opacity-80">Archive Series · 真实故事</span>
+<span class="block font-headline text-3xl">100 Girls · 一百位女孩</span>
 </div>
 </div>
 </a>
 </div>
 </div>
 </section>
-<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-<section class="md:col-span-8 bg-surface-container-lowest rounded-lg p-8 shadow-sm border-l-4 border-primary flex flex-col justify-between min-h-[320px]">
+
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6" style="margin-top: 48px;">
+<!-- Self Archive / Hero CTA -->
+<section class="md:col-span-8 bg-surface-container-lowest rounded-lg p-8 shadow-sm flex flex-col justify-between min-h-[180px]" style="border-top: 4px solid #4A3073;">
 <div class="space-y-4">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-secondary text-4xl" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
 <div>
-<h3 class="font-headline text-3xl text-primary">Self Archive</h3>
-<p class="text-[10px] uppercase tracking-widest text-outline">自我求索</p>
-</div>
+<h3 class="font-headline text-3xl text-primary">自我求索<br><span style="font-size:0.75em;opacity:0.6;">Self Archive</span></h3>
 </div>
 <div class="space-y-3">
-<p class="text-on-surface-variant text-lg leading-relaxed">"What is the one thing you are holding onto that no longer serves the woman you are becoming?"</p>
-<p class="text-on-surface-variant/60 text-base font-headline">"有什么是你正紧握不放，却不再契合你未来模样的？"</p>
+<p class="archive-quote text-on-surface-variant text-lg leading-relaxed">每一次测评，都是一次和自己的对话。</p>
+<p class="archive-quote-en text-on-surface-variant" style="font-size:0.85em;opacity:0.6;font-style:italic;">Every assessment is a conversation with yourself.</p>
 </div>
 </div>
+<!-- A1: Button text and link updated -->
 <div class="mt-8 flex items-center gap-4">
-<a href="/assessment" class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-8 py-4 rounded-lg font-label text-sm uppercase tracking-widest font-bold hover:opacity-90 transition-all active:scale-95 inline-block">
-Begin Reflection
+<a href="assessment.html" class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-8 py-4 rounded-lg font-label text-sm uppercase tracking-widest font-bold hover:opacity-90 transition-all active:scale-95 inline-block">
+开始探索 <span style="font-size:0.75em;opacity:0.6;">Explore</span> →
 </a>
-<span class="text-[10px] uppercase tracking-widest text-on-surface-variant/40">开始探索</span>
 </div>
 </section>
-<section class="md:col-span-4 bg-primary-container text-white rounded-lg p-8 relative overflow-hidden group">
+
+<!-- B: Internal Map card — light bg, brand accent, dynamic tags, link to map.html -->
+<section class="md:col-span-4 rounded-lg p-8 relative overflow-hidden group" style="background:#f5f0eb; border-top: 4px solid #4A3073; min-height: 180px;">
 <div class="relative z-10 h-full flex flex-col justify-between">
 <div>
-<div class="flex justify-between items-start">
-<h3 class="font-label text-xs uppercase tracking-widest font-bold text-on-primary-container mb-4">Internal Map</h3>
-<span class="text-[9px] text-on-primary-container/60 tracking-widest">内在地图</span>
-</div>
-<p class="font-headline text-2xl">Patterns /你的脉络</p>
+<h3 style="font-family:'Noto Serif SC',serif;font-size:18px;font-weight:500;color:#33185c;">内在地图</h3>
+<span style="font-family:'Lora',serif;font-style:italic;font-size:12px;opacity:0.55;display:block;margin-top:2px;">Internal Map</span>
+<!-- Dynamic profile tags -->
+<div id="profileTags" class="mt-3 flex flex-wrap gap-2"></div>
 </div>
 <div class="py-6">
 <div class="flex items-end gap-2 h-24">
-<div class="w-full bg-secondary/40 rounded-t-full h-[60%] animate-pulse"></div>
-<div class="w-full bg-secondary/60 rounded-t-full h-[90%]"></div>
-<div class="w-full bg-secondary/30 rounded-t-full h-[40%]"></div>
-<div class="w-full bg-secondary rounded-t-full h-[75%]"></div>
-<div class="w-full bg-secondary/50 rounded-t-full h-[55%]"></div>
+<div class="w-full bg-[#9c3c62]/30 rounded-t-full h-[60%]"></div>
+<div class="w-full bg-[#9c3c62]/50 rounded-t-full h-[90%]"></div>
+<div class="w-full bg-[#9c3c62]/20 rounded-t-full h-[40%]"></div>
+<div class="w-full bg-[#9c3c62]/70 rounded-t-full h-[75%]"></div>
+<div class="w-full bg-[#9c3c62]/40 rounded-t-full h-[55%]"></div>
 </div>
 </div>
-<a class="text-on-primary-container font-label text-xs uppercase tracking-widest border-b border-on-primary-container/30 pb-1 w-fit flex items-center gap-2" href="#">
-View Profile <span class="text-[9px] opacity-60">查看概览</span>
+<a class="text-[#4A3073] font-label text-xs uppercase tracking-widest border-b border-[#4A3073]/30 pb-1 w-fit flex items-center gap-2 hover:opacity-70 transition-opacity" href="map.html">
+查看我的地图 →
 </a>
 </div>
-<div class="absolute -right-12 -bottom-12 w-48 h-48 rounded-full bg-primary/20 blur-3xl"></div>
 </section>
-<section class="md:col-span-12 space-y-6 pt-6">
+
+<!-- E: Mood check-in — independent section before Letters -->
+<section class="md:col-span-12 mood-check-in bg-surface-container-low rounded-lg p-5" style="border-top: 1px solid rgba(74,48,115,0.1); padding-top: 20px;">
+<p class="mood-label font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">今天，你感觉怎么样？<span class="text-[10px] opacity-50 normal-case"> How are you feeling?</span></p>
+<div class="mood-options">
+<button data-mood="calm" data-color="#7B9EA6">🌊 平静 <span style="font-size:0.8em;opacity:0.6;">Calm</span></button>
+<button data-mood="anxious" data-color="#E8A87C">⚡ 焦虑 <span style="font-size:0.8em;opacity:0.6;">Anxious</span></button>
+<button data-mood="tired" data-color="#9B8EA8">🌙 疲惫 <span style="font-size:0.8em;opacity:0.6;">Tired</span></button>
+<button data-mood="alive" data-color="#7BAE8C">🌱 有活力 <span style="font-size:0.8em;opacity:0.6;">Alive</span></button>
+<button data-mood="numb" data-color="#B0A8A0">🪨 麻木 <span style="font-size:0.8em;opacity:0.6;">Numb</span></button>
+<button data-mood="sad" data-color="#6B8CBE">😔 悲伤 <span style="font-size:0.8em;opacity:0.6;">Sad</span></button>
+<button data-mood="grateful" data-color="#D4A96A">✨ 感恩 <span style="font-size:0.8em;opacity:0.6;">Grateful</span></button>
+<button data-mood="overwhelmed" data-color="#C47A7A">🌀 压力大 <span style="font-size:0.8em;opacity:0.6;">Overwhelmed</span></button>
+</div>
+<p class="mood-confirm font-label text-xs text-on-surface-variant mt-3 opacity-0 transition-opacity duration-300">已记录 <span style="opacity:0.55;font-size:0.85em;">· Recorded</span></p>
+</section>
+
+<!-- Letters section -->
+<section class="md:col-span-12 space-y-6" style="padding-top: 24px;">
 <div class="flex justify-between items-end">
 <div class="flex items-baseline gap-4">
-<h3 class="font-headline text-4xl text-primary">Letters</h3>
-<span class="font-headline text-xl text-primary/40">书信</span>
+<h3 class="font-headline text-4xl text-primary" style="padding: 8px 0;">来信 <span class="font-headline text-xl text-primary/40">Letters</span></h3>
 </div>
 <a href="/mailbox" class="text-secondary font-label text-xs uppercase tracking-widest font-bold flex items-center gap-2 group">
 Read All <span class="text-[9px] opacity-60">阅读全部</span> <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
 </a>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-<div class="bg-surface-container-low rounded-lg p-6 hover:bg-surface-container-high transition-colors cursor-pointer group">
+
+<!-- A2: Horizontal scroll cards -->
+<div class="letters-scroll">
+<div class="letter-card bg-surface-container-low rounded-lg p-6 hover:bg-surface-container-high transition-colors cursor-pointer group">
 <div class="flex justify-between items-start mb-6">
 <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
 <span class="material-symbols-outlined text-secondary">mail</span>
 </div>
-<span class="font-label text-[10px] text-on-surface-variant opacity-60 uppercase">OCT 24 / 十月</span>
+<span class="font-label text-[10px] text-on-surface-variant opacity-60 uppercase">OCT 24</span>
 </div>
 <h4 class="font-headline text-xl text-primary mb-1">To the girl who hides her fire</h4>
 <p class="font-headline text-sm text-primary/60 mb-3">致那个隐藏光芒的女孩</p>
 <p class="text-on-surface-variant text-sm line-clamp-2 leading-relaxed">Sometimes we mistake our silence for peace, but your fire is meant to illuminate the way...</p>
 </div>
-<div class="bg-surface-container-low rounded-lg p-6 hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="letter-card bg-surface-container-low rounded-lg p-6 hover:bg-surface-container-high transition-colors cursor-pointer">
 <div class="flex justify-between items-start mb-6">
 <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
 <span class="material-symbols-outlined text-secondary">edit_note</span>
 </div>
-<span class="font-label text-[10px] text-on-surface-variant opacity-60 uppercase">OCT 21 / 十月</span>
+<span class="font-label text-[10px] text-on-surface-variant opacity-60 uppercase">OCT 21</span>
 </div>
 <h4 class="font-headline text-xl text-primary mb-1">A letter to your future self</h4>
 <p class="font-headline text-sm text-primary/60 mb-3">致未来自己的一封信</p>
 <p class="text-on-surface-variant text-sm line-clamp-2 leading-relaxed">If you could see yourself five years from now, what is the first thing you would ask her?</p>
 </div>
-<div class="bg-surface-variant/60 backdrop-blur-md rounded-lg p-6 border border-white/20 shadow-sm hover:shadow-md transition-all cursor-pointer">
+<div class="letter-card bg-surface-variant/60 backdrop-blur-md rounded-lg p-6 border border-white/20 shadow-sm hover:shadow-md transition-all cursor-pointer">
 <div class="flex justify-between items-start mb-6">
 <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
 <span class="material-symbols-outlined text-primary">psychology</span>
 </div>
-<span class="font-label text-[10px] text-on-surface-variant opacity-60 uppercase">OCT 18 / 十月</span>
+<span class="font-label text-[10px] text-on-surface-variant opacity-60 uppercase">OCT 18</span>
 </div>
 <h4 class="font-headline text-xl text-primary mb-1">Understanding Resonance</h4>
 <p class="font-headline text-sm text-primary/60 mb-3">解读共鸣</p>
 <p class="text-on-surface-variant text-sm line-clamp-2 leading-relaxed">Your patterns show a deep resonance with themes of growth and intentional solitude this month.</p>
 </div>
+<div class="letter-card bg-surface-container-low rounded-lg p-6 hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-6">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-secondary">favorite</span>
+</div>
+<span class="font-label text-[10px] text-on-surface-variant opacity-60 uppercase">OCT 15</span>
+</div>
+<h4 class="font-headline text-xl text-primary mb-1">On softness as strength</h4>
+<p class="font-headline text-sm text-primary/60 mb-3">论柔软即是力量</p>
+<p class="text-on-surface-variant text-sm line-clamp-2 leading-relaxed">We live in a world that rewards the armored. But what if tenderness is the bravest thing you carry?</p>
+</div>
 </div>
 </section>
 </div>
+
+<!-- D: Meditation player -->
+<audio id="reflectionAudio" src="assets/audio/your-reflection.mp3" preload="none"></audio>
 <div class="fixed bottom-28 left-1/2 -translate-x-1/2 w-[90%] max-w-md z-40">
 <div class="bg-surface-container-lowest/80 backdrop-blur-xl rounded-full py-4 px-6 flex items-center gap-4 shadow-2xl border border-white/40">
-<button class="w-10 h-10 flex-shrink-0 rounded-full bg-primary text-on-primary flex items-center justify-center">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<button id="reflectionPlayBtn" onclick="toggleReflection()" class="w-10 h-10 flex-shrink-0 rounded-full bg-primary/80 text-on-primary flex items-center justify-center cursor-pointer hover:bg-primary transition-colors active:scale-95">
+<span id="reflectionIcon" class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
 </button>
 <div class="flex-grow">
 <div class="flex items-center gap-2">
-<p class="text-[10px] font-label uppercase tracking-widest text-primary font-bold">Guided Meditation</p>
-<span class="text-[9px] text-primary/40">冥想导引</span>
+<p class="text-[10px] font-label uppercase tracking-widest text-primary font-bold">Now Playing</p>
 </div>
-<p class="text-xs text-on-surface-variant truncate">The Muse: Deep Introspection / 深度内省</p>
+<p class="text-xs text-on-surface-variant truncate">Your Reflection · Max Richter</p>
 </div>
-<div class="flex gap-1 items-end h-6 w-12 flex-shrink-0">
+<div id="reflectionBars" class="flex gap-1 items-end h-6 w-12 flex-shrink-0 opacity-30">
 <div class="w-1 bg-secondary rounded-full h-2"></div>
 <div class="w-1 bg-secondary rounded-full h-5"></div>
 <div class="w-1 bg-secondary rounded-full h-3"></div>
@@ -244,17 +334,37 @@ Read All <span class="text-[9px] opacity-60">阅读全部</span> <span class="ma
 </div>
 </div>
 </div>
+<script>
+function toggleReflection() {
+  const audio = document.getElementById('reflectionAudio');
+  const icon = document.getElementById('reflectionIcon');
+  const bars = document.getElementById('reflectionBars');
+  if (audio.paused) {
+    audio.play();
+    icon.textContent = 'pause';
+    bars.style.opacity = '1';
+  } else {
+    audio.pause();
+    icon.textContent = 'play_arrow';
+    bars.style.opacity = '0.3';
+  }
+}
+document.getElementById('reflectionAudio').addEventListener('ended', function() {
+  document.getElementById('reflectionIcon').textContent = 'play_arrow';
+  document.getElementById('reflectionBars').style.opacity = '0.3';
+});
+</script>
 </main>
 <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center pt-4 pb-8 px-4 bg-[#ffffff]/60 backdrop-blur-2xl rounded-t-[2.5rem] z-50 shadow-[0_-8px_32px_rgba(28,28,26,0.04)]">
 <a class="flex flex-col items-center justify-center text-[#33185c] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#9c3c62] after:rounded-full" href="/">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
 <span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Home</span>
 </a>
-<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="/stories">
+<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="stories.html">
 <span class="material-symbols-outlined">auto_stories</span>
 <span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Stories</span>
 </a>
-<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="/assessment">
+<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="assessment.html">
 <span class="material-symbols-outlined">psychology</span>
 <span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Archive</span>
 </a>
@@ -270,17 +380,98 @@ Read All <span class="text-[9px] opacity-60">阅读全部</span> <span class="ma
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/auth.js"></script>
 <script>
+  // Auth state
   (async () => {
     const user = await getUser();
     const loginBtn  = document.getElementById('loginEntryBtn');
     const avatarBtn = document.getElementById('userAvatarBtn');
     if (user) {
-      const name = user.user_metadata?.name || user.user_metadata?.full_name || user.email?.split('@')[0] || '我';
+      const name = user.user_metadata?.name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Me';
       avatarBtn.textContent = name.charAt(0).toUpperCase();
       avatarBtn.classList.remove('hidden');
     } else {
       loginBtn.classList.remove('hidden');
     }
+  })();
+
+  // B: Dynamic profile tags from localStorage
+  (function() {
+    const tagMap = {
+      mbti: v => v,
+      hsp: v => v === 'true' || v === true ? 'Highly Sensitive' : null,
+      cognitive: v => v,
+      ecr: v => v,
+      attachment: v => v,
+    };
+    const tags = [];
+    for (const [key, fn] of Object.entries(tagMap)) {
+      const raw = localStorage.getItem(key) || localStorage.getItem('sheIs_' + key);
+      if (raw) {
+        try {
+          const val = JSON.parse(raw);
+          const label = fn(val?.result || val?.type || val);
+          if (label) tags.push(label);
+        } catch(e) {
+          const label = fn(raw);
+          if (label) tags.push(label);
+        }
+      }
+    }
+    if (tags.length) {
+      const container = document.getElementById('profileTags');
+      tags.forEach(t => {
+        const span = document.createElement('span');
+        span.textContent = t;
+        span.style.cssText = 'font-size:11px;padding:3px 10px;border-radius:999px;background:#ecdcff;color:#4a3073;font-family:Plus Jakarta Sans,sans-serif;font-weight:600;';
+        container.appendChild(span);
+      });
+    }
+  })();
+
+  // E: Mood check-in
+  (function() {
+    const btns = document.querySelectorAll('.mood-options button');
+    const confirm = document.querySelector('.mood-confirm');
+    // Restore previous selection if same day
+    try {
+      const saved = JSON.parse(localStorage.getItem('sheIs_mood_today') || 'null');
+      if (saved && saved.mood) {
+        const today = new Date().toDateString();
+        const savedDay = new Date(saved.timestamp).toDateString();
+        if (today === savedDay) {
+          btns.forEach(b => {
+            if (b.dataset.mood === saved.mood) {
+              b.classList.add('selected');
+              b.style.backgroundColor = saved.color;
+              b.style.color = '#fff';
+            } else {
+              b.style.opacity = '0.4';
+            }
+          });
+          if (confirm) { confirm.style.opacity = '1'; }
+        }
+      }
+    } catch(e) {}
+    btns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const mood = this.dataset.mood;
+        const color = this.dataset.color;
+        btns.forEach(b => {
+          b.classList.remove('selected');
+          b.style.backgroundColor = '';
+          b.style.color = '';
+          b.style.opacity = '0.4';
+        });
+        this.classList.add('selected');
+        this.style.backgroundColor = color;
+        this.style.color = '#fff';
+        this.style.opacity = '1';
+        localStorage.setItem('sheIs_mood_today', JSON.stringify({ mood, color, timestamp: Date.now() }));
+        if (confirm) {
+          confirm.style.opacity = '1';
+        }
+      });
+    });
   })();
 </script>
 </body></html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html class="light" lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小舟：我们都需要一个痛苦的剂量 | 女也 She Is</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Serif+SC:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface-container": "#f0edea",
+        "on-secondary-container": "#771f44",
+        "outline-variant": "#ccc4d1",
+        "on-primary": "#ffffff",
+        "background": "#fcf9f6",
+        "inverse-primary": "#d6baff",
+        "surface-tint": "#6c5196",
+        "surface-container-low": "#f6f3f0",
+        "on-surface": "#1c1c1a",
+        "outline": "#7b7580",
+        "surface-container-highest": "#e5e2df",
+        "primary": "#33185c",
+        "surface-dim": "#dcdad7",
+        "surface-container-high": "#eae8e5",
+        "on-surface-variant": "#4a454f",
+        "surface-container-lowest": "#ffffff",
+        "primary-fixed": "#ecdcff",
+        "on-primary-container": "#b99ce7",
+        "primary-fixed-dim": "#d6baff",
+        "on-primary-fixed-variant": "#53397c",
+        "surface-variant": "#e5e2df",
+        "secondary": "#9c3c62",
+        "secondary-fixed": "#ffd9e2",
+        "surface": "#fcf9f6",
+        "primary-container": "#4a3073",
+        "secondary-container": "#fd8ab2",
+        "on-background": "#1c1c1a"
+      },
+      fontFamily: {
+        "headline": ["Noto Serif", "Noto Serif SC", "serif"],
+        "body": ["Plus Jakarta Sans", "Noto Serif SC", "sans-serif"],
+        "label": ["Plus Jakarta Sans", "sans-serif"]
+      },
+      borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+    },
+  },
+}
+</script>
+  <style>
+    body { -webkit-font-smoothing: antialiased; background: #fcf9f6; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .editorial-shadow { box-shadow: 0 32px 64px -12px rgba(28, 28, 26, 0.08); }
+    .glass-player { background: rgba(255,255,255,0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    .mode-btn { padding: 6px 18px; border-radius: 999px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; border: none; cursor: pointer; transition: all 0.2s; background: transparent; color: #7b7580; }
+    .mode-btn.active { background: #4a3073; color: #fff; }
+    .story-audio-player { display: none; }
+    .story-audio-player.visible { display: flex; }
+    .speed-btn { padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; border: 1.5px solid #ccc4d1; background: transparent; color: #4a454f; cursor: pointer; transition: all 0.2s; }
+    .speed-btn.active { border-color: #4a3073; background: #4a3073; color: #fff; }
+    #storyProgress { -webkit-appearance: none; appearance: none; height: 4px; border-radius: 2px; background: linear-gradient(to right, #4a3073 var(--prog,0%), #e5e2df var(--prog,0%)); cursor: pointer; }
+    #storyProgress::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #4a3073; cursor: pointer; }
+    .article-listen-mode { transition: opacity 0.4s; }
+    .article-listen-mode.dimmed { opacity: 0.35; pointer-events: none; }
+  </style>
+</head>
+<body class="bg-surface text-[#1c1c1a] font-body selection:bg-[#33185c]/20">
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-[#33185c]/10 bg-[#fcf9f6]/85 backdrop-blur-xl">
+    <div class="mx-auto flex h-16 max-w-5xl items-center justify-between px-5 sm:px-6">
+      <a href="/stories" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#33185c] transition hover:bg-[#33185c]/5" aria-label="返回故事列表">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </a>
+      <div class="text-center text-[#33185c]">
+        <div class="font-headline text-xl font-bold leading-none">女也</div>
+        <div class="mt-1 text-[10px] uppercase tracking-[0.28em] text-[#33185c]/55">She Is</div>
+      </div>
+      <div class="flex items-center gap-1">
+        <div id="headerAuthArea">
+          <a href="login.html" id="loginEntryBtn" class="text-xs font-label font-semibold text-[#33185c]/70 hover:text-[#33185c] tracking-widest uppercase transition-colors hidden">登录</a>
+          <a href="map.html" id="userAvatarBtn" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white hidden" style="background:linear-gradient(135deg,#4a3073,#9c3c62);"></a>
+        </div>
+        <button id="shareButton" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#33185c] transition hover:bg-[#33185c]/5" aria-label="分享故事">
+          <span class="material-symbols-outlined">share</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="pb-32 pt-16">
+    <section class="relative isolate flex h-[70vh] min-h-[520px] items-end overflow-hidden">
+      <div class="absolute inset-0 bg-[linear-gradient(135deg,#33185c_0%,#5c2c73_36%,#9c3c62_72%,#f0d6d8_100%)]"></div>
+      <img src="assets/covers/cover-008-xiaozhou.jpg" alt="小舟：我们都需要一个痛苦的剂量" class="absolute inset-0 h-full w-full object-cover opacity-60">
+      <div class="absolute inset-0 bg-gradient-to-b from-white/20 via-white/40 to-[#fcf9f6]"></div>
+      <div class="relative z-10 mx-auto w-full max-w-5xl px-6 pb-12 sm:px-8 md:pb-14">
+        <span class="font-label text-sm uppercase tracking-[0.3em] text-primary mb-4 block">Volume 008 / 100位女孩</span>
+        <h2 class="font-headline text-4xl md:text-5xl text-primary leading-tight font-bold max-w-[90%] mb-2">我们都需要一个痛苦的剂量</h2>
+        <span class="font-headline text-xl md:text-2xl text-primary/70 font-normal tracking-normal">Everyone Needs Their Dose of Pain</span>
+      </div>
+    </section>
+
+    <section class="px-6 mb-8 max-w-3xl mx-auto">
+      <!-- Mode Toggle -->
+      <div class="flex justify-center mb-4">
+        <div class="inline-flex gap-1 p-1 rounded-full bg-surface-container">
+          <button class="mode-btn active" data-mode="read" id="modeRead">阅读</button>
+          <button class="mode-btn" data-mode="listen" id="modeListen">听故事</button>
+        </div>
+      </div>
+
+      <!-- Background Music Player (read mode) -->
+      <div id="bgPlayerSection" class="glass-player p-4 rounded-lg editorial-shadow flex flex-col gap-2 border border-outline-variant/10">
+        <div class="flex items-center gap-3">
+          <button id="bgPlayBtn" class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center active:scale-90 transition-transform flex-shrink-0">
+            <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+          </button>
+          <div class="flex-1 min-w-0">
+            <p class="font-label text-xs uppercase tracking-widest text-primary font-bold leading-tight">Background Music / 背景音乐</p>
+          </div>
+          <span id="bgTime" class="font-label text-xs text-on-surface-variant opacity-70 flex-shrink-0 tabular-nums">0:00 / --:--</span>
+        </div>
+        <input id="bgProgress" type="range" min="0" max="100" value="0" class="w-full h-1 rounded-full appearance-none cursor-pointer" style="accent-color:#4A3073;">
+      </div>
+
+      <!-- Story Audio Player (listen mode) -->
+      <audio id="storyAudio" src="assets/audio/story-008.mp3" preload="metadata"></audio>
+      <div id="storyPlayerSection" class="story-audio-player glass-player rounded-lg editorial-shadow flex-col gap-2 border border-outline-variant/10" style="padding: 12px 16px;">
+        <div class="flex items-center gap-3">
+          <button id="storyPlayBtn" class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center flex-shrink-0 active:scale-90 transition-transform">
+            <span id="storyPlayIcon" class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+          </button>
+          <div class="flex-1 min-w-0 flex items-center gap-2">
+            <span class="font-label text-primary font-bold whitespace-nowrap" style="font-size:13px;">听故事</span>
+            <span class="text-on-surface-variant" style="font-size:12px;opacity:0.6;"><span id="storyCurrentTime">0:00</span> / <span id="storyDuration">--:--</span></span>
+          </div>
+          <div class="flex gap-1 flex-shrink-0">
+            <button class="speed-btn active" data-speed="1">1x</button>
+            <button class="speed-btn" data-speed="1.5">1.5x</button>
+            <button class="speed-btn" data-speed="2">2x</button>
+          </div>
+        </div>
+        <input type="range" id="storyProgress" min="0" max="100" value="0" class="w-full" style="--prog:0%">
+      </div>
+    </section>
+
+    <article id="storyArticle" class="mx-auto max-w-3xl px-6 py-12 sm:px-8 article-listen-mode">
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">这是一顿轻松的饭。虽然我们谈论了痛苦，但感受不到一丝"痛苦"情绪的流动。我们就是坐在大屯路一家湖南小炒店里，点了红烧肉、手撕包菜和一碗肉丸汤，像两个刚认识的朋友一样随便聊。她先问我为什么要做这件事，我说想看看不同的人。她说她看了我写的那些故事，"觉得大部分人都很悲伤，"然后很认真地问我："是为了故事性，还是确实遇到的人都是？"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">我跟她说了实话：两者都有。找我吃饭的人，心思重的会更主动，而我又是个"乐观的悲情叙事者"——聊天的时候很松弛，但一到写的环节就忍不住去挖更深、更重的东西。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">"那今天就轻松一点吧。"她说。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">小舟刚来北京不到三个月。30岁，广西人，博士后，研究微生物，具体说是病原体和线虫。语速不紧不慢，笑起来很温和，一张典型的广西人的脸，有南方女孩的小巧，但五官的线条是硬朗的，眉骨和颧骨都带着一点山里的棱角。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">聊到一半我才知道，她一年前刚离婚。对象是高中同学，在一起十几年，海军军官，驻扎在东北的一个县城。一年见一两次。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">"十几年？"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">"从高中到博士后。"我以为接下来会是一个悲伤的故事。但她没有往那个方向走。她只是安安静静地，把自己这十几年每一次"选择离开"的逻辑，讲给了我听。</p>
+
+      <section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">01</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">探春出走</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">One Station at a Time</p></div></div></section>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">小舟从幼儿园就开始住校。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我习惯性问她是小镇做题家吗，她说："在广西，不算小镇，但父母能帮到的不多。"高中毕业的时候她就想好了：不管考成什么样，一定要离开广西。"我就想去看看这个世界。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">后来她真的一站一站走出去了。本科去了外省一所双非，硕士换了一个搞产业化的组，博士公派出国，在国外待了四年。每一站都是一个全新的城市、全新的圈子、全新的实验台。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">有意思的是，她在家的时候身体一直不好，一离开家乡，身体就好了——像某种植物，在原来的土壤里总是蔫的，换了盆反而活过来了。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">国外那四年是她最松弛的时候。每天十点上班，下午四点就走。导师不push，她就各种玩。但她心里知道这不是终点——"我想要去一个真正厉害的人手下做事，学到只有我有、别人没有的技能。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">于是博士后选了国内一个大牛的组。代价是从每天六小时的工作量，变成了早九晚十一、一周六天。"我觉得搞科研90%都是失败，导师只想要那10%的成功，你就要做1000%的努力。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">但她有自己的方式。她说她不是那种能一直"打墙"的人——"让我一直锤同一堵墙，锤不动我就跑了。但我擅长绕路。"科研上碰壁的时候，她会跳出来，从完全不同的角度找一条绕过去的路。"使巧劲，"她笑，"我觉得一个组里需要有这样的人，不然大家就绕不过去。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">而她的男朋友——后来的丈夫——始终在东北的那个县城。"一年见一两次。他是海军，经常出海，一走就是几个月，手机都要上交的，完全失联。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我问她怎么撑了这么久。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"因为知根知底吧。而且那个时候有一个人在，哪怕见不到，你的情绪就是稳的。"她想了想，"就是有一种被托住的感觉。你知道如果真出了什么事，还有一个人可以打电话。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">但到了某个临界点，他撑不住了。他想要的是一个具体的家——下班回来有人在，周末可以一起吃饭的那种。而她的人生规划里，至少还有五年要在广州或北京。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"他的痛苦是真实的。"她说这话的时候没有怨气。"我们打了七个小时的电话，他一整个通宵，跟我讨论这件事。他甚至去算命了，算命的也说他太想有家了。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">最后他们还是分开了。三个月后他就有了新的人，在同一个城市，不用异地的那种。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"我觉得可能是他的正缘在叩门了。所以他才会突然撑不住。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">这句话不是自我安慰。她是真的这么理解世界的。她信因果，信缘起缘落，也信一个搞科学的人可以同时信玄学——"科学是西方解释世界的方法，玄学是中国解释世界的方法，说到底都是人在看世界。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">离婚之后，她在国外遇到了另一个很好的男生。华人，各方面都match，稳定，有房有车，想结婚。她当时也差不多可以拿永居了。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">但她回来了。因为国内的一个导师说了一句话打动了她："我要做那种可以刻在墓志铭上的研究。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"我一听就完了。"她笑，"我就是这种人，你跟我说做有意义的事，我就上头了。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">于是她放弃了永居、放弃了那段感情、放弃了轻松的生活，回来过上了早九晚十一的日子。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我问她后不后悔。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"我很小的时候就想过，这辈子就算没有婚姻，我也希望能做出一点让世界记住的东西。"她顿了一下，"当然后来我认识到了自己的局限性——可能也就在一个很小的领域里做一点事。但这个时代给了我们选择的机会。以前的女性可能轮回了很多次，每次都只能承担家庭的角色。这个时代终于可以选另一条路了——那我为什么不去选呢？"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她说这话的时候，餐桌上的红烧肉已经凉了。但她眼睛是亮的——那种亮不是兴奋，是一个人在说出自己真正相信的东西时，瞳孔里会有的那种确认感。</p>
+
+      <section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">02</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">痛苦的剂量</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">The Dose Makes the Pain</p></div></div></section>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">吃到一半，我们聊到一个奇怪的话题：为什么条件很好的人，依然会痛苦？</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我跟她说，我见过的女孩里，有些人的苦难非常具体，但也有一些人，客观条件什么都不缺，依然会在深夜里觉得空落落的。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"我身边也有这样的朋友。"她说，"各方面都很好的，家庭条件好，事业也好，但就是为了一段感情酗酒、痛苦得不能自拔。你说他是庸人自扰吗？不是的。他的痛苦是真实的。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">然后她说了一句让我一直记到现在的话：</p>
+      <p class="text-xl leading-[1.9] font-medium text-[#33185c] mb-7 pl-6 border-l-4 border-[#9c3c62]">"我觉得我们都需要一个痛苦的剂量。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我分享了一个每次都在我痛苦的时候抚慰我的"自洽理论"：人的喜怒哀乐总量是恒定的，不会因为你的身份、财富、学历而改变。区别只在于你的那份痛苦从哪个入口进来。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"你看，你事业很稳了，所以你的痛苦就从感情那个口子进来。但是我的一些朋友，以前喜欢那种有点坏的男生，自从工作非常辛苦以后，她们就只想找一个稳定的、确定的人——因为痛苦的剂量工作已经给够了，感情那边就不需要再补了。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我愣了一下。这个逻辑非常粗暴，但也非常准确。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她是做科学的人，即便在聊感情和命运的时候，也习惯去找一个底层结构。但她找到的这个结构不是冰冷的，反而很温柔。它在说：你的痛苦不是矫情，不是庸人自扰，它就是你作为一个人必须承受的那份重量，只是碰巧从这个地方落下来了。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我不由跟她分享了一个画面。我家打扫卫生的阿姨有一天在换床单，把床单一扬起来的时候，脸红扑扑的，带着油光，笑眯眯的。那一瞬间我就在想，可能阿姨今天比我开心呢。她的开心来源是带好吃的回家给孩子，如果有人这么跟我分享这些，我不会感到开心。但那又怎样呢？她的快乐和我的快乐，在"快乐"这个维度上是等重的。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"所以不管你做多大的事，赚多少钱，每个人的感受其实是公平的。"她接过话说，"你不会因为条件更好就不痛苦，也不会因为条件差就不快乐。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">一个研究病原体的博士后，和一个上市公司的高级牛马，坐在一家湖南小炒店里，在红烧肉旁边聊到了人本主义。这可能是这个系列里最不悲伤的一顿饭。</p>
+
+      <section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">03</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">把心收回来</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">Learning to Be Your Own Anchor</p></div></div></section>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">现在的小舟是单身状态。从18岁谈恋爱到30岁离婚，中间没有断过档。这是她第一次完全一个人。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"以前虽然一直异地，但名义上有一个对象在，情绪就是稳的。现在那个寄存点没了，我得学着把心放回自己身上。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我问她这个过程难吗。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"难。因为我敏感。"她说到这里停了一下，像是在组织一个思考了很久的表达。"我初高中的时候，别人很小的一个举动都会放大我心里的不自信。觉得人家是不是瞧不起我？不喜欢我？晚上做梦都能哭醒。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"后来呢？"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"后来我发现，敏感是双刃剑。你把它朝外面用，就变成了情商——你能感知别人的情绪，知道怎么跟不同的人相处。但你要是关不上那个开关，它就会一直割你自己。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我觉得这可能是我听到的关于"敏感"最实用的描述。不是要消灭它，不是要拥抱它，而是学会控制那个开关的方向。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"所以你现在关上了吗？"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"没有完全关上。"她很诚实。"但我现在知道了，那个让我难受的不是敏感本身，是我自己的能量够不够。能量够的时候，敏感是工具；能量不够的时候，敏感就是伤口。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">这让我想到她说的另一件事：她从18岁开始谈恋爱到30岁分开，中间看过无数朋友为感情崩溃，她当时完全不能理解——"干嘛要这么恋爱脑？你没有别的事干了吗？"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我毫不客气地笑着说："你小心哦，我感觉快到你了。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她也坦然："30岁了，第一次一个人，发现原来那个被托住的感觉消失了以后，真的会晃。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">但她把这件事也当成了一个新的实验——不是要赶紧找下一个寄存点，而是看看自己能不能做自己的锚。她之前的十二年，一直有一根看不见的线牵着一个远方的人。线断了以后她才发现，那根线虽然细，却一直在替她分担重量。现在全部的重力落回了自己身上。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"很多年都没有这样过了。有点不习惯。但也挺好的。"</p>
+
+      <section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">04</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">尾声：还有很长的故事要写</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">More Chapters Ahead</p></div></div></section>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">吃完饭我们走出去，都很着急赶路。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">不过我们达成共识：故事没有结束。我们或许都断断续续合上一些人生的章节。这一章合上了，但后面还有很长很长要写。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">这是这顿饭里最打动我的地方。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">小舟的人生没有崩塌过，她只是一次又一次地站在岔路口，选了那条更难但更远的路，然后承受选择带来的代价——不是被动的伤害，而是主动的代价。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她让我更深地认同一件事：痛苦不一定是坏掉了的信号。有时候它只是你正在生长的证据——你在往一个新的方向长，旧的皮肤自然会疼。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她聊到博士期间有个朋友，每段恋爱都走同一个循环：甜蜜→作→对方离开→痛苦，然后下一段重来。她旁观了三轮，提醒了三次，朋友还是掉进去了。"我问她你是不是享受这种痛苦？她说痛苦给她一种诡异的安全感——因为熟悉。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我们都笑了。然后都沉默了一会儿。因为我们都知道，每个人身上或多或少都有这样的循环——一种旧的行为模式，你明明看见了，但下一次它来的时候，你还是会掉进去。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"但每掉进去一次，你爬出来的速度会快一点。"她说。"而且你在里面的时候会知道——哦，这个我认识，我来过。"</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我觉得这大概就是成长最真实的样子。不是不再掉进去，而是掉进去的时候不慌了。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">而且每个人承受的那份重量其实是一样的。你看到别人比你惨，不意味着你的痛苦就是假的；你看到别人比你好，也不意味着她不疼。那份剂量是公平的，它只是从不同的入口进来。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">所以不用比较，也不用觉得自己矫情。你疼，是因为你在活着，在选择，在生长。</p>
+      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">这就够了。</p>
+
+      <section class="mt-24 rounded-[2rem] border border-[#33185c]/10 bg-[#f0edea] p-8 shadow-[0_30px_80px_rgba(51,24,92,0.07)]">
+        <div class="mb-8">
+          <h5 class="font-headline text-2xl text-[#33185c] font-bold mb-1">A Moment for You</h5>
+          <p class="font-headline text-sm text-[#33185c]/40 mb-3">心灵寄语</p>
+          <div class="w-12 h-1 bg-[#9c3c62] rounded-full"></div>
+        </div>
+        <p class="text-[#4a454f] leading-relaxed mb-2">你觉得你现在的"痛苦剂量"，从哪个入口进来？</p>
+        <p class="text-[#4a454f]/60 text-sm italic leading-relaxed mb-6">Which entrance does your dose of pain come through right now?</p>
+        <p class="text-[#4a454f] text-sm leading-relaxed mb-8">如果你愿意，写下来。不用完整，一个词也好。</p>
+        <div class="relative mb-4">
+          <textarea class="w-full bg-white/60 border-0 border-b border-[#ccc4d1] focus:ring-0 focus:bg-white rounded-none py-4 px-0 min-h-[120px] text-[#1c1c1a] placeholder:text-[#7b7580]/40 font-body" placeholder="写点什么..."></textarea>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="flex-1 min-w-0 flex items-center justify-center gap-1.5 px-3 py-3 rounded-full bg-[#33185c] text-white text-[10px] font-label font-bold uppercase tracking-wide whitespace-nowrap transition-colors" onclick="this.dataset.public = this.dataset.public === 'true' ? 'false' : 'true'; const isPublic = this.dataset.public === 'true'; this.querySelector('.icon').textContent = isPublic ? 'public' : 'lock'; this.querySelector('.label-text').textContent = isPublic ? 'Public / 公开' : 'Private / 仅自己';" data-public="true">
+            <span class="material-symbols-outlined text-sm icon">public</span>
+            <span class="label-text whitespace-nowrap">Public / 公开</span>
+          </button>
+          <button class="flex-1 min-w-0 py-3 px-3 bg-white/70 text-[#1c1c1a] rounded-full font-label uppercase tracking-wide text-[10px] font-bold shadow-sm active:scale-95 transition-transform text-center whitespace-nowrap border border-[#7b7580]/20">
+            Save / 留下感悟
+          </button>
+        </div>
+      </section>
+
+      <section class="mt-12 space-y-6">
+        <h5 class="font-headline text-xl text-[#33185c] font-bold mb-2">Reflections <span class="text-base font-normal text-[#33185c]/40">/ 读者感悟</span></h5>
+        <article class="rounded-xl border border-[#ccc4d1]/40 bg-white/70 p-6 shadow-sm">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-7 h-7 rounded-full bg-[#33185c]/10 flex items-center justify-center">
+              <span class="text-[10px] font-bold text-[#33185c]">?</span>
+            </div>
+            <span class="font-label text-[10px] uppercase tracking-widest text-[#4a454f]/60">Waiting for you</span>
+          </div>
+          <p class="font-body text-sm text-[#4a454f] leading-relaxed">你的感受，也许会照亮下一个读到这里的人。</p>
+        </article>
+      </section>
+    </article>
+  </main>
+
+  <div class="fixed bottom-6 left-1/2 z-40 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2">
+    <a href="/stories" class="flex items-center justify-center gap-2 rounded-full bg-[#33185c] px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_20px_60px_rgba(51,24,92,0.28)] transition hover:bg-[#44206f]">
+      <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      返回故事列表
+    </a>
+  </div>
+
+  <script>
+    document.getElementById('shareButton')?.addEventListener('click', async () => {
+      const shareData = { title: document.title, text: '小舟：我们都需要一个痛苦的剂量 | 女也 She Is', url: window.location.href };
+      try {
+        if (navigator.share) { await navigator.share(shareData); return; }
+        await navigator.clipboard.writeText(window.location.href);
+        alert('链接已复制');
+      } catch (error) { console.error(error); }
+    });
+  </script>
+  <audio id="bgAudio" loop>
+    <source src="assets/audio/story-008.mp3" type="audio/mpeg">
+  </audio>
+  <script>
+    (function() {
+      const audio = document.getElementById('bgAudio');
+      audio.volume = 0.35;
+      audio.muted = true;
+      audio.play().catch(function(){});
+      var unmuted = false;
+      function unmute() {
+        if (!unmuted) { audio.muted = false; unmuted = true; }
+        document.removeEventListener('click', unmute);
+        document.removeEventListener('touchstart', unmute);
+      }
+      document.addEventListener('click', unmute);
+      document.addEventListener('touchstart', unmute);
+    })();
+  </script>
+
+  <script>
+    // BG Audio player controls
+    const bgAudio = document.getElementById('bgAudio');
+    const bgPlayBtn = document.getElementById('bgPlayBtn');
+    const bgProgress = document.getElementById('bgProgress');
+    const bgTime = document.getElementById('bgTime');
+    function formatBgTime(s) { return Math.floor(s/60) + ':' + String(Math.floor(s%60)).padStart(2,'0'); }
+    bgPlayBtn.addEventListener('click', () => {
+      if (bgAudio.paused) { bgAudio.play(); bgPlayBtn.querySelector('.material-symbols-outlined').textContent = 'pause'; }
+      else { bgAudio.pause(); bgPlayBtn.querySelector('.material-symbols-outlined').textContent = 'play_arrow'; }
+    });
+    bgAudio.addEventListener('timeupdate', () => {
+      if (bgAudio.duration) {
+        bgProgress.value = (bgAudio.currentTime / bgAudio.duration) * 100;
+        bgTime.textContent = formatBgTime(bgAudio.currentTime) + ' / ' + formatBgTime(bgAudio.duration);
+      }
+    });
+    bgProgress.addEventListener('input', () => { bgAudio.currentTime = (bgProgress.value / 100) * bgAudio.duration; });
+
+    // Mode toggle
+    const modeRead = document.getElementById('modeRead');
+    const modeListen = document.getElementById('modeListen');
+    const bgPlayerSection = document.getElementById('bgPlayerSection');
+    const storyPlayerSection = document.getElementById('storyPlayerSection');
+    const storyArticle = document.getElementById('storyArticle');
+    const storyAudio = document.getElementById('storyAudio');
+    const storyPlayBtn = document.getElementById('storyPlayBtn');
+    const storyPlayIcon = document.getElementById('storyPlayIcon');
+    const storyProgress = document.getElementById('storyProgress');
+    const storyCurrentTime = document.getElementById('storyCurrentTime');
+    const storyDuration = document.getElementById('storyDuration');
+
+    function fmt(s) {
+      const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+      return m + ':' + String(sec).padStart(2,'0');
+    }
+
+    modeRead.addEventListener('click', () => {
+      modeRead.classList.add('active');
+      modeListen.classList.remove('active');
+      bgPlayerSection.style.display = '';
+      storyPlayerSection.classList.remove('visible');
+      storyArticle.classList.remove('dimmed');
+      storyAudio.pause();
+    });
+
+    modeListen.addEventListener('click', () => {
+      modeListen.classList.add('active');
+      modeRead.classList.remove('active');
+      bgPlayerSection.style.display = 'none';
+      storyPlayerSection.classList.add('visible');
+      storyArticle.classList.add('dimmed');
+    });
+
+    storyPlayBtn.addEventListener('click', () => {
+      if (storyAudio.paused) {
+        storyAudio.play();
+        storyPlayIcon.textContent = 'pause';
+      } else {
+        storyAudio.pause();
+        storyPlayIcon.textContent = 'play_arrow';
+      }
+    });
+
+    storyAudio.addEventListener('loadedmetadata', () => {
+      storyDuration.textContent = fmt(storyAudio.duration);
+    });
+
+    storyAudio.addEventListener('timeupdate', () => {
+      if (!storyAudio.duration) return;
+      const pct = (storyAudio.currentTime / storyAudio.duration) * 100;
+      storyProgress.value = pct;
+      storyProgress.style.setProperty('--prog', pct + '%');
+      storyCurrentTime.textContent = fmt(storyAudio.currentTime);
+    });
+
+    storyAudio.addEventListener('ended', () => {
+      storyPlayIcon.textContent = 'play_arrow';
+    });
+
+    storyProgress.addEventListener('input', () => {
+      const t = (storyProgress.value / 100) * storyAudio.duration;
+      storyAudio.currentTime = t;
+      storyProgress.style.setProperty('--prog', storyProgress.value + '%');
+    });
+
+    document.querySelectorAll('.speed-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        storyAudio.playbackRate = parseFloat(btn.dataset.speed);
+      });
+    });
+  </script>
+  <script>
+  (async () => {
+    if (typeof getUser !== 'function') return;
+    const user = await getUser();
+    const loginBtn  = document.getElementById('loginEntryBtn');
+    const avatarBtn = document.getElementById('userAvatarBtn');
+    if (!loginBtn || !avatarBtn) return;
+    if (user) {
+      const name = user.user_metadata?.name || user.user_metadata?.full_name || user.email?.split('@')[0] || '我';
+      avatarBtn.textContent = name.charAt(0).toUpperCase();
+      avatarBtn.classList.remove('hidden');
+    } else {
+      loginBtn.classList.remove('hidden');
+    }
+  })();
+  </script>
+</body>
+</html>

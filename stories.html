@@ -76,6 +76,17 @@ tailwind.config = {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 body { min-height: max(884px, 100dvh); }
+/* Enforce consistent cover image aspect ratio across all story cards */
+article .story-image-wrap {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  position: relative;
+}
+@media (min-width: 768px) {
+  article .story-image-wrap {
+    aspect-ratio: unset;
+  }
+}
 </style>
 </head>
 <body class="bg-background text-on-surface font-body selection:bg-primary-fixed min-h-screen">
@@ -129,9 +140,59 @@ A curated digital anthology celebrating the fierce and soft journeys of a hundre
 <p class="text-[10px] text-outline/40 text-right mb-2 font-label tracking-wider">Cover images are AIGC and do not represent real individuals.</p>
 <div class="space-y-12">
 
+<!-- 009 探探 (left image) -->
+<article class="group relative flex flex-col md:flex-row bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="inner-soul,identity">
+<div class="story-image-wrap w-full md:w-2/5 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<img alt="探探" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-009-tantan.jpg" onerror="this.style.display='none'">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+</div>
+<div class="p-8 md:p-12 flex-1 flex flex-col justify-center">
+<div class="mb-4 flex items-center gap-3">
+<span class="w-12 h-[1px] bg-secondary"></span>
+<span class="text-secondary font-label text-xs tracking-[0.2em] uppercase font-bold">Volume 009</span>
+</div>
+<h2 class="font-headline text-2xl md:text-3xl text-on-surface mb-2 leading-tight">贪心的17岁女人</h2>
+<h3 class="font-headline text-lg md:text-xl text-primary/60 mb-6 font-medium">The Greedy Girl at Seventeen</h3>
+<p class="font-body text-on-surface-variant leading-relaxed mb-8 line-clamp-3">
+她17岁，在北五环一所创新高中读书，毕业标准不是考试，而是月入4万或拿到50万投资。她管自己叫"被迫自主"——不是天生独立，是被推到了父母的整套系统全部失效的地方，只能自己走。
+</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-outline text-sm font-body italic">7 min read</span>
+<a href="story-009.html" class="flex items-center gap-2 text-primary font-bold tracking-wider hover:translate-x-1 transition-transform">
+READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
+</a>
+</div>
+</div>
+</article>
+
+<!-- 008 小舟 (right image) -->
+<article class="group relative flex flex-col md:flex-row-reverse bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="inner-soul,relationship">
+<div class="story-image-wrap w-full md:w-2/5 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<img alt="小舟" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-008-xiaozhou.jpg" onerror="this.style.display='none'">
+<div class="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+</div>
+<div class="p-8 md:p-12 flex-1 flex flex-col justify-center">
+<div class="mb-4 flex items-center gap-3">
+<span class="w-12 h-[1px] bg-secondary"></span>
+<span class="text-secondary font-label text-xs tracking-[0.2em] uppercase font-bold">Volume 008</span>
+</div>
+<h2 class="font-headline text-2xl md:text-3xl text-on-surface mb-2 leading-tight">我们都需要一个痛苦的剂量</h2>
+<h3 class="font-headline text-lg md:text-xl text-primary/60 mb-6 font-medium">Everyone Needs Their Dose of Pain</h3>
+<p class="font-body text-on-surface-variant leading-relaxed mb-8 line-clamp-3">
+30岁的博士后，研究病原体和线虫，一年前刚离婚。她说："我觉得我们都需要一个痛苦的剂量。"那份剂量是公平的，它只是从不同的入口进来。
+</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-outline text-sm font-body italic">8 min read</span>
+<a href="story-008.html" class="flex items-center gap-2 text-primary font-bold tracking-wider hover:-translate-x-1 transition-transform">
+READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
+</a>
+</div>
+</div>
+</article>
+
 <!-- 007 曲奇 (left image) -->
 <article class="group relative flex flex-col md:flex-row bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="inner-soul,identity">
-<div class="w-full md:w-2/5 h-80 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<div class="story-image-wrap w-full md:w-2/5 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
 <img alt="曲奇" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-007-quqi.png" onerror="this.style.display='none'">
 <div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 </div>
@@ -156,7 +217,7 @@ READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
 
 <!-- 006 嗅嗅 (right image) -->
 <article class="group relative flex flex-col md:flex-row-reverse bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="inner-soul,identity">
-<div class="w-full md:w-2/5 h-80 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<div class="story-image-wrap w-full md:w-2/5 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
 <img alt="嗅嗅" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-006-xiuxiu.png" onerror="this.style.display='none'">
 <div class="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 </div>
@@ -181,7 +242,7 @@ Wrapped head-to-toe in Beijing black, Xiuxiu smiles with the unguarded sweetness
 
 <!-- 005 冰冰 (left image) -->
 <article class="group relative flex flex-col md:flex-row bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="art,identity">
-<div class="w-full md:w-2/5 h-80 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<div class="story-image-wrap w-full md:w-2/5 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
 <img alt="冰冰" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-005-bingbing.png" onerror="this.style.display='none'">
 <div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 </div>
@@ -206,7 +267,7 @@ READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
 
 <!-- 004 小李 (right image) -->
 <article class="group relative flex flex-col md:flex-row-reverse bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="inner-soul,identity">
-<div class="w-full md:w-2/5 h-80 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<div class="story-image-wrap w-full md:w-2/5 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
 <img alt="小李" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-004-xiaoli.png" onerror="this.style.display='none'">
 <div class="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 </div>
@@ -231,7 +292,7 @@ Xiao Li's 450-word introductory message arrived with flawless punctuation and fo
 
 <!-- 003 自行车 (left image) -->
 <article class="group relative flex flex-col md:flex-row bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="inner-soul,identity">
-<div class="w-full md:w-2/5 h-80 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<div class="story-image-wrap w-full md:w-2/5 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
 <img alt="自行车" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-003-zixingche.png" onerror="this.style.display='none'">
 <div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 </div>
@@ -256,7 +317,7 @@ READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
 
 <!-- 002 小陈 (right image) -->
 <article class="group relative flex flex-col md:flex-row-reverse bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="identity,relationship">
-<div class="w-full md:w-2/5 h-80 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<div class="story-image-wrap w-full md:w-2/5 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
 <img alt="小陈" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-002-xiaochen.png" onerror="this.style.display='none'">
 <div class="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 </div>
@@ -281,7 +342,7 @@ A law student with the crackling energy of an ENTP who once stood up alone again
 
 <!-- 001 团子 (left image) -->
 <article class="group relative flex flex-col md:flex-row bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.04)] transition-all duration-500" data-tags="inner-soul,relationship">
-<div class="w-full md:w-2/5 h-80 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
+<div class="story-image-wrap w-full md:w-2/5 md:h-auto relative overflow-hidden" style="background: linear-gradient(135deg, #4a3073, #9c3c62);">
 <img alt="团子" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="assets/covers/cover-001-tuanzi.png" onerror="this.style.display='none'">
 <div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 </div>
@@ -358,6 +419,17 @@ READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
       loginBtn.classList.remove('hidden');
     }
   })();
+
+  // Task 3: Make entire story card clickable
+  document.querySelectorAll('article[data-tags]').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', (e) => {
+      if (!e.target.closest('a')) {
+        const link = card.querySelector('a[href]');
+        if (link) window.location.href = link.href;
+      }
+    });
+  });
 </script>
 </body>
 </html>
