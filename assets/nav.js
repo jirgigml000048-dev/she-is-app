@@ -7,9 +7,9 @@
   const tabs = [
     { href: 'index.html', icon: 'home', label: 'Home' },
     { href: 'stories.html', icon: 'auto_stories', label: 'Stories' },
-    { href: 'assessment.html', icon: 'psychology', label: 'Archive' },
     { href: 'map.html', icon: 'hub', label: 'Map' },
     { href: 'mailbox.html', icon: 'mail', label: 'Letters' },
+    { href: 'profile.html', icon: 'person', label: 'Me' },
   ];
 
   // Determine active tab from current URL
