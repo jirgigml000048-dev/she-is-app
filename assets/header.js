@@ -7,8 +7,8 @@
 
   const showBack = el.dataset.back === 'true';
   const leftIcon = showBack
-    ? '<a href="index.html" class="hover:opacity-80 transition-opacity active:scale-95 duration-300"><span class="material-symbols-outlined text-primary">arrow_back</span></a>'
-    : '<button class="hover:opacity-80 transition-opacity active:scale-95 duration-300"><span class="material-symbols-outlined text-primary">menu</span></button>';
+    ? '<a href="index.html" class="flex items-center justify-center min-h-[44px] min-w-[44px] hover:opacity-80 transition-opacity active:scale-95 duration-300"><span class="material-symbols-outlined text-primary">arrow_back</span></a>'
+    : '<button class="flex items-center justify-center min-h-[44px] min-w-[44px] hover:opacity-80 transition-opacity active:scale-95 duration-300"><span class="material-symbols-outlined text-primary">menu</span></button>';
 
   el.innerHTML = `
 <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl">

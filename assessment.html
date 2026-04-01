@@ -13,6 +13,12 @@
 body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: antialiased; min-height: 100dvh; }
 .serif-title { font-family: 'Noto Serif', 'Noto Serif SC', serif; }
 .glass-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+main > section { animation: fadeInUp 0.5s ease both; }
+main > section:nth-child(1) { animation-delay: 0.05s; }
+main > section:nth-child(2) { animation-delay: 0.12s; }
+main > section:nth-child(3) { animation-delay: 0.19s; }
+main > section:nth-child(4) { animation-delay: 0.26s; }
+main > section:nth-child(5) { animation-delay: 0.33s; }
 </style>
 </head>
 <body class="bg-background text-on-background selection:bg-primary-container/30">
@@ -166,7 +172,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: ant
 
 <!-- My Profile Summary -->
 <section class="mb-8">
-<div class="bg-gradient-to-br from-[#4a3073] to-[#33185c] rounded-xl p-8 text-on-primary relative overflow-hidden">
+<div class="bg-gradient-to-br from-primary-container to-primary rounded-xl p-8 text-on-primary relative overflow-hidden">
 <div class="absolute right-[-20px] top-[-20px] w-40 h-40 border-[16px] border-white/5 rounded-full"></div>
 <div class="relative z-10">
 <h3 class="serif-title text-2xl font-bold mb-2">Your Inner Portrait</h3>

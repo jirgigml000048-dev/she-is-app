@@ -25,9 +25,13 @@
     #storyProgress::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #4a3073; cursor: pointer; }
     .article-listen-mode { transition: opacity 0.4s; }
     .article-listen-mode.dimmed { opacity: 0.35; pointer-events: none; }
-  </style>
+  
+/* Scroll-triggered section fade-in */
+.story-section { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.story-section.visible { opacity: 1; transform: none; }
+</style>
 </head>
-<body class="bg-surface text-[#1c1c1a] font-body selection:bg-[#33185c]/20">
+<body class="bg-surface text-on-surface font-body selection:bg-primary/20">
   <div id="app-header" data-back="true"></div>
   <script src="assets/header.js"></script>
 
@@ -92,83 +96,83 @@
     </section>
 
     <article id="storyArticle" class="mx-auto max-w-3xl px-6 py-12 sm:px-8 article-listen-mode">
-        <blockquote class="border-l-[3px] border-[#9c3c62] pl-5 italic text-lg leading-[1.9] font-light text-[#33185c] mb-8">「女性最有魅力也最难的点，从来不是温柔，而是坚定。」</blockquote>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">见到小陈第一眼，你绝对猜不到她是个&quot;刺头&quot;。戴着鸭舌帽，皮肤干净，看起来是家教很好的做题家。但只要她一开口，ENTP 特有的、噼里啪啦的生命力就挡不住了。她是学法律的，看着她边涮牛肉边拆解父权结构的样子，我心里暗暗感叹：这姑娘，未来可不是那种会坐在格子间里听话的人。我们几乎没有聊任何&quot;生活琐事&quot;。隔着热气腾腾的寿喜锅，我们聊了两个小时。关于愤怒，关于东亚家庭的&quot;潮湿&quot;，关于爱的博弈，以及女性在这个结构性世界里，到底该如何&quot;幸存&quot;。她像一把年轻锐利的剑，而我像一面久经沙场的盾。以下是这场对话中，那些让我反复回味的片段。</p>
-<section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">01</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">愤怒是对的</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">被讨厌 = 做对了</p></div></div></section>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">小陈在高中就展现出了 ENTP 的&quot;攻击性&quot;。班上有男生当众开女生的黄腔，所有人都不好说什么，只有她站出来对峙。哪怕结果是被那一群男生集体孤立。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;但我挺引以为傲的。&quot;她发自内心地骄傲，&quot;被他们讨厌，说明我做的是对的。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;如果不表达愤怒，对方就会觉得理所当然。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">这种不妥协，让她在女性主义议题上也异常锋利。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;'非二元'性别在我这里不成立。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">如果你之所以觉得自己是&quot;非二元&quot;，是因为你认为自己&quot;既不像男人、也不像女人&quot;，那前提本身，已经默认了&quot;男人该有男人的样子，女人该有女人的样子&quot;。&quot;男性气质&quot;或&quot;女性气质&quot;都是社会强加的枷锁。如果你为了逃避枷锁，而发明了一个新盒子钻进去，你其实并没有打破枷锁，你只是在巩固这个分类体系。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我很理解她，这是一种逻辑上的自相矛盾：你想打破二元，却用二元的标准来定义自己的逃离。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">这种锋利延伸到了我们对&quot;穿衣自由&quot;的讨论。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;为什么所有的晚会，再冷的天，男人都可以穿得西装革履，温暖舒适；而女人都穿极少的露肤度高的小裙子？&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;如果女生自己也觉得穿漂亮礼服，展示自己完美的身材很开心呢？开心到可以不顾寒冷的天气。&quot;我反问。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她皱了皱眉，没有退让：&quot;可那真的是她们自己的开心吗？还是被长期凝视训练出来的？&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">看着她，我好生羡慕，我说相比反抗，我好像变成了一个温和的&quot;人本主义者&quot;，开始反复思考那些看不见的结构。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;男性的幸运在于，他们天然有一个统一的向上标准（搞钱/权力）；而女性的不幸，来源于标准的混乱。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">我不想结婚生孩子是对的吗？ 我性格强势是对的吗？ 我靠外貌谋生是对的吗？</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">这个混乱不仅让我们迷茫，还让我们不自信。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">或许有一天，我们能够强大到不再多想，只是让男性羡慕我们可以穿上华丽的礼裙，而男性确实也会实在地羡慕，那一刻，我们才算真正的胜利。</p>
-<section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">02</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">那面潮湿的墙</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">潮湿的爱</p></div></div></section>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;潮湿&quot;——这是全场最让我们产生生理性共鸣的一个词。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">提到父母，我们几乎同时叹了口气。那种黏稠的、控制的、没有明确边界的爱。像梅雨季发霉的墙皮，带着腐味，也带着无法否认的温情。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她从小就在这团湿气里试图&quot;突围&quot;。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;从小我就反抗我父母，特别不满他们的教育方式。&quot;她说，&quot;可后来我发现，那种反抗只会让我越来越焦躁，甚至变得和他们一样情绪化。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她描述起童年时，家庭里那种默认的权力结构：父亲天然就是家里的&quot;王&quot;，哪怕家里的生计和家务，更多是母亲在承担。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;我看到了我妈妈的付出，她在我们家生意上决策投入虽然没有我爸多，但她操持着家里的一切，所以我更能看到女性的付出。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">听到这里，我好像嗅到了小陈女性主义锋芒的来源，是她天生的敏锐和判断。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她想跟妈妈更多互动，去改变他们：&quot;但她听不进去，她不管我。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">看着她眼里的无力感，我想起了曾经的自己。我也曾因为母亲那些糟糕的习惯，觉得全世界的厄运都降临在我身上。但后来，我理解了上一代的&quot;局限&quot;。她们也是那面潮湿墙壁下的受害者，她们从未见过阳光，自然不懂得如何给人温暖。所以，于我来说，与其试图改造父母，不如在自己这里，尝试切断某些代际传递。我正在尝试做那个&quot;切断者&quot;。我经常对儿子说&quot;我爱你&quot;，我和他进行深度的聊天，问他的感受——哪怕他才10岁。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我要把那面发霉的墙，在我这里推倒，让阳光晒进来。</p>
-<section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">03</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">坚定，才能让人托付</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">坚定 &gt; 温柔</p></div></div></section>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">现在的互联网恋爱显学是：&quot;谈恋爱只筛选，不改变。&quot;仿佛只要你遇到的人有一点瑕疵，就该立刻换下一个。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她却对这个观点嗤之以鼻。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她和一个 INFJ（提倡者）的男生谈着一场近乎&quot;奇迹&quot;的恋爱。每次谈到男朋友的时候，她的甜蜜是溢出来的，毫不掩饰。&quot;我真的觉得很幸运，也很难得。&quot;她说，男生尊重她、包容她的发散思维。虽然他性格却是一个极度讨厌计划被打乱的 J 人。他们会吵架，但最后都选择了妥协和改变。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;说'只筛选不改变'的人，大都是假装洒脱。&quot;她说得很直。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我接过她的话：&quot;那更像是一种防御机制。因为当我们没有能力去解决问题，或者潜意识里不相信两个人可以共同成长的时候。大脑便慈悲地递来一颗糖，帮我们退出。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她对爱情的坚定，深深打动了我。她让我看到了爱情最原本的样子——不是找到一个严丝合缝的齿轮，而是两个独立的圆，愿意为了咬合而磨平自己的一部分棱角。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">饭局结束前，我们共同苦恼于 AI 让她变懒，思考能力退化。我想了想，告诉她一个我最近反复确认的感受：</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;AI 最可怕的其实不是让人变懒，而是它不坚定。你给它什么指令，它就附和什么。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">在这个充满&quot;既要又要&quot;的环境里，女性太容易像 AI 一样，被外界的指令带着跑了。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">所以，在这顿饭的最后，我对这位即将远行的女孩说：</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;女性最有魅力也最难的点，从来不是温柔，不是包容，而是坚定。温柔会让人喜欢，但坚定才能让人托付。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">这种坚定，我在她对女性主义、对爱情、对父母上，已经找到了。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">临走前，我们抱了抱，我觉得好安心。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">世界需要&quot;愤怒&quot;的女孩。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我们的野心不是干翻男人，而是掌握自己的规则。</p>
+        <blockquote class="border-l-[3px] border-secondary pl-5 italic text-lg leading-[1.9] font-light text-primary mb-8">「女性最有魅力也最难的点，从来不是温柔，而是坚定。」</blockquote>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-8">见到小陈第一眼，你绝对猜不到她是个&quot;刺头&quot;。戴着鸭舌帽，皮肤干净，看起来是家教很好的做题家。但只要她一开口，ENTP 特有的、噼里啪啦的生命力就挡不住了。她是学法律的，看着她边涮牛肉边拆解父权结构的样子，我心里暗暗感叹：这姑娘，未来可不是那种会坐在格子间里听话的人。我们几乎没有聊任何&quot;生活琐事&quot;。隔着热气腾腾的寿喜锅，我们聊了两个小时。关于愤怒，关于东亚家庭的&quot;潮湿&quot;，关于爱的博弈，以及女性在这个结构性世界里，到底该如何&quot;幸存&quot;。她像一把年轻锐利的剑，而我像一面久经沙场的盾。以下是这场对话中，那些让我反复回味的片段。</p>
+<section class="pt-6 mt-14 story-section"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-secondary leading-none">01</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-primary font-bold leading-tight">愤怒是对的</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-primary/55">被讨厌 = 做对了</p></div></div></section>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">小陈在高中就展现出了 ENTP 的&quot;攻击性&quot;。班上有男生当众开女生的黄腔，所有人都不好说什么，只有她站出来对峙。哪怕结果是被那一群男生集体孤立。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;但我挺引以为傲的。&quot;她发自内心地骄傲，&quot;被他们讨厌，说明我做的是对的。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;如果不表达愤怒，对方就会觉得理所当然。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">这种不妥协，让她在女性主义议题上也异常锋利。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;'非二元'性别在我这里不成立。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">如果你之所以觉得自己是&quot;非二元&quot;，是因为你认为自己&quot;既不像男人、也不像女人&quot;，那前提本身，已经默认了&quot;男人该有男人的样子，女人该有女人的样子&quot;。&quot;男性气质&quot;或&quot;女性气质&quot;都是社会强加的枷锁。如果你为了逃避枷锁，而发明了一个新盒子钻进去，你其实并没有打破枷锁，你只是在巩固这个分类体系。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我很理解她，这是一种逻辑上的自相矛盾：你想打破二元，却用二元的标准来定义自己的逃离。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">这种锋利延伸到了我们对&quot;穿衣自由&quot;的讨论。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;为什么所有的晚会，再冷的天，男人都可以穿得西装革履，温暖舒适；而女人都穿极少的露肤度高的小裙子？&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;如果女生自己也觉得穿漂亮礼服，展示自己完美的身材很开心呢？开心到可以不顾寒冷的天气。&quot;我反问。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她皱了皱眉，没有退让：&quot;可那真的是她们自己的开心吗？还是被长期凝视训练出来的？&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">看着她，我好生羡慕，我说相比反抗，我好像变成了一个温和的&quot;人本主义者&quot;，开始反复思考那些看不见的结构。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;男性的幸运在于，他们天然有一个统一的向上标准（搞钱/权力）；而女性的不幸，来源于标准的混乱。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-8">我不想结婚生孩子是对的吗？ 我性格强势是对的吗？ 我靠外貌谋生是对的吗？</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">这个混乱不仅让我们迷茫，还让我们不自信。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">或许有一天，我们能够强大到不再多想，只是让男性羡慕我们可以穿上华丽的礼裙，而男性确实也会实在地羡慕，那一刻，我们才算真正的胜利。</p>
+<section class="pt-6 mt-14 story-section"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-secondary leading-none">02</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-primary font-bold leading-tight">那面潮湿的墙</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-primary/55">潮湿的爱</p></div></div></section>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;潮湿&quot;——这是全场最让我们产生生理性共鸣的一个词。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">提到父母，我们几乎同时叹了口气。那种黏稠的、控制的、没有明确边界的爱。像梅雨季发霉的墙皮，带着腐味，也带着无法否认的温情。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她从小就在这团湿气里试图&quot;突围&quot;。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;从小我就反抗我父母，特别不满他们的教育方式。&quot;她说，&quot;可后来我发现，那种反抗只会让我越来越焦躁，甚至变得和他们一样情绪化。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她描述起童年时，家庭里那种默认的权力结构：父亲天然就是家里的&quot;王&quot;，哪怕家里的生计和家务，更多是母亲在承担。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;我看到了我妈妈的付出，她在我们家生意上决策投入虽然没有我爸多，但她操持着家里的一切，所以我更能看到女性的付出。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">听到这里，我好像嗅到了小陈女性主义锋芒的来源，是她天生的敏锐和判断。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她想跟妈妈更多互动，去改变他们：&quot;但她听不进去，她不管我。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">看着她眼里的无力感，我想起了曾经的自己。我也曾因为母亲那些糟糕的习惯，觉得全世界的厄运都降临在我身上。但后来，我理解了上一代的&quot;局限&quot;。她们也是那面潮湿墙壁下的受害者，她们从未见过阳光，自然不懂得如何给人温暖。所以，于我来说，与其试图改造父母，不如在自己这里，尝试切断某些代际传递。我正在尝试做那个&quot;切断者&quot;。我经常对儿子说&quot;我爱你&quot;，我和他进行深度的聊天，问他的感受——哪怕他才10岁。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我要把那面发霉的墙，在我这里推倒，让阳光晒进来。</p>
+<section class="pt-6 mt-14 story-section"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-secondary leading-none">03</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-primary font-bold leading-tight">坚定，才能让人托付</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-primary/55">坚定 &gt; 温柔</p></div></div></section>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">现在的互联网恋爱显学是：&quot;谈恋爱只筛选，不改变。&quot;仿佛只要你遇到的人有一点瑕疵，就该立刻换下一个。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她却对这个观点嗤之以鼻。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她和一个 INFJ（提倡者）的男生谈着一场近乎&quot;奇迹&quot;的恋爱。每次谈到男朋友的时候，她的甜蜜是溢出来的，毫不掩饰。&quot;我真的觉得很幸运，也很难得。&quot;她说，男生尊重她、包容她的发散思维。虽然他性格却是一个极度讨厌计划被打乱的 J 人。他们会吵架，但最后都选择了妥协和改变。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;说'只筛选不改变'的人，大都是假装洒脱。&quot;她说得很直。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我接过她的话：&quot;那更像是一种防御机制。因为当我们没有能力去解决问题，或者潜意识里不相信两个人可以共同成长的时候。大脑便慈悲地递来一颗糖，帮我们退出。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她对爱情的坚定，深深打动了我。她让我看到了爱情最原本的样子——不是找到一个严丝合缝的齿轮，而是两个独立的圆，愿意为了咬合而磨平自己的一部分棱角。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">饭局结束前，我们共同苦恼于 AI 让她变懒，思考能力退化。我想了想，告诉她一个我最近反复确认的感受：</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;AI 最可怕的其实不是让人变懒，而是它不坚定。你给它什么指令，它就附和什么。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">在这个充满&quot;既要又要&quot;的环境里，女性太容易像 AI 一样，被外界的指令带着跑了。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">所以，在这顿饭的最后，我对这位即将远行的女孩说：</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;女性最有魅力也最难的点，从来不是温柔，不是包容，而是坚定。温柔会让人喜欢，但坚定才能让人托付。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">这种坚定，我在她对女性主义、对爱情、对父母上，已经找到了。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">临走前，我们抱了抱，我觉得好安心。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">世界需要&quot;愤怒&quot;的女孩。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我们的野心不是干翻男人，而是掌握自己的规则。</p>
 
-<section class="mt-24 rounded-[2rem] border border-[#33185c]/10 bg-[#f0edea] p-8 shadow-[0_30px_80px_rgba(51,24,92,0.07)]">
+<section class="mt-24 rounded-[2rem] border border-primary/10 bg-[#f0edea] p-8 shadow-[0_30px_80px_rgba(51,24,92,0.07)]">
   <div class="mb-8">
-    <h5 class="font-headline text-2xl text-[#33185c] font-bold mb-1">A Moment for You</h5>
-    <p class="font-headline text-sm text-[#33185c]/40 mb-3">心灵寄语</p>
-    <div class="w-12 h-1 bg-[#9c3c62] rounded-full"></div>
+    <h5 class="font-headline text-2xl text-primary font-bold mb-1">A Moment for You</h5>
+    <p class="font-headline text-sm text-primary/40 mb-3">心灵寄语</p>
+    <div class="w-12 h-1 bg-secondary rounded-full"></div>
   </div>
   <p class="text-[#4a454f] leading-relaxed mb-2">你有没有经历过一次"被讨厌"反而让你确信自己做对了的时刻？</p>
   <p class="text-[#4a454f]/60 text-sm italic leading-relaxed mb-6">Have you ever been disliked — and felt, in that exact moment, that you were finally doing something right?</p>
   <p class="text-[#4a454f] text-sm leading-relaxed mb-8">如果你愿意，写下那次你选择了坚定。</p>
   <div class="relative mb-4">
-    <textarea class="w-full bg-white/60 border-0 border-b border-[#ccc4d1] focus:ring-0 focus:bg-white rounded-none py-4 px-0 min-h-[120px] text-[#1c1c1a] placeholder:text-[#7b7580]/40 font-body" placeholder="写点什么..."></textarea>
+    <textarea class="w-full bg-white/60 border-0 border-b border-[#ccc4d1] focus:ring-0 focus:bg-white rounded-none py-4 px-0 min-h-[120px] text-on-surface placeholder:text-[#7b7580]/40 font-body" placeholder="写点什么..."></textarea>
   </div>
   <div class="flex items-center gap-3">
-    <button class="flex-1 min-w-0 flex items-center justify-center gap-1.5 px-3 py-3 rounded-full bg-[#33185c] text-white text-[10px] font-label font-bold uppercase tracking-wide whitespace-nowrap transition-colors" onclick="this.dataset.public = this.dataset.public === 'true' ? 'false' : 'true'; const isPublic = this.dataset.public === 'true'; this.querySelector('.icon').textContent = isPublic ? 'public' : 'lock'; this.querySelector('.label-text').textContent = isPublic ? 'Public / 公开' : 'Private / 仅自己';" data-public="true">
+    <button class="flex-1 min-w-0 flex items-center justify-center gap-1.5 px-3 py-3 rounded-full bg-primary text-white text-[10px] font-label font-bold uppercase tracking-wide whitespace-nowrap transition-colors" onclick="this.dataset.public = this.dataset.public === 'true' ? 'false' : 'true'; const isPublic = this.dataset.public === 'true'; this.querySelector('.icon').textContent = isPublic ? 'public' : 'lock'; this.querySelector('.label-text').textContent = isPublic ? 'Public / 公开' : 'Private / 仅自己';" data-public="true">
       <span class="material-symbols-outlined text-sm icon">public</span>
       <span class="label-text whitespace-nowrap">Public / 公开</span>
     </button>
-    <button class="flex-1 min-w-0 py-3 px-3 bg-white/70 text-[#1c1c1a] rounded-full font-label uppercase tracking-wide text-[10px] font-bold shadow-sm active:scale-95 transition-transform text-center whitespace-nowrap border border-[#7b7580]/20">
+    <button class="flex-1 min-w-0 py-3 px-3 bg-white/70 text-on-surface rounded-full font-label uppercase tracking-wide text-[10px] font-bold shadow-sm active:scale-95 transition-transform text-center whitespace-nowrap border border-[#7b7580]/20">
       Save / 留下感悟
     </button>
   </div>
 </section>
 
 <section class="mt-12 space-y-6">
-  <h5 class="font-headline text-xl text-[#33185c] font-bold mb-2">Reflections <span class="text-base font-normal text-[#33185c]/40">/ 读者感悟</span></h5>
+  <h5 class="font-headline text-xl text-primary font-bold mb-2">Reflections <span class="text-base font-normal text-primary/40">/ 读者感悟</span></h5>
 
   <article class="rounded-xl border border-[#ccc4d1]/40 bg-white/70 p-6 shadow-sm">
     <div class="flex items-center gap-3 mb-3">
-      <div class="w-7 h-7 rounded-full bg-[#33185c]/10 flex items-center justify-center">
-        <span class="text-[10px] font-bold text-[#33185c]">?</span>
+      <div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+        <span class="text-[10px] font-bold text-primary">?</span>
       </div>
       <span class="font-label text-[10px] uppercase tracking-widest text-[#4a454f]/60">Waiting for you</span>
     </div>
@@ -179,7 +183,7 @@
   </main>
 
   <div class="fixed bottom-6 left-1/2 z-40 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2">
-    <a href="/stories" class="flex items-center justify-center gap-2 rounded-full bg-[#33185c] px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_20px_60px_rgba(51,24,92,0.28)] transition hover:bg-[#44206f]">
+    <a href="/stories" class="flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_20px_60px_rgba(51,24,92,0.28)] transition hover:bg-[#44206f]">
       <span class="material-symbols-outlined text-[20px]">arrow_back</span>
       返回故事列表
     </a>
@@ -335,5 +339,14 @@
   </script>
   <div id="app-nav"></div>
   <script src="assets/nav.js"></script>
+
+<script>
+(function() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.story-section').forEach(el => obs.observe(el));
+})();
+</script>
 </body>
 </html>

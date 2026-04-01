@@ -22,8 +22,8 @@
   const links = tabs.map(tab => {
     const active = isActive(tab.href);
     const cls = active
-      ? 'flex flex-col items-center justify-center text-primary relative after:content-[\'\'] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-secondary after:rounded-full'
-      : 'flex flex-col items-center justify-center text-primary-container/40 hover:text-primary transition-colors';
+      ? 'flex flex-col items-center justify-center min-h-[44px] min-w-[44px] text-primary relative after:content-[\'\'] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-secondary after:rounded-full'
+      : 'flex flex-col items-center justify-center min-h-[44px] min-w-[44px] text-primary-container/40 hover:text-primary transition-colors';
     const iconStyle = active ? "font-variation-settings: 'FILL' 1;" : '';
     return `<a class="${cls}" href="${tab.href}">
       <span class="material-symbols-outlined" style="${iconStyle}">${tab.icon}</span>

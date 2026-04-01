@@ -25,9 +25,13 @@
     #storyProgress::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #4a3073; cursor: pointer; }
     .article-listen-mode { transition: opacity 0.4s; }
     .article-listen-mode.dimmed { opacity: 0.35; pointer-events: none; }
-  </style>
+  
+/* Scroll-triggered section fade-in */
+.story-section { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.story-section.visible { opacity: 1; transform: none; }
+</style>
 </head>
-<body class="bg-surface text-[#1c1c1a] font-body selection:bg-[#33185c]/20">
+<body class="bg-surface text-on-surface font-body selection:bg-primary/20">
   <div id="app-header" data-back="true"></div>
   <script src="assets/header.js"></script>
 
@@ -92,65 +96,65 @@
     </section>
 
     <article id="storyArticle" class="mx-auto max-w-3xl px-6 py-12 sm:px-8 article-listen-mode">
-        <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">嗅嗅坐在我对面，把自己裹在一身彻底的黑里。&quot;这是北京的城市色。&quot;她打趣道，语气轻快。但这层黑色的防御，在她笑起来的瞬间就失效了。她的眼睛极甜，眯起来的时候会弯成两道弯弯的月亮，盛满了毫无防备的善意。那一刻我觉得，坐在那里的不像是一个需要在这个残酷都市里搏杀的成年人，倒像是一个暂时溜出来透气的女孩。</p>
-<section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">01</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">快乐是燃料，也是一种秩序</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">ENFP 还是 ENFJ？</p></div></div></section>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">嗅嗅的首页签名分明写着：&quot;快乐干饭/激情社交&quot;。她是认真的。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;我有很多跟陌生人吃饭的经验，现在经常一起玩的好朋友，基本上都是小红书上认识的！&quot;说这话时，她眼里有星星点点的光。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;所以你是 ENFP 吗？&quot;我问。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;我以前是 ENFP，但最近做测试他说我是 ENFJ。&quot;她的脸挤到一块，眉头皱成一个小小的结，好像真的不能理解，&quot;天呐，我怎么可能是 J 人呢？&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">确实，她看起来精力旺盛得过分，像个不知疲倦的探险家，在小红书和 Dating App 的丛林里穿梭。哪怕她嘴上吐槽着&quot;正经人谁用这些软件&quot;，看透了男性的权衡与算计，但手指依然乐此不疲地滑向右边。她甚至有些执拗地坚持着自己的审美标准——大眼睛、双眼皮、176以上。但最重要的，还要有真诚。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;君子论迹不论心，感情里走神能理解，但背叛绝对不能忍。&quot;说这话时，她语气里有一种孩童般的黑白分明。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">但聊着聊着，我发现她体内那个&quot;P人&quot;的随性和&quot;J人&quot;的秩序，其实并不打架。聊到周末，她突然打开了话匣子：&quot;我真的闲不下来，周六固定外出社交探店，或是约陌生人吃饭；周日没事我就买菜做饭、收拾屋子。即便宅家，我也会有条理地安排琐事，不会漫无目的地虚度。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">一口气轻快地讲完，她自己先愣住了，露出惊异的眼神：&quot;天呐，我不会真的是 J 人吧！&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我想，她大概只是在混乱的生活里，试图给自己修一圈栏杆。为了能安全地做回那个随性的孩子，她必须用一种成人的严谨去维护她的游乐场。</p>
-<section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">02</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">玻璃杯里的万花筒</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">废墟之年，英雄主义</p></div></div></section>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">服务员端着盘子走近时，她正说得眉飞色舞，却突然像被按了静音键一样停住。哪怕她自称是高能量的社牛，骨子里那份敏感和小心翼翼，依然像触角一样张开着。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">更有趣的是她手里的动作。每次举起玻璃水杯，她都没有直接喝，而是悬在半空，晃动几秒。午后的光线穿透杯体，在深绿色的粗糙纸纤维上碎裂、重组，忽明忽暗，像万花筒。那一刻，她的眼神有一瞬间的失焦——她似乎并不在这张餐桌上，而是躲进了一个只有光和水构成的缝隙里，正兴致勃勃地看着世界如何变形。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">作为1999年出生的女孩，嗅嗅刚刚经历了一个可以说是&quot;废墟重建&quot;的2024年——失恋、失业、发小突然离世。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;我都想着，我可能明天也会死去。&quot;她看着那杯摇晃的水，笑着对我说：&quot;能过一天是一天嘛。你让我今天好好活着，我就好好活；你让我明天立马死掉，我也全部都能接受。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">嗅嗅笑得那么甜，那双弯弯的月亮眼里，看不出一丝阴霾。这听起来像悲观主义的叹息，但在她身上，这更像是一种热烈的英雄主义。因为见识过生活的不确定，她决定把所有的筹码都压在&quot;今天&quot;。</p>
-<section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">03</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">被允许不长大</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">北京 = 允许</p></div></div></section>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">问到对以后的打算。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;我对留在北京的要求并不高，工资可以糊口就行。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;我不知道，太复杂了！&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">讲到未来可能&quot;回家&quot;的选择，嗅嗅盯着盘子，难得的关掉始终微笑的眼睛，认真跟我捋完各种选项，但最后落脚到&quot;没想好&quot;，在她看来，职业规划像一团迷雾。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">&quot;我不想回家，也没那么想跟家人在一起，也不想生孩子，现在就很自由。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她说北京&quot;土土的&quot;，这句评价里全是温柔。我看着她，好像明白了她为什么不愿离开。家乡意味着&quot;标准答案&quot;，意味着你是谁的女儿，谁的妻子，意味着你必须在某个年纪长成一个不动声色的大人。而这个&quot;土土的&quot;北京，意味着&quot;允许&quot;。允许她不吃早饭，允许她10点半才上班，允许她为了维持大众点评的VIP等级而费尽周折，允许她做一个周末独自去公园发呆的孤岛。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她坦诚地说：&quot;我不想长大。&quot;</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她跟我讲起小时候在村子里的事：从村头跑到村尾，串来串去，如果小伙伴在午睡，她就趴在床头等。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">或许，现在的她，依然在&quot;等&quot;吧。哪怕不知道在等什么，哪怕不知道明天会不会更好，但她决定先在原地玩一会儿。</p>
-<p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">饭局结束时，她穿上黑色的大衣，眼睛笑成两个月亮。看着她，我突然觉得，未来确不确定又有什么关系呢？只要她还拥有在深绿色餐巾纸上看到&quot;万花筒&quot;的能力，只要她还相信&quot;陌生人交友最坏不过浪费一顿饭钱&quot;。那么，这座由她亲手搭建的、流动的游乐场，就永远不会打烊。</p>
+        <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">嗅嗅坐在我对面，把自己裹在一身彻底的黑里。&quot;这是北京的城市色。&quot;她打趣道，语气轻快。但这层黑色的防御，在她笑起来的瞬间就失效了。她的眼睛极甜，眯起来的时候会弯成两道弯弯的月亮，盛满了毫无防备的善意。那一刻我觉得，坐在那里的不像是一个需要在这个残酷都市里搏杀的成年人，倒像是一个暂时溜出来透气的女孩。</p>
+<section class="pt-6 mt-14 story-section"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-secondary leading-none">01</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-primary font-bold leading-tight">快乐是燃料，也是一种秩序</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-primary/55">ENFP 还是 ENFJ？</p></div></div></section>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">嗅嗅的首页签名分明写着：&quot;快乐干饭/激情社交&quot;。她是认真的。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;我有很多跟陌生人吃饭的经验，现在经常一起玩的好朋友，基本上都是小红书上认识的！&quot;说这话时，她眼里有星星点点的光。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;所以你是 ENFP 吗？&quot;我问。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;我以前是 ENFP，但最近做测试他说我是 ENFJ。&quot;她的脸挤到一块，眉头皱成一个小小的结，好像真的不能理解，&quot;天呐，我怎么可能是 J 人呢？&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">确实，她看起来精力旺盛得过分，像个不知疲倦的探险家，在小红书和 Dating App 的丛林里穿梭。哪怕她嘴上吐槽着&quot;正经人谁用这些软件&quot;，看透了男性的权衡与算计，但手指依然乐此不疲地滑向右边。她甚至有些执拗地坚持着自己的审美标准——大眼睛、双眼皮、176以上。但最重要的，还要有真诚。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;君子论迹不论心，感情里走神能理解，但背叛绝对不能忍。&quot;说这话时，她语气里有一种孩童般的黑白分明。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">但聊着聊着，我发现她体内那个&quot;P人&quot;的随性和&quot;J人&quot;的秩序，其实并不打架。聊到周末，她突然打开了话匣子：&quot;我真的闲不下来，周六固定外出社交探店，或是约陌生人吃饭；周日没事我就买菜做饭、收拾屋子。即便宅家，我也会有条理地安排琐事，不会漫无目的地虚度。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">一口气轻快地讲完，她自己先愣住了，露出惊异的眼神：&quot;天呐，我不会真的是 J 人吧！&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我想，她大概只是在混乱的生活里，试图给自己修一圈栏杆。为了能安全地做回那个随性的孩子，她必须用一种成人的严谨去维护她的游乐场。</p>
+<section class="pt-6 mt-14 story-section"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-secondary leading-none">02</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-primary font-bold leading-tight">玻璃杯里的万花筒</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-primary/55">废墟之年，英雄主义</p></div></div></section>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">服务员端着盘子走近时，她正说得眉飞色舞，却突然像被按了静音键一样停住。哪怕她自称是高能量的社牛，骨子里那份敏感和小心翼翼，依然像触角一样张开着。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">更有趣的是她手里的动作。每次举起玻璃水杯，她都没有直接喝，而是悬在半空，晃动几秒。午后的光线穿透杯体，在深绿色的粗糙纸纤维上碎裂、重组，忽明忽暗，像万花筒。那一刻，她的眼神有一瞬间的失焦——她似乎并不在这张餐桌上，而是躲进了一个只有光和水构成的缝隙里，正兴致勃勃地看着世界如何变形。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">作为1999年出生的女孩，嗅嗅刚刚经历了一个可以说是&quot;废墟重建&quot;的2024年——失恋、失业、发小突然离世。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;我都想着，我可能明天也会死去。&quot;她看着那杯摇晃的水，笑着对我说：&quot;能过一天是一天嘛。你让我今天好好活着，我就好好活；你让我明天立马死掉，我也全部都能接受。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">嗅嗅笑得那么甜，那双弯弯的月亮眼里，看不出一丝阴霾。这听起来像悲观主义的叹息，但在她身上，这更像是一种热烈的英雄主义。因为见识过生活的不确定，她决定把所有的筹码都压在&quot;今天&quot;。</p>
+<section class="pt-6 mt-14 story-section"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-secondary leading-none">03</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-primary font-bold leading-tight">被允许不长大</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-primary/55">北京 = 允许</p></div></div></section>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">问到对以后的打算。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;我对留在北京的要求并不高，工资可以糊口就行。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;我不知道，太复杂了！&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">讲到未来可能&quot;回家&quot;的选择，嗅嗅盯着盘子，难得的关掉始终微笑的眼睛，认真跟我捋完各种选项，但最后落脚到&quot;没想好&quot;，在她看来，职业规划像一团迷雾。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">&quot;我不想回家，也没那么想跟家人在一起，也不想生孩子，现在就很自由。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她说北京&quot;土土的&quot;，这句评价里全是温柔。我看着她，好像明白了她为什么不愿离开。家乡意味着&quot;标准答案&quot;，意味着你是谁的女儿，谁的妻子，意味着你必须在某个年纪长成一个不动声色的大人。而这个&quot;土土的&quot;北京，意味着&quot;允许&quot;。允许她不吃早饭，允许她10点半才上班，允许她为了维持大众点评的VIP等级而费尽周折，允许她做一个周末独自去公园发呆的孤岛。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她坦诚地说：&quot;我不想长大。&quot;</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她跟我讲起小时候在村子里的事：从村头跑到村尾，串来串去，如果小伙伴在午睡，她就趴在床头等。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">或许，现在的她，依然在&quot;等&quot;吧。哪怕不知道在等什么，哪怕不知道明天会不会更好，但她决定先在原地玩一会儿。</p>
+<p class="text-lg leading-[1.9] font-light text-on-surface mb-7">饭局结束时，她穿上黑色的大衣，眼睛笑成两个月亮。看着她，我突然觉得，未来确不确定又有什么关系呢？只要她还拥有在深绿色餐巾纸上看到&quot;万花筒&quot;的能力，只要她还相信&quot;陌生人交友最坏不过浪费一顿饭钱&quot;。那么，这座由她亲手搭建的、流动的游乐场，就永远不会打烊。</p>
 
-<section class="mt-24 rounded-[2rem] border border-[#33185c]/10 bg-[#f0edea] p-8 shadow-[0_30px_80px_rgba(51,24,92,0.07)]">
+<section class="mt-24 rounded-[2rem] border border-primary/10 bg-[#f0edea] p-8 shadow-[0_30px_80px_rgba(51,24,92,0.07)]">
   <div class="mb-8">
-    <h5 class="font-headline text-2xl text-[#33185c] font-bold mb-1">A Moment for You</h5>
-    <p class="font-headline text-sm text-[#33185c]/40 mb-3">心灵寄语</p>
-    <div class="w-12 h-1 bg-[#9c3c62] rounded-full"></div>
+    <h5 class="font-headline text-2xl text-primary font-bold mb-1">A Moment for You</h5>
+    <p class="font-headline text-sm text-primary/40 mb-3">心灵寄语</p>
+    <div class="w-12 h-1 bg-secondary rounded-full"></div>
   </div>
   <p class="text-[#4a454f] leading-relaxed mb-2">你允许自己"不长大"的方式是什么？</p>
   <p class="text-[#4a454f]/60 text-sm italic leading-relaxed mb-6">What's your permission slip to not grow up?</p>
   <p class="text-[#4a454f] text-sm leading-relaxed mb-8">如果你愿意，写下你的游乐场在哪里。</p>
   <div class="relative mb-4">
-    <textarea class="w-full bg-white/60 border-0 border-b border-[#ccc4d1] focus:ring-0 focus:bg-white rounded-none py-4 px-0 min-h-[120px] text-[#1c1c1a] placeholder:text-[#7b7580]/40 font-body" placeholder="写点什么..."></textarea>
+    <textarea class="w-full bg-white/60 border-0 border-b border-[#ccc4d1] focus:ring-0 focus:bg-white rounded-none py-4 px-0 min-h-[120px] text-on-surface placeholder:text-[#7b7580]/40 font-body" placeholder="写点什么..."></textarea>
   </div>
   <div class="flex items-center gap-3">
-    <button class="flex-1 min-w-0 flex items-center justify-center gap-1.5 px-3 py-3 rounded-full bg-[#33185c] text-white text-[10px] font-label font-bold uppercase tracking-wide whitespace-nowrap transition-colors" onclick="this.dataset.public = this.dataset.public === 'true' ? 'false' : 'true'; const isPublic = this.dataset.public === 'true'; this.querySelector('.icon').textContent = isPublic ? 'public' : 'lock'; this.querySelector('.label-text').textContent = isPublic ? 'Public / 公开' : 'Private / 仅自己';" data-public="true">
+    <button class="flex-1 min-w-0 flex items-center justify-center gap-1.5 px-3 py-3 rounded-full bg-primary text-white text-[10px] font-label font-bold uppercase tracking-wide whitespace-nowrap transition-colors" onclick="this.dataset.public = this.dataset.public === 'true' ? 'false' : 'true'; const isPublic = this.dataset.public === 'true'; this.querySelector('.icon').textContent = isPublic ? 'public' : 'lock'; this.querySelector('.label-text').textContent = isPublic ? 'Public / 公开' : 'Private / 仅自己';" data-public="true">
       <span class="material-symbols-outlined text-sm icon">public</span>
       <span class="label-text whitespace-nowrap">Public / 公开</span>
     </button>
-    <button class="flex-1 min-w-0 py-3 px-3 bg-white/70 text-[#1c1c1a] rounded-full font-label uppercase tracking-wide text-[10px] font-bold shadow-sm active:scale-95 transition-transform text-center whitespace-nowrap border border-[#7b7580]/20">
+    <button class="flex-1 min-w-0 py-3 px-3 bg-white/70 text-on-surface rounded-full font-label uppercase tracking-wide text-[10px] font-bold shadow-sm active:scale-95 transition-transform text-center whitespace-nowrap border border-[#7b7580]/20">
       Save / 留下感悟
     </button>
   </div>
 </section>
 
 <section class="mt-12 space-y-6">
-  <h5 class="font-headline text-xl text-[#33185c] font-bold mb-2">Reflections <span class="text-base font-normal text-[#33185c]/40">/ 读者感悟</span></h5>
+  <h5 class="font-headline text-xl text-primary font-bold mb-2">Reflections <span class="text-base font-normal text-primary/40">/ 读者感悟</span></h5>
 
   <article class="rounded-xl border border-[#ccc4d1]/40 bg-white/70 p-6 shadow-sm">
     <div class="flex items-center gap-3 mb-3">
-      <div class="w-7 h-7 rounded-full bg-[#33185c]/10 flex items-center justify-center">
-        <span class="text-[10px] font-bold text-[#33185c]">?</span>
+      <div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+        <span class="text-[10px] font-bold text-primary">?</span>
       </div>
       <span class="font-label text-[10px] uppercase tracking-widest text-[#4a454f]/60">Waiting for you</span>
     </div>
@@ -161,7 +165,7 @@
   </main>
 
   <div class="fixed bottom-6 left-1/2 z-40 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2">
-    <a href="/stories" class="flex items-center justify-center gap-2 rounded-full bg-[#33185c] px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_20px_60px_rgba(51,24,92,0.28)] transition hover:bg-[#44206f]">
+    <a href="/stories" class="flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_20px_60px_rgba(51,24,92,0.28)] transition hover:bg-[#44206f]">
       <span class="material-symbols-outlined text-[20px]">arrow_back</span>
       返回故事列表
     </a>
@@ -317,5 +321,14 @@
   </script>
   <div id="app-nav"></div>
   <script src="assets/nav.js"></script>
+
+<script>
+(function() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.story-section').forEach(el => obs.observe(el));
+})();
+</script>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <script src="assets/tailwind-config.js"></script>
 <link rel="stylesheet" href="css/style.css">
 <style>
-body { min-height: max(884px, 100dvh); -webkit-font-smoothing: antialiased; }
+body { min-height: 100dvh; -webkit-font-smoothing: antialiased; }
 .serif-title { font-family: 'Noto Serif', 'Noto Serif SC', serif; }
 .editorial-shadow { box-shadow: 0 32px 64px -12px rgba(28, 28, 26, 0.08); }
 .glass-player { background: rgba(255,255,255,0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
@@ -45,6 +45,10 @@ article > section + section::before {
 #storyProgress { accent-color: #4a3073; }
 .article-listen-mode { transition: opacity 0.4s; }
 .article-listen-mode.dimmed { opacity: 0.35; pointer-events: none; }
+
+/* Scroll-triggered section fade-in */
+.story-section { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.story-section.visible { opacity: 1; transform: none; }
 </style>
 </head>
 <body class="bg-surface font-body text-on-surface selection:bg-primary-fixed leading-relaxed">
@@ -325,7 +329,7 @@ article > section + section::before {
 
 <!-- Floating "More Stories" -->
 <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-40">
-<a href="/stories" class="flex items-center gap-3 px-6 py-3 bg-[#4a3073] text-[#ffffff] rounded-full shadow-2xl editorial-shadow active:scale-90 transition-transform">
+<a href="/stories" class="flex items-center gap-3 px-6 py-3 bg-primary-container text-[#ffffff] rounded-full shadow-2xl editorial-shadow active:scale-90 transition-transform">
 <span class="material-symbols-outlined">menu_book</span>
 <span class="font-label text-xs uppercase tracking-widest">阅读更多故事</span>
 </a>
@@ -464,5 +468,14 @@ article > section + section::before {
 </script>
 <div id="app-nav"></div>
 <script src="assets/nav.js"></script>
+
+<script>
+(function() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.story-section').forEach(el => obs.observe(el));
+})();
+</script>
 </body>
 </html>
