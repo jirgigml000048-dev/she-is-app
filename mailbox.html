@@ -51,11 +51,11 @@ Write as if no one is watching, but as if your future self is listening.
 <div class="space-y-6">
 <div class="border-b border-outline-variant/20 pb-2">
 <label class="font-label text-[10px] uppercase tracking-wider text-secondary font-bold">Subject / 标题</label>
-<input class="w-full bg-transparent border-none focus:ring-0 font-headline text-xl text-on-surface placeholder:text-outline-variant/40 p-0 mt-1" placeholder="A title for your thoughts..." type="text">
+<input id="letterSubject" class="w-full bg-transparent border-none focus:ring-0 font-headline text-xl text-on-surface placeholder:text-outline-variant/40 p-0 mt-1" placeholder="A title for your thoughts..." type="text">
 </div>
 <div class="min-h-[250px]">
 <label class="font-label text-[10px] uppercase tracking-wider text-secondary font-bold">The Message / 内容</label>
-<textarea class="w-full h-full bg-transparent border-none focus:ring-0 font-body text-base leading-relaxed text-on-surface placeholder:text-outline-variant/40 p-0 resize-none min-h-[250px] mt-1" placeholder="Begin here... 从这里开始写..."></textarea>
+<textarea id="letterBody" class="w-full h-full bg-transparent border-none focus:ring-0 font-body text-base leading-relaxed text-on-surface placeholder:text-outline-variant/40 p-0 resize-none min-h-[250px] mt-1" placeholder="Begin here... 从这里开始写..."></textarea>
 </div>
 </div>
 <!-- Visibility Toggle + Send -->
@@ -64,7 +64,7 @@ Write as if no one is watching, but as if your future self is listening.
     <span class="material-symbols-outlined text-sm icon">public</span>
     <span class="label-text whitespace-nowrap">Public / 公开</span>
   </button>
-  <button class="flex-1 min-w-0 py-3 px-3 bg-surface-container-high text-on-surface rounded-full font-label uppercase tracking-wide text-[10px] font-bold shadow-sm active:scale-95 transition-transform flex items-center justify-center gap-1.5 whitespace-nowrap border border-outline/20">
+  <button id="letterSendBtn" class="flex-1 min-w-0 py-3 px-3 bg-surface-container-high text-on-surface rounded-full font-label uppercase tracking-wide text-[10px] font-bold shadow-sm active:scale-95 transition-transform flex items-center justify-center gap-1.5 whitespace-nowrap border border-outline/20">
     Seal & Send <span class="material-symbols-outlined text-sm">send</span>
   </button>
 </div>
@@ -204,6 +204,39 @@ Explore / 查看 <span class="material-symbols-outlined text-xs">arrow_forward</
       loginBtn.classList.remove('hidden');
     }
   })();
+
+  // Letter saving
+  document.getElementById('letterSendBtn')?.addEventListener('click', function() {
+    const subject = document.getElementById('letterSubject');
+    const body = document.getElementById('letterBody');
+    const toggle = document.getElementById('visibility-toggle');
+    if (!subject || !body) return;
+    const subjectVal = subject.value.trim();
+    const bodyVal = body.value.trim();
+    if (!bodyVal) { body.focus(); return; }
+    const isPublic = toggle?.dataset.public === 'true';
+    const letter = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      subject: subjectVal || '无题 / Untitled',
+      body: bodyVal,
+      isPublic: isPublic,
+      createdAt: new Date().toISOString()
+    };
+    try {
+      const letters = JSON.parse(localStorage.getItem('sheIs_letters') || '[]');
+      letters.unshift(letter);
+      if (letters.length > 50) letters.length = 50;
+      localStorage.setItem('sheIs_letters', JSON.stringify(letters));
+    } catch(e) {}
+    subject.value = '';
+    body.value = '';
+    // Show confirmation
+    const btn = this;
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✓ Sent <span class="material-symbols-outlined text-sm">check</span>';
+    btn.disabled = true;
+    setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 2000);
+  });
 </script>
 </body>
 </html>

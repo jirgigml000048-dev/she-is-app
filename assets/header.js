@@ -24,7 +24,7 @@
       </button>
       <div id="headerAuthArea" class="flex items-center">
         <a href="login.html" id="loginEntryBtn" class="text-xs font-label font-semibold text-primary/70 hover:text-primary tracking-widest uppercase transition-colors hidden">登录</a>
-        <a href="map.html" id="userAvatarBtn" class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white border border-outline-variant/15 hidden" style="background:linear-gradient(135deg,#4a3073,#9c3c62);"></a>
+        <a href="profile.html" id="userAvatarBtn" class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white border border-outline-variant/15 hidden" style="background:linear-gradient(135deg,#4a3073,#9c3c62);"></a>
       </div>
     </div>
   </div>
