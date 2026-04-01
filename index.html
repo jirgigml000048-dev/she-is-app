@@ -82,12 +82,11 @@
 <div id="profileTags" class="mt-3 flex flex-wrap gap-2"></div>
 </div>
 <div class="py-6">
-<div class="flex items-end gap-2 h-24">
-<div class="w-full bg-secondary/30 rounded-t-full h-[60%]"></div>
-<div class="w-full bg-secondary/50 rounded-t-full h-[90%]"></div>
-<div class="w-full bg-secondary/20 rounded-t-full h-[40%]"></div>
-<div class="w-full bg-secondary/70 rounded-t-full h-[75%]"></div>
-<div class="w-full bg-secondary/40 rounded-t-full h-[55%]"></div>
+<div id="mapBars" class="flex items-end gap-2 h-24">
+<div class="w-full bg-primary/15 rounded-t-full h-[15%]"></div>
+<div class="w-full bg-secondary/15 rounded-t-full h-[15%]"></div>
+<div class="w-full bg-primary-container/15 rounded-t-full h-[15%]"></div>
+<div class="w-full bg-outline/15 rounded-t-full h-[15%]"></div>
 </div>
 </div>
 <a class="text-primary-container font-label text-xs uppercase tracking-widest border-b border-primary-container/30 pb-1 w-fit flex items-center gap-2 hover:opacity-70 transition-opacity" href="map.html">
@@ -220,6 +219,7 @@ document.getElementById('reflectionAudio').addEventListener('ended', function() 
 <script src="assets/nav.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/auth.js"></script>
+<script src="assets/profile-utils.js"></script>
 <script>
   // Auth state
   (async () => {
@@ -235,37 +235,47 @@ document.getElementById('reflectionAudio').addEventListener('ended', function() 
     }
   })();
 
-  // B: Dynamic profile tags from localStorage
+  // B: Dynamic profile tags + bar chart from SheProfileStore
   (function() {
-    const tagMap = {
-      mbti: v => v,
-      hsp: v => v === 'true' || v === true ? 'Highly Sensitive' : null,
-      cognitive: v => v,
-      ecr: v => v,
-      attachment: v => v,
-    };
-    const tags = [];
-    for (const [key, fn] of Object.entries(tagMap)) {
-      const raw = localStorage.getItem(key) || localStorage.getItem('sheIs_' + key);
-      if (raw) {
-        try {
-          const val = JSON.parse(raw);
-          const label = fn(val?.result || val?.type || val);
-          if (label) tags.push(label);
-        } catch(e) {
-          const label = fn(raw);
-          if (label) tags.push(label);
-        }
-      }
-    }
-    if (tags.length) {
-      const container = document.getElementById('profileTags');
-      tags.forEach(t => {
-        const span = document.createElement('span');
-        span.textContent = t;
-        span.style.cssText = 'font-size:11px;padding:3px 10px;border-radius:999px;background:#ecdcff;color:#4a3073;font-family:Plus Jakarta Sans,sans-serif;font-weight:600;';
-        container.appendChild(span);
+    if (!window.SheProfileStore) return;
+    const results = window.SheProfileStore.readAllResults();
+    const container = document.getElementById('profileTags');
+    const barWrap = document.getElementById('mapBars');
+
+    // Tags: show summary from each completed test
+    results.slice(0, 4).forEach(r => {
+      const label = r.summary || r.topDimension;
+      if (!label) return;
+      const span = document.createElement('span');
+      span.textContent = String(label).substring(0, 12);
+      span.style.cssText = 'font-size:11px;padding:3px 10px;border-radius:999px;background:rgba(236,220,255,0.6);color:#4a3073;font-family:Plus Jakarta Sans,sans-serif;font-weight:600;';
+      container.appendChild(span);
+    });
+
+    // Bar chart: reflect completion across 4 axes
+    if (barWrap) {
+      const axes = [
+        { ids: ['cognitive','cognitive-48'], color: 'var(--c-primary)' },
+        { ids: ['hsp','erq','ecr'],         color: 'var(--c-secondary)' },
+        { ids: ['fmps','boundary-sense','disc'], color: 'var(--c-primary-container)' },
+        { ids: ['abm-love-animal'],         color: 'var(--c-outline)' },
+      ];
+      const rMap = {};
+      results.forEach(r => { rMap[r.moduleId] = r; });
+      barWrap.innerHTML = '';
+      axes.forEach(axis => {
+        const done = axis.ids.filter(id => rMap[id]).length;
+        const total = axis.ids.length;
+        const pct = total > 0 ? Math.max(15, (done / total) * 100) : 15;
+        const bar = document.createElement('div');
+        bar.style.cssText = `width:100%;border-radius:9999px 9999px 0 0;height:${pct}%;background:${axis.color};opacity:${done > 0 ? 0.7 : 0.15};transition:height 0.6s ease;`;
+        barWrap.appendChild(bar);
       });
+    }
+
+    // Empty state hint
+    if (results.length === 0 && container) {
+      container.innerHTML = '<span style="font-size:11px;color:rgba(74,48,115,0.35);font-family:Plus Jakarta Sans,sans-serif;">完成第一个测评，解锁地图</span>';
     }
   })();
 
