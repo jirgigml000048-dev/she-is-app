@@ -238,6 +238,18 @@
     .map-cta-btn:hover { background: rgba(74,48,115,0.06); border-color: rgba(74,48,115,0.5); }
     .map-cta-sub { font-size: 10px; color: var(--text-muted); margin-top: 10px; font-family: 'Noto Sans SC', sans-serif; letter-spacing: 0.5px; }
 
+    /* Empty state axis cards */
+    .empty-axis-card { display:block;padding:18px 14px;border:1px solid rgba(74,48,115,0.13);border-radius:16px;background:rgba(74,48,115,0.02);text-decoration:none;transition:background 0.2s,border-color 0.2s; }
+    .empty-axis-card:hover { background:rgba(74,48,115,0.06);border-color:rgba(74,48,115,0.25); }
+    .empty-axis-num { font-size:10px;color:rgba(74,48,115,0.35);letter-spacing:3px;font-family:'Noto Sans SC',sans-serif;margin-bottom:8px; }
+    .empty-axis-name { font-size:14px;color:var(--text);font-family:'Noto Serif SC',serif;font-weight:400;margin-bottom:2px; }
+    .empty-axis-en { font-size:9px;color:var(--text-muted);font-family:'Lora',serif;font-style:italic;margin-bottom:8px; }
+    .empty-axis-desc { font-size:10px;color:var(--text-muted);font-family:'Noto Sans SC',sans-serif;line-height:1.7; }
+
+    /* Chat bubble styles */
+    .chat-bubble-user { align-self:flex-end;max-width:82%;padding:10px 14px;border-radius:14px 14px 4px 14px;background:rgba(74,48,115,0.08);font-size:13px;color:var(--text);font-family:'Noto Sans SC',sans-serif;line-height:1.6; }
+    .chat-bubble-ai { align-self:flex-start;max-width:82%;padding:10px 14px;border-radius:14px 14px 14px 4px;background:rgba(74,48,115,0.03);border:1px solid rgba(74,48,115,0.08);font-size:13px;color:var(--text);font-family:'Noto Sans SC',sans-serif;line-height:1.6;font-style:italic; }
+
   </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
@@ -262,6 +274,41 @@
 </div>
 
 
+<!-- Empty State Guide (shown when no tests completed) -->
+<div id="emptyGuide" style="display:none;padding:40px 24px 8px;max-width:420px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:28px;">
+    <div style="font-size:9px;letter-spacing:5px;color:rgba(74,48,115,0.4);font-family:'Noto Sans SC',sans-serif;margin-bottom:12px;">开始探索 · BEGIN</div>
+    <div style="font-size:24px;font-family:'Noto Serif SC',serif;font-weight:300;color:var(--text);letter-spacing:2px;line-height:1.5;margin-bottom:10px;">你的地图<br>还是一张白纸</div>
+    <div style="font-size:11px;color:var(--text-muted);font-family:'Noto Sans SC',sans-serif;letter-spacing:0.5px;line-height:1.8;">选一个你最好奇的维度开始<br>第一次测评之后，你就能看见轮廓</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px;">
+    <a href="test-cognitive.html" class="empty-axis-card">
+      <div class="empty-axis-num">01</div>
+      <div class="empty-axis-name">特质轴</div>
+      <div class="empty-axis-en">Trait Axis</div>
+      <div class="empty-axis-desc">荣格认知功能<br>你的思维操作系统</div>
+    </a>
+    <a href="test-hsp.html" class="empty-axis-card">
+      <div class="empty-axis-num">02</div>
+      <div class="empty-axis-name">情绪轴</div>
+      <div class="empty-axis-en">Emotion Axis</div>
+      <div class="empty-axis-desc">高敏感度特质<br>你的情绪处理方式</div>
+    </a>
+    <a href="test-fmps.html" class="empty-axis-card">
+      <div class="empty-axis-num">03</div>
+      <div class="empty-axis-name">行为轴</div>
+      <div class="empty-axis-en">Behavior Axis</div>
+      <div class="empty-axis-desc">完美主义倾向<br>你与世界的互动方式</div>
+    </a>
+    <a href="test-ecr.html" class="empty-axis-card">
+      <div class="empty-axis-num">04</div>
+      <div class="empty-axis-name">情绪·依恋</div>
+      <div class="empty-axis-en">Attachment Style</div>
+      <div class="empty-axis-desc">成人依恋类型<br>亲密关系中的你</div>
+    </a>
+  </div>
+</div>
+
 <!-- 四轴卡片区 -->
 <div class="axes-section" id="axesSection">
   <div class="axes-header">
@@ -279,6 +326,32 @@
     <div class="narrative-line"></div>
   </div>
   <p class="narrative-text" id="narrativeText"></p>
+</div>
+
+<!-- AI Chat Section -->
+<div id="chatSection" style="display:none;padding:0 24px 24px;max-width:600px;margin:0 auto;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+    <div style="flex:1;height:1px;background:rgba(74,48,115,0.15);"></div>
+    <span style="font-size:9px;letter-spacing:4px;color:rgba(74,48,115,0.4);font-family:'Noto Sans SC',sans-serif;white-space:nowrap;">继续聊 · Ask More</span>
+    <div style="flex:1;height:1px;background:rgba(74,48,115,0.15);"></div>
+  </div>
+  <div id="chatMessages" style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;max-height:320px;overflow-y:auto;padding-right:4px;"></div>
+  <div style="display:flex;gap:10px;align-items:flex-end;">
+    <textarea id="chatInput" rows="2" placeholder="问一个关于你自己的问题..." style="flex:1;background:rgba(74,48,115,0.03);border:1px solid rgba(74,48,115,0.15);border-radius:14px;padding:12px 14px;font-size:13px;color:var(--text);font-family:'Noto Sans SC',sans-serif;resize:none;line-height:1.5;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='rgba(74,48,115,0.4)'" onblur="this.style.borderColor='rgba(74,48,115,0.15)'"></textarea>
+    <button id="chatSendBtn" style="width:44px;height:44px;border-radius:50%;background:var(--accent);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:opacity 0.2s;flex-shrink:0;">
+      <span class="material-symbols-outlined" style="font-size:18px;">send</span>
+    </button>
+  </div>
+</div>
+
+<!-- Timeline Section -->
+<div id="timelineSection" style="display:none;padding:0 24px 24px;max-width:600px;margin:0 auto;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+    <div style="flex:1;height:1px;background:rgba(74,48,115,0.15);"></div>
+    <span style="font-size:9px;letter-spacing:4px;color:rgba(74,48,115,0.4);font-family:'Noto Sans SC',sans-serif;white-space:nowrap;">成长轨迹 · Timeline</span>
+    <div style="flex:1;height:1px;background:rgba(74,48,115,0.15);"></div>
+  </div>
+  <div id="timelineContent"></div>
 </div>
 
 <div class="cta-section" id="ctaSection"></div>
@@ -966,28 +1039,140 @@
     });
   }
 
+  // ─── Feature 3: Empty state guide ───────────────────────────
+  function renderEmptyGuide(res) {
+    const hasAny = Object.keys(res).length > 0;
+    const guide = document.getElementById('emptyGuide');
+    const axesSection = document.getElementById('axesSection');
+    const shareSection = document.getElementById('shareSection');
+    if (guide) guide.style.display = hasAny ? 'none' : 'block';
+    if (axesSection) axesSection.style.display = hasAny ? '' : 'none';
+    if (shareSection) shareSection.style.display = hasAny ? 'flex' : 'none';
+    return hasAny;
+  }
+
+  // ─── Feature 6: Results timeline ─────────────────────────────
+  function renderTimeline() {
+    const section = document.getElementById('timelineSection');
+    const content = document.getElementById('timelineContent');
+    if (!section || !content || !window.SheProfileStore?.readAllHistory) return;
+    const allHistory = window.SheProfileStore.readAllHistory();
+    const modules = Object.entries(allHistory).filter(([, h]) => h.length > 1);
+    if (modules.length === 0) { section.style.display = 'none'; return; }
+    section.style.display = 'block';
+    content.innerHTML = '';
+    const nameMap = { cognitive: '荣格认知', 'cognitive-48': '荣格认知48', hsp: '高敏感度', ecr: '依恋类型', erq: '情绪调节', fmps: '完美主义', 'boundary-sense': '边界感', disc: 'DISC行为' };
+    modules.forEach(([moduleId, history]) => {
+      const name = nameMap[moduleId] || moduleId;
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'margin-bottom:24px;';
+      wrap.innerHTML = `<div style="font-size:10px;color:var(--text-muted);font-family:'Noto Sans SC',sans-serif;letter-spacing:2px;margin-bottom:10px;">${name}</div>`;
+      const track = document.createElement('div');
+      track.style.cssText = 'display:flex;align-items:flex-start;gap:0;';
+      const recent = history.slice(-5);
+      recent.forEach((entry, i) => {
+        const isLatest = i === recent.length - 1;
+        const d = new Date(entry.completedAt);
+        const label = d.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+        const dot = document.createElement('div');
+        dot.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:5px;min-width:52px;';
+        dot.innerHTML = `
+          <div style="width:${isLatest ? 11 : 8}px;height:${isLatest ? 11 : 8}px;border-radius:50%;background:${isLatest ? 'var(--accent)' : 'rgba(74,48,115,0.22)'};flex-shrink:0;"></div>
+          <div style="font-size:8px;color:var(--text-muted);font-family:'Noto Sans SC',sans-serif;text-align:center;">${label}</div>
+          <div style="font-size:9px;color:${isLatest ? 'var(--accent)' : 'var(--text-muted)'};font-family:'Noto Serif SC',serif;text-align:center;font-weight:${isLatest ? 600 : 400};">${entry.summary || safeScore(entry)}</div>`;
+        track.appendChild(dot);
+        if (i < recent.length - 1) {
+          const line = document.createElement('div');
+          line.style.cssText = 'flex:1;height:1px;background:rgba(74,48,115,0.12);margin-top:5px;';
+          track.appendChild(line);
+        }
+      });
+      wrap.appendChild(track);
+      content.appendChild(wrap);
+    });
+  }
+
+  // ─── Feature 5: AI chat companion ────────────────────────────
+  function initChat(res) {
+    const section = document.getElementById('chatSection');
+    const input = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('chatSendBtn');
+    const messagesEl = document.getElementById('chatMessages');
+    if (!section || !input || !sendBtn || !messagesEl) return;
+    if (Object.keys(res).length === 0) return;
+    section.style.display = 'block';
+
+    let chatHistory = [];
+    let loading = false;
+
+    function addBubble(text, isUser) {
+      const el = document.createElement('div');
+      el.className = isUser ? 'chat-bubble-user' : 'chat-bubble-ai';
+      el.textContent = text;
+      messagesEl.appendChild(el);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return el;
+    }
+
+    async function send() {
+      if (loading) return;
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      addBubble(text, true);
+      chatHistory.push({ role: 'user', content: text });
+      loading = true;
+      sendBtn.style.opacity = '0.4';
+      const loadingEl = addBubble('…', false);
+      try {
+        const resp = await fetch('/.netlify/functions/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ results: res, messages: chatHistory })
+        });
+        if (!resp.ok) throw new Error('api');
+        const data = await resp.json();
+        loadingEl.textContent = data.reply;
+        chatHistory.push({ role: 'assistant', content: data.reply });
+      } catch {
+        loadingEl.textContent = '暂时无法连接，请稍后再试。';
+      }
+      loading = false;
+      sendBtn.style.opacity = '1';
+    }
+
+    sendBtn.addEventListener('click', send);
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+    });
+  }
+
   function init() {
     results = loadResults();
     const regions = buildRegions(results);
     setTimeout(() => {
       document.getElementById('header').classList.add('visible');
     }, 100);
-    const completedCount = regions.filter(r => r.completed).length;
     renderMap(regions);
     renderMoodCalendar();
     initMoodPicker();
-    // Show narrative section with placeholder, then fill async
-    const ns = document.getElementById('narrativeSection');
-    const narrativeTextEl = document.getElementById('narrativeText');
-    narrativeTextEl.textContent = '解读生成中…';
-    ns.style.display = 'block';
-    setTimeout(() => ns.classList.add('visible'), 2000);
-    generateNarrative(results).then(narrative => {
-      narrativeTextEl.textContent = narrative || '完成更多测评，解读将在这里生长。';
-      if (!narrative) ns.style.display = 'none';
-    });
+    const hasAny = renderEmptyGuide(results);
+    if (hasAny) {
+      // Show narrative section with placeholder, then fill async
+      const ns = document.getElementById('narrativeSection');
+      const narrativeTextEl = document.getElementById('narrativeText');
+      narrativeTextEl.textContent = '解读生成中…';
+      ns.style.display = 'block';
+      setTimeout(() => ns.classList.add('visible'), 2000);
+      generateNarrative(results).then(narrative => {
+        narrativeTextEl.textContent = narrative || '完成更多测评，解读将在这里生长。';
+        if (!narrative) ns.style.display = 'none';
+      });
+    }
     renderAxesCards(results);
     buildShareCard(results);
+    renderTimeline();
+    initChat(results);
     window._mapRegions = regions;
     window._mapResults = results;
   }

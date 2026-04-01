@@ -412,6 +412,7 @@
   </div>
 </div>
 <script src="assets/profile-utils.js"></script>
+<script src="assets/test-progress.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 const Qs = [
@@ -503,6 +504,14 @@ const QsEn = [
 ];
 const ans = Array(Qs.length).fill(null);
 let cur = 0;
+// Restore saved progress
+(function () {
+  const saved = window.SheTestProgress && window.SheTestProgress.load('hsp');
+  if (saved && Array.isArray(saved.ans) && saved.ans.length === Qs.length) {
+    saved.ans.forEach((v, i) => { ans[i] = v; });
+    cur = saved.cur || 0;
+  }
+})();
 const $=id=>document.getElementById(id);
 const storyRec = document.getElementById('storyRec');
 const storyTitleEl = storyRec.querySelector('.story-rec-title');
@@ -567,9 +576,10 @@ function render(){
       : 'width:2rem;height:2rem;border-radius:9999px;background:transparent;color:#7b7580;font-size:12px;font-weight:600;border:1px solid #ccc4d1;cursor:pointer;transition:all 0.2s;';
     b.onmouseover = () => { if(!isActive) b.style.borderColor = '#33185c'; b.style.color = '#33185c'; };
     b.onmouseout = () => { if(!isActive) { b.style.borderColor = '#ccc4d1'; b.style.color = '#7b7580'; } };
-    b.onclick = () => { 
-      ans[cur] = i; 
-      render(); 
+    b.onclick = () => {
+      ans[cur] = i;
+      if (window.SheTestProgress) SheTestProgress.save('hsp', { ans: ans.slice(), cur });
+      render();
       // 自动跳下一题（延迟 300ms 让用户看到选中效果）
       if(cur < Qs.length - 1) {
         setTimeout(() => { cur++; render(); }, 300);
@@ -696,6 +706,7 @@ $('resultPanel').style.display = 'block';
 storyRec.style.display = 'block';
 window.scrollTo(0,0);
 saveTestResult('hsp', level, { score: mean, level });
+if (window.SheTestProgress) SheTestProgress.clear('hsp');
 }
 
 function retryQuiz(){

@@ -17,6 +17,12 @@
         topDimension: payload.topDimension || ''
       };
       localStorage.setItem(PREFIX + payload.moduleId, JSON.stringify(record));
+      // Append to history (keeps last 20 entries per module)
+      const histKey = PREFIX + 'history_' + payload.moduleId;
+      const history = JSON.parse(localStorage.getItem(histKey) || '[]');
+      history.push(record);
+      if (history.length > 20) history.splice(0, history.length - 20);
+      localStorage.setItem(histKey, JSON.stringify(history));
     } catch (error) {
       console.warn('Failed to save profile result:', error);
     }
@@ -55,6 +61,30 @@
     return readAllResults().length > 0;
   }
 
+  function getHistory(moduleId) {
+    if (!moduleId) return [];
+    try {
+      return JSON.parse(localStorage.getItem(PREFIX + 'history_' + moduleId) || '[]');
+    } catch (e) {
+      return [];
+    }
+  }
+
+  // Returns { moduleId: [entries] } for modules with >1 history entry
+  function readAllHistory() {
+    const out = {};
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (!key || !key.startsWith(PREFIX + 'history_')) continue;
+        const moduleId = key.slice((PREFIX + 'history_').length);
+        const parsed = JSON.parse(localStorage.getItem(key) || '[]');
+        if (Array.isArray(parsed) && parsed.length > 0) out[moduleId] = parsed;
+      }
+    } catch (e) {}
+    return out;
+  }
+
   function wantsResultView() {
     try {
       const params = new URLSearchParams(window.location.search || '');
@@ -76,6 +106,8 @@
     getResult,
     readAllResults,
     hasResults,
+    getHistory,
+    readAllHistory,
     wantsResultView,
     normalizeToFive
   };
