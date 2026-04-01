@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>女也 She Is — 一款 AI 共建的女性心理测评 App 是怎么做出来的</title>
+<meta property="og:title" content="女也 She Is — 15天，105次提交，一个关于女性内在的产品">
+<meta property="og:description" content="Gigi 和 AI 团队如何在 15 天内从零构建一款心理测评 + 非虚构故事 Web App。关于品味、克制与共建。">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<style>
+  :root {
+    --bg: #FAF7F4;
+    --accent: #4A3073;
+    --accent-light: rgba(74,48,115,0.08);
+    --text: #1E1628;
+    --text-muted: rgba(30,22,40,0.5);
+    --border: rgba(74,48,115,0.12);
+    --sans: 'Georgia', serif;
+    --body-max: 680px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .header {
+    padding: 60px 24px 0;
+    max-width: var(--body-max);
+    margin: 0 auto;
+  }
+
+  .label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-style: normal;
+    font-family: Georgia, serif;
+  }
+
+  h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text);
+    margin-top: 20px;
+    font-style: italic;
+  }
+
+  .subtitle {
+    margin-top: 16px;
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 24px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .meta-value {
+    font-size: 15px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(74,48,115,0.2);
+    margin: 48px auto;
+  }
+
+  article {
+    max-width: var(--body-max);
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 56px;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: 36px;
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  p {
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+
+  blockquote {
+    margin: 32px 0;
+    padding: 20px 24px;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-light);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  blockquote cite {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    font-style: normal;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 32px 0;
+  }
+
+  .stat-cell {
+    background: var(--bg);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+    font-style: italic;
+    line-height: 1;
+  }
+
+  .stat-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  .timeline {
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding-left: 40px;
+    position: relative;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: 10px;
+    top: 7px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+  }
+
+  .timeline-dot.peak {
+    background: var(--accent);
+  }
+
+  .timeline-date {
+    font-size: 12px;
+    color: var(--text-muted);
+    min-width: 80px;
+    padding-top: 1px;
+    letter-spacing: 0.03em;
+  }
+
+  .timeline-content {
+    flex: 1;
+  }
+
+  .timeline-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .timeline-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .decision-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .decision-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .decision-body {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .vi-rule {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+
+  .vi-rule:last-child { border-bottom: none; }
+
+  .vi-tick {
+    color: var(--accent);
+    font-weight: 700;
+    min-width: 16px;
+    margin-top: 2px;
+  }
+
+  .vi-cross {
+    color: rgba(150,80,80,0.6);
+    font-weight: 700;
+    min-width: 16px;
+    margin-top: 2px;
+  }
+
+  .lesson-list {
+    list-style: none;
+    margin: 20px 0;
+  }
+
+  .lesson-list li {
+    padding: 12px 0 12px 28px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .lesson-list li:last-child { border-bottom: none; }
+
+  .lesson-list li::before {
+    content: counter(lesson-counter, decimal-leading-zero);
+    counter-increment: lesson-counter;
+    position: absolute;
+    left: 0;
+    top: 13px;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .lesson-list {
+    counter-reset: lesson-counter;
+  }
+
+  .story-epilogue {
+    margin-top: 64px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .epilogue-quote {
+    font-size: 20px;
+    font-style: italic;
+    color: var(--text-muted);
+    line-height: 1.65;
+    max-width: 440px;
+    margin: 0 auto 24px;
+  }
+
+  .epilogue-attr {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 24px 0;
+  }
+
+  .tag {
+    font-size: 12px;
+    padding: 4px 12px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 26px; }
+    .meta-row { gap: 16px; }
+    .stat-number { font-size: 26px; }
+    .timeline-date { min-width: 64px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="label">Vibe Retrospect · 女也 She Is</span>
+  <h1>她在 15 天内<br>做出了一款关于女性内在的 App</h1>
+  <p class="subtitle">一个创作者和 AI 团队如何在极简技术栈上，<br>把心理测评和真实女性故事变成一款有质感的产品。</p>
+  <div class="meta-row">
+    <div class="meta-item">
+      <span class="meta-label">创作者</span>
+      <span class="meta-value">Gigi</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">AI 协作</span>
+      <span class="meta-value">Claude Code</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">时间</span>
+      <span class="meta-value">2026.03.18 — 04.01</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">部署</span>
+      <span class="meta-value">Netlify · 静态</span>
+    </div>
+  </div>
+</div>
+
+<article>
+
+  <div class="stats-grid">
+    <div class="stat-cell">
+      <div class="stat-number">15</div>
+      <div class="stat-desc">开发天数</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-number">105</div>
+      <div class="stat-desc">Git Commits</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-number">9+</div>
+      <div class="stat-desc">心理测评模块</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-number">8+</div>
+      <div class="stat-desc">真实女性故事</div>
+    </div>
+  </div>
+
+  <div class="tag-row">
+    <span class="tag">心理测评</span>
+    <span class="tag">非虚构故事</span>
+    <span class="tag">纯静态 HTML</span>
+    <span class="tag">Vibe Coding</span>
+    <span class="tag">女性视角</span>
+    <span class="tag">AI 共建</span>
+  </div>
+
+  <h2>它从哪里来</h2>
+
+  <p>Gigi 想做一个关于女性内在的产品——不是娱乐向的"测测你是什么星座/甜品"，而是有学术依据的心理测量工具，加上真实女孩的非虚构故事，让用户在测评和阅读中完成某种内在相遇。</p>
+
+  <p>这个想法的起点很具体：现有的心理测评内容不稀缺，但把它做得既有质感、又有共情温度、又能在手机浏览器零门槛访问的产品几乎没有。不需要 App，不需要注册才能用，打开即用。</p>
+
+  <blockquote>
+    品牌叫「女也 She Is」。「女也」来自古汉字，女字旁，也是"她"的一部分。品牌色是暮色紫 #4A3073——有神秘感、内省感、知识感，刻意绕开粉色系的女性刻板印象。
+    <cite>— 品牌原点</cite>
+  </blockquote>
+
+  <p>「100位女孩」系列是产品差异化的灵魂：每个真实女孩的故事都配有 AI 生成的封面图、TTS 朗读音频、背景音乐，像一本会呼吸的杂志。</p>
+
+  <div class="divider"></div>
+
+  <h2>为什么选择纯静态 HTML</h2>
+
+  <p>这是一个刻意的选择，而不是技术限制。</p>
+
+  <p>纯静态 HTML + Tailwind CDN 意味着：没有构建步骤，AI 可以直接看到 DOM 结构并精确修改；部署只要 push 到 GitHub，30 秒后 Netlify 自动上线；用户打开链接即用，没有任何安装门槛。</p>
+
+  <blockquote>
+    纯静态 HTML 对 AI 协作极友好：没有编译错误，所见即所得。Claude Code 改完一个文件，F5 刷新就能看到效果。
+    <cite>— 技术选型背后的逻辑</cite>
+  </blockquote>
+
+  <p>代价是：页面之间没有共享组件，每次要在多个文件里做相同修改。这也是为什么后来需要 <code>scripts/new_story.sh</code> 这样的脚手架——用工具代替手工。</p>
+
+  <div class="divider"></div>
+
+  <h2>关键决策</h2>
+
+  <div class="decision-card">
+    <div class="decision-title">先写 VI 规范，再写代码</div>
+    <div class="decision-body">3 月 24 日，Gigi 发现在没有规范约束的情况下，每次视觉迭代都在返工。于是写下 vi-spec.md，明确了品牌色、字体、组件规范，并列出明确的禁用项。从那天起，视觉才真正稳定。</div>
+  </div>
+
+  <div class="decision-card">
+    <div class="decision-title">Supabase Magic Link 优先于 Google OAuth</div>
+    <div class="decision-body">微信内置浏览器不支持 Google OAuth 弹窗，而目标用户大量在微信里打开链接。Magic Link 通过邮件发送，任何浏览器都能用，成为主要登录方式。</div>
+  </div>
+
+  <div class="decision-card">
+    <div class="decision-title">结果页是产品的核心，不是附属</div>
+    <div class="decision-body">最多 commits 的文件都是测评页（test-hsp.html 28次、test-fmps.html 23次）。结果页不能像报告，要有洞察感，要有「在日常里」「值得想一想」等让用户有共鸣的 section。</div>
+  </div>
+
+  <div class="decision-card">
+    <div class="decision-title">故事脚手架化</div>
+    <div class="decision-body">3 月 26 日，随着故事数量增多，手工复制粘贴模板带来了大量细节不一致的问题。一个 bash 脚本 <code>scripts/new_story.sh</code> 解决了这个问题——一行命令生成完整故事模板，包含所有必要占位符。</div>
+  </div>
+
+  <h2>VI 规范：克制是最高美学</h2>
+
+  <p>vi-spec.md 是这个项目最重要的文档之一。它不只规定了"用什么颜色"，更规定了"不能做什么"。</p>
+
+  <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 24px 0;">
+    <div style="font-size: 13px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px;">禁用项（The Nopes）</div>
+    <div class="vi-rule"><span class="vi-cross">✕</span><span>Emoji 图标</span></div>
+    <div class="vi-rule"><span class="vi-cross">✕</span><span>Box-shadow 堆砌</span></div>
+    <div class="vi-rule"><span class="vi-cross">✕</span><span>饱和弥散渐变</span></div>
+    <div class="vi-rule"><span class="vi-cross">✕</span><span>Glassmorphism</span></div>
+    <div class="vi-rule"><span class="vi-cross">✕</span><span>纯黑 / 纯白</span></div>
+    <div class="vi-rule"><span class="vi-cross">✕</span><span>居中一切</span></div>
+    <div class="vi-rule"><span class="vi-cross">✕</span><span>圆体字</span></div>
+    <div style="font-size: 13px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin: 20px 0 16px;">动效规范</div>
+    <div class="vi-rule"><span class="vi-tick">✓</span><span>只用 transform + opacity，不用其他属性做动画</span></div>
+    <div class="vi-rule"><span class="vi-tick">✓</span><span>fadeUp: opacity + translateY(16px)</span></div>
+    <div class="vi-rule"><span class="vi-tick">✓</span><span>easing: cubic-bezier(.25,.46,.45,.94)</span></div>
+  </div>
+
+  <blockquote>
+    留白比装饰更有质感。克制是最高美学。
+    <cite>— VI 规范的设计哲学</cite>
+  </blockquote>
+
+  <div class="divider"></div>
+
+  <h2>开发时间线</h2>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <span class="timeline-date">03-18</span>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-title">起点：VI polish + 核心测评上线</div>
+        <div class="timeline-desc">项目初始化，7 commits。HSP、ECR、ERQ 等核心测评页完成，背景音乐接入。</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <span class="timeline-date">03-19</span>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-title">Supabase Auth 接入 + 结果卡片</div>
+        <div class="timeline-desc">20 commits。Google 登录 + Magic Link，结果卡片下载（html2canvas），个人画像页。</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <span class="timeline-date">03-22</span>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-title">六个真实女孩故事上线</div>
+        <div class="timeline-desc">10 commits。曲奇、小陈、小李、冰冰、秀秀、自行车——完整原稿替换占位内容。</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <span class="timeline-date">03-23</span>
+      <div class="timeline-dot peak"></div>
+      <div class="timeline-content">
+        <div class="timeline-title">🔥 爆发日：22 commits</div>
+        <div class="timeline-desc">全站测评名称统一，四轴架构重构，HSP/ERQ/FMPS/profile 精修，新增 DISC 行为风格测评。最高产的一天。</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <span class="timeline-date">03-24</span>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-title">VI 规范落地：暮色紫统一全站</div>
+        <div class="timeline-desc">写下 vi-spec.md，全站统一 #4A3073 + Lora + #FAF7F4。视觉从此稳定。</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <span class="timeline-date">03-26</span>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-title">故事页视觉重建 + 脚手架诞生</div>
+        <div class="timeline-desc">12 commits。Stitch 视觉重建，story-detail 模板标准化，<code>scripts/new_story.sh</code> 上线。</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <span class="timeline-date">03-30</span>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-title">内在地图 map.html 上线</div>
+        <div class="timeline-desc">12 commits。Supabase 登录 bug 修复，map.html 数据可视化，profile 迁移重构。</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <span class="timeline-date">04-01</span>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-title">播放器双模式 + 故事 008/009</div>
+        <div class="timeline-desc">2 commits。音频播放器升级，新增两个故事，AI 交叉解读功能。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2>人与 AI 是如何协作的</h2>
+
+  <p>这不是"Gigi 给需求，AI 写代码"这么简单。实际的协作模式是：</p>
+
+  <p><strong>Gigi 驱动方向</strong>，提出功能需求（往往很具体，包含 HTML 片段或截图参考）；<strong>Claude Code 执行实现</strong>，一次性完成跨多文件的修改；<strong>Gigi 看截图确认</strong>，给出精修意见；<strong>Claude Code 精修迭代</strong>。</p>
+
+  <p>项目里大量的 <code>ss-*.png</code> 文件（从 ss-index.png 到 ss-index-v15.png）就是这个循环的物理证据——每一个版本截图，都是一次"见了面"的确认。</p>
+
+  <blockquote>
+    Claude Code 最擅长的是批量相似修改：同一个改动要在 10 个测评文件里做时，AI 效率碾压人工。每个测评页都有结果卡片下载功能——是通过一次 session 批量注入 <code>assets/result-card.js</code> 完成的。
+    <cite>— 协作效率的真实体现</cite>
+  </blockquote>
+
+  <p>VI 规范落地后，Gigi 有一套口头语言：「去掉图标」「呼吸感」「克制」「去掉这个 shadow」。这些关键词 Claude Code 都能准确理解并执行。这种默契不是天生的——是在 15 天的迭代里磨合出来的。</p>
+
+  <div class="divider"></div>
+
+  <h2>踩过的坑</h2>
+
+  <h3>iOS Safari 渲染 bug</h3>
+  <p>ECR/ERQ 结果页在 iOS Safari 显示异常。根因是 Safari 对某些 flex/grid 属性处理不同。3 月 22 日修复，后来成为每次结果页重构后必做的检查项。</p>
+
+  <h3>Supabase 初始化时序</h3>
+  <p>登录后 session 无法写入，auth headers 报错。问题是 <code>window.sb</code> 在 DOMContentLoaded 前被使用，加上 CDN 版本不固定导致 breaking change。修复：defer 初始化，直接写 localStorage，固定 CDN 版本。</p>
+
+  <h3>弥散渐变 → 视觉过度</h3>
+  <p>早期 index 页加了弥散渐变背景，看起来很廉价。根因是没有 VI 规范约束。3 月 24 日写 vi-spec.md 后全站统一，这类问题再没出现。</p>
+
+  <h3>结果页"上重下轻"</h3>
+  <p>重构后结果页内容集中在顶部，底部空旷。解决方式：加 section 间距，加入「在日常里」「值得想一想」等新内容 section，而不是纯靠 CSS 撑高度。</p>
+
+  <div class="divider"></div>
+
+  <h2>经验</h2>
+
+  <ul class="lesson-list">
+    <li><strong>VI 规范要最先写。</strong>没有规范的阶段，每次改动都在部分返工。规范不只是"用什么颜色"，更是"不能做什么"。</li>
+    <li><strong>截图即验收。</strong>视觉类改动必须看截图，口头描述容易失真。ss-index-v15.png 的存在不是偶然。</li>
+    <li><strong>脚手架救生命。</strong>重复性内容（故事页）一定要工具化，手工复制粘贴是 bug 的温床。一个 50 行的 bash 脚本可以省掉大量时间。</li>
+    <li><strong>结果页是产品核心，不是附属。</strong>用户测完看到的第一眼决定他们会不会分享。「在日常里」「值得想一想」这些 section 不是装饰，是产品价值的主要载体。</li>
+    <li><strong>分享路径要在设计期想清楚。</strong>html2canvas 结果卡片是社交传播的核心触点，事后加难度远高于一开始设计。</li>
+    <li><strong>Magic Link 优先于 Google OAuth。</strong>微信内置浏览器是中国用户的主要入口，Google OAuth 在里面不可用。Magic Link 覆盖了几乎所有场景。</li>
+    <li><strong>纯静态 HTML 对 AI 协作极友好。</strong>没有编译步骤，AI 改完即看，出错也容易定位。这种技术栈在 vibe coding 场景里有独特优势。</li>
+  </ul>
+
+  <div class="story-epilogue">
+    <div class="epilogue-quote">
+      "心理测评最难的不是题目，是结果页：<br>
+      要有洞察感，不能像报告。"
+    </div>
+    <div class="epilogue-attr">女也 She Is · 2026</div>
+  </div>
+
+</article>
+
+</body>
+</html>
