@@ -1,6 +1,112 @@
 /* She Is — Shared Styles
    Loaded by all pages alongside Tailwind CSS */
 
+/* ── Color tokens (light mode) ─────────────────────────────────────── */
+:root {
+  --c-background:               #fcf9f6;
+  --c-surface:                  #fcf9f6;
+  --c-surface-bright:           #fcf9f6;
+  --c-surface-dim:              #dcdad7;
+  --c-surface-variant:          #e5e2df;
+  --c-surface-tint:             #6c5196;
+  --c-surface-container-lowest: #ffffff;
+  --c-surface-container-low:    #f6f3f0;
+  --c-surface-container:        #f0edea;
+  --c-surface-container-high:   #eae8e5;
+  --c-surface-container-highest:#e5e2df;
+  --c-inverse-surface:          #31302f;
+  --c-inverse-on-surface:       #f3f0ed;
+  --c-on-background:            #1c1c1a;
+  --c-on-surface:               #1c1c1a;
+  --c-on-surface-variant:       #4a454f;
+  --c-outline:                  #7b7580;
+  --c-outline-variant:          #ccc4d1;
+  --c-primary:                  #33185c;
+  --c-on-primary:               #ffffff;
+  --c-primary-container:        #4a3073;
+  --c-on-primary-container:     #b99ce7;
+  --c-primary-fixed:            #ecdcff;
+  --c-primary-fixed-dim:        #d6baff;
+  --c-on-primary-fixed:         #26074e;
+  --c-on-primary-fixed-variant: #53397c;
+  --c-inverse-primary:          #d6baff;
+  --c-secondary:                #9c3c62;
+  --c-on-secondary:             #ffffff;
+  --c-secondary-container:      #fd8ab2;
+  --c-on-secondary-container:   #771f44;
+  --c-secondary-fixed:          #ffd9e2;
+  --c-secondary-fixed-dim:      #ffb0c8;
+  --c-on-secondary-fixed:       #3e001e;
+  --c-on-secondary-fixed-variant:#7e244a;
+  --c-tertiary:                 #272828;
+  --c-on-tertiary:              #ffffff;
+  --c-tertiary-container:       #3d3e3e;
+  --c-on-tertiary-container:    #a9a9a9;
+  --c-tertiary-fixed:           #e3e2e2;
+  --c-tertiary-fixed-dim:       #c7c6c6;
+  --c-on-tertiary-fixed:        #1b1c1c;
+  --c-on-tertiary-fixed-variant:#464747;
+  --c-error:                    #ba1a1a;
+  --c-on-error:                 #ffffff;
+  --c-error-container:          #ffdad6;
+  --c-on-error-container:       #93000a;
+}
+
+/* ── Color tokens (dark mode) ──────────────────────────────────────── */
+html.dark {
+  --c-background:               #1a1625;
+  --c-surface:                  #1a1625;
+  --c-surface-bright:           #37343c;
+  --c-surface-dim:              #131218;
+  --c-surface-variant:          #49454f;
+  --c-surface-tint:             #cfbcff;
+  --c-surface-container-lowest: #0f0d13;
+  --c-surface-container-low:    #1d1b20;
+  --c-surface-container:        #211f26;
+  --c-surface-container-high:   #2b2930;
+  --c-surface-container-highest:#302d37;
+  --c-inverse-surface:          #e6e1e5;
+  --c-inverse-on-surface:       #322f37;
+  --c-on-background:            #e6e1e5;
+  --c-on-surface:               #e6e1e5;
+  --c-on-surface-variant:       #cac4d0;
+  --c-outline:                  #938f99;
+  --c-outline-variant:          #49454f;
+  --c-primary:                  #cfbcff;
+  --c-on-primary:               #380e7e;
+  --c-primary-container:        #5234a4;
+  --c-on-primary-container:     #e9ddff;
+  --c-primary-fixed:            #ecdcff;
+  --c-primary-fixed-dim:        #d6baff;
+  --c-on-primary-fixed:         #26074e;
+  --c-on-primary-fixed-variant: #53397c;
+  --c-inverse-primary:          #6750a4;
+  --c-secondary:                #ffb0c8;
+  --c-on-secondary:             #66043f;
+  --c-secondary-container:      #8e1e4e;
+  --c-on-secondary-container:   #ffd9e4;
+  --c-secondary-fixed:          #ffd9e2;
+  --c-secondary-fixed-dim:      #ffb0c8;
+  --c-on-secondary-fixed:       #3e001e;
+  --c-on-secondary-fixed-variant:#7e244a;
+  --c-tertiary:                 #c7c6c6;
+  --c-on-tertiary:              #303131;
+  --c-tertiary-container:       #464747;
+  --c-on-tertiary-container:    #e3e2e2;
+  --c-tertiary-fixed:           #e3e2e2;
+  --c-tertiary-fixed-dim:       #c7c6c6;
+  --c-on-tertiary-fixed:        #1b1c1c;
+  --c-on-tertiary-fixed-variant:#464747;
+  --c-error:                    #ffb4ab;
+  --c-on-error:                 #690005;
+  --c-error-container:          #93000a;
+  --c-on-error-container:       #ffdad6;
+}
+
+/* Dark mode body/bg transition */
+html { transition: background-color 0.3s ease, color 0.3s ease; }
+html.dark body { color-scheme: dark; }
+
 /* Material Symbols base settings */
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;

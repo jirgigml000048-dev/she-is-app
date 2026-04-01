@@ -2,6 +2,7 @@
 <html class="light" lang="zh-Hans">
 <head>
 <meta charset="utf-8">
+<script src="assets/theme-init.js"></script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>100位女孩 | 女也 She Is</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -40,18 +41,18 @@
 A curated digital anthology celebrating the fierce and soft journeys of a hundred individual lives. Each story is a reflection, a muse, and a testament to being.
 </p>
 <!-- Filter Bar -->
-<div class="flex flex-col md:flex-row gap-4 items-center mb-8">
+<div class="filter-bar flex flex-col md:flex-row gap-4 items-center mb-8">
 <div class="relative w-full md:flex-1">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
 <input class="w-full pl-12 pr-4 py-2.5 rounded-full bg-surface-container-low border-none focus:ring-2 focus:ring-primary/20 text-on-surface placeholder:text-outline-variant font-body" placeholder="Search stories..." type="text">
 </div>
 <div class="flex gap-2 overflow-x-auto pb-2 w-full md:w-auto">
-<button class="px-4 py-1.5 rounded-full bg-primary text-on-primary font-label text-[10px] tracking-widest uppercase">All</button>
-<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Inner Soul</button>
-<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Identity</button>
-<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Art</button>
-<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Relationship</button>
-<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Career</button>
+<button data-tag="all" class="px-4 py-1.5 rounded-full bg-primary text-on-primary font-label text-[10px] tracking-widest uppercase transition-colors">All</button>
+<button data-tag="inner-soul" class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Inner Soul</button>
+<button data-tag="identity" class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Identity</button>
+<button data-tag="art" class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Art</button>
+<button data-tag="relationship" class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Relationship</button>
+<button data-tag="career" class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Career</button>
 </div>
 </div>
 </section>
@@ -319,7 +320,7 @@ READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
     }
   })();
 
-  // Task 3: Make entire story card clickable
+  // Make entire story card clickable
   document.querySelectorAll('article[data-tags]').forEach(card => {
     card.style.cursor = 'pointer';
     card.addEventListener('click', (e) => {
@@ -328,6 +329,42 @@ READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
         if (link) window.location.href = link.href;
       }
     });
+  });
+
+  // Filter + Search
+  const filterBtns = document.querySelectorAll('.filter-bar button[data-tag]');
+  const searchInput = document.querySelector('.filter-bar input[type="text"]');
+  const articles = document.querySelectorAll('article[data-tags]');
+  let activeTag = 'all';
+  let searchQuery = '';
+
+  function applyFilters() {
+    articles.forEach(article => {
+      const tags = (article.dataset.tags || '').split(',').map(t => t.trim());
+      const title = article.querySelector('h2')?.textContent.toLowerCase() || '';
+      const body = article.querySelector('p')?.textContent.toLowerCase() || '';
+      const tagMatch = activeTag === 'all' || tags.includes(activeTag);
+      const searchMatch = !searchQuery || title.includes(searchQuery) || body.includes(searchQuery);
+      article.style.display = tagMatch && searchMatch ? '' : 'none';
+    });
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeTag = btn.dataset.tag;
+      filterBtns.forEach(b => {
+        b.className = 'px-4 py-1.5 rounded-full font-label text-[10px] tracking-widest uppercase transition-colors ' +
+          (b === btn
+            ? 'bg-primary text-on-primary'
+            : 'bg-surface-container-highest text-on-surface-variant hover:bg-surface-container-high');
+      });
+      applyFilters();
+    });
+  });
+
+  searchInput?.addEventListener('input', () => {
+    searchQuery = searchInput.value.toLowerCase().trim();
+    applyFilters();
   });
 </script>
 </body>
