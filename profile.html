@@ -206,6 +206,9 @@
 
   </div>
 
+    <div id="app-nav"></div>
+  <div style="height:80px;"></div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/auth.js"></script>
   <script src="assets/profile-utils.js"></script>
@@ -246,6 +249,18 @@
   }
 
   // ── Render assessments ───────────────────────────────────────────────
+  const ASSESSMENT_URLS = {
+    'cognitive-functions': 'test-cognitive.html',
+    'cognitive-48': 'test-cognitive-48.html',
+    'hsp': 'test-hsp.html',
+    'erq': 'test-erq.html',
+    'ecr': 'test-ecr.html',
+    'fmps': 'test-fmps.html',
+    'boundary-sense': 'test-boundary.html',
+    'relationship-role': 'test-relationship.html',
+    'today-mood': 'index.html',
+  };
+
   function renderAssessments() {
     const el = document.getElementById('assessmentList');
     if (!window.SheProfileStore) return;
@@ -280,11 +295,12 @@
       const name = ASSESSMENT_NAMES[r.moduleId] || r.moduleName || r.moduleId;
       const summary = r.summary || r.topDimension || '';
       const date = fmtDate(r.completedAt);
-      return `<div class="assessment-item">
+      const url = ASSESSMENT_URLS[r.moduleId] || 'assessment.html';
+      return `<a href="${url}" class="assessment-item" style="text-decoration:none;display:block;cursor:pointer;">
         <div class="assessment-name">${name}</div>
         ${summary ? `<div class="assessment-result">${summary}</div>` : ''}
         ${date ? `<div class="assessment-time">${date}</div>` : ''}
-      </div>`;
+      </a>`;
     }).join('');
   }
 
