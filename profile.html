@@ -446,6 +446,34 @@
         <p class="text-[11px] text-on-surface-variant/50 text-center mt-3">会按当前真实结果生成图片并下载到本地。</p>
       </section>
 
+      <!-- Mood History -->
+      <section class="bg-surface-container-lowest rounded-lg p-6 shadow-sm border border-outline-variant/20 mb-8" id="moodHistorySection" style="display:none">
+        <div class="flex items-baseline gap-3 mb-4 pb-3 border-b border-outline-variant/20">
+          <h3 class="font-headline text-lg text-primary">情绪打卡</h3>
+          <span class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/50 font-label">Mood Check-in</span>
+        </div>
+        <div id="moodHistoryGrid" class="grid grid-cols-7 gap-1.5"></div>
+        <div class="flex items-center gap-4 mt-4 text-[10px] text-on-surface-variant/50 font-label" id="moodLegend"></div>
+      </section>
+
+      <!-- My Letters -->
+      <section class="bg-surface-container-lowest rounded-lg p-6 shadow-sm border border-outline-variant/20 mb-8" id="lettersSection" style="display:none">
+        <div class="flex items-baseline gap-3 mb-4 pb-3 border-b border-outline-variant/20">
+          <h3 class="font-headline text-lg text-primary">我的留言</h3>
+          <span class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/50 font-label">Letters</span>
+        </div>
+        <div id="lettersList" class="space-y-3"></div>
+      </section>
+
+      <!-- Test Timeline -->
+      <section class="bg-surface-container-lowest rounded-lg p-6 shadow-sm border border-outline-variant/20 mb-8" id="testTimelineSection" style="display:none">
+        <div class="flex items-baseline gap-3 mb-4 pb-3 border-b border-outline-variant/20">
+          <h3 class="font-headline text-lg text-primary">成长轨迹</h3>
+          <span class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/50 font-label">Timeline</span>
+        </div>
+        <div id="testTimelineContent"></div>
+      </section>
+
       <!-- CTA -->
       <section class="text-center mb-8">
         <p class="text-sm text-on-surface-variant/70 mb-6 font-serif italic">"景观随心而动，探索从未止步。"</p>
@@ -457,6 +485,9 @@
 
     document.getElementById('shareLongBtn').addEventListener('click',   () => shareImage('long',   { axes, portrait }));
     document.getElementById('shareResultBtn').addEventListener('click', () => shareImage('result', { axes, portrait }));
+    renderMoodHistory();
+    renderLetters();
+    renderTestTimeline();
   }
 
   /* ── Share HTML builders ── */
@@ -547,6 +578,132 @@
       sharePreviewImage.removeAttribute('src');
     }
   });
+
+  /* ── Mood History ── */
+  function renderMoodHistory() {
+    const section = document.getElementById('moodHistorySection');
+    const grid = document.getElementById('moodHistoryGrid');
+    const legend = document.getElementById('moodLegend');
+    if (!section || !grid) return;
+    let history = [];
+    try { history = JSON.parse(localStorage.getItem('sheIs_mood_history') || '[]'); } catch(e) {}
+    if (history.length === 0) return;
+    section.style.display = '';
+
+    // Build 30-day calendar grid (today at the end)
+    const now = new Date();
+    const moodMap = {};
+    history.forEach(h => {
+      const d = new Date(h.timestamp).toDateString();
+      moodMap[d] = h; // last entry per day wins
+    });
+    const moodLabels = { calm:'平静', anxious:'焦虑', tired:'疲惫', alive:'有活力', numb:'麻木', sad:'悲伤', grateful:'感恩', overwhelmed:'压力大' };
+    const seenMoods = new Set();
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(d.getDate() - i);
+      const key = d.toDateString();
+      const entry = moodMap[key];
+      const cell = document.createElement('div');
+      cell.className = 'aspect-square rounded-md flex items-center justify-center text-[9px] font-label';
+      if (entry) {
+        cell.style.background = entry.color;
+        cell.style.color = '#fff';
+        cell.textContent = d.getDate();
+        cell.title = moodLabels[entry.mood] || entry.mood;
+        seenMoods.add(entry.mood);
+      } else {
+        cell.style.background = 'rgba(74,48,115,0.04)';
+        cell.style.color = 'rgba(74,48,115,0.25)';
+        cell.textContent = d.getDate();
+      }
+      grid.appendChild(cell);
+    }
+    // Legend
+    if (legend) {
+      legend.innerHTML = Array.from(seenMoods).slice(0, 5).map(m => {
+        const entry = history.find(h => h.mood === m);
+        return `<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full flex-shrink-0" style="background:${entry?.color || '#ccc'}"></span>${moodLabels[m] || m}</span>`;
+      }).join('');
+    }
+  }
+
+  /* ── My Letters ── */
+  function renderLetters() {
+    const section = document.getElementById('lettersSection');
+    const list = document.getElementById('lettersList');
+    if (!section || !list) return;
+    let letters = [];
+    try { letters = JSON.parse(localStorage.getItem('sheIs_letters') || '[]'); } catch(e) {}
+    if (letters.length === 0) return;
+    section.style.display = '';
+
+    letters.slice(0, 10).forEach(letter => {
+      const d = new Date(letter.createdAt);
+      const dateStr = d.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+      const card = document.createElement('div');
+      card.className = 'p-4 rounded-lg bg-surface-container-low border border-outline-variant/10';
+      card.innerHTML = `
+        <div class="flex justify-between items-start mb-2">
+          <h4 class="text-sm font-bold text-on-surface font-headline">${esc(letter.subject)}</h4>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <span class="text-[10px] text-on-surface-variant/50 font-label">${dateStr}</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded-full ${letter.isPublic ? 'bg-primary/10 text-primary' : 'bg-surface-container text-outline'} font-label">${letter.isPublic ? '公开' : '私密'}</span>
+          </div>
+        </div>
+        <p class="text-xs text-on-surface-variant/70 leading-relaxed line-clamp-3">${esc(letter.body)}</p>`;
+      list.appendChild(card);
+    });
+    if (letters.length > 10) {
+      const more = document.createElement('p');
+      more.className = 'text-center text-[10px] text-on-surface-variant/40 font-label mt-3';
+      more.textContent = `共 ${letters.length} 封留言`;
+      list.appendChild(more);
+    }
+  }
+
+  /* ── Test Timeline ── */
+  function renderTestTimeline() {
+    const section = document.getElementById('testTimelineSection');
+    const content = document.getElementById('testTimelineContent');
+    if (!section || !content || !window.SheProfileStore?.readAllHistory) return;
+    const allHistory = window.SheProfileStore.readAllHistory();
+    const modules = Object.entries(allHistory).filter(([, h]) => h.length > 1);
+    if (modules.length === 0) return;
+    section.style.display = '';
+
+    const nameMap = { cognitive: '荣格认知', 'cognitive-48': '荣格认知48', hsp: '高敏感度', ecr: '依恋类型', erq: '情绪调节', fmps: '完美主义', 'boundary-sense': '边界感', disc: 'DISC行为' };
+    modules.forEach(([moduleId, history]) => {
+      const name = nameMap[moduleId] || moduleId;
+      const wrap = document.createElement('div');
+      wrap.className = 'mb-5';
+      wrap.innerHTML = `<div class="text-[10px] text-on-surface-variant/50 font-label tracking-widest uppercase mb-3">${esc(name)}</div>`;
+      const track = document.createElement('div');
+      track.className = 'flex items-start gap-0';
+      const recent = history.slice(-5);
+      recent.forEach((entry, i) => {
+        const isLatest = i === recent.length - 1;
+        const d = new Date(entry.completedAt);
+        const label = d.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+        const summary = entry.summary || '';
+        const dot = document.createElement('div');
+        dot.className = 'flex flex-col items-center gap-1';
+        dot.style.minWidth = '56px';
+        dot.innerHTML = `
+          <div class="rounded-full flex-shrink-0 ${isLatest ? 'w-3 h-3 bg-primary' : 'w-2 h-2 bg-primary/25'}"></div>
+          <span class="text-[9px] text-on-surface-variant/50 font-label">${label}</span>
+          <span class="text-[10px] ${isLatest ? 'text-primary font-bold' : 'text-on-surface-variant/60'} font-headline text-center">${esc(summary).substring(0, 8)}</span>`;
+        track.appendChild(dot);
+        if (i < recent.length - 1) {
+          const line = document.createElement('div');
+          line.className = 'flex-1 h-px bg-outline-variant/30 mt-[5px]';
+          track.appendChild(line);
+        }
+      });
+      wrap.appendChild(track);
+      content.appendChild(wrap);
+    });
+  }
 
   function toggleAxis(key) {
     const bar   = document.querySelector(`.axis-collapsed-bar[data-axis="${key}"]`);

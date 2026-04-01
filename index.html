@@ -308,6 +308,13 @@ document.getElementById('reflectionAudio').addEventListener('ended', function() 
         this.style.color = '#fff';
         this.style.opacity = '1';
         localStorage.setItem('sheIs_mood_today', JSON.stringify({ mood, color, timestamp: Date.now() }));
+        // Append to mood history (keep last 90 entries)
+        try {
+          var hist = JSON.parse(localStorage.getItem('sheIs_mood_history') || '[]');
+          hist.push({ mood: mood, color: color, timestamp: Date.now() });
+          if (hist.length > 90) hist.splice(0, hist.length - 90);
+          localStorage.setItem('sheIs_mood_history', JSON.stringify(hist));
+        } catch(e) {}
         if (confirm) {
           confirm.style.opacity = '1';
         }

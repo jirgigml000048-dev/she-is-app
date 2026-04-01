@@ -1202,6 +1202,12 @@
         const mood = this.dataset.mood;
         const color = this.dataset.color;
         localStorage.setItem('sheIs_mood_today', JSON.stringify({ mood, color, timestamp: Date.now() }));
+        try {
+          var hist = JSON.parse(localStorage.getItem('sheIs_mood_history') || '[]');
+          hist.push({ mood: mood, color: color, timestamp: Date.now() });
+          if (hist.length > 90) hist.splice(0, hist.length - 90);
+          localStorage.setItem('sheIs_mood_history', JSON.stringify(hist));
+        } catch(e) {}
         if (recorded) recorded.style.display = 'block';
         // Refresh calendar dot
         const moodGrid = document.getElementById('moodGrid');
