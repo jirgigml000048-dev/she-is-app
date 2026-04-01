@@ -1,234 +1,429 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html class="light" lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <script src="assets/theme-init.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>我的档案 · She Is</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="assets/tailwind-config.js"></script>
   <link rel="stylesheet" href="css/style.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; }
+
     body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
       background: #f5f0eb;
       color: #1E1628;
-      font-family: 'Noto Serif SC', Georgia, serif;
       min-height: 100vh;
-      padding-bottom: 100px;
+      padding-bottom: 120px;
+      position: relative;
     }
-    .dark body {
-      background: #1a1520;
-      color: #e8e0f0;
+    .dark body { background: #1a1520; color: #e8e0f0; }
+
+    /* Grain overlay */
+    .grain-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity: 0.5;
     }
-    .accent { color: #4A3073; }
-    .card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 16px;
-      border: 1px solid rgba(74,48,115,0.1);
+    .dark .grain-overlay { opacity: 0.3; }
+
+    .page-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 28rem;
+      margin: 0 auto;
+      padding: 0 1rem;
+      padding-top: 5rem;
     }
-    .dark .card {
-      background: #231d2e;
-      border-color: rgba(180,155,225,0.15);
+
+    /* serif title */
+    .serif-title {
+      font-family: 'Noto Serif SC', Georgia, serif;
     }
-    .card-title {
-      font-size: 11px;
-      font-family: 'Noto Sans SC', sans-serif;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #4A3073;
-      opacity: 0.7;
-      margin-bottom: 14px;
-      font-weight: 500;
+
+    /* ── Profile Header ───────────────────────────────────── */
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
     }
-    .dark .card-title { color: #b49be1; opacity: 0.8; }
-    .assessment-item {
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(74,48,115,0.08);
+    .avatar-circle {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #33185c, #9c3c62);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; font-weight: 800;
+      color: white;
+      flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(51,24,92,0.25);
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    .assessment-item:last-child { border-bottom: none; }
-    .dark .assessment-item { border-color: rgba(180,155,225,0.1); }
-    .assessment-name {
-      font-size: 14px;
-      font-weight: 500;
+    .profile-name {
+      font-size: 17px;
+      font-weight: 700;
       color: #1E1628;
-      margin-bottom: 3px;
+      line-height: 1.2;
     }
-    .dark .assessment-name { color: #e8e0f0; }
-    .assessment-result {
+    .dark .profile-name { color: #e8e0f0; }
+    .profile-email {
+      font-size: 12px;
+      color: rgba(30,22,40,0.45);
+      margin-top: 2px;
+    }
+    .dark .profile-email { color: rgba(232,224,240,0.4); }
+
+    /* Login prompt */
+    .login-prompt {
+      background: rgba(74,48,115,0.06);
+      border: 1px dashed rgba(74,48,115,0.22);
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .dark .login-prompt {
+      background: rgba(180,155,225,0.07);
+      border-color: rgba(180,155,225,0.2);
+    }
+    .login-prompt-text {
       font-size: 13px;
-      color: #4A3073;
-      font-style: italic;
+      color: rgba(30,22,40,0.55);
     }
-    .dark .assessment-result { color: #c5adf0; }
-    .assessment-time {
-      font-size: 11px;
-      font-family: 'Noto Sans SC', sans-serif;
-      color: rgba(30,22,40,0.4);
-      margin-top: 3px;
-    }
-    .dark .assessment-time { color: rgba(232,224,240,0.4); }
-    .letter-item {
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(74,48,115,0.08);
+    .dark .login-prompt-text { color: rgba(232,224,240,0.5); }
+    .login-btn {
+      background: #33185c;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 12px;
+      font-weight: 600;
       cursor: pointer;
       text-decoration: none;
-      display: block;
+      display: inline-block;
+      transition: background 0.2s;
     }
-    .letter-item:last-child { border-bottom: none; }
-    .dark .letter-item { border-color: rgba(180,155,225,0.1); }
+    .login-btn:hover { background: #4a3073; }
+
+    /* ── Section Card ─────────────────────────────────────── */
+    .section-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 22px 20px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(74,48,115,0.08);
+      box-shadow: 0 2px 12px rgba(51,24,92,0.05);
+      transition: box-shadow 0.3s;
+    }
+    .dark .section-card {
+      background: #231d2e;
+      border-color: rgba(180,155,225,0.12);
+      box-shadow: none;
+    }
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #9c3c62;
+      margin-bottom: 4px;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1E1628;
+      margin-bottom: 16px;
+    }
+    .dark .section-title { color: #e8e0f0; }
+
+    /* ── Assessment items ─────────────────────────────────── */
+    .assessment-item {
+      display: block;
+      text-decoration: none;
+      padding: 13px 14px;
+      border-left: 4px solid #33185c;
+      border-radius: 0 10px 10px 0;
+      background: rgba(74,48,115,0.04);
+      margin-bottom: 10px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .assessment-item:hover {
+      background: rgba(74,48,115,0.09);
+      transform: translateX(2px);
+    }
+    .dark .assessment-item {
+      background: rgba(180,155,225,0.07);
+      border-color: #9c3c62;
+    }
+    .dark .assessment-item:hover { background: rgba(180,155,225,0.13); }
+    .assessment-item:last-child { margin-bottom: 0; }
+
+    .item-en-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: rgba(51,24,92,0.5);
+      margin-bottom: 3px;
+    }
+    .dark .item-en-label { color: rgba(180,155,225,0.5); }
+    .item-zh-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1E1628;
+    }
+    .dark .item-zh-title { color: #e8e0f0; }
+    .item-badge {
+      display: inline-block;
+      background: rgba(156,60,98,0.12);
+      color: #9c3c62;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 9px;
+      border-radius: 20px;
+      margin-top: 5px;
+    }
+    .dark .item-badge {
+      background: rgba(156,60,98,0.2);
+      color: #e08aaa;
+    }
+    .item-date {
+      font-size: 10px;
+      color: rgba(30,22,40,0.35);
+      margin-top: 4px;
+    }
+    .dark .item-date { color: rgba(232,224,240,0.3); }
+
+    /* ── Letter items ─────────────────────────────────────── */
+    .letter-item {
+      display: block;
+      text-decoration: none;
+      padding: 12px 14px;
+      border-left: 3px solid rgba(156,60,98,0.5);
+      background: rgba(156,60,98,0.04);
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 10px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .letter-item:hover {
+      background: rgba(156,60,98,0.08);
+      transform: translateX(2px);
+    }
+    .dark .letter-item {
+      background: rgba(180,155,225,0.05);
+      border-color: rgba(180,155,225,0.3);
+    }
+    .letter-item:last-child { margin-bottom: 0; }
     .letter-title {
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       color: #1E1628;
       margin-bottom: 3px;
     }
     .dark .letter-title { color: #e8e0f0; }
     .letter-preview {
       font-size: 12px;
-      color: rgba(30,22,40,0.5);
+      color: rgba(30,22,40,0.48);
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
-      font-family: 'Noto Sans SC', sans-serif;
     }
-    .dark .letter-preview { color: rgba(232,224,240,0.45); }
+    .dark .letter-preview { color: rgba(232,224,240,0.4); }
     .letter-date {
-      font-size: 11px;
-      font-family: 'Noto Sans SC', sans-serif;
-      color: rgba(30,22,40,0.4);
-      margin-top: 3px;
+      font-size: 10px;
+      color: rgba(30,22,40,0.35);
+      margin-top: 4px;
     }
-    .dark .letter-date { color: rgba(232,224,240,0.4); }
+    .dark .letter-date { color: rgba(232,224,240,0.3); }
+    .see-all-link {
+      display: block;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: rgba(51,24,92,0.5);
+      text-decoration: none;
+      margin-top: 14px;
+      transition: color 0.2s;
+    }
+    .see-all-link:hover { color: #33185c; }
+    .dark .see-all-link { color: rgba(180,155,225,0.5); }
+    .dark .see-all-link:hover { color: #b49be1; }
+
+    /* ── Mood items ───────────────────────────────────────── */
     .mood-item {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 11px;
       padding: 10px 0;
-      border-bottom: 1px solid rgba(74,48,115,0.08);
+      border-bottom: 1px solid rgba(74,48,115,0.07);
     }
     .mood-item:last-child { border-bottom: none; }
     .dark .mood-item { border-color: rgba(180,155,225,0.1); }
-    .mood-emoji { font-size: 20px; line-height: 1; flex-shrink: 0; }
-    .mood-label { font-size: 14px; color: #1E1628; }
+    .mood-emoji { font-size: 20px; flex-shrink: 0; line-height: 1; }
+    .mood-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1E1628;
+      flex: 1;
+    }
     .dark .mood-label { color: #e8e0f0; }
     .mood-date {
-      font-size: 11px;
-      font-family: 'Noto Sans SC', sans-serif;
-      color: rgba(30,22,40,0.4);
-      margin-left: auto;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: rgba(30,22,40,0.3);
     }
-    .dark .mood-date { color: rgba(232,224,240,0.4); }
+    .dark .mood-date { color: rgba(232,224,240,0.3); }
+
+    /* ── Empty tip ────────────────────────────────────────── */
     .empty-tip {
       font-size: 13px;
-      color: rgba(30,22,40,0.4);
+      color: rgba(30,22,40,0.38);
       font-style: italic;
-      padding: 8px 0;
-      font-family: 'Noto Sans SC', sans-serif;
+      padding: 6px 0;
     }
-    .dark .empty-tip { color: rgba(232,224,240,0.35); }
-    .user-avatar {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      background: linear-gradient(135deg,#4a3073,#9c3c62);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; font-weight: bold; color: white;
-      flex-shrink: 0;
-    }
-    .login-banner {
-      background: rgba(74,48,115,0.07);
-      border: 1px dashed rgba(74,48,115,0.2);
-      border-radius: 12px;
-      padding: 16px 20px;
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 20px;
-    }
-    .dark .login-banner {
-      background: rgba(180,155,225,0.07);
-      border-color: rgba(180,155,225,0.2);
-    }
-    .login-btn {
-      background: #4A3073;
-      color: white;
-      border: none;
-      border-radius: 20px;
-      padding: 6px 16px;
+    .dark .empty-tip { color: rgba(232,224,240,0.32); }
+
+    /* ── Logout btn ───────────────────────────────────────── */
+    .logout-btn {
+      display: block;
+      width: 100%;
+      background: transparent;
+      border: 1px solid rgba(156,60,98,0.3);
+      color: rgba(156,60,98,0.8);
+      border-radius: 14px;
+      padding: 12px;
       font-size: 13px;
-      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.06em;
       cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
+      transition: background 0.2s, color 0.2s;
+      margin-top: 8px;
+    }
+    .logout-btn:hover {
+      background: rgba(156,60,98,0.07);
+      color: #9c3c62;
+    }
+    .dark .logout-btn {
+      border-color: rgba(180,155,225,0.2);
+      color: rgba(180,155,225,0.6);
+    }
+    .dark .logout-btn:hover {
+      background: rgba(180,155,225,0.08);
+      color: #b49be1;
     }
   </style>
 </head>
 <body>
-  <div class="max-w-lg mx-auto px-4 pt-6">
+  <div class="grain-overlay"></div>
 
-    <!-- User header -->
-    <div id="userHeader" class="flex items-center gap-3 mb-6 hidden">
-      <div class="user-avatar" id="avatarCircle"></div>
+  <div id="app-header" data-back="false"></div>
+
+  <div class="page-inner">
+
+    <!-- Profile header: logged in -->
+    <div id="userHeader" class="profile-header hidden">
+      <div class="avatar-circle" id="avatarCircle"></div>
       <div>
-        <div id="userName" class="text-base font-medium" style="color:#1E1628;"></div>
-        <div id="userEmail" class="text-xs font-sans" style="color:rgba(30,22,40,0.5);"></div>
+        <div class="profile-name serif-title" id="userName"></div>
+        <div class="profile-email" id="userEmail"></div>
       </div>
     </div>
-    <div id="loginBanner" class="login-banner hidden">
-      <span class="text-sm" style="color:rgba(30,22,40,0.6);font-family:'Noto Sans SC',sans-serif;">登录后查看完整档案</span>
+
+    <!-- Login prompt -->
+    <div id="loginPrompt" class="login-prompt hidden">
+      <span class="login-prompt-text">登录后查看完整档案</span>
       <a href="login.html" class="login-btn">登录</a>
     </div>
-    <div id="guestNote" class="mb-4 hidden">
-      <p class="text-xs font-sans" style="color:rgba(30,22,40,0.45);">以访客身份浏览 · 本地数据仅存在此设备</p>
+
+    <!-- Guest note -->
+    <div id="guestNote" class="hidden mb-5">
+      <p class="text-xs" style="color:rgba(30,22,40,0.4);">以访客身份浏览 · 本地数据仅存于此设备</p>
     </div>
 
-    <!-- Section 1: Assessment results -->
-    <div class="card">
-      <div class="card-title">我的测评结果</div>
-      <div id="assessmentList"><p class="empty-tip">暂无测评记录</p></div>
+    <!-- ── Section 1: Assessment Results ── -->
+    <div class="section-card">
+      <div class="section-label">My Assessments</div>
+      <div class="serif-title section-title">我的测评结果</div>
+      <div id="assessmentList"><p class="empty-tip">暂无测评记录，去完成一项测评吧</p></div>
     </div>
 
-    <!-- Section 2: My letters -->
-    <div class="card">
-      <div class="card-title">我的来信</div>
-      <div id="letterList"><p class="empty-tip">暂无来信</p></div>
-      <a href="mailbox.html" class="block text-center mt-3 text-xs font-sans" style="color:#4A3073;opacity:0.7;">查看全部来信 →</a>
+    <!-- ── Section 2: Mood Log ── -->
+    <div class="section-card">
+      <div class="section-label">Mood Check-in</div>
+      <div class="serif-title section-title">心情打卡</div>
+      <div id="moodList"><p class="empty-tip">还没有打卡记录，去首页打卡吧</p></div>
     </div>
 
-    <!-- Section 3: Mood log -->
-    <div class="card">
-      <div class="card-title">心情打卡</div>
-      <div id="moodList"><p class="empty-tip">暂无心情记录</p></div>
+    <!-- ── Section 3: My Letters ── -->
+    <div class="section-card">
+      <div class="section-label">Letters to Me</div>
+      <div class="serif-title section-title">我的来信</div>
+      <div id="letterList"><p class="empty-tip">还没有来信，去写一封吧</p></div>
+      <a href="mailbox.html" class="see-all-link">查看全部来信 →</a>
+    </div>
+
+    <!-- Logout -->
+    <div id="logoutWrap" class="hidden">
+      <button class="logout-btn" id="logoutBtn">退出登录</button>
     </div>
 
   </div>
 
-    <div id="app-nav"></div>
-  <div style="height:80px;"></div>
+  <div id="app-nav"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/auth.js"></script>
   <script src="assets/profile-utils.js"></script>
-  <script src="assets/nav.js"></script>
   <script src="assets/header.js"></script>
+  <script src="assets/nav.js"></script>
   <script>
-  // ── Assessment module names ──────────────────────────────────────────
+  // ── Name maps ────────────────────────────────────────────
   const ASSESSMENT_NAMES = {
-    'cognitive-functions': '认知功能偏好',
-    'cognitive-48': '48题认知测评',
+    'cognitive-functions': '荣格认知功能',
+    'cognitive-48': '认知功能 48题',
     'hsp': '高敏感人格 HSP',
     'erq': '情绪调节策略 ERQ',
-    'ecr': '依恋风格 ECR',
+    'ecr': '依恋类型 ECR',
     'fmps': '完美主义倾向 FMPS',
-    'boundary-sense': '边界感测评',
-    'relationship-role': '关系角色测评',
-    'today-mood': '今日心情快测',
+    'boundary-sense': '边界感知',
+    'relationship-role': '关系角色',
+    'today-mood': '今日心情',
   };
-
-  // ── Mood emoji/label map ─────────────────────────────────────────────
+  const ASSESSMENT_LABELS = {
+    'cognitive-functions': 'Jungian Functions',
+    'cognitive-48': 'Cognitive 48',
+    'hsp': 'HSP Scale',
+    'erq': 'ERQ',
+    'ecr': 'ECR Attachment',
+    'fmps': 'FMPS',
+    'boundary-sense': 'Boundary Sense',
+    'relationship-role': 'Relationship Role',
+    'today-mood': 'Mood Check',
+  };
+  const ASSESSMENT_URLS = {
+    'cognitive-functions': 'test-cognitive.html',
+    'cognitive-48': 'test-cognitive-48.html',
+    'hsp': 'test-hsp.html',
+    'erq': 'test-erq.html',
+    'ecr': 'test-ecr.html',
+    'fmps': 'test-fmps.html',
+    'boundary-sense': 'test-boundary-sense.html',
+    'relationship-role': 'test-relationship-role.html',
+    'today-mood': 'index.html',
+  };
   const MOOD_MAP = {
     calm:        { emoji: '🌊', label: '平静' },
     anxious:     { emoji: '⚡', label: '焦虑' },
@@ -240,7 +435,6 @@
     overwhelmed: { emoji: '🌀', label: '压力大' },
   };
 
-  // ── Helpers ──────────────────────────────────────────────────────────
   function fmtDate(ts) {
     if (!ts) return '';
     const d = new Date(ts);
@@ -248,95 +442,52 @@
     return d.getFullYear() + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + String(d.getDate()).padStart(2,'0');
   }
 
-  // ── Render assessments ───────────────────────────────────────────────
-  const ASSESSMENT_URLS = {
-    'cognitive-functions': 'test-cognitive.html',
-    'cognitive-48': 'test-cognitive-48.html',
-    'hsp': 'test-hsp.html',
-    'erq': 'test-erq.html',
-    'ecr': 'test-ecr.html',
-    'fmps': 'test-fmps.html',
-    'boundary-sense': 'test-boundary.html',
-    'relationship-role': 'test-relationship.html',
-    'today-mood': 'index.html',
-  };
-
+  // ── Render assessments ───────────────────────────────────
   function renderAssessments() {
     const el = document.getElementById('assessmentList');
-    if (!window.SheProfileStore) return;
-
-    // Gather all history entries across all modules
     const allEntries = [];
     const keys = Object.keys(ASSESSMENT_NAMES);
     keys.forEach(moduleId => {
-      // Try history first
       try {
-        const histKey = 'she_result_history_' + moduleId;
-        const hist = JSON.parse(localStorage.getItem(histKey) || '[]');
+        const hist = JSON.parse(localStorage.getItem('she_result_history_' + moduleId) || '[]');
         if (hist.length > 0) {
           hist.forEach(h => allEntries.push({ ...h, moduleId }));
           return;
         }
       } catch(e) {}
-      // Fallback: single result
-      const r = window.SheProfileStore.getResult(moduleId);
-      if (r) allEntries.push(r);
+      if (window.SheProfileStore) {
+        const r = window.SheProfileStore.getResult(moduleId);
+        if (r) allEntries.push({ ...r, moduleId });
+      }
     });
 
-    if (allEntries.length === 0) {
+    if (!allEntries.length) {
       el.innerHTML = '<p class="empty-tip">暂无测评记录，去完成一项测评吧</p>';
       return;
     }
-
-    // Sort by completedAt desc
     allEntries.sort((a, b) => new Date(b.completedAt||0) - new Date(a.completedAt||0));
 
     el.innerHTML = allEntries.map(r => {
       const name = ASSESSMENT_NAMES[r.moduleId] || r.moduleName || r.moduleId;
+      const label = ASSESSMENT_LABELS[r.moduleId] || r.moduleId;
       const summary = r.summary || r.topDimension || '';
       const date = fmtDate(r.completedAt);
       const url = ASSESSMENT_URLS[r.moduleId] || 'assessment.html';
-      return `<a href="${url}" class="assessment-item" style="text-decoration:none;display:block;cursor:pointer;">
-        <div class="assessment-name">${name}</div>
-        ${summary ? `<div class="assessment-result">${summary}</div>` : ''}
-        ${date ? `<div class="assessment-time">${date}</div>` : ''}
+      return `<a href="${url}" class="assessment-item">
+        <div class="item-en-label">${label}</div>
+        <div class="item-zh-title">${name}</div>
+        ${summary ? `<div class="item-badge">${summary}</div>` : ''}
+        ${date ? `<div class="item-date">${date}</div>` : ''}
       </a>`;
     }).join('');
   }
 
-  // ── Render letters ───────────────────────────────────────────────────
-  function renderLetters() {
-    const el = document.getElementById('letterList');
-    let letters = [];
-    try {
-      letters = JSON.parse(localStorage.getItem('sheIs_letters') || '[]');
-    } catch(e) {}
-    if (!letters.length) {
-      el.innerHTML = '<p class="empty-tip">还没有写过来信，去写一封吧</p>';
-      return;
-    }
-    const show = letters.slice(0, 5);
-    el.innerHTML = show.map(l => {
-      const title = l.subject || '无题';
-      const preview = (l.body || '').replace(/\n/g,' ').slice(0, 60);
-      const date = fmtDate(l.timestamp || l.date);
-      return `<a href="mailbox.html" class="letter-item">
-        <div class="letter-title">${title}</div>
-        ${preview ? `<div class="letter-preview">${preview}</div>` : ''}
-        ${date ? `<div class="letter-date">${date}</div>` : ''}
-      </a>`;
-    }).join('');
-  }
-
-  // ── Render mood log ──────────────────────────────────────────────────
+  // ── Render mood ──────────────────────────────────────────
   function renderMoods() {
     const el = document.getElementById('moodList');
     let hist = [];
-    try {
-      hist = JSON.parse(localStorage.getItem('sheIs_mood_history') || '[]');
-    } catch(e) {}
+    try { hist = JSON.parse(localStorage.getItem('sheIs_mood_history') || '[]'); } catch(e) {}
     if (!hist.length) {
-      // Try today's single entry
       try {
         const today = JSON.parse(localStorage.getItem('sheIs_mood_today') || 'null');
         if (today && today.mood) hist = [today];
@@ -358,40 +509,71 @@
     }).join('');
   }
 
-  // ── User auth ────────────────────────────────────────────────────────
+  // ── Render letters ───────────────────────────────────────
+  function renderLetters() {
+    const el = document.getElementById('letterList');
+    let letters = [];
+    try { letters = JSON.parse(localStorage.getItem('sheIs_letters') || '[]'); } catch(e) {}
+
+    // Fallback demo letters
+    if (!letters.length) {
+      letters = [
+        { subject: '给未来的自己', body: '你好，现在的你正在某个普通的夜晚，写下这封信……', timestamp: Date.now() - 86400000 * 3 },
+        { subject: '关于勇敢这件事', body: '你曾经以为自己不够勇敢，但你已经做了很多需要勇气的事。', timestamp: Date.now() - 86400000 * 10 },
+      ];
+    }
+
+    const show = letters.slice(0, 5);
+    el.innerHTML = show.map(l => {
+      const title = l.subject || '无题';
+      const preview = (l.body || '').replace(/\n/g,' ').slice(0, 60);
+      const date = fmtDate(l.timestamp || l.date);
+      return `<a href="mailbox.html" class="letter-item">
+        <div class="letter-title">${title}</div>
+        ${preview ? `<div class="letter-preview">${preview}</div>` : ''}
+        ${date ? `<div class="letter-date">${date}</div>` : ''}
+      </a>`;
+    }).join('');
+  }
+
+  // ── User auth ────────────────────────────────────────────
   async function initUser() {
     if (typeof getUser !== 'function') {
       document.getElementById('guestNote').classList.remove('hidden');
+      document.getElementById('loginPrompt').classList.remove('hidden');
       return;
     }
     try {
       const user = await getUser();
       if (user) {
         const name = user.user_metadata?.name || user.user_metadata?.full_name || user.email?.split('@')[0] || '我';
-        const header = document.getElementById('userHeader');
-        const avatar = document.getElementById('avatarCircle');
-        const nameEl = document.getElementById('userName');
-        const emailEl = document.getElementById('userEmail');
-        avatar.textContent = name.charAt(0).toUpperCase();
-        nameEl.textContent = name;
-        emailEl.textContent = user.email || '';
-        header.classList.remove('hidden');
-        // dark mode text fix
-        nameEl.style.color = '';
-        emailEl.style.color = '';
+        document.getElementById('avatarCircle').textContent = name.charAt(0).toUpperCase();
+        document.getElementById('userName').textContent = name;
+        document.getElementById('userEmail').textContent = user.email || '';
+        document.getElementById('userHeader').classList.remove('hidden');
+        document.getElementById('logoutWrap').classList.remove('hidden');
       } else {
-        document.getElementById('loginBanner').classList.remove('hidden');
+        document.getElementById('loginPrompt').classList.remove('hidden');
         document.getElementById('guestNote').classList.remove('hidden');
       }
     } catch(e) {
       document.getElementById('guestNote').classList.remove('hidden');
+      document.getElementById('loginPrompt').classList.remove('hidden');
     }
   }
 
-  // ── Init ─────────────────────────────────────────────────────────────
+  // ── Logout ───────────────────────────────────────────────
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    if (typeof signOut === 'function') {
+      await signOut();
+    }
+    window.location.href = 'login.html';
+  });
+
+  // ── Init ─────────────────────────────────────────────────
   renderAssessments();
-  renderLetters();
   renderMoods();
+  renderLetters();
   initUser();
   </script>
 </body>

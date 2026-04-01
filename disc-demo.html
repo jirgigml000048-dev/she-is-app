@@ -6,7 +6,7 @@
   <title>DISC 行为风格测评 | 女也</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;1,400&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
@@ -411,7 +411,7 @@
       justify-content: center;
     }
     .quote-card-type {
-      font-family: "Lora", Georgia, serif;
+      font-family: 'Noto Serif', Georgia, serif, Georgia, serif;
       font-size: 44px;
       font-weight: 600;
       line-height: 1.1;
@@ -419,7 +419,7 @@
     }
     .quote-card-quote {
       margin-top: 16px;
-      font-family: "Lora", Georgia, serif;
+      font-family: 'Noto Serif', Georgia, serif, Georgia, serif;
       font-size: 16px;
       line-height: 1.7;
       color: #888;
@@ -439,7 +439,7 @@
     .quote-card-foot-right {
       font-size: 12px;
       color: #4A3073;
-      font-family: "Lora", Georgia, serif;
+      font-family: 'Noto Serif', Georgia, serif, Georgia, serif;
     }
     .modal {
       position: fixed;
@@ -1053,10 +1053,10 @@
       const typeDesc = typeDescParts.join('·').trim();
       const typeMarkup = typeDesc
         ? `
-            <div style="font-family: 'Lora', serif; font-size: 52px; font-weight: 600; color: #4A3073; line-height: 1.0;">${typeShort}</div>
+            <div style="font-family: 'Noto Serif', Georgia, serif; font-size: 52px; font-weight: 600; color: #4A3073; line-height: 1.0;">${typeShort}</div>
             <div style="font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 400; color: #4A3073; margin-top: 8px; letter-spacing: 0.05em;">${typeDesc}</div>
           `
-        : `<div style="font-family: 'Lora', serif; font-size: 52px; font-weight: 600; color: #4A3073; line-height: 1.0;">${rawTypeName}</div>`;
+        : `<div style="font-family: 'Noto Serif', Georgia, serif; font-size: 52px; font-weight: 600; color: #4A3073; line-height: 1.0;">${rawTypeName}</div>`;
       shell.innerHTML = `
         <div class="quote-card">
           <div class="quote-card-head">行为风格测评 · DISC</div>

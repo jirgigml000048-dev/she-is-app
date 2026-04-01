@@ -196,7 +196,7 @@
     }
     .score-row:last-child { margin-bottom: 0; }
     .score-label {
-      font-family: "Noto Serif SC", "Lora", serif;
+      font-family: "Noto Serif SC", 'Noto Serif', Georgia, serif;
       font-size: 11px;
       color: rgba(47,42,38,0.72);
       width: 64px;
@@ -242,7 +242,7 @@
       flex-shrink: 0;
     }
     .r-type {
-      font-family: "Noto Serif SC", "Lora", serif;
+      font-family: "Noto Serif SC", 'Noto Serif', Georgia, serif;
       font-size: 30px;
       color: #2e2e2e;
       margin: 0;
@@ -387,7 +387,7 @@
 }
 
 .story-rec-title {
-  font-family: "Lora", serif;
+  font-family: 'Noto Serif', Georgia, serif;
   font-size: 20px;
   color: #2e2e2e;
   line-height: 1.4;
@@ -470,7 +470,7 @@
     /* === End Stitch Override === */
 
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@400;500;700\&family=Plus+Jakarta+Sans:wght@300;400;500;600;700" rel="stylesheet">
+  
   <link rel="stylesheet" href="css/font-override.css" />
   <script src="assets/result-card.js"></script>
 </head>
@@ -667,8 +667,8 @@ function generateResultCard() {
         <div style="height:1px;background:rgba(74,48,115,0.15);margin-top:12px;"></div>
       </div>
       <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
-        <div style="font-family:'Lora',serif;font-size:34px;line-height:1.35;color:#4A3073;font-weight:600;">${document.getElementById('resultTitle')?.dataset?.subtitle || document.getElementById('resultTitle')?.textContent?.trim() || '边界感比较稳固'}</div>
-        <div style="margin-top:18px;font-family:'Lora',serif;font-size:18px;line-height:1.9;color:#5b5167;font-style:italic;">${document.getElementById('resultQuote')?.textContent?.trim() || ''}</div>
+        <div style="font-family:'Noto Serif', Georgia, serif;font-size:34px;line-height:1.35;color:#4A3073;font-weight:600;">${document.getElementById('resultTitle')?.dataset?.subtitle || document.getElementById('resultTitle')?.textContent?.trim() || '边界感比较稳固'}</div>
+        <div style="margin-top:18px;font-family:'Noto Serif', Georgia, serif;font-size:18px;line-height:1.9;color:#5b5167;font-style:italic;">${document.getElementById('resultQuote')?.textContent?.trim() || ''}</div>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:flex-end;">
         <span style="font-family:Courier New,monospace;font-size:9px;color:#9d948d;">she-is-app.netlify.app</span>
