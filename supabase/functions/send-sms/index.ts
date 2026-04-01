@@ -1,9 +1,15 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-const CORS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+const ALLOWED_ORIGINS = (Deno.env.get('ALLOWED_ORIGINS') || '').split(',').filter(Boolean)
+
+function corsHeaders(req: Request) {
+  const origin = req.headers.get('origin') || ''
+  const allowed = ALLOWED_ORIGINS.length === 0 || ALLOWED_ORIGINS.includes(origin)
+  return {
+    'Access-Control-Allow-Origin': allowed ? origin : ALLOWED_ORIGINS[0] || '',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  }
 }
 
 const enc = (s: string) => new TextEncoder().encode(s)
@@ -87,22 +93,38 @@ async function sendTencentSMS(phone: string, code: string): Promise<void> {
 }
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') return new Response('ok', { headers: CORS })
+  const cors = corsHeaders(req)
+  if (req.method === 'OPTIONS') return new Response('ok', { headers: cors })
 
   try {
     const { phone } = await req.json()
     if (!phone || !/^\d{11}$/.test(phone)) {
       return new Response(JSON.stringify({ error: '手机号格式错误' }), {
-        status: 400, headers: { ...CORS, 'Content-Type': 'application/json' }
+        status: 400, headers: { ...cors, 'Content-Type': 'application/json' }
       })
     }
-
-    const code = String(Math.floor(100000 + Math.random() * 900000))
 
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     )
+
+    // Rate limit: reject if an OTP was sent to this phone within 60 seconds
+    const { data: recentOtp } = await supabase
+      .from('sms_otp')
+      .select('created_at')
+      .eq('phone', phone)
+      .gt('created_at', new Date(Date.now() - 60 * 1000).toISOString())
+      .order('created_at', { ascending: false })
+      .limit(1)
+    if (recentOtp && recentOtp.length > 0) {
+      return new Response(JSON.stringify({ error: '请求过于频繁，请60秒后再试' }), {
+        status: 429, headers: { ...cors, 'Content-Type': 'application/json' }
+      })
+    }
+
+    const code = String(Math.floor(100000 + Math.random() * 900000))
+
     await supabase.from('sms_otp').delete().eq('phone', phone).eq('used', false)
     const { error: insertError } = await supabase.from('sms_otp').insert({
       phone,
@@ -114,12 +136,12 @@ serve(async (req) => {
     await sendTencentSMS(phone, code)
 
     return new Response(JSON.stringify({ success: true }), {
-      headers: { ...CORS, 'Content-Type': 'application/json' }
+      headers: { ...cors, 'Content-Type': 'application/json' }
     })
   } catch (e) {
     console.error(e)
     return new Response(JSON.stringify({ error: e.message || '发送失败' }), {
-      status: 500, headers: { ...CORS, 'Content-Type': 'application/json' }
+      status: 500, headers: { ...cors, 'Content-Type': 'application/json' }
     })
   }
 })

@@ -228,3 +228,28 @@ function closeLoginModal() {
   const modal = document.getElementById('loginModal');
   if (modal) modal.style.display = 'none';
 }
+
+// Migrate localStorage test results to Supabase after login
+async function migrateLocalResults() {
+  const user = await getUser();
+  if (!user) return;
+
+  const prefix = 'she_result_';
+  const keys = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith(prefix)) keys.push(key);
+  }
+
+  for (const key of keys) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) continue;
+      const result = JSON.parse(raw);
+      const moduleId = key.replace(prefix, '');
+      await saveTestResult(moduleId, result.summary || result.type || '', result);
+    } catch (e) {
+      console.warn('migrateLocalResults: skipped', key, e);
+    }
+  }
+}

@@ -1,19 +1,26 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-const CORS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+const ALLOWED_ORIGINS = (Deno.env.get('ALLOWED_ORIGINS') || '').split(',').filter(Boolean)
+
+function corsHeaders(req: Request) {
+  const origin = req.headers.get('origin') || ''
+  const allowed = ALLOWED_ORIGINS.length === 0 || ALLOWED_ORIGINS.includes(origin)
+  return {
+    'Access-Control-Allow-Origin': allowed ? origin : ALLOWED_ORIGINS[0] || '',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  }
 }
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') return new Response('ok', { headers: CORS })
+  const cors = corsHeaders(req)
+  if (req.method === 'OPTIONS') return new Response('ok', { headers: cors })
 
   try {
     const { phone, code } = await req.json()
     if (!phone || !code) {
       return new Response(JSON.stringify({ error: '参数缺失' }), {
-        status: 400, headers: { ...CORS, 'Content-Type': 'application/json' }
+        status: 400, headers: { ...cors, 'Content-Type': 'application/json' }
       })
     }
 
@@ -36,7 +43,7 @@ serve(async (req) => {
     if (fetchError) throw fetchError
     if (!otpRows || otpRows.length === 0) {
       return new Response(JSON.stringify({ error: '验证码错误或已过期' }), {
-        status: 400, headers: { ...CORS, 'Content-Type': 'application/json' }
+        status: 400, headers: { ...cors, 'Content-Type': 'application/json' }
       })
     }
 
@@ -62,7 +69,7 @@ serve(async (req) => {
 
     if (!signInError && signInData.session) {
       return new Response(JSON.stringify({ session: signInData.session }), {
-        headers: { ...CORS, 'Content-Type': 'application/json' }
+        headers: { ...cors, 'Content-Type': 'application/json' }
       })
     }
 
@@ -82,13 +89,13 @@ serve(async (req) => {
     if (newSignInError) throw newSignInError
 
     return new Response(JSON.stringify({ session: newSession.session }), {
-      headers: { ...CORS, 'Content-Type': 'application/json' }
+      headers: { ...cors, 'Content-Type': 'application/json' }
     })
 
   } catch (e) {
     console.error(e)
     return new Response(JSON.stringify({ error: e.message || '验证失败' }), {
-      status: 500, headers: { ...CORS, 'Content-Type': 'application/json' }
+      status: 500, headers: { ...cors, 'Content-Type': 'application/json' }
     })
   }
 })

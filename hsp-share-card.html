@@ -2,57 +2,22 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
+<script src="assets/theme-init.js"></script>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>HSP 金句卡 | 女也 She Is</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "surface-container": "#f0edea",
-            "surface": "#fcf9f6",
-            "primary": "#33185c",
-            "outline": "#7b7580",
-            "on-primary-container": "#b99ce7",
-            "background": "#fcf9f6",
-            "on-surface-variant": "#4a454f",
-            "secondary": "#9c3c62",
-            "secondary-fixed-dim": "#ffb0c8",
-            "secondary-container": "#fd8ab2",
-            "primary-container": "#4a3073",
-            "on-secondary": "#ffffff",
-            "on-primary": "#ffffff",
-            "outline-variant": "#ccc4d1",
-            "surface-container-high": "#eae8e5",
-            "surface-container-low": "#f6f3f0",
-            "surface-container-lowest": "#ffffff",
-            "on-surface": "#1c1c1a"
-          },
-          fontFamily: {
-            "headline": ["Noto Serif", "Noto Serif SC", "serif"],
-            "body": ["Plus Jakarta Sans", "Noto Serif SC", "sans-serif"],
-            "label": ["Plus Jakarta Sans", "sans-serif"]
-          },
-          borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
-        },
-      },
-    }
-  </script>
+  <script src="assets/tailwind-config.js"></script>
+  <link rel="stylesheet" href="css/style.css">
   <style>
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
     .serif-italic { font-style: italic; }
-    body { min-height: max(884px, 100dvh); }
+    body { min-height: 100dvh; }
   </style>
 </head>
 <body class="bg-surface text-on-surface font-body min-h-screen flex flex-col items-center justify-center p-6 overflow-x-hidden">
 
-  <header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-[#fcf9f6]/80 backdrop-blur-xl">
+  <header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-surface/80 backdrop-blur-xl">
     <span class="material-symbols-outlined text-primary cursor-pointer hover:opacity-70 transition-opacity" onclick="history.back()">arrow_back</span>
     <h1 class="font-headline font-bold text-primary tracking-tighter text-lg">女也 She Is</h1>
     <span class="material-symbols-outlined text-primary cursor-pointer hover:opacity-70 transition-opacity" onclick="doShare()">share</span>

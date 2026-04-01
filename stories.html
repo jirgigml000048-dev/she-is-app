@@ -2,112 +2,33 @@
 <html class="light" lang="zh-Hans">
 <head>
 <meta charset="utf-8">
+<script src="assets/theme-init.js"></script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>100位女孩 | 女也 She Is</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Noto+Serif+SC:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-<script id="tailwind-config">
-tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        "surface-container": "#f0edea",
-        "on-secondary-container": "#771f44",
-        "tertiary-container": "#3d3e3e",
-        "inverse-on-surface": "#f3f0ed",
-        "on-secondary": "#ffffff",
-        "error-container": "#ffdad6",
-        "on-error": "#ffffff",
-        "outline-variant": "#ccc4d1",
-        "on-secondary-fixed": "#3e001e",
-        "tertiary-fixed": "#e3e2e2",
-        "on-primary": "#ffffff",
-        "on-tertiary": "#ffffff",
-        "on-primary-fixed": "#26074e",
-        "on-tertiary-container": "#a9a9a9",
-        "tertiary": "#272828",
-        "background": "#fcf9f6",
-        "inverse-primary": "#d6baff",
-        "secondary-fixed-dim": "#ffb0c8",
-        "surface-tint": "#6c5196",
-        "surface-container-low": "#f6f3f0",
-        "on-tertiary-fixed-variant": "#464747",
-        "on-surface": "#1c1c1a",
-        "on-tertiary-fixed": "#1b1c1c",
-        "outline": "#7b7580",
-        "surface-container-highest": "#e5e2df",
-        "primary": "#33185c",
-        "surface-dim": "#dcdad7",
-        "inverse-surface": "#31302f",
-        "surface-container-high": "#eae8e5",
-        "on-surface-variant": "#4a454f",
-        "on-secondary-fixed-variant": "#7e244a",
-        "surface-container-lowest": "#ffffff",
-        "on-error-container": "#93000a",
-        "primary-fixed": "#ecdcff",
-        "on-primary-container": "#b99ce7",
-        "primary-fixed-dim": "#d6baff",
-        "on-primary-fixed-variant": "#53397c",
-        "tertiary-fixed-dim": "#c7c6c6",
-        "surface-variant": "#e5e2df",
-        "secondary": "#9c3c62",
-        "secondary-fixed": "#ffd9e2",
-        "surface": "#fcf9f6",
-        "primary-container": "#4a3073",
-        "error": "#ba1a1a",
-        "secondary-container": "#fd8ab2",
-        "surface-bright": "#fcf9f6",
-        "on-background": "#1c1c1a"
-      },
-      fontFamily: {
-        "headline": ["Noto Serif", "Noto Serif SC", "serif"],
-        "body": ["Plus Jakarta Sans", "sans-serif"],
-        "label": ["Plus Jakarta Sans", "sans-serif"]
-      },
-      borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
-    },
-  },
-}
-</script>
+<script src="assets/tailwind-config.js"></script>
+<link rel="stylesheet" href="css/style.css">
 <style>
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-}
-body { min-height: max(884px, 100dvh); }
-/* Enforce consistent cover image aspect ratio across all story cards */
-article .story-image-wrap {
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  position: relative;
-}
-@media (min-width: 768px) {
-  article .story-image-wrap {
-    aspect-ratio: unset;
-  }
-}
+    body { min-height: 100dvh; }
+    /* Enforce consistent cover image aspect ratio across all story cards */
+    article .story-image-wrap {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      position: relative;
+    }
+    @media (min-width: 768px) {
+      article .story-image-wrap {
+        aspect-ratio: unset;
+      }
+    }
 </style>
 </head>
 <body class="bg-background text-on-surface font-body selection:bg-primary-fixed min-h-screen">
 
-<!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 bg-[#fcf9f6]/80 backdrop-blur-xl">
-<div class="flex justify-between items-center px-6 py-4 w-full">
-<a href="/" class="hover:opacity-80 transition-opacity active:scale-95 duration-300">
-<span class="material-symbols-outlined text-[#33185c]">arrow_back</span>
-</a>
-<h1 class="font-headline text-2xl tracking-tight text-[#33185c] flex items-center gap-2">
-<span class="font-bold">女也</span>
-<span class="text-xs uppercase tracking-[0.2em] font-light opacity-60">She Is</span>
-</h1>
-<div id="headerAuthArea">
-  <a href="login.html" id="loginEntryBtn" class="text-xs font-label font-semibold text-primary/70 hover:text-primary tracking-widest uppercase transition-colors hidden">登录</a>
-  <a href="map.html" id="userAvatarBtn" class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white border border-outline-variant/15 hidden" style="background:linear-gradient(135deg,#4a3073,#9c3c62);"></a>
-</div>
-</div>
-<div class="bg-[#f0edea] h-[1px] w-full opacity-20"></div>
-</header>
+<div id="app-header" data-back="true"></div>
+<script src="assets/header.js"></script>
 
 <main class="pt-24 pb-32 px-6 max-w-5xl mx-auto">
 
@@ -120,18 +41,18 @@ article .story-image-wrap {
 A curated digital anthology celebrating the fierce and soft journeys of a hundred individual lives. Each story is a reflection, a muse, and a testament to being.
 </p>
 <!-- Filter Bar -->
-<div class="flex flex-col md:flex-row gap-4 items-center mb-8">
+<div class="filter-bar flex flex-col md:flex-row gap-4 items-center mb-8">
 <div class="relative w-full md:flex-1">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
 <input class="w-full pl-12 pr-4 py-2.5 rounded-full bg-surface-container-low border-none focus:ring-2 focus:ring-primary/20 text-on-surface placeholder:text-outline-variant font-body" placeholder="Search stories..." type="text">
 </div>
 <div class="flex gap-2 overflow-x-auto pb-2 w-full md:w-auto">
-<button class="px-4 py-1.5 rounded-full bg-primary text-on-primary font-label text-[10px] tracking-widest uppercase">All</button>
-<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Inner Soul</button>
-<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Identity</button>
-<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Art</button>
-<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Relationship</button>
-<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Career</button>
+<button data-tag="all" class="px-4 py-1.5 rounded-full bg-primary text-on-primary font-label text-[10px] tracking-widest uppercase transition-colors">All</button>
+<button data-tag="inner-soul" class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Inner Soul</button>
+<button data-tag="identity" class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Identity</button>
+<button data-tag="art" class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Art</button>
+<button data-tag="relationship" class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Relationship</button>
+<button data-tag="career" class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-[10px] tracking-widest uppercase hover:bg-surface-container-high transition-colors">Career</button>
 </div>
 </div>
 </section>
@@ -380,29 +301,8 @@ READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
 
 </main>
 
-<!-- BottomNavBar -->
-<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center pt-4 pb-8 px-4 bg-[#ffffff]/60 backdrop-blur-2xl rounded-t-[2.5rem] z-50 shadow-[0_-8px_32px_rgba(28,28,26,0.04)]">
-<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="/">
-<span class="material-symbols-outlined">home</span>
-<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#33185c] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#9c3c62] after:rounded-full" href="/stories">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
-<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Stories</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="/assessment">
-<span class="material-symbols-outlined">psychology</span>
-<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Archive</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="map.html">
-<span class="material-symbols-outlined">hub</span>
-<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Map</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="/mailbox">
-<span class="material-symbols-outlined">mail</span>
-<span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Letters</span>
-</a>
-</nav>
+<div id="app-nav"></div>
+<script src="assets/nav.js"></script>
 
 <script>
   (async () => {
@@ -420,7 +320,7 @@ READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
     }
   })();
 
-  // Task 3: Make entire story card clickable
+  // Make entire story card clickable
   document.querySelectorAll('article[data-tags]').forEach(card => {
     card.style.cursor = 'pointer';
     card.addEventListener('click', (e) => {
@@ -429,6 +329,42 @@ READ STORY <span class="material-symbols-outlined">arrow_right_alt</span>
         if (link) window.location.href = link.href;
       }
     });
+  });
+
+  // Filter + Search
+  const filterBtns = document.querySelectorAll('.filter-bar button[data-tag]');
+  const searchInput = document.querySelector('.filter-bar input[type="text"]');
+  const articles = document.querySelectorAll('article[data-tags]');
+  let activeTag = 'all';
+  let searchQuery = '';
+
+  function applyFilters() {
+    articles.forEach(article => {
+      const tags = (article.dataset.tags || '').split(',').map(t => t.trim());
+      const title = article.querySelector('h2')?.textContent.toLowerCase() || '';
+      const body = article.querySelector('p')?.textContent.toLowerCase() || '';
+      const tagMatch = activeTag === 'all' || tags.includes(activeTag);
+      const searchMatch = !searchQuery || title.includes(searchQuery) || body.includes(searchQuery);
+      article.style.display = tagMatch && searchMatch ? '' : 'none';
+    });
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeTag = btn.dataset.tag;
+      filterBtns.forEach(b => {
+        b.className = 'px-4 py-1.5 rounded-full font-label text-[10px] tracking-widest uppercase transition-colors ' +
+          (b === btn
+            ? 'bg-primary text-on-primary'
+            : 'bg-surface-container-highest text-on-surface-variant hover:bg-surface-container-high');
+      });
+      applyFilters();
+    });
+  });
+
+  searchInput?.addEventListener('input', () => {
+    searchQuery = searchInput.value.toLowerCase().trim();
+    applyFilters();
   });
 </script>
 </body>

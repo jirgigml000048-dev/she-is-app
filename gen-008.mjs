@@ -1,7 +1,7 @@
 import { ElevenLabsClient } from '@elevenlabs/elevenlabs-js';
 import { writeFileSync, readFileSync } from 'fs';
 
-const client = new ElevenLabsClient({ apiKey: '053c37e750221105f244d43341724178758b1d60b40796aebeb2360ffe36153d' });
+const client = new ElevenLabsClient({ apiKey: process.env.ELEVENLABS_API_KEY });
 const text = readFileSync('/tmp/text-008.txt', 'utf-8');
 console.log('Text length:', text.length);
 

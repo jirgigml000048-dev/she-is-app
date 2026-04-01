@@ -2,6 +2,7 @@
 <html class="light" lang="zh-CN">
 <head>
   <meta charset="utf-8">
+<script src="assets/theme-init.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>探探：贪心的17岁女人 | 女也 She Is</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -9,53 +10,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Serif+SC:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script id="tailwind-config">
-tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        "surface-container": "#f0edea",
-        "on-secondary-container": "#771f44",
-        "outline-variant": "#ccc4d1",
-        "on-primary": "#ffffff",
-        "background": "#fcf9f6",
-        "inverse-primary": "#d6baff",
-        "surface-tint": "#6c5196",
-        "surface-container-low": "#f6f3f0",
-        "on-surface": "#1c1c1a",
-        "outline": "#7b7580",
-        "surface-container-highest": "#e5e2df",
-        "primary": "#33185c",
-        "surface-dim": "#dcdad7",
-        "surface-container-high": "#eae8e5",
-        "on-surface-variant": "#4a454f",
-        "surface-container-lowest": "#ffffff",
-        "primary-fixed": "#ecdcff",
-        "on-primary-container": "#b99ce7",
-        "primary-fixed-dim": "#d6baff",
-        "on-primary-fixed-variant": "#53397c",
-        "surface-variant": "#e5e2df",
-        "secondary": "#9c3c62",
-        "secondary-fixed": "#ffd9e2",
-        "surface": "#fcf9f6",
-        "primary-container": "#4a3073",
-        "secondary-container": "#fd8ab2",
-        "on-background": "#1c1c1a"
-      },
-      fontFamily: {
-        "headline": ["Noto Serif", "Noto Serif SC", "serif"],
-        "body": ["Plus Jakarta Sans", "Noto Serif SC", "sans-serif"],
-        "label": ["Plus Jakarta Sans", "sans-serif"]
-      },
-      borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
-    },
-  },
-}
-</script>
+  <script src="assets/tailwind-config.js"></script>
+  <link rel="stylesheet" href="css/style.css">
   <style>
     body { -webkit-font-smoothing: antialiased; background: #fcf9f6; }
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
     .editorial-shadow { box-shadow: 0 32px 64px -12px rgba(28, 28, 26, 0.08); }
     .glass-player { background: rgba(255,255,255,0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
     .mode-btn { padding: 6px 18px; border-radius: 999px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; border: none; cursor: pointer; transition: all 0.2s; background: transparent; color: #7b7580; }
@@ -68,29 +26,15 @@ tailwind.config = {
     #storyProgress::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #4a3073; cursor: pointer; }
     .article-listen-mode { transition: opacity 0.4s; }
     .article-listen-mode.dimmed { opacity: 0.35; pointer-events: none; }
-  </style>
+  
+/* Scroll-triggered section fade-in */
+.story-section { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.story-section.visible { opacity: 1; transform: none; }
+</style>
 </head>
-<body class="bg-surface text-[#1c1c1a] font-body selection:bg-[#33185c]/20">
-  <header class="fixed inset-x-0 top-0 z-50 border-b border-[#33185c]/10 bg-[#fcf9f6]/85 backdrop-blur-xl">
-    <div class="mx-auto flex h-16 max-w-5xl items-center justify-between px-5 sm:px-6">
-      <a href="/stories" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#33185c] transition hover:bg-[#33185c]/5" aria-label="返回故事列表">
-        <span class="material-symbols-outlined">arrow_back</span>
-      </a>
-      <div class="text-center text-[#33185c]">
-        <div class="font-headline text-xl font-bold leading-none">女也</div>
-        <div class="mt-1 text-[10px] uppercase tracking-[0.28em] text-[#33185c]/55">She Is</div>
-      </div>
-      <div class="flex items-center gap-1">
-        <div id="headerAuthArea">
-          <a href="login.html" id="loginEntryBtn" class="text-xs font-label font-semibold text-[#33185c]/70 hover:text-[#33185c] tracking-widest uppercase transition-colors hidden">登录</a>
-          <a href="map.html" id="userAvatarBtn" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white hidden" style="background:linear-gradient(135deg,#4a3073,#9c3c62);"></a>
-        </div>
-        <button id="shareButton" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-[#33185c] transition hover:bg-[#33185c]/5" aria-label="分享故事">
-          <span class="material-symbols-outlined">share</span>
-        </button>
-      </div>
-    </div>
-  </header>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/20">
+  <div id="app-header" data-back="true"></div>
+  <script src="assets/header.js"></script>
 
   <main class="pb-32 pt-16">
     <section class="relative isolate flex h-[70vh] min-h-[520px] items-end overflow-hidden">
@@ -149,96 +93,96 @@ tailwind.config = {
     </section>
 
     <article id="storyArticle" class="mx-auto max-w-3xl px-6 py-12 sm:px-8 article-listen-mode">
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">她给我发私信的时候，我以为至少是个大学生。"创新学校"让我刻板印象，认为是大学毕业、甚至已经工作后的业余项目。见面以后我问她多大。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">"还不到18，我17岁。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">京城的北五环藏着一个创新高中。我们约在旁边一家不算好吃也不算难吃的西餐厅，她点了一份意面，下午一点半还要回去上课，一节叫"人类文明拼图"的课，但她说可以请假，"本来也没有那么想上的。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">她坐在我对面，高高的个子，手里抱着一台贴满贴纸的笔记本电脑。宽松的卫衣，厚厚的齐短刘海下，一张还没有被任何办公室的荧光灯照旧的脸，显得非常干净。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">她下午还有答辩。我问她紧张吗。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">"我知道应该会答得很好。但我就是非常焦虑。"她想了想，又补了一句，"我发现我习惯焦虑。如果不焦虑，我反而会更焦虑。焦虑的时候我觉得我在一个正确的状态里，说明我在努力。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-8">17岁的人说出这种话，你不知道该心疼还是该佩服。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">她给我发私信的时候，我以为至少是个大学生。"创新学校"让我刻板印象，认为是大学毕业、甚至已经工作后的业余项目。见面以后我问她多大。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">"还不到18，我17岁。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">京城的北五环藏着一个创新高中。我们约在旁边一家不算好吃也不算难吃的西餐厅，她点了一份意面，下午一点半还要回去上课，一节叫"人类文明拼图"的课，但她说可以请假，"本来也没有那么想上的。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">她坐在我对面，高高的个子，手里抱着一台贴满贴纸的笔记本电脑。宽松的卫衣，厚厚的齐短刘海下，一张还没有被任何办公室的荧光灯照旧的脸，显得非常干净。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">她下午还有答辩。我问她紧张吗。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">"我知道应该会答得很好。但我就是非常焦虑。"她想了想，又补了一句，"我发现我习惯焦虑。如果不焦虑，我反而会更焦虑。焦虑的时候我觉得我在一个正确的状态里，说明我在努力。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">17岁的人说出这种话，你不知道该心疼还是该佩服。</p>
 
-      <section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">01</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">"我才十几岁，你就让我考虑五六十岁的事"</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">Forced Into Autonomy</p></div></div></section>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">探探的学校不走寻常路。大厂的创始人个人资助，第一届学生学费全免，毕业标准不是考试，而是你的项目要实现月收入4万，或者拿到50万投资，或者被大公司收购。三选一。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"比高考难多了。"她自己也觉得。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她不是一开始就在这里的。小学公立，初中在知名的"海淀衡水"，管得特别严的那种。后来走上homeschool的路，在线上学生社群听说了这个学校，"毅然决然地申请了。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">有意思的是她的家庭。父母都是部队的，纪律严明，全家除了她都是J人。哥哥在体制内研究所，"非常非常务实，我非常不喜欢他那样子。"弟弟才上四年级，INFJ。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">父母从小用创新的方式培养她，买了一辆房车，全国跑，到处玩。但同时又拧巴地希望她考一个响亮的大学，"开创家族历史"。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"他们很矛盾。一方面不想让我受公立教育的熏陶，一方面又特别希望我考清北。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">而现在她在的这条路，父母完全帮不上忙。他们不懂创业，不懂AI，不懂大厂的工程师在教什么。所以他们的态度变成了："那你自己做决定吧。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"我说我才十几岁，你就让我天天考虑五六十岁之后也不会后悔的事情，你不觉得这太不公平了吗？"她笑着说。"我爸妈每次就说，那咋整啊，我们也帮不上忙。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她管自己叫"被迫自主"。不是天生独立，是被推到了一个父母的经验、认知、整套系统全部失效的地方。她只能自己走。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我跟她说不要想那么远，世界变化太快了，十年后会发生什么谁都不知道。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"那很好了。"她一下子放松了。肩膀肉眼可见地往下落了一点。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我想，她可能只是需要一个大人跟她说一句：不知道就不知道，没关系的。</p>
+      <section class="pt-6 mt-14 story-section"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-secondary leading-none">01</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-primary font-bold leading-tight">"我才十几岁，你就让我考虑五六十岁的事"</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-primary/55">Forced Into Autonomy</p></div></div></section>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">探探的学校不走寻常路。大厂的创始人个人资助，第一届学生学费全免，毕业标准不是考试，而是你的项目要实现月收入4万，或者拿到50万投资，或者被大公司收购。三选一。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"比高考难多了。"她自己也觉得。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她不是一开始就在这里的。小学公立，初中在知名的"海淀衡水"，管得特别严的那种。后来走上homeschool的路，在线上学生社群听说了这个学校，"毅然决然地申请了。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">有意思的是她的家庭。父母都是部队的，纪律严明，全家除了她都是J人。哥哥在体制内研究所，"非常非常务实，我非常不喜欢他那样子。"弟弟才上四年级，INFJ。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">父母从小用创新的方式培养她，买了一辆房车，全国跑，到处玩。但同时又拧巴地希望她考一个响亮的大学，"开创家族历史"。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"他们很矛盾。一方面不想让我受公立教育的熏陶，一方面又特别希望我考清北。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">而现在她在的这条路，父母完全帮不上忙。他们不懂创业，不懂AI，不懂大厂的工程师在教什么。所以他们的态度变成了："那你自己做决定吧。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"我说我才十几岁，你就让我天天考虑五六十岁之后也不会后悔的事情，你不觉得这太不公平了吗？"她笑着说。"我爸妈每次就说，那咋整啊，我们也帮不上忙。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她管自己叫"被迫自主"。不是天生独立，是被推到了一个父母的经验、认知、整套系统全部失效的地方。她只能自己走。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我跟她说不要想那么远，世界变化太快了，十年后会发生什么谁都不知道。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"那很好了。"她一下子放松了。肩膀肉眼可见地往下落了一点。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我想，她可能只是需要一个大人跟她说一句：不知道就不知道，没关系的。</p>
 
-      <section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">02</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">"他们需要什么样的青少年，我就变成什么样"</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">The Chameleon</p></div></div></section>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她的导师给她贴了两个标签：八面玲珑，变色龙。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"虽然挺难听的，但我也接受了。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她是ENFJ，理论上最擅长社交的人格之一。但她说她很难建立1V1的关系。一群人里她如鱼得水，可以照顾所有人的情绪，让气氛热络。但只剩两个人面对面坐着，她就有压力。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"我是不是特别适合做朋友？"半是自嘲，半是真的在问。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">聊深了才知道根在哪。父母开房车带她旅行的那些年，她一直在跟成年人打交道，营地里的叔叔阿姨、景区的陌生人、父母的朋友。一个小女孩站在一群大人中间，很快就学会了一件事：读空气。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"我就会想，他们需要一个什么样的青少年样本出现，那我就变成那个样子。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我笑了，说你知道吗，你说的跟我在职场上做的事一模一样，工作需要什么画像，我就凹什么画像。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"确实。"她也笑了。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">只不过我是30多岁才意识到这件事。她17岁就已经在问"那不变的时候，我到底是什么样"了。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她说她的能量完全依赖于外界互动：跟人相处得好，状态就特别好，碰到不舒服的人，哪怕理智上知道"那是他的问题"，情绪还是会塌一整天。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我跟她说你还小，被影响很正常。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"你怎么这样说，"她愣了一下，"好温暖啊。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">那一刻我意识到，她可能已经很久没有听到这句话了。在一个所有人都把她当大人的环境里，导师在push她的项目，甲方在压她的方案，父母在说"你自己决定"。没有人记得她才17岁。她太会适应了，适应到所有人都忘了她还是个小孩。</p>
+      <section class="pt-6 mt-14 story-section"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-secondary leading-none">02</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-primary font-bold leading-tight">"他们需要什么样的青少年，我就变成什么样"</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-primary/55">The Chameleon</p></div></div></section>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她的导师给她贴了两个标签：八面玲珑，变色龙。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"虽然挺难听的，但我也接受了。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她是ENFJ，理论上最擅长社交的人格之一。但她说她很难建立1V1的关系。一群人里她如鱼得水，可以照顾所有人的情绪，让气氛热络。但只剩两个人面对面坐着，她就有压力。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"我是不是特别适合做朋友？"半是自嘲，半是真的在问。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">聊深了才知道根在哪。父母开房车带她旅行的那些年，她一直在跟成年人打交道，营地里的叔叔阿姨、景区的陌生人、父母的朋友。一个小女孩站在一群大人中间，很快就学会了一件事：读空气。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"我就会想，他们需要一个什么样的青少年样本出现，那我就变成那个样子。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我笑了，说你知道吗，你说的跟我在职场上做的事一模一样，工作需要什么画像，我就凹什么画像。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"确实。"她也笑了。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">只不过我是30多岁才意识到这件事。她17岁就已经在问"那不变的时候，我到底是什么样"了。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她说她的能量完全依赖于外界互动：跟人相处得好，状态就特别好，碰到不舒服的人，哪怕理智上知道"那是他的问题"，情绪还是会塌一整天。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我跟她说你还小，被影响很正常。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"你怎么这样说，"她愣了一下，"好温暖啊。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">那一刻我意识到，她可能已经很久没有听到这句话了。在一个所有人都把她当大人的环境里，导师在push她的项目，甲方在压她的方案，父母在说"你自己决定"。没有人记得她才17岁。她太会适应了，适应到所有人都忘了她还是个小孩。</p>
 
-      <section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">03</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">"我就是这样贪心的女人啊"</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">Want It All</p></div></div></section>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">问她以后想做什么，她说："每天都想退休。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">一个毕业即创业学校的学生，17岁就想退休。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"因为给甲方做项目太烦了。人家既不舍得出钱，还要你把所有事做完。"她翻了个白眼。"但自己创业也要伺候客户，也很烦。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">话锋一转，她的奋斗目标是下半年去美国参加一个gap项目，"我可以去森林里面读哲学。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">"终极梦想是赚到很多钱，在森林里盖一个自己的房子，只有好朋友知道在哪。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">想退休，又想创业。想去森林读哲学，又想月入4万通过答辩。想赶紧长大拥有大人的能力，又想保留现在的精力和体力。想有人替她做决策，又受不了不认可的人管她。</p>
-      <p class="text-xl leading-[1.9] font-medium text-[#33185c] mb-7 pl-6 border-l-4 border-[#9c3c62]">"我就是很贪心啊，我就是这样贪心的女人啊。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">17岁，管自己叫"贪心的女人"。我笑得不行。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">但我觉得这种"什么都想要"本身就是一种生命力。后来你会学会取舍，会知道什么是你真正要的，什么只是路过的风景。但在17岁，在精力还够、试错成本还低、世界还没来得及告诉你"不行"的时候，什么都想要，才是对的。</p>
+      <section class="pt-6 mt-14 story-section"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-secondary leading-none">03</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-primary font-bold leading-tight">"我就是这样贪心的女人啊"</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-primary/55">Want It All</p></div></div></section>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">问她以后想做什么，她说："每天都想退休。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">一个毕业即创业学校的学生，17岁就想退休。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"因为给甲方做项目太烦了。人家既不舍得出钱，还要你把所有事做完。"她翻了个白眼。"但自己创业也要伺候客户，也很烦。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">话锋一转，她的奋斗目标是下半年去美国参加一个gap项目，"我可以去森林里面读哲学。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"终极梦想是赚到很多钱，在森林里盖一个自己的房子，只有好朋友知道在哪。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">想退休，又想创业。想去森林读哲学，又想月入4万通过答辩。想赶紧长大拥有大人的能力，又想保留现在的精力和体力。想有人替她做决策，又受不了不认可的人管她。</p>
+      <p class="text-xl leading-[1.9] font-medium text-primary mb-7 pl-6 border-l-4 border-secondary">"我就是很贪心啊，我就是这样贪心的女人啊。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">17岁，管自己叫"贪心的女人"。我笑得不行。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">但我觉得这种"什么都想要"本身就是一种生命力。后来你会学会取舍，会知道什么是你真正要的，什么只是路过的风景。但在17岁，在精力还够、试错成本还低、世界还没来得及告诉你"不行"的时候，什么都想要，才是对的。</p>
 
-      <section class="pt-6 mt-14"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-[#9c3c62] leading-none">04</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-[#33185c] font-bold leading-tight">答辩通过了</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-[#33185c]/55">She Passed</p></div></div></section>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我们只聊了一个多小时，还没尽兴，探探就要赶回去准备答辩了。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">除了做"贪心的女人"，探探还接受自己做"恶毒坏女人"。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">她说她现在在团队里，总是那个照顾所有人情绪的人，谁不开心她都要管，但这种掌控全局的感受她形容为："挺享受的。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">但她预感有一天自己会变。"也许有一天我就不这么想了。哪怕我知道你有情绪问题，我也不会照顾你了。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我说那叫"姐累了"。她笑，说对，"但我现在做不到那样。我只是觉得，如果有一天我真的变成那种人，一个不在乎别人的人，我也接受她。"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">17岁就在给未来所有版本的自己预留位置了。连那个还不存在的、可能不那么好的自己，她都提前接纳了。这件事本身，比任何答辩都厉害。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">星期日的晚上，探探给我发了一条微信：</p>
-      <p class="text-xl leading-[1.9] font-medium text-[#33185c] mb-7 pl-6 border-l-4 border-[#9c3c62]">"姐姐我答辩通过啦哈哈哈哈，跟你聊天感觉放松下来了好多，所以那天下午也没有很紧张"</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">我看着那串"哈哈哈哈"，觉得好安心。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">去吧。去森林里读哲学，去创业赚钱，去看五月天，去焦虑，去贪心。</p>
-      <p class="text-lg leading-[1.9] font-light text-[#1c1c1a] mb-7">趁你还什么都想要。</p>
+      <section class="pt-6 mt-14 story-section"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-secondary leading-none">04</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-primary font-bold leading-tight">答辩通过了</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-primary/55">She Passed</p></div></div></section>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我们只聊了一个多小时，还没尽兴，探探就要赶回去准备答辩了。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">除了做"贪心的女人"，探探还接受自己做"恶毒坏女人"。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她说她现在在团队里，总是那个照顾所有人情绪的人，谁不开心她都要管，但这种掌控全局的感受她形容为："挺享受的。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">但她预感有一天自己会变。"也许有一天我就不这么想了。哪怕我知道你有情绪问题，我也不会照顾你了。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我说那叫"姐累了"。她笑，说对，"但我现在做不到那样。我只是觉得，如果有一天我真的变成那种人，一个不在乎别人的人，我也接受她。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">17岁就在给未来所有版本的自己预留位置了。连那个还不存在的、可能不那么好的自己，她都提前接纳了。这件事本身，比任何答辩都厉害。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">星期日的晚上，探探给我发了一条微信：</p>
+      <p class="text-xl leading-[1.9] font-medium text-primary mb-7 pl-6 border-l-4 border-secondary">"姐姐我答辩通过啦哈哈哈哈，跟你聊天感觉放松下来了好多，所以那天下午也没有很紧张"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我看着那串"哈哈哈哈"，觉得好安心。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">去吧。去森林里读哲学，去创业赚钱，去看五月天，去焦虑，去贪心。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">趁你还什么都想要。</p>
 
-      <section class="mt-24 rounded-[2rem] border border-[#33185c]/10 bg-[#f0edea] p-8 shadow-[0_30px_80px_rgba(51,24,92,0.07)]">
+      <section class="mt-24 rounded-[2rem] border border-primary/10 bg-[#f0edea] p-8 shadow-[0_30px_80px_rgba(51,24,92,0.07)]">
         <div class="mb-8">
-          <h5 class="font-headline text-2xl text-[#33185c] font-bold mb-1">A Moment for You</h5>
-          <p class="font-headline text-sm text-[#33185c]/40 mb-3">心灵寄语</p>
-          <div class="w-12 h-1 bg-[#9c3c62] rounded-full"></div>
+          <h5 class="font-headline text-2xl text-primary font-bold mb-1">A Moment for You</h5>
+          <p class="font-headline text-sm text-primary/40 mb-3">心灵寄语</p>
+          <div class="w-12 h-1 bg-secondary rounded-full"></div>
         </div>
         <p class="text-[#4a454f] leading-relaxed mb-2">你上一次允许自己"什么都想要"是什么时候？</p>
         <p class="text-[#4a454f]/60 text-sm italic leading-relaxed mb-6">When was the last time you allowed yourself to want everything?</p>
         <p class="text-[#4a454f] text-sm leading-relaxed mb-8">如果你愿意，写下你现在最贪心想要的那件事。</p>
         <div class="relative mb-4">
-          <textarea class="w-full bg-white/60 border-0 border-b border-[#ccc4d1] focus:ring-0 focus:bg-white rounded-none py-4 px-0 min-h-[120px] text-[#1c1c1a] placeholder:text-[#7b7580]/40 font-body" placeholder="写点什么..."></textarea>
+          <textarea class="w-full bg-white/60 border-0 border-b border-[#ccc4d1] focus:ring-0 focus:bg-white rounded-none py-4 px-0 min-h-[120px] text-on-surface placeholder:text-[#7b7580]/40 font-body" placeholder="写点什么..."></textarea>
         </div>
         <div class="flex items-center gap-3">
-          <button class="flex-1 min-w-0 flex items-center justify-center gap-1.5 px-3 py-3 rounded-full bg-[#33185c] text-white text-[10px] font-label font-bold uppercase tracking-wide whitespace-nowrap transition-colors" onclick="this.dataset.public = this.dataset.public === 'true' ? 'false' : 'true'; const isPublic = this.dataset.public === 'true'; this.querySelector('.icon').textContent = isPublic ? 'public' : 'lock'; this.querySelector('.label-text').textContent = isPublic ? 'Public / 公开' : 'Private / 仅自己';" data-public="true">
+          <button class="flex-1 min-w-0 flex items-center justify-center gap-1.5 px-3 py-3 rounded-full bg-primary text-white text-[10px] font-label font-bold uppercase tracking-wide whitespace-nowrap transition-colors" onclick="this.dataset.public = this.dataset.public === 'true' ? 'false' : 'true'; const isPublic = this.dataset.public === 'true'; this.querySelector('.icon').textContent = isPublic ? 'public' : 'lock'; this.querySelector('.label-text').textContent = isPublic ? 'Public / 公开' : 'Private / 仅自己';" data-public="true">
             <span class="material-symbols-outlined text-sm icon">public</span>
             <span class="label-text whitespace-nowrap">Public / 公开</span>
           </button>
-          <button class="flex-1 min-w-0 py-3 px-3 bg-white/70 text-[#1c1c1a] rounded-full font-label uppercase tracking-wide text-[10px] font-bold shadow-sm active:scale-95 transition-transform text-center whitespace-nowrap border border-[#7b7580]/20">
+          <button class="flex-1 min-w-0 py-3 px-3 bg-white/70 text-on-surface rounded-full font-label uppercase tracking-wide text-[10px] font-bold shadow-sm active:scale-95 transition-transform text-center whitespace-nowrap border border-[#7b7580]/20">
             Save / 留下感悟
           </button>
         </div>
       </section>
 
       <section class="mt-12 space-y-6">
-        <h5 class="font-headline text-xl text-[#33185c] font-bold mb-2">Reflections <span class="text-base font-normal text-[#33185c]/40">/ 读者感悟</span></h5>
+        <h5 class="font-headline text-xl text-primary font-bold mb-2">Reflections <span class="text-base font-normal text-primary/40">/ 读者感悟</span></h5>
         <article class="rounded-xl border border-[#ccc4d1]/40 bg-white/70 p-6 shadow-sm">
           <div class="flex items-center gap-3 mb-3">
-            <div class="w-7 h-7 rounded-full bg-[#33185c]/10 flex items-center justify-center">
-              <span class="text-[10px] font-bold text-[#33185c]">?</span>
+            <div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+              <span class="text-[10px] font-bold text-primary">?</span>
             </div>
             <span class="font-label text-[10px] uppercase tracking-widest text-[#4a454f]/60">Waiting for you</span>
           </div>
@@ -249,7 +193,7 @@ tailwind.config = {
   </main>
 
   <div class="fixed bottom-6 left-1/2 z-40 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2">
-    <a href="/stories" class="flex items-center justify-center gap-2 rounded-full bg-[#33185c] px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_20px_60px_rgba(51,24,92,0.28)] transition hover:bg-[#44206f]">
+    <a href="/stories" class="flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_20px_60px_rgba(51,24,92,0.28)] transition hover:bg-[#44206f]">
       <span class="material-symbols-outlined text-[20px]">arrow_back</span>
       返回故事列表
     </a>
@@ -395,5 +339,16 @@ tailwind.config = {
     }
   })();
   </script>
+  <div id="app-nav"></div>
+  <script src="assets/nav.js"></script>
+
+<script>
+(function() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.story-section').forEach(el => obs.observe(el));
+})();
+</script>
 </body>
 </html>
