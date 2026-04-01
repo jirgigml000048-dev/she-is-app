@@ -8,25 +8,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,300;1,400&family=Noto+Serif+SC:wght@300;400&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script id="tailwind-config">
-tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        "primary": "#33185c",
-        "secondary": "#9c3c62",
-        "primary-container": "#4a3073",
-      },
-      fontFamily: {
-        "headline": ["Noto Serif", "Noto Serif SC", "serif"],
-        "body": ["Plus Jakarta Sans", "sans-serif"],
-        "label": ["Plus Jakarta Sans", "sans-serif"]
-      },
-    },
-  },
-}
-  </script>
+  <script src="assets/tailwind-config.js"></script>
+  <link rel="stylesheet" href="css/style.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; font-family: 'Material Symbols Outlined'; }
@@ -347,28 +330,8 @@ tailwind.config = {
 
 <footer>女也 She Is · Inner Landscape v0.2</footer>
 
-<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center pt-4 pb-8 px-4 bg-[#ffffff]/60 backdrop-blur-2xl rounded-t-[2.5rem] z-50 shadow-[0_-8px_32px_rgba(28,28,26,0.04)]">
-  <a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="index.html">
-    <span class="material-symbols-outlined">home</span>
-    <span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Home</span>
-  </a>
-  <a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="stories.html">
-    <span class="material-symbols-outlined">auto_stories</span>
-    <span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Stories</span>
-  </a>
-  <a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="assessment.html">
-    <span class="material-symbols-outlined">psychology</span>
-    <span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Archive</span>
-  </a>
-  <a class="flex flex-col items-center justify-center text-[#33185c] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#9c3c62] after:rounded-full" href="map.html">
-    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hub</span>
-    <span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Map</span>
-  </a>
-  <a class="flex flex-col items-center justify-center text-[#4a3073]/40 hover:text-[#33185c] transition-colors" href="mailbox.html">
-    <span class="material-symbols-outlined">mail</span>
-    <span class="font-label text-[9px] uppercase tracking-widest font-bold mt-1">Letters</span>
-  </a>
-</nav>
+<div id="app-nav"></div>
+<script src="assets/nav.js"></script>
 
 <script src="assets/profile-utils.js"></script>
 <script>

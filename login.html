@@ -8,49 +8,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js"></script>
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          "on-background": "#1c1c1a", "outline-variant": "#ccc4d1", "inverse-primary": "#d6baff",
-          "tertiary-container": "#3d3e3e", "on-secondary": "#ffffff", "surface-container-low": "#f6f3f0",
-          "secondary-fixed": "#ffd9e2", "surface-dim": "#dcdad7", "on-primary-fixed": "#26074e",
-          "surface": "#fcf9f6", "surface-container-high": "#eae8e5", "primary-fixed-dim": "#d6baff",
-          "outline": "#7b7580", "error-container": "#ffdad6", "surface-variant": "#e5e2df",
-          "tertiary-fixed": "#e3e2e2", "on-surface": "#1c1c1a", "on-primary-container": "#b99ce7",
-          "secondary-container": "#fd8ab2", "on-tertiary": "#ffffff", "error": "#ba1a1a",
-          "surface-bright": "#fcf9f6", "surface-container-highest": "#e5e2df", "secondary": "#9c3c62",
-          "primary-fixed": "#ecdcff", "on-error": "#ffffff", "inverse-on-surface": "#f3f0ed",
-          "on-primary-fixed-variant": "#53397c", "inverse-surface": "#31302f", "on-secondary-fixed": "#3e001e",
-          "on-primary": "#ffffff", "background": "#fcf9f6", "primary": "#33185c",
-          "on-surface-variant": "#4a454f", "surface-tint": "#6c5196", "on-secondary-fixed-variant": "#7e244a",
-          "surface-container": "#f0edea", "secondary-fixed-dim": "#ffb0c8", "primary-container": "#4a3073",
-          "tertiary": "#272828", "on-secondary-container": "#771f44", "on-error-container": "#93000a",
-          "on-tertiary-container": "#a9a9a9", "tertiary-fixed-dim": "#c7c6c6", "surface-container-lowest": "#ffffff"
-        },
-        fontFamily: {
-          "headline": ["Noto Serif SC", "serif"],
-          "body": ["Plus Jakarta Sans", "sans-serif"],
-          "label": ["Plus Jakarta Sans", "sans-serif"]
-        },
-        borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
-      },
-    },
-  }
-</script>
+<script src="assets/tailwind-config.js"></script>
+<link rel="stylesheet" href="css/style.css">
 <style>
-  .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    display: inline-block; line-height: 1; text-transform: none;
-    letter-spacing: normal; word-wrap: normal; white-space: nowrap; direction: ltr;
-  }
   body {
-    background-color: #fcf9f6; color: #1c1c1a;
     font-family: 'Plus Jakarta Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
-    min-height: max(884px, 100dvh);
+    min-height: 100dvh;
   }
   .serif-display { font-family: 'Noto Serif SC', serif; }
   .asymmetric-gradient {
