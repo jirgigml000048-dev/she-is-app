@@ -1,4 +1,9 @@
-/* Preserve icon fonts */
+/* VI Spec Font System - She Is App */
+/* Logo/标题: Lora italic */
+/* 中文正文: Noto Serif SC */
+/* 功能/按钮/Caption: Noto Sans SC */
+
+/* Protect icon fonts from any override */
 .material-icons,
 .material-icons-outlined,
 .material-symbols-outlined,
@@ -6,72 +11,4 @@
 [class*="material-icons"],
 [class*="material-symbols"] {
   font-family: 'Material Symbols Outlined', 'Material Icons' !important;
-}
-
-body,
-p,
-li,
-a,
-button,
-input,
-textarea,
-select,
-label,
-span,
-div,
-article,
-section,
-main,
-aside,
-blockquote,
-dd,
-dt,
-figcaption,
-small {
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif !important;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.title,
-.card-title,
-.section-title,
-.story-title,
-.section-row-title,
-.character-name,
-.sec-title,
-.sec-label,
-.hook-text,
-.r-type {
-  font-family: "Noto Serif SC", "Cormorant Garamond", "Source Han Serif SC", serif !important;
-}
-
-body *:not(.material-icons):not(.material-icons-outlined):not(.material-symbols-outlined):not(.material-symbols-rounded):not([class*="material-icons"]):not([class*="material-symbols"]) {
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif !important;
-}
-
-/* Override Tailwind font utility classes */
-.font-sans,
-.font-serif,
-[class*="font-"] {
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif !important;
-}
-
-code,
-pre,
-kbd,
-samp,
-.eyebrow,
-.tagline,
-.logo-en,
-.page-pretitle,
-.result-tag,
-.test-intro-source,
-.row-en-tag,
-.home-tagline {
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif !important;
 }

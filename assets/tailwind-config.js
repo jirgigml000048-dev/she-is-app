@@ -54,8 +54,8 @@ tailwind.config = {
         "on-error-container":       "var(--c-on-error-container)",
       },
       fontFamily: {
-        "sans":        ["Noto Serif SC", "Source Han Serif SC", "serif"],
-        "serif":       ["Noto Serif SC", "Noto Serif", "Source Han Serif SC", "serif"],
+        "sans":        ["Noto Sans SC", "system-ui", "sans-serif"],
+        "serif":       ["Noto Serif SC", "Georgia", "serif"],
         "headline":    ["Noto Serif", "Noto Serif SC", "serif"],
         "body":        ["Noto Serif SC", "Source Han Serif SC", "serif"],
         "label":       ["Noto Serif SC", "Source Han Serif SC", "serif"],
