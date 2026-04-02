@@ -41,7 +41,14 @@ h6,
 }
 
 body * {
-  font-family: inherit;
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif !important;
+}
+
+/* Override Tailwind font utility classes */
+.font-sans,
+.font-serif,
+[class*="font-"] {
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif !important;
 }
 
 code,

@@ -54,9 +54,11 @@ tailwind.config = {
         "on-error-container":       "var(--c-on-error-container)",
       },
       fontFamily: {
+        "sans":        ["Noto Serif SC", "Source Han Serif SC", "serif"],
+        "serif":       ["Noto Serif SC", "Noto Serif", "Source Han Serif SC", "serif"],
         "headline":    ["Noto Serif", "Noto Serif SC", "serif"],
-        "body":        ["Plus Jakarta Sans", "sans-serif"],
-        "label":       ["Plus Jakarta Sans", "sans-serif"],
+        "body":        ["Noto Serif SC", "Source Han Serif SC", "serif"],
+        "label":       ["Noto Serif SC", "Source Han Serif SC", "serif"],
         "handwriting": ["Dancing Script", "cursive"],
       },
       borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
