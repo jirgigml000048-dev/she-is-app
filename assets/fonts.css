@@ -1,0 +1,27 @@
+/* She Is — Shared Font Loader
+   All pages should include: <link rel="stylesheet" href="assets/fonts.css">
+   This replaces per-page Google Fonts <link> tags. */
+
+/* Preconnect hints (browsers that support Link headers benefit automatically;
+   for others, each HTML page already has <link rel="preconnect"> tags) */
+
+/* Chinese serif — headlines */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&display=swap');
+
+/* Latin serif */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* Body / label sans-serif */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+/* Chinese sans-serif — UI labels */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+/* Italic accent */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
+/* Handwriting (used in tailwind config) */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap');
+
+/* Material Symbols icons */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
