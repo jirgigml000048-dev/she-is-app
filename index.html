@@ -17,6 +17,7 @@
         main > *:nth-child(3) { animation-delay: 0.19s; }
         main > *:nth-child(4) { animation-delay: 0.26s; }
     </style>
+<link rel="stylesheet" href="css/font-override.css">
 </head>
 <body class="bg-background text-on-surface font-body selection:bg-primary-fixed min-h-screen soft-gradient-bg">
 <div id="app-header"></div>
@@ -248,7 +249,7 @@ document.getElementById('reflectionAudio').addEventListener('ended', function() 
       if (!label) return;
       const span = document.createElement('span');
       span.textContent = String(label).substring(0, 12);
-      span.style.cssText = 'font-size:11px;padding:3px 10px;border-radius:999px;background:rgba(236,220,255,0.6);color:#4a3073;font-family:Plus Jakarta Sans,sans-serif;font-weight:600;';
+      span.style.cssText = 'font-size:11px;padding:3px 10px;border-radius:999px;background:rgba(236,220,255,0.6);color:#4a3073;font-family:'Noto Serif SC',Georgia,serif;font-weight:600;';
       container.appendChild(span);
     });
 
@@ -275,7 +276,7 @@ document.getElementById('reflectionAudio').addEventListener('ended', function() 
 
     // Empty state hint
     if (results.length === 0 && container) {
-      container.innerHTML = '<span style="font-size:11px;color:rgba(74,48,115,0.35);font-family:Plus Jakarta Sans,sans-serif;">完成第一个测评，解锁地图</span>';
+      container.innerHTML = '<span style="font-size:11px;color:rgba(74,48,115,0.35);font-family:'Noto Serif SC',Georgia,serif;">完成第一个测评，解锁地图</span>';
     }
   })();
 

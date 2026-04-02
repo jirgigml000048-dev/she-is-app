@@ -209,7 +209,7 @@ html.dark body { color-scheme: dark; }
   border: 1px solid rgba(74, 48, 115, 0.2);
   background: white;
   font-size: 13px !important;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Noto Serif SC', Georgia, serif;
   cursor: pointer;
   color: #4a454f;
   white-space: nowrap;

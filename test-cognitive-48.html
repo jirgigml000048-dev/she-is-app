@@ -173,7 +173,7 @@
 
       .test-intro-note {
         margin: 0;
-        font-family: 'DM Sans', sans-serif;
+        font-family: 'Noto Serif SC', Georgia, serif;
         font-size: 12px;
         color: #999;
         line-height: 1.6;
@@ -189,7 +189,7 @@
         backdrop-filter: blur(8px);
         border: none;
         border-radius: 30px;
-        font-family: 'DM Sans', sans-serif;
+        font-family: 'Noto Serif SC', Georgia, serif;
         font-size: 14px;
         letter-spacing: 0.15em;
         cursor: pointer;
@@ -466,7 +466,7 @@
     }
     body {
       background: #fcf9f6 !important;
-      font-family: "Plus Jakarta Sans", "Noto Serif SC", sans-serif !important;
+      font-family: 'Noto Serif SC', Georgia, serif !important;
     }
     h1, h2, h3, h4 {
       font-family: "Noto Serif SC", serif !important;
@@ -546,13 +546,13 @@
   <div style="width:100%;max-width:28rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:2rem;position:relative;z-index:10;">
     <!-- Header -->
     <div style="display:flex;flex-direction:column;gap:0.6rem;align-items:center;">
-      <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.4em;color:#9c3c62;font-weight:600;">Self Discovery</span>
+      <span style="font-family: 'Noto Serif SC', Georgia, serif;font-size:10px;text-transform:uppercase;letter-spacing:0.4em;color:#9c3c62;font-weight:600;">Self Discovery</span>
       <h2 style="font-family:'Noto Serif SC',serif;font-size:2rem;line-height:1.2;color:#33185c;margin:0;">
         Jung Cognitive (Quick)<br>
         <span style="display:block;margin-top:0.5rem;font-weight:400;opacity:0.9;">荣格认知功能 · 快速版</span>
       </h2>
       <div style="height:1px;width:3rem;background:#ccc4d1;"></div>
-      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;letter-spacing:0.15em;color:#4a454f;text-transform:uppercase;margin:0;">
+      <p style="font-family: 'Noto Serif SC', Georgia, serif;font-size:11px;letter-spacing:0.15em;color:#4a454f;text-transform:uppercase;margin:0;">
         MBTI-CF Quick · 48 Questions
       </p>
     </div>
@@ -567,10 +567,10 @@
     </div>
     <!-- CTA Button -->
     <div style="width:100%;padding-top:1.2rem;">
-      <button id="startBtn" style="width:100%;height:4rem;background:linear-gradient(to right,#33185c,#4a3073);color:#ffffff;border:none;border-radius:0.75rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;letter-spacing:0.2em;font-size:0.85rem;text-transform:uppercase;cursor:pointer;box-shadow:0 20px 40px rgba(51,24,92,0.2);transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+      <button id="startBtn" style="width:100%;height:4rem;background:linear-gradient(to right,#33185c,#4a3073);color:#ffffff;border:none;border-radius:0.75rem;font-family: 'Noto Serif SC', Georgia, serif;font-weight:500;letter-spacing:0.2em;font-size:0.85rem;text-transform:uppercase;cursor:pointer;box-shadow:0 20px 40px rgba(51,24,92,0.2);transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:0.5rem;">
         Ready / 准备好了 →
       </button>
-      <p style="margin-top:1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;color:#7b7580;letter-spacing:0.15em;text-transform:uppercase;">Approx. 5-8 Minutes</p>
+      <p style="margin-top:1.5rem;font-family: 'Noto Serif SC', Georgia, serif;font-size:10px;color:#7b7580;letter-spacing:0.15em;text-transform:uppercase;">Approx. 5-8 Minutes</p>
     </div>
   </div>
   </div>
@@ -1092,7 +1092,7 @@ const cognitiveLongDesc = {
         const counterEl = document.getElementById('quizCounter');
         const answeredEl = document.getElementById('quizAnswered');
         const barEl = document.getElementById('quizBar');
-        if (counterEl) counterEl.innerHTML = `${state.page + 1} <span style="font-size:1rem;color:rgba(204,196,209,1);font-family:'Plus Jakarta Sans',sans-serif;">/ ${total}</span>`;
+        if (counterEl) counterEl.innerHTML = `${state.page + 1} <span style="font-size:1rem;color:rgba(204,196,209,1);font-family: 'Noto Serif SC', Georgia, serif;">/ ${total}</span>`;
         if (answeredEl) answeredEl.innerHTML = `已完成 ${done} / ${state.data.total} <span style="opacity:0.6;">/ Completed ${done} / ${state.data.total}</span>`;
         if (barEl) barEl.style.width = `${(done / state.data.total) * 100}%`;
         updateProgress();
