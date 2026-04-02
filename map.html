@@ -7,7 +7,7 @@
   <title>内在地形图 · She Is</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="assets/tailwind-config.js"></script>
@@ -38,20 +38,20 @@
     header.visible { opacity: 1 !important; }
     .map-container { padding: 16px; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
     .map-container svg { width: 100%; max-width: 640px; height: auto; display: block; margin: 0 auto; }
-    .hint { text-align: center; font-size: 11px; color: var(--text-muted); letter-spacing: 1px; margin-top: 12px; width: 100%; font-family: 'Noto Sans SC', sans-serif; }
+    .hint { text-align: center; font-size: 11px; color: var(--text-muted); letter-spacing: 1px; margin-top: 12px; width: 100%; font-family: 'Noto Serif SC', Georgia, serif; }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: translateY(0); }
     }
     .mood-section { margin: 24px 24px 0; }
     .mood-inline-picker { margin-top: 20px; background: rgba(245,240,235,0.6); border-radius: 12px; padding: 16px; }
-    .mood-inline-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(74,48,115,0.5); font-family: 'Noto Sans SC', sans-serif; text-align: center; margin-bottom: 12px; }
+    .mood-inline-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(74,48,115,0.5); font-family: 'Noto Serif SC', Georgia, serif; text-align: center; margin-bottom: 12px; }
     .mood-options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .mood-capsule { background: rgba(255,255,255,0.7); border: 1px solid rgba(74,48,115,0.15); border-radius: 100px; padding: 8px 12px; font-size: 11px; font-family: 'Noto Sans SC', sans-serif; color: rgba(30,22,40,0.75); cursor: pointer; transition: all 0.2s; text-align: center; }
+    .mood-capsule { background: rgba(255,255,255,0.7); border: 1px solid rgba(74,48,115,0.15); border-radius: 100px; padding: 8px 12px; font-size: 11px; font-family: 'Noto Serif SC', Georgia, serif; color: rgba(30,22,40,0.75); cursor: pointer; transition: all 0.2s; text-align: center; }
     .mood-capsule:hover { background: rgba(74,48,115,0.08); }
     .mood-capsule.selected { border-color: var(--accent); background: rgba(74,48,115,0.12); color: var(--accent); font-weight: 600; }
-    .mood-recorded { text-align: center; font-size: 10px; letter-spacing: 1.5px; color: rgba(74,48,115,0.6); font-family: 'Noto Sans SC', sans-serif; margin-top: 12px; }
-    .mood-title { font-size: 10px; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 12px; text-align: center; font-family: 'Noto Sans SC', sans-serif; text-transform: uppercase; }
+    .mood-recorded { text-align: center; font-size: 10px; letter-spacing: 1.5px; color: rgba(74,48,115,0.6); font-family: 'Noto Serif SC', Georgia, serif; margin-top: 12px; }
+    .mood-title { font-size: 10px; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 12px; text-align: center; font-family: 'Noto Serif SC', Georgia, serif; text-transform: uppercase; }
     .mood-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; }
     .mood-cell { aspect-ratio: 1; border-radius: 2px; display: flex; align-items: center; justify-content: center; }
     .mood-day { font-size: 7px; color: rgba(74,48,115,0.4); font-family: 'Noto Serif', Georgia, serif; }
@@ -65,19 +65,19 @@
     .cta-card { padding: 16px 20px; border: 1px solid var(--border); border-radius: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-decoration: none; color: var(--text); transition: background 0.2s; }
     .cta-card:hover { background: rgba(74,48,115,0.04); }
     .cta-label { font-size: 12px; letter-spacing: 1px; }
-    .cta-sub { font-size: 10px; color: var(--text-muted); margin-top: 3px; font-family: 'Noto Sans SC', sans-serif; }
+    .cta-sub { font-size: 10px; color: var(--text-muted); margin-top: 3px; font-family: 'Noto Serif SC', Georgia, serif; }
     .cta-arrow { font-size: 14px; color: var(--accent); opacity: 0.5; }
     .share-section { margin: 40px 24px; display: flex; flex-direction: column; align-items: center; }
     .share-card { width: 240px; padding: 1px; background: linear-gradient(135deg, rgba(74,48,115,0.3), rgba(74,48,115,0.1)); border-radius: 14px; }
     .share-card-inner { background: var(--bg); border-radius: 13px; padding: 24px 20px; text-align: center; }
-    .share-brand { font-size: 8px; letter-spacing: 4px; color: var(--accent); margin-bottom: 16px; opacity: 0.6; font-family: 'Noto Sans SC', sans-serif; }
+    .share-brand { font-size: 8px; letter-spacing: 4px; color: var(--accent); margin-bottom: 16px; opacity: 0.6; font-family: 'Noto Serif SC', Georgia, serif; }
     .share-name { font-size: 20px; font-family: 'Noto Serif', Georgia, serif; font-style: italic; font-weight: 300; color: var(--text); margin-bottom: 6px; letter-spacing: 3px; }
-    .share-type { font-size: 9px; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 16px; font-family: 'Noto Sans SC', sans-serif; }
+    .share-type { font-size: 9px; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 16px; font-family: 'Noto Serif SC', Georgia, serif; }
     .share-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin-bottom: 16px; }
-    .share-tag-item { font-size: 8px; padding: 3px 8px; border: 1px solid var(--border); border-radius: 12px; color: var(--text-muted); letter-spacing: 0.5px; font-family: 'Noto Sans SC', sans-serif; }
+    .share-tag-item { font-size: 8px; padding: 3px 8px; border: 1px solid var(--border); border-radius: 12px; color: var(--text-muted); letter-spacing: 0.5px; font-family: 'Noto Serif SC', Georgia, serif; }
     .share-footer { font-size: 7px; color: rgba(30,22,40,0.2); letter-spacing: 2px; }
-    .share-hint { font-size: 9px; color: var(--text-muted); margin-top: 12px; letter-spacing: 1px; font-family: 'Noto Sans SC', sans-serif; }
-    footer { text-align: center; padding: 32px 24px; font-size: 9px; color: rgba(30,22,40,0.2); letter-spacing: 3px; font-family: 'Noto Sans SC', sans-serif; }
+    .share-hint { font-size: 9px; color: var(--text-muted); margin-top: 12px; letter-spacing: 1px; font-family: 'Noto Serif SC', Georgia, serif; }
+    footer { text-align: center; padding: 32px 24px; font-size: 9px; color: rgba(30,22,40,0.2); letter-spacing: 3px; font-family: 'Noto Serif SC', Georgia, serif; }
 
     /* ─── 四轴画像 区块 ─── */
     .axes-section { margin: 40px 0 0; }
@@ -145,7 +145,7 @@
     .axis-card-desc {
       font-size: 11px;
       color: var(--text-muted);
-      font-family: 'Noto Sans SC', sans-serif;
+      font-family: 'Noto Serif SC', Georgia, serif;
       line-height: 1.6;
       letter-spacing: 0.3px;
     }
@@ -200,7 +200,7 @@
       border-radius: 50px;
       background: rgba(74,48,115,0.08);
       color: var(--accent);
-      font-family: 'Noto Sans SC', sans-serif;
+      font-family: 'Noto Serif SC', Georgia, serif;
       letter-spacing: 0.5px;
       border: 1px solid rgba(74,48,115,0.12);
     }
@@ -232,24 +232,74 @@
       font-size: 11px;
       letter-spacing: 3px;
       color: var(--accent);
-      font-family: 'Noto Sans SC', sans-serif;
+      font-family: 'Noto Serif SC', Georgia, serif;
       text-decoration: none;
       transition: background 0.2s, border-color 0.2s;
     }
     .map-cta-btn:hover { background: rgba(74,48,115,0.06); border-color: rgba(74,48,115,0.5); }
-    .map-cta-sub { font-size: 10px; color: var(--text-muted); margin-top: 10px; font-family: 'Noto Sans SC', sans-serif; letter-spacing: 0.5px; }
+    .map-cta-sub { font-size: 10px; color: var(--text-muted); margin-top: 10px; font-family: 'Noto Serif SC', Georgia, serif; letter-spacing: 0.5px; }
 
     /* Empty state axis cards */
     .empty-axis-card { display:block;padding:18px 14px;border:1px solid rgba(74,48,115,0.13);border-radius:16px;background:rgba(74,48,115,0.02);text-decoration:none;transition:background 0.2s,border-color 0.2s; }
     .empty-axis-card:hover { background:rgba(74,48,115,0.06);border-color:rgba(74,48,115,0.25); }
-    .empty-axis-num { font-size:10px;color:rgba(74,48,115,0.35);letter-spacing:3px;font-family:'Noto Sans SC',sans-serif;margin-bottom:8px; }
+    .empty-axis-num { font-size:10px;color:rgba(74,48,115,0.35);letter-spacing:3px;font-family:'Noto Serif SC',Georgia,serif;margin-bottom:8px; }
     .empty-axis-name { font-size:14px;color:var(--text);font-family:'Noto Serif SC',serif;font-weight:400;margin-bottom:2px; }
     .empty-axis-en { font-size:9px;color:var(--text-muted);font-family:'Noto Serif', Georgia, serif;font-style:italic;margin-bottom:8px; }
-    .empty-axis-desc { font-size:10px;color:var(--text-muted);font-family:'Noto Sans SC',sans-serif;line-height:1.7; }
+    .empty-axis-desc { font-size:10px;color:var(--text-muted);font-family:'Noto Serif SC',Georgia,serif;line-height:1.7; }
 
     /* Chat bubble styles */
-    .chat-bubble-user { align-self:flex-end;max-width:82%;padding:10px 14px;border-radius:14px 14px 4px 14px;background:rgba(74,48,115,0.08);font-size:13px;color:var(--text);font-family:'Noto Sans SC',sans-serif;line-height:1.6; }
-    .chat-bubble-ai { align-self:flex-start;max-width:82%;padding:10px 14px;border-radius:14px 14px 14px 4px;background:rgba(74,48,115,0.03);border:1px solid rgba(74,48,115,0.08);font-size:13px;color:var(--text);font-family:'Noto Sans SC',sans-serif;line-height:1.6;font-style:italic; }
+    .chat-bubble-user { align-self:flex-end;max-width:82%;padding:10px 14px;border-radius:14px 14px 4px 14px;background:rgba(74,48,115,0.08);font-size:13px;color:var(--text);font-family:'Noto Serif SC',Georgia,serif;line-height:1.6; }
+    .chat-bubble-ai { align-self:flex-start;max-width:82%;padding:10px 14px;border-radius:14px 14px 14px 4px;background:rgba(74,48,115,0.03);border:1px solid rgba(74,48,115,0.08);font-size:13px;color:var(--text);font-family:'Noto Serif SC',Georgia,serif;line-height:1.6;font-style:italic; }
+
+    /* ─── Mobile First: 375–428px ─── */
+    @media (max-width: 480px) {
+      body {
+        font-size: 14px;
+        padding-top: 60px;
+        padding-bottom: 100px;
+      }
+      .map-container { padding: 12px 8px; }
+      .map-container svg { max-width: 100%; }
+      .mood-section { margin: 16px 16px 0; }
+      .mood-inline-picker { padding: 12px; }
+      .mood-options-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
+      .mood-capsule { font-size: 11px; padding: 7px 10px; }
+      .narrative-section { margin: 24px 16px 0; }
+      .narrative-text { font-size: 13px; line-height: 1.9; }
+      .cta-section { margin: 20px 16px 0; }
+      .cta-card { padding: 14px 16px; }
+      .cta-label { font-size: 12px; }
+      .cta-sub { font-size: 10px; }
+      .share-section { margin: 28px 16px; }
+      .share-card { width: 100%; max-width: 320px; }
+      .axes-section { margin: 28px 0 0; }
+      .axes-header { padding: 0 16px; }
+      .axes-list { padding: 0 16px; gap: 10px; }
+      .axis-card-header { padding: 14px 16px; }
+      .axis-card-name { font-size: 14px; }
+      .axis-card-desc { font-size: 11px; }
+      .axis-card-body { padding: 0 16px 14px; }
+      .test-item-name { font-size: 12px; }
+      .map-cta { margin: 24px 16px 0; }
+      .map-cta-btn { font-size: 10px; padding: 11px 24px; }
+      .empty-axis-card { padding: 14px 12px; }
+      .empty-axis-name { font-size: 13px; }
+      .empty-axis-desc { font-size: 10px; }
+      /* Share modal full-screen on mobile */
+      #shareModal > div {
+        width: 100% !important;
+        max-width: 100% !important;
+        border-radius: 20px 20px 0 0 !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        margin: 0 !important;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      footer { padding: 24px 16px; font-size: 9px; }
+    }
 
   </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -278,9 +328,9 @@
 <!-- Empty State Guide (shown when no tests completed) -->
 <div id="emptyGuide" style="display:none;padding:40px 24px 8px;max-width:420px;margin:0 auto;">
   <div style="text-align:center;margin-bottom:28px;">
-    <div style="font-size:9px;letter-spacing:5px;color:rgba(74,48,115,0.4);font-family:'Noto Sans SC',sans-serif;margin-bottom:12px;">开始探索 · BEGIN</div>
+    <div style="font-size:9px;letter-spacing:5px;color:rgba(74,48,115,0.4);font-family:'Noto Serif SC',Georgia,serif;margin-bottom:12px;">开始探索 · BEGIN</div>
     <div style="font-size:24px;font-family:'Noto Serif SC',serif;font-weight:300;color:var(--text);letter-spacing:2px;line-height:1.5;margin-bottom:10px;">你的地图<br>还是一张白纸</div>
-    <div style="font-size:11px;color:var(--text-muted);font-family:'Noto Sans SC',sans-serif;letter-spacing:0.5px;line-height:1.8;">选一个你最好奇的维度开始<br>第一次测评之后，你就能看见轮廓</div>
+    <div style="font-size:11px;color:var(--text-muted);font-family:'Noto Serif SC',Georgia,serif;letter-spacing:0.5px;line-height:1.8;">选一个你最好奇的维度开始<br>第一次测评之后，你就能看见轮廓</div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px;">
     <a href="test-cognitive.html" class="empty-axis-card">
@@ -328,7 +378,7 @@
   </div>
   <div class="narrative-text" id="narrativeText"></div>
   <div style="text-align:center;margin-top:20px;">
-    <button id="regenNarrativeBtn" onclick="regenNarrative()" style="padding:8px 24px;border:1px solid rgba(74,48,115,0.3);border-radius:50px;font-size:10px;letter-spacing:2px;color:var(--accent);font-family:'Noto Sans SC',sans-serif;background:transparent;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='rgba(74,48,115,0.06)'" onmouseout="this.style.background='transparent'">重新解读</button>
+    <button id="regenNarrativeBtn" onclick="regenNarrative()" style="padding:8px 24px;border:1px solid rgba(74,48,115,0.3);border-radius:50px;font-size:10px;letter-spacing:2px;color:var(--accent);font-family:'Noto Serif SC',Georgia,serif;background:transparent;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='rgba(74,48,115,0.06)'" onmouseout="this.style.background='transparent'">重新解读</button>
   </div>
 </div>
 
@@ -336,12 +386,12 @@
 <div id="chatSection" style="display:none;padding:0 24px 24px;max-width:600px;margin:0 auto;">
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
     <div style="flex:1;height:1px;background:rgba(74,48,115,0.15);"></div>
-    <span style="font-size:9px;letter-spacing:4px;color:rgba(74,48,115,0.4);font-family:'Noto Sans SC',sans-serif;white-space:nowrap;">继续聊 · Ask More</span>
+    <span style="font-size:9px;letter-spacing:4px;color:rgba(74,48,115,0.4);font-family:'Noto Serif SC',Georgia,serif;white-space:nowrap;">继续聊 · Ask More</span>
     <div style="flex:1;height:1px;background:rgba(74,48,115,0.15);"></div>
   </div>
   <div id="chatMessages" style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;max-height:320px;overflow-y:auto;padding-right:4px;"></div>
   <div style="display:flex;gap:10px;align-items:flex-end;">
-    <textarea id="chatInput" rows="2" placeholder="问一个关于你自己的问题..." style="flex:1;background:rgba(74,48,115,0.03);border:1px solid rgba(74,48,115,0.15);border-radius:14px;padding:12px 14px;font-size:13px;color:var(--text);font-family:'Noto Sans SC',sans-serif;resize:none;line-height:1.5;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='rgba(74,48,115,0.4)'" onblur="this.style.borderColor='rgba(74,48,115,0.15)'"></textarea>
+    <textarea id="chatInput" rows="2" placeholder="问一个关于你自己的问题..." style="flex:1;background:rgba(74,48,115,0.03);border:1px solid rgba(74,48,115,0.15);border-radius:14px;padding:12px 14px;font-size:13px;color:var(--text);font-family:'Noto Serif SC',Georgia,serif;resize:none;line-height:1.5;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='rgba(74,48,115,0.4)'" onblur="this.style.borderColor='rgba(74,48,115,0.15)'"></textarea>
     <button id="chatSendBtn" style="width:44px;height:44px;border-radius:50%;background:var(--accent);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:opacity 0.2s;flex-shrink:0;">
       <span class="material-symbols-outlined" style="font-size:18px;">send</span>
     </button>
@@ -352,7 +402,7 @@
 <div id="timelineSection" style="display:none;padding:0 24px 24px;max-width:600px;margin:0 auto;">
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
     <div style="flex:1;height:1px;background:rgba(74,48,115,0.15);"></div>
-    <span style="font-size:9px;letter-spacing:4px;color:rgba(74,48,115,0.4);font-family:'Noto Sans SC',sans-serif;white-space:nowrap;">成长轨迹 · Timeline</span>
+    <span style="font-size:9px;letter-spacing:4px;color:rgba(74,48,115,0.4);font-family:'Noto Serif SC',Georgia,serif;white-space:nowrap;">成长轨迹 · Timeline</span>
     <div style="flex:1;height:1px;background:rgba(74,48,115,0.15);"></div>
   </div>
   <div id="timelineContent"></div>
@@ -388,8 +438,8 @@
 
 <div class="share-section" id="shareSection" style="display:flex">
   <div style="display:flex;gap:12px;width:100%;max-width:340px;">
-    <button onclick="openShareModal('portrait')" style="flex:1;padding:13px 8px;border:1px solid rgba(74,48,115,0.3);border-radius:50px;font-size:11px;letter-spacing:1.5px;color:var(--accent);font-family:'Noto Sans SC',sans-serif;background:transparent;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='rgba(74,48,115,0.06)'" onmouseout="this.style.background='transparent'">分享完整画像</button>
-    <button onclick="openShareModal('assessment')" style="flex:1;padding:13px 8px;border:1px solid rgba(74,48,115,0.3);border-radius:50px;font-size:11px;letter-spacing:1.5px;color:var(--accent);font-family:'Noto Sans SC',sans-serif;background:transparent;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='rgba(74,48,115,0.06)'" onmouseout="this.style.background='transparent'">分享测评结果</button>
+    <button onclick="openShareModal('portrait')" style="flex:1;padding:13px 8px;border:1px solid rgba(74,48,115,0.3);border-radius:50px;font-size:11px;letter-spacing:1.5px;color:var(--accent);font-family:'Noto Serif SC',Georgia,serif;background:transparent;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='rgba(74,48,115,0.06)'" onmouseout="this.style.background='transparent'">分享完整画像</button>
+    <button onclick="openShareModal('assessment')" style="flex:1;padding:13px 8px;border:1px solid rgba(74,48,115,0.3);border-radius:50px;font-size:11px;letter-spacing:1.5px;color:var(--accent);font-family:'Noto Serif SC',Georgia,serif;background:transparent;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='rgba(74,48,115,0.06)'" onmouseout="this.style.background='transparent'">分享测评结果</button>
   </div>
 </div>
 
@@ -398,7 +448,7 @@
   <div id="shareModalInner" style="max-width:400px;margin:0 auto;padding:0 16px;pointer-events:none;">
     <div style="pointer-events:auto;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-        <span style="font-size:11px;letter-spacing:3px;color:rgba(255,255,255,0.5);font-family:'Noto Sans SC',sans-serif;">长按图片保存</span>
+        <span style="font-size:11px;letter-spacing:3px;color:rgba(255,255,255,0.5);font-family:'Noto Serif SC',Georgia,serif;">长按图片保存</span>
         <button onclick="closeShareModal()" style="background:rgba(255,255,255,0.1);border:none;border-radius:50%;width:32px;height:32px;color:rgba(255,255,255,0.7);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">×</button>
       </div>
       <div id="shareCardContainer" style="background:#f5f0eb;border-radius:16px;overflow:hidden;"></div>
@@ -683,7 +733,7 @@
       // Check for bold header **...**
       const boldMatch = p.match(/^\*\*(.+?)\*\*\n?([\s\S]*)/);
       if (boldMatch) {
-        return `<div style="margin-bottom:16px;"><div style="font-size:10px;letter-spacing:2px;color:var(--accent);font-family:'Noto Sans SC',sans-serif;margin-bottom:6px;opacity:0.7;">${boldMatch[1]}</div><p class="narrative-text" style="margin:0;">${boldMatch[2]}</p></div>`;
+        return `<div style="margin-bottom:16px;"><div style="font-size:10px;letter-spacing:2px;color:var(--accent);font-family:'Noto Serif SC',Georgia,serif;margin-bottom:6px;opacity:0.7;">${boldMatch[1]}</div><p class="narrative-text" style="margin:0;">${boldMatch[2]}</p></div>`;
       }
       return `<p class="narrative-text" style="margin-bottom:14px;">${p}</p>`;
     }).join('');
@@ -760,7 +810,7 @@
   function openShareModal(type) {
     const modal = document.getElementById('shareModal');
     const container = document.getElementById('shareCardContainer');
-    container.innerHTML = '<div style="padding:48px 0;text-align:center;color:rgba(30,22,40,0.4);font-size:11px;letter-spacing:2px;font-family:\'Noto Sans SC\',sans-serif;">生成中…</div>';
+    container.innerHTML = '<div style="padding:48px 0;text-align:center;color:rgba(30,22,40,0.4);font-size:11px;letter-spacing:2px;font-family:\'Noto Serif SC\',Georgia,serif;">生成中…</div>';
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden';
 
@@ -793,7 +843,7 @@
 
           const hint = document.createElement('div');
           hint.id = 'shareImgHint';
-          hint.style.cssText = 'text-align:center;margin-top:14px;font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:1.5px;font-family:\'Noto Sans SC\',sans-serif;';
+          hint.style.cssText = 'text-align:center;margin-top:14px;font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:1.5px;font-family:\'Noto Serif SC\',Georgia,serif;';
           hint.textContent = '长按图片保存到相册';
           container.parentNode.appendChild(hint);
 
@@ -801,13 +851,13 @@
           dlBtn.id = 'shareImgDl';
           dlBtn.href = dataUrl;
           dlBtn.download = 'she-is-portrait.png';
-          dlBtn.style.cssText = 'display:block;margin:12px auto 0;width:fit-content;padding:9px 24px;border:1px solid rgba(255,255,255,0.25);border-radius:50px;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.55);font-family:\'Noto Sans SC\',sans-serif;text-decoration:none;';
+          dlBtn.style.cssText = 'display:block;margin:12px auto 0;width:fit-content;padding:9px 24px;border:1px solid rgba(255,255,255,0.25);border-radius:50px;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.55);font-family:\'Noto Serif SC\',Georgia,serif;text-decoration:none;';
           dlBtn.textContent = '下载图片';
           container.parentNode.appendChild(dlBtn);
 
           document.body.removeChild(offscreen);
         }).catch(err => {
-          container.innerHTML = '<div style="padding:32px;text-align:center;color:rgba(200,80,80,0.7);font-size:11px;letter-spacing:1px;font-family:\'Noto Sans SC\',sans-serif;">生成失败，请重试</div>';
+          container.innerHTML = '<div style="padding:32px;text-align:center;color:rgba(200,80,80,0.7);font-size:11px;letter-spacing:1px;font-family:\'Noto Serif SC\',Georgia,serif;">生成失败，请重试</div>';
           document.body.removeChild(offscreen);
           console.error('html2canvas error', err);
         });
@@ -835,7 +885,7 @@
     // Header
     wrap.innerHTML += `
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="font-size:9px;letter-spacing:5px;color:rgba(74,48,115,0.45);font-family:'Noto Sans SC',sans-serif;margin-bottom:10px;">女也 · SHE IS</div>
+        <div style="font-size:9px;letter-spacing:5px;color:rgba(74,48,115,0.45);font-family:'Noto Serif SC',Georgia,serif;margin-bottom:10px;">女也 · SHE IS</div>
         <div style="font-size:22px;font-family:'Noto Serif SC',Georgia,serif;font-weight:300;color:#1E1628;letter-spacing:4px;margin-bottom:4px;">我的内在画像</div>
         <div style="font-size:10px;color:rgba(30,22,40,0.4);letter-spacing:2px;font-family:'Noto Serif', Georgia, serif;font-style:italic;">Inner Landscape</div>
         <div style="width:40px;height:1px;background:rgba(74,48,115,0.2);margin:16px auto 0;"></div>
@@ -902,7 +952,7 @@
         <div style="font-size:9px;color:rgba(74,48,115,0.5);letter-spacing:2px;font-family:'Noto Serif', Georgia, serif;font-style:italic;margin-bottom:5px;">${axis.nameEn}</div>
         <div style="font-size:12px;color:#1E1628;font-family:'Noto Serif SC',serif;letter-spacing:1px;margin-bottom:6px;">${axis.name}</div>
         <div style="display:flex;flex-wrap:wrap;gap:4px;">
-          ${tags.length ? tags.map(t => `<span style="font-size:8px;padding:2px 7px;border-radius:10px;background:rgba(74,48,115,0.08);color:#4A3073;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.5px;">${String(t).substring(0,16)}</span>`).join('') : '<span style="font-size:8px;color:rgba(30,22,40,0.25);font-family:\'Noto Sans SC\',sans-serif;letter-spacing:1px;">待探索</span>'}
+          ${tags.length ? tags.map(t => `<span style="font-size:8px;padding:2px 7px;border-radius:10px;background:rgba(74,48,115,0.08);color:#4A3073;font-family:'Noto Serif SC',Georgia,serif;letter-spacing:0.5px;">${String(t).substring(0,16)}</span>`).join('') : '<span style="font-size:8px;color:rgba(30,22,40,0.25);font-family:\'Noto Serif SC\',Georgia,serif;letter-spacing:1px;">待探索</span>'}
         </div>`;
       axesDiv.appendChild(cell);
     });
@@ -923,8 +973,8 @@
     // Branding footer
     wrap.innerHTML += `
       <div style="text-align:center;padding-top:16px;border-top:1px solid rgba(74,48,115,0.08);">
-        <div style="font-size:8px;letter-spacing:3px;color:rgba(74,48,115,0.3);font-family:'Noto Sans SC',sans-serif;">女也 She Is · Inner Landscape</div>
-        <div style="font-size:7px;color:rgba(30,22,40,0.2);letter-spacing:2px;font-family:'Noto Sans SC',sans-serif;margin-top:4px;">she-is-app.netlify.app</div>
+        <div style="font-size:8px;letter-spacing:3px;color:rgba(74,48,115,0.3);font-family:'Noto Serif SC',Georgia,serif;">女也 She Is · Inner Landscape</div>
+        <div style="font-size:7px;color:rgba(30,22,40,0.2);letter-spacing:2px;font-family:'Noto Serif SC',Georgia,serif;margin-top:4px;">she-is-app.netlify.app</div>
       </div>`;
 
     return wrap;
@@ -937,7 +987,7 @@
     // Header
     wrap.innerHTML += `
       <div style="text-align:center;margin-bottom:28px;">
-        <div style="font-size:9px;letter-spacing:5px;color:rgba(74,48,115,0.45);font-family:'Noto Sans SC',sans-serif;margin-bottom:10px;">女也 · SHE IS</div>
+        <div style="font-size:9px;letter-spacing:5px;color:rgba(74,48,115,0.45);font-family:'Noto Serif SC',Georgia,serif;margin-bottom:10px;">女也 · SHE IS</div>
         <div style="font-size:22px;font-family:'Noto Serif SC',Georgia,serif;font-weight:300;color:#1E1628;letter-spacing:4px;margin-bottom:4px;">我的测评档案</div>
         <div style="font-size:10px;color:rgba(30,22,40,0.4);letter-spacing:2px;font-family:'Noto Serif', Georgia, serif;font-style:italic;">Assessment Archive</div>
         <div style="width:40px;height:1px;background:rgba(74,48,115,0.2);margin:16px auto 0;"></div>
@@ -957,7 +1007,7 @@
     const completedTests = allTests.filter(t => results[t.id]);
     if (completedTests.length === 0) {
       const emptyDiv = document.createElement('div');
-      emptyDiv.style.cssText = 'text-align:center;padding:40px 0;color:rgba(30,22,40,0.3);font-size:11px;letter-spacing:1px;font-family:\'Noto Sans SC\',sans-serif;';
+      emptyDiv.style.cssText = 'text-align:center;padding:40px 0;color:rgba(30,22,40,0.3);font-size:11px;letter-spacing:1px;font-family:\'Noto Serif SC\',Georgia,serif;';
       emptyDiv.textContent = '还没有完成任何测评';
       wrap.appendChild(emptyDiv);
     } else {
@@ -976,7 +1026,7 @@
               <div style="font-size:12px;color:#1E1628;letter-spacing:1px;font-family:'Noto Serif SC',serif;">${test.name}</div>
               <div style="font-size:9px;color:rgba(30,22,40,0.35);letter-spacing:1.5px;font-family:'Noto Serif', Georgia, serif;font-style:italic;margin-top:2px;">${test.nameEn}</div>
             </div>
-            ${summary ? `<span style="font-size:9px;padding:3px 10px;border-radius:12px;background:rgba(74,48,115,0.08);color:#4A3073;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.5px;white-space:nowrap;">${String(summary).substring(0,16)}</span>` : (score !== '—' ? `<span style="font-size:11px;color:rgba(74,48,115,0.6);font-family:'Noto Serif', Georgia, serif;font-weight:300;">${score}</span>` : '')}
+            ${summary ? `<span style="font-size:9px;padding:3px 10px;border-radius:12px;background:rgba(74,48,115,0.08);color:#4A3073;font-family:'Noto Serif SC',Georgia,serif;letter-spacing:0.5px;white-space:nowrap;">${String(summary).substring(0,16)}</span>` : (score !== '—' ? `<span style="font-size:11px;color:rgba(74,48,115,0.6);font-family:'Noto Serif', Georgia, serif;font-weight:300;">${score}</span>` : '')}
           </div>
           ${scoreNum !== null ? `<div style="height:2px;background:rgba(74,48,115,0.08);border-radius:1px;overflow:hidden;"><div style="height:100%;width:${scoreNum}%;background:rgba(74,48,115,0.3);border-radius:1px;transition:width 0.6s;"></div></div>` : ''}`;
         listDiv.appendChild(card);
@@ -987,8 +1037,8 @@
     // Branding footer
     wrap.innerHTML += `
       <div style="text-align:center;padding-top:16px;border-top:1px solid rgba(74,48,115,0.08);">
-        <div style="font-size:8px;letter-spacing:3px;color:rgba(74,48,115,0.3);font-family:'Noto Sans SC',sans-serif;">女也 She Is · Inner Landscape</div>
-        <div style="font-size:7px;color:rgba(30,22,40,0.2);letter-spacing:2px;font-family:'Noto Sans SC',sans-serif;margin-top:4px;">she-is-app.netlify.app</div>
+        <div style="font-size:8px;letter-spacing:3px;color:rgba(74,48,115,0.3);font-family:'Noto Serif SC',Georgia,serif;">女也 She Is · Inner Landscape</div>
+        <div style="font-size:7px;color:rgba(30,22,40,0.2);letter-spacing:2px;font-family:'Noto Serif SC',Georgia,serif;margin-top:4px;">she-is-app.netlify.app</div>
       </div>`;
 
     return wrap;
@@ -1039,7 +1089,7 @@
       const header = document.createElement('div');
       header.className = 'axis-card-header';
       const progress = axis.tests.length > 0 ? `${completedTests.length}/${axis.tests.length}` : '';
-      const progressLabel = isCompleted ? `<span style="font-size:9px;color:var(--accent);opacity:0.6;font-family:'Noto Sans SC',sans-serif;letter-spacing:1px;margin-top:5px;display:block;">${progress} 已完成</span>` : `<span style="font-size:9px;color:var(--text-muted);font-family:'Noto Sans SC',sans-serif;letter-spacing:1px;margin-top:5px;display:block;">待探索</span>`;
+      const progressLabel = isCompleted ? `<span style="font-size:9px;color:var(--accent);opacity:0.6;font-family:'Noto Serif SC',Georgia,serif;letter-spacing:1px;margin-top:5px;display:block;">${progress} 已完成</span>` : `<span style="font-size:9px;color:var(--text-muted);font-family:'Noto Serif SC',Georgia,serif;letter-spacing:1px;margin-top:5px;display:block;">待探索</span>`;
       header.innerHTML = `
         <div class="axis-card-title">
           <div class="axis-card-name">${axis.name} <span class="axis-card-name-en">${axis.nameEn}</span></div>
@@ -1121,7 +1171,7 @@
       const name = nameMap[moduleId] || moduleId;
       const wrap = document.createElement('div');
       wrap.style.cssText = 'margin-bottom:24px;';
-      wrap.innerHTML = `<div style="font-size:10px;color:var(--text-muted);font-family:'Noto Sans SC',sans-serif;letter-spacing:2px;margin-bottom:10px;">${name}</div>`;
+      wrap.innerHTML = `<div style="font-size:10px;color:var(--text-muted);font-family:'Noto Serif SC',Georgia,serif;letter-spacing:2px;margin-bottom:10px;">${name}</div>`;
       const track = document.createElement('div');
       track.style.cssText = 'display:flex;align-items:flex-start;gap:0;';
       const recent = history.slice(-5);
@@ -1133,7 +1183,7 @@
         dot.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:5px;min-width:52px;';
         dot.innerHTML = `
           <div style="width:${isLatest ? 11 : 8}px;height:${isLatest ? 11 : 8}px;border-radius:50%;background:${isLatest ? 'var(--accent)' : 'rgba(74,48,115,0.22)'};flex-shrink:0;"></div>
-          <div style="font-size:8px;color:var(--text-muted);font-family:'Noto Sans SC',sans-serif;text-align:center;">${label}</div>
+          <div style="font-size:8px;color:var(--text-muted);font-family:'Noto Serif SC',Georgia,serif;text-align:center;">${label}</div>
           <div style="font-size:9px;color:${isLatest ? 'var(--accent)' : 'var(--text-muted)'};font-family:'Noto Serif SC',serif;text-align:center;font-weight:${isLatest ? 600 : 400};">${entry.summary || safeScore(entry)}</div>`;
         track.appendChild(dot);
         if (i < recent.length - 1) {
