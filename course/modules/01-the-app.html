@@ -1,0 +1,149 @@
+    <section class="module" id="module-1" style="background: var(--color-bg);">
+      <div class="module-content">
+
+        <header class="module-header animate-in">
+          <span class="module-number">01</span>
+          <h1 class="module-title">What is She Is?</h1>
+          <p class="module-subtitle">A self-discovery app for women — and a surprisingly elegant piece of software.</p>
+        </header>
+
+        <!-- Screen 1: The product -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">内心的注视是种无畏的爱</h2>
+          <p><em>"She Is" (女也)</em> is a web app that invites women to explore their inner landscape through a series of <span class="term" data-definition="A structured questionnaire that measures a psychological trait — like attachment style or emotional sensitivity — based on your answers.">psychological assessments</span>. Think of it as a private journaling ritual that speaks the language of modern psychology.</p>
+          <p>Users take tests on topics like <strong>High Sensitivity (HSP)</strong>, <strong>Attachment Style (ECR)</strong>, <strong>Emotion Regulation (ERQ)</strong>, and <strong>Jungian Cognitive Functions</strong>. After each test, they get a beautifully designed result card they can save and share.</p>
+
+          <div class="pattern-cards stagger-children">
+            <div class="pattern-card animate-in">
+              <div class="pattern-icon" style="background: var(--color-accent-light);">🧠</div>
+              <div class="pattern-title">Psychological Tests</div>
+              <p class="pattern-desc">7 validated assessments across 4 "axes" — Trait, Emotion, Relationship, Motivation.</p>
+            </div>
+            <div class="pattern-card animate-in">
+              <div class="pattern-icon" style="background: #E4F2F7;">📖</div>
+              <div class="pattern-title">100 Girls Stories</div>
+              <p class="pattern-desc">Real stories from 100 different women. A living archive of inner lives.</p>
+            </div>
+            <div class="pattern-card animate-in">
+              <div class="pattern-icon" style="background: var(--color-success-light);">🗺️</div>
+              <div class="pattern-title">Inner Map</div>
+              <p class="pattern-desc">A personal profile that accumulates your test results into a visual portrait.</p>
+            </div>
+            <div class="pattern-card animate-in">
+              <div class="pattern-icon" style="background: #FDF5E0;">💌</div>
+              <div class="pattern-title">Magic Link Login</div>
+              <p class="pattern-desc">No passwords. You log in via a link sent to your email — simple and private.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 2: A user journey traced into code -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Imagine you open the app and take the HSP test</h2>
+          <p>Here's what happens, step by step — from your first tap to the result card appearing on your screen. This whole sequence involves five different technical layers working in concert.</p>
+
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-step-num">1</div>
+              <p>You open <code>index.html</code> in the browser</p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <div class="flow-step-num">2</div>
+              <p>You tap "开始探索" → browser loads <code>assessment.html</code></p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <div class="flow-step-num">3</div>
+              <p>You pick HSP → browser loads <code>test-hsp.html</code></p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <div class="flow-step-num">4</div>
+              <p>You answer 27 questions, JS scores you</p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <div class="flow-step-num">5</div>
+              <p>Result saved to <span class="term" data-definition="A storage space built into every browser. It's like a tiny sticky-note drawer that remembers things even after you close the tab. Data stays until you clear your browser.">localStorage</span> and optionally Supabase</p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <div class="flow-step-num">6</div>
+              <p>Beautiful result card renders on screen ✨</p>
+            </div>
+          </div>
+
+          <div class="callout callout-accent animate-in">
+            <span class="callout-icon">💡</span>
+            <div class="callout-content">
+              <span class="callout-title">Why this matters for you as a builder</span>
+              <p>The entire app is a set of plain HTML files with JavaScript inside. There is no build step — no Webpack, no React, no compiling. What you see in the file system is what runs in the browser. This is called a <span class="term" data-definition="A website where every file is a static document — HTML, CSS, and JavaScript — that the browser reads directly. The server just delivers files; it does not do any computing.">static site</span>, and it makes She Is extremely cheap to host and easy to modify.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 3: The tech stack -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">The tech stack: what tools were used and why</h2>
+          <p>Every codebase is built from a set of chosen tools. She Is makes deliberate, practical choices.</p>
+
+          <div class="badge-list stagger-children">
+            <div class="badge-item animate-in">
+              <span class="badge-code">Tailwind CSS</span>
+              <span class="badge-desc">A <span class="term" data-definition="A pre-written collection of CSS styles. Instead of writing 'make this box have rounded corners and a shadow,' you just add a class name like 'rounded-lg shadow-md' and Tailwind handles the CSS for you.">CSS utility framework</span>. Lets you style things by adding short class names directly in HTML — no separate stylesheet needed for most UI elements.</span>
+            </div>
+            <div class="badge-item animate-in">
+              <span class="badge-code">Supabase</span>
+              <span class="badge-desc">A <span class="term" data-definition="A service (like Firebase or Airtable) that gives you a database and authentication system without building your own server. You send data to their servers via API calls.">Backend-as-a-Service</span>. Handles user accounts, login emails, and storing test results in a cloud database.</span>
+            </div>
+            <div class="badge-item animate-in">
+              <span class="badge-code">Netlify Functions</span>
+              <span class="badge-desc"><span class="term" data-definition="Small pieces of backend code that run on demand in the cloud. They wake up when called, do one job (like calling another API), and go back to sleep. You pay only for what runs.">Serverless functions</span> hosted on Netlify. Used to call the Anthropic AI API (for the narrative/chat features) without exposing the secret API key to users.</span>
+            </div>
+            <div class="badge-item animate-in">
+              <span class="badge-code">localStorage</span>
+              <span class="badge-desc">The browser's built-in memory. Test results are saved here first — instant, offline-capable, no network required.</span>
+            </div>
+            <div class="badge-item animate-in">
+              <span class="badge-code">html2canvas</span>
+              <span class="badge-desc">A JavaScript library that takes a <span class="term" data-definition="A program that captures a screenshot of a specific part of the browser window and converts it into an image file you can download or share.">screenshot</span> of the result card HTML and turns it into a shareable PNG image.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Quick check ✓</h2>
+          <div class="quiz-container" id="quiz-1">
+            <div class="quiz-question-block" data-correct="b"
+                 data-explanation-right="Correct. There's no build step — the files run directly as-is in a browser."
+                 data-explanation-wrong="She Is doesn't use React or Vue. It's plain HTML + JS files that browsers read directly.">
+              <p class="quiz-question">She Is is built with React and needs to be compiled before it runs. True or false?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>True — it uses React with JSX</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>False — it's plain HTML/JS, no compilation needed</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>False — it uses Vue.js</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question-block" data-correct="c"
+                 data-explanation-right="Right. Netlify Functions run on Netlify's servers, so your API key never appears in code the browser can read."
+                 data-explanation-wrong="If the AI API key were in client-side JavaScript, any user who opened DevTools could read it and use it themselves — that would be a serious security leak.">
+              <p class="quiz-question">Why does She Is use Netlify Functions to call the Anthropic AI API instead of calling it directly from the browser?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Because the AI API is too slow for the browser to handle</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Because Netlify Functions are faster</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>To keep the API key secret — browser code is visible to anyone</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <button class="quiz-check-btn" onclick="checkQuiz('quiz-1')">Check answers</button>
+            <button class="quiz-reset-btn" onclick="resetQuiz('quiz-1')">Reset</button>
+          </div>
+        </div>
+
+      </div>
+    </section>

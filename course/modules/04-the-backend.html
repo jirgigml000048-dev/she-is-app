@@ -1,0 +1,191 @@
+    <section class="module" id="module-4" style="background: var(--color-bg-warm);">
+      <div class="module-content">
+
+        <header class="module-header animate-in">
+          <span class="module-number">04</span>
+          <h1 class="module-title">The Outside World</h1>
+          <p class="module-subtitle">Supabase, Netlify, and AI — the three external services that power She Is, and why each one is there.</p>
+        </header>
+
+        <!-- Screen 1: Supabase -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Supabase: the invisible database</h2>
+          <p>She Is doesn't own a server. Instead, it rents one from Supabase — a company that provides a ready-made database and authentication system via the internet.</p>
+          <p>Think of it like renting a storage unit instead of building a warehouse. You pay for the space; they handle the building, security, and plumbing.</p>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">assets/auth.js</span>
+<span class="code-line"><span class="code-keyword">const</span> sb = <span class="code-function">createClient</span>(</span>
+<span class="code-line">  <span class="code-string">'https://xagmrt...supabase.co'</span>,</span>
+<span class="code-line">  <span class="code-string">'sb_publishable_Vryw...'</span></span>
+<span class="code-line">);</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">async function</span> <span class="code-function">saveTestResult</span>(</span>
+<span class="code-line">  testName, resultType, resultData) {</span>
+<span class="code-line">  <span class="code-keyword">const</span> user = <span class="code-keyword">await</span> <span class="code-function">getUser</span>();</span>
+<span class="code-line">  <span class="code-keyword">if</span> (!user) <span class="code-keyword">return</span> <span class="code-keyword">null</span>;</span>
+<span class="code-line">  <span class="code-keyword">await</span> sb.<span class="code-function">from</span>(<span class="code-string">'test_results'</span>)</span>
+<span class="code-line">    .<span class="code-function">upsert</span>({ user_id: user.id, ... });</span>
+<span class="code-line">}</span>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <div class="tl">Connect to "our" Supabase project using its URL and a public key</div>
+                <div class="tl">The URL is the address of the database; the key is a badge that says "this is a She Is request"</div>
+                <div class="tl">saveTestResult is called after every test completion</div>
+                <div class="tl">First it checks: is the user logged in? If not, skip — no cloud save</div>
+                <div class="tl">.from('test_results') = "go to the table named test_results"</div>
+                <div class="tl">.upsert = "insert if new, update if already exists" (no duplicates)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout-accent animate-in">
+            <span class="callout-icon">🔑</span>
+            <div class="callout-content">
+              <span class="callout-title">Public key vs. secret key</span>
+              <p>The Supabase key in auth.js is marked <code>sb_publishable_</code> — it's safe to be public. It only allows reading/writing data for the logged-in user. A <em>secret</em> key (like an AI API key) would give access to everything and must never appear in client-side code.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 2: Magic link login flow -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Magic link login: no passwords, ever</h2>
+          <p>She Is uses "passwordless authentication." When you enter your email, Supabase sends you a link. Click the link → you're logged in. The link is your temporary password, delivered to your email.</p>
+
+          <div class="step-cards stagger-children">
+            <div class="step-card animate-in">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>You enter your email on login.html</strong>
+                <p>The code calls <code>sb.auth.signInWithOtp({ email })</code> — OTP stands for "one-time password"</p>
+              </div>
+            </div>
+            <div class="step-card animate-in">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Supabase sends you an email</strong>
+                <p>The email contains a unique link valid for 1 hour. She Is has a custom email template for this (email-template-magic-link.html)</p>
+              </div>
+            </div>
+            <div class="step-card animate-in">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>You click the link in the email</strong>
+                <p>Your browser opens the app with special tokens in the URL. Supabase JS library detects them.</p>
+              </div>
+            </div>
+            <div class="step-card animate-in">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Session established — you're logged in</strong>
+                <p>Supabase saves a session token in your browser. Every future request to the database includes this token automatically.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 3: Netlify Functions + AI -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Netlify Functions: the AI middleman</h2>
+          <p>She Is has two AI features: a <strong>narrative generator</strong> (turns your test results into a personal story) and a <strong>chat</strong> (ask questions about your results). Both use the Anthropic Claude API.</p>
+          <p>But calling the AI API directly from the browser would expose the secret API key. Solution: use a Netlify Function as a middleman.</p>
+
+          <div class="flow-animation animate-in" id="flow-4"
+               data-steps='[
+                 {"highlight":"browser4","label":"User clicks Generate Narrative. Browser sends test results to the Netlify function URL.","packet":false},
+                 {"highlight":"netlify4","label":"Netlify Function receives the request. It has access to the secret ANTHROPIC_API_KEY stored in Netlify's environment variables.","packet":true,"from":"browser4","to":"netlify4"},
+                 {"highlight":"claude4","label":"Netlify Function calls Claude API: send results + system prompt, get narrative text back.","packet":true,"from":"netlify4","to":"claude4"},
+                 {"highlight":"netlify4","label":"Claude returns the narrative. Netlify Function receives it.","packet":true,"from":"claude4","to":"netlify4"},
+                 {"highlight":"browser4","label":"Netlify Function sends the narrative text back to the browser. API key was never exposed.","packet":true,"from":"netlify4","to":"browser4"}
+               ]'>
+            <div class="flow-actors">
+              <div class="flow-actor" id="flow-browser4">
+                <div class="flow-actor-icon">🌐</div>
+                <span>Browser</span>
+              </div>
+              <div class="flow-actor" id="flow-netlify4">
+                <div class="flow-actor-icon">⚡</div>
+                <span>Netlify Fn</span>
+              </div>
+              <div class="flow-actor" id="flow-claude4">
+                <div class="flow-actor-icon">🤖</div>
+                <span>Claude API</span>
+              </div>
+            </div>
+            <div class="flow-packet"></div>
+            <div class="flow-step-label">Click "Next Step" to begin</div>
+            <div class="flow-controls">
+              <button class="btn flow-next-btn">Next Step →</button>
+              <button class="btn flow-reset-btn">Reset</button>
+              <span class="flow-progress">Step 0 / 5</span>
+            </div>
+          </div>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">netlify/functions/narrative.js</span>
+<span class="code-line"><span class="code-keyword">const</span> client = <span class="code-keyword">new</span> <span class="code-function">Anthropic</span>({</span>
+<span class="code-line">  apiKey: <span class="code-function">process.env</span>.<span class="code-property">ANTHROPIC_API_KEY</span></span>
+<span class="code-line">});</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">const</span> msg = <span class="code-keyword">await</span> client.messages</span>
+<span class="code-line">  .<span class="code-function">create</span>({</span>
+<span class="code-line">    model: <span class="code-string">"claude-opus-4-5"</span>,</span>
+<span class="code-line">    max_tokens: <span class="code-number">1024</span>,</span>
+<span class="code-line">    messages: [{ role: <span class="code-string">"user"</span>,</span>
+<span class="code-line">      content: prompt }]</span>
+<span class="code-line">  });</span>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <div class="tl">process.env.ANTHROPIC_API_KEY = read the secret key from Netlify's secure vault</div>
+                <div class="tl">The key is never written in the code — it's injected at runtime</div>
+                <div class="tl">client.messages.create sends the request to Claude</div>
+                <div class="tl">model: which version of Claude to use</div>
+                <div class="tl">max_tokens: 1024 means "stop after ~750 words to control cost"</div>
+                <div class="tl">messages: the actual prompt with the user's test results embedded</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Quick check ✓</h2>
+          <div class="quiz-container" id="quiz-4">
+            <div class="quiz-question-block" data-correct="a"
+                 data-explanation-right="Correct. The API key is stored in Netlify's environment variables — a secure vault that only the function can access at runtime. It's never in the client-side code."
+                 data-explanation-wrong="The API key is NOT in any client-side file. If it were, any user could open DevTools and copy it.">
+              <p class="quiz-question">Where is the Anthropic AI API key stored in She Is?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>In Netlify's environment variables — only the serverless function can read it</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>In assets/auth.js alongside the Supabase key</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>In a .env file in the project folder</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question-block" data-correct="b"
+                 data-explanation-right="Right — OTP means one-time password. The link in the email is the password, valid for one use."
+                 data-explanation-wrong="OTP stands for One-Time Password, not One-Time Profile. The magic link IS the password.">
+              <p class="quiz-question">What does OTP stand for in <code>sb.auth.signInWithOtp()</code>?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>One-Time Profile</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>One-Time Password — the magic link in the email is a temporary password</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Open Transfer Protocol</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <button class="quiz-check-btn" onclick="checkQuiz('quiz-4')">Check answers</button>
+            <button class="quiz-reset-btn" onclick="resetQuiz('quiz-4')">Reset</button>
+          </div>
+        </div>
+
+      </div>
+    </section>

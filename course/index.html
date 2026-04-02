@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How She Is Works — A Codebase Course</title>
+
+  <!-- Google Fonts: Bricolage Grotesque · DM Sans · JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    :root {
+      --color-accent:       #7B6DAA;
+      --color-accent-hover: #6A5C96;
+      --color-accent-light: #F0EBF9;
+      --color-accent-muted: #A89CC8;
+    }
+  </style>
+
+  <script src="main.js" defer></script>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="nav-inner">
+      <span class="nav-title">How She Is Works</span>
+      <div class="nav-dots" id="nav-dots" role="tablist">
+        <button class="nav-dot" data-target="module-1" data-tooltip="The App" role="tab" aria-label="Module 1: The App"></button>
+        <button class="nav-dot" data-target="module-2" data-tooltip="The Cast" role="tab" aria-label="Module 2: The Cast"></button>
+        <button class="nav-dot" data-target="module-3" data-tooltip="Data Flow" role="tab" aria-label="Module 3: Data Flow"></button>
+        <button class="nav-dot" data-target="module-4" data-tooltip="The Backend" role="tab" aria-label="Module 4: The Backend"></button>
+        <button class="nav-dot" data-target="module-5" data-tooltip="Smart Tricks" role="tab" aria-label="Module 5: Smart Tricks"></button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- modules/*.html content is assembled here by build.sh -->
+    <section class="module" id="module-1" style="background: var(--color-bg);">
+      <div class="module-content">
+
+        <header class="module-header animate-in">
+          <span class="module-number">01</span>
+          <h1 class="module-title">What is She Is?</h1>
+          <p class="module-subtitle">A self-discovery app for women — and a surprisingly elegant piece of software.</p>
+        </header>
+
+        <!-- Screen 1: The product -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">内心的注视是种无畏的爱</h2>
+          <p><em>"She Is" (女也)</em> is a web app that invites women to explore their inner landscape through a series of <span class="term" data-definition="A structured questionnaire that measures a psychological trait — like attachment style or emotional sensitivity — based on your answers.">psychological assessments</span>. Think of it as a private journaling ritual that speaks the language of modern psychology.</p>
+          <p>Users take tests on topics like <strong>High Sensitivity (HSP)</strong>, <strong>Attachment Style (ECR)</strong>, <strong>Emotion Regulation (ERQ)</strong>, and <strong>Jungian Cognitive Functions</strong>. After each test, they get a beautifully designed result card they can save and share.</p>
+
+          <div class="pattern-cards stagger-children">
+            <div class="pattern-card animate-in">
+              <div class="pattern-icon" style="background: var(--color-accent-light);">🧠</div>
+              <div class="pattern-title">Psychological Tests</div>
+              <p class="pattern-desc">7 validated assessments across 4 "axes" — Trait, Emotion, Relationship, Motivation.</p>
+            </div>
+            <div class="pattern-card animate-in">
+              <div class="pattern-icon" style="background: #E4F2F7;">📖</div>
+              <div class="pattern-title">100 Girls Stories</div>
+              <p class="pattern-desc">Real stories from 100 different women. A living archive of inner lives.</p>
+            </div>
+            <div class="pattern-card animate-in">
+              <div class="pattern-icon" style="background: var(--color-success-light);">🗺️</div>
+              <div class="pattern-title">Inner Map</div>
+              <p class="pattern-desc">A personal profile that accumulates your test results into a visual portrait.</p>
+            </div>
+            <div class="pattern-card animate-in">
+              <div class="pattern-icon" style="background: #FDF5E0;">💌</div>
+              <div class="pattern-title">Magic Link Login</div>
+              <p class="pattern-desc">No passwords. You log in via a link sent to your email — simple and private.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 2: A user journey traced into code -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Imagine you open the app and take the HSP test</h2>
+          <p>Here's what happens, step by step — from your first tap to the result card appearing on your screen. This whole sequence involves five different technical layers working in concert.</p>
+
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-step-num">1</div>
+              <p>You open <code>index.html</code> in the browser</p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <div class="flow-step-num">2</div>
+              <p>You tap "开始探索" → browser loads <code>assessment.html</code></p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <div class="flow-step-num">3</div>
+              <p>You pick HSP → browser loads <code>test-hsp.html</code></p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <div class="flow-step-num">4</div>
+              <p>You answer 27 questions, JS scores you</p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <div class="flow-step-num">5</div>
+              <p>Result saved to <span class="term" data-definition="A storage space built into every browser. It's like a tiny sticky-note drawer that remembers things even after you close the tab. Data stays until you clear your browser.">localStorage</span> and optionally Supabase</p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <div class="flow-step-num">6</div>
+              <p>Beautiful result card renders on screen ✨</p>
+            </div>
+          </div>
+
+          <div class="callout callout-accent animate-in">
+            <span class="callout-icon">💡</span>
+            <div class="callout-content">
+              <span class="callout-title">Why this matters for you as a builder</span>
+              <p>The entire app is a set of plain HTML files with JavaScript inside. There is no build step — no Webpack, no React, no compiling. What you see in the file system is what runs in the browser. This is called a <span class="term" data-definition="A website where every file is a static document — HTML, CSS, and JavaScript — that the browser reads directly. The server just delivers files; it does not do any computing.">static site</span>, and it makes She Is extremely cheap to host and easy to modify.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 3: The tech stack -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">The tech stack: what tools were used and why</h2>
+          <p>Every codebase is built from a set of chosen tools. She Is makes deliberate, practical choices.</p>
+
+          <div class="badge-list stagger-children">
+            <div class="badge-item animate-in">
+              <span class="badge-code">Tailwind CSS</span>
+              <span class="badge-desc">A <span class="term" data-definition="A pre-written collection of CSS styles. Instead of writing 'make this box have rounded corners and a shadow,' you just add a class name like 'rounded-lg shadow-md' and Tailwind handles the CSS for you.">CSS utility framework</span>. Lets you style things by adding short class names directly in HTML — no separate stylesheet needed for most UI elements.</span>
+            </div>
+            <div class="badge-item animate-in">
+              <span class="badge-code">Supabase</span>
+              <span class="badge-desc">A <span class="term" data-definition="A service (like Firebase or Airtable) that gives you a database and authentication system without building your own server. You send data to their servers via API calls.">Backend-as-a-Service</span>. Handles user accounts, login emails, and storing test results in a cloud database.</span>
+            </div>
+            <div class="badge-item animate-in">
+              <span class="badge-code">Netlify Functions</span>
+              <span class="badge-desc"><span class="term" data-definition="Small pieces of backend code that run on demand in the cloud. They wake up when called, do one job (like calling another API), and go back to sleep. You pay only for what runs.">Serverless functions</span> hosted on Netlify. Used to call the Anthropic AI API (for the narrative/chat features) without exposing the secret API key to users.</span>
+            </div>
+            <div class="badge-item animate-in">
+              <span class="badge-code">localStorage</span>
+              <span class="badge-desc">The browser's built-in memory. Test results are saved here first — instant, offline-capable, no network required.</span>
+            </div>
+            <div class="badge-item animate-in">
+              <span class="badge-code">html2canvas</span>
+              <span class="badge-desc">A JavaScript library that takes a <span class="term" data-definition="A program that captures a screenshot of a specific part of the browser window and converts it into an image file you can download or share.">screenshot</span> of the result card HTML and turns it into a shareable PNG image.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Quick check ✓</h2>
+          <div class="quiz-container" id="quiz-1">
+            <div class="quiz-question-block" data-correct="b"
+                 data-explanation-right="Correct. There's no build step — the files run directly as-is in a browser."
+                 data-explanation-wrong="She Is doesn't use React or Vue. It's plain HTML + JS files that browsers read directly.">
+              <p class="quiz-question">She Is is built with React and needs to be compiled before it runs. True or false?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>True — it uses React with JSX</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>False — it's plain HTML/JS, no compilation needed</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>False — it uses Vue.js</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question-block" data-correct="c"
+                 data-explanation-right="Right. Netlify Functions run on Netlify's servers, so your API key never appears in code the browser can read."
+                 data-explanation-wrong="If the AI API key were in client-side JavaScript, any user who opened DevTools could read it and use it themselves — that would be a serious security leak.">
+              <p class="quiz-question">Why does She Is use Netlify Functions to call the Anthropic AI API instead of calling it directly from the browser?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Because the AI API is too slow for the browser to handle</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Because Netlify Functions are faster</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>To keep the API key secret — browser code is visible to anyone</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <button class="quiz-check-btn" onclick="checkQuiz('quiz-1')">Check answers</button>
+            <button class="quiz-reset-btn" onclick="resetQuiz('quiz-1')">Reset</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <section class="module" id="module-2" style="background: var(--color-bg-warm);">
+      <div class="module-content">
+
+        <header class="module-header animate-in">
+          <span class="module-number">02</span>
+          <h1 class="module-title">Meet the Cast</h1>
+          <p class="module-subtitle">Every file has a role. Here's who does what — and why it matters when you want to change something.</p>
+        </header>
+
+        <!-- Screen 1: File structure metaphor -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Think of the codebase as a theatre backstage</h2>
+          <p>A theatre performance looks seamless on stage, but backstage there are distinct departments: lighting, costumes, sound, props, script. Each department has a clear responsibility, and they hand things off to each other on cue.</p>
+          <p>She Is works the same way. Different files have different jobs. When you know who does what, you can find the right file to change — instead of guessing.</p>
+
+          <div class="arch-diagram animate-in">
+            <div class="arch-zone">
+              <div class="arch-zone-label">🌐 Pages (what users navigate to)</div>
+              <div>
+                <div class="arch-component" data-desc="The home screen. Shows the hero section, assessment entry, 'Inner Map' card, and daily mood check-in. Entry point for most users.">
+                  <span class="arch-icon">🏠</span>index.html
+                </div>
+                <div class="arch-component" data-desc="The assessment catalog. Lists all 7 tests grouped into 4 axes (Trait, Emotion, Relationship, Motivation). Users browse and choose a test here.">
+                  <span class="arch-icon">📋</span>assessment.html
+                </div>
+                <div class="arch-component" data-desc="One file per test — test-hsp.html, test-ecr.html, test-erq.html, etc. Each file contains the questions, scoring logic, and result display for that specific test.">
+                  <span class="arch-icon">🧪</span>test-*.html
+                </div>
+                <div class="arch-component" data-desc="The user's profile page. Shows a radar chart of all completed test scores, saved result cards, and personal history.">
+                  <span class="arch-icon">👤</span>profile.html
+                </div>
+                <div class="arch-component" data-desc="The stories archive. Shows short personal narratives from real women (or fiction). Each story has its own HTML file: story-tuanzi.html, story-xiaoli.html, etc.">
+                  <span class="arch-icon">📖</span>stories.html
+                </div>
+              </div>
+            </div>
+
+            <div class="arch-zone">
+              <div class="arch-zone-label">⚙️ Shared Scripts (reused by multiple pages)</div>
+              <div>
+                <div class="arch-component" data-desc="Manages the top navigation bar (back button, logo, menu). Injected by every page via: document.getElementById('app-header') and a script tag. Write once, reuse everywhere.">
+                  <span class="arch-icon">🔝</span>assets/header.js
+                </div>
+                <div class="arch-component" data-desc="Connects to Supabase (the cloud database). Provides: getUser(), saveTestResult(), getUserResults(), signInWithEmail(). All pages import this to read/write the database.">
+                  <span class="arch-icon">🔑</span>assets/auth.js
+                </div>
+                <div class="arch-component" data-desc="Generates the downloadable result card image. Takes the result card HTML element, uses html2canvas to screenshot it, and triggers a PNG download.">
+                  <span class="arch-icon">📸</span>assets/result-download.js
+                </div>
+                <div class="arch-component" data-desc="Shared Tailwind CSS configuration — color tokens, font families, custom utilities. All pages load this so they share the same design system.">
+                  <span class="arch-icon">🎨</span>assets/tailwind-config.js
+                </div>
+              </div>
+            </div>
+
+            <div class="arch-zone">
+              <div class="arch-zone-label">☁️ Cloud / Backend</div>
+              <div>
+                <div class="arch-component" data-desc="A Netlify serverless function that receives a user's test results and calls the Anthropic Claude API to generate a personalized narrative interpretation. Keeps the API key secret.">
+                  <span class="arch-icon">🤖</span>netlify/functions/narrative.js
+                </div>
+                <div class="arch-component" data-desc="Another Netlify function for the AI chat feature. Lets users ask questions about their results and get AI-powered responses.">
+                  <span class="arch-icon">💬</span>netlify/functions/chat.js
+                </div>
+              </div>
+            </div>
+
+            <div class="arch-description">Click a component above to learn what it does.</div>
+          </div>
+        </div>
+
+        <!-- Screen 2: Code translation — header.js pattern -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">How shared components work</h2>
+          <p>She Is uses a clever pattern to share the navigation header across all pages without copying and pasting the same HTML everywhere. Here's how it works:</p>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">HTML</span>
+<span class="code-line"><span class="code-comment"><!-- In every page's body --></span></span>
+<span class="code-line"><span class="code-tag">&lt;div</span> <span class="code-attr">id</span>=<span class="code-value">"app-header"</span></span>
+<span class="code-line">     <span class="code-attr">data-back</span>=<span class="code-value">"true"</span><span class="code-tag">&gt;&lt;/div&gt;</span></span>
+<span class="code-line"><span class="code-tag">&lt;script</span> <span class="code-attr">src</span>=<span class="code-value">"assets/header.js"</span><span class="code-tag">&gt;&lt;/script&gt;</span></span>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">What this means</span>
+              <div class="translation-lines">
+                <div class="tl">Leave an empty placeholder div with id="app-header"</div>
+                <div class="tl">Then load the header.js script</div>
+                <div class="tl">header.js finds that div by ID and fills it with navigation HTML</div>
+                <div class="tl">data-back="true" tells header.js to show a back arrow on this page</div>
+                <div class="tl">Result: every page gets the same header, from one source file</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout-info animate-in">
+            <span class="callout-icon">🎯</span>
+            <div class="callout-content">
+              <span class="callout-title">Why this matters when steering AI</span>
+              <p>If you want to change the navigation — add a new menu item, change the logo — you change <strong>one file</strong> (assets/header.js) and every page updates automatically. If you tell AI to "add a notification bell to the header," it should edit header.js, not every individual page. If the AI starts editing each page individually, redirect it.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 3: Group Chat animation — who talks to whom -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Watch the pages talk to each other</h2>
+          <p>When you take a test and get results, several files pass information between each other. This is the "conversation":</p>
+
+          <div class="chat-window" id="cast-chat">
+            <div class="chat-messages">
+
+              <div class="chat-message" data-sender="user" style="display:none">
+                <div class="chat-avatar" style="background: #7B6DAA;">U</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#7B6DAA;">User</span>
+                  <p>I just finished the HSP test and clicked "See Results"</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="hsp" style="display:none">
+                <div class="chat-avatar" style="background: #2A7B9B;">H</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#2A7B9B;">test-hsp.html</span>
+                  <p>Got it. I scored the answers: you got 68/189. That's "High HSP". Saving this to localStorage right now...</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="ls" style="display:none">
+                <div class="chat-avatar" style="background: #D4A843;">L</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#D4A843;">localStorage</span>
+                  <p>Saved! Key: "hsp_result", Value: {"score": 68, "type": "high", "date": "2025-06-01"}. I'll hold this even if you close the tab.</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="auth" style="display:none">
+                <div class="chat-avatar" style="background: #2D8B55;">A</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#2D8B55;">assets/auth.js</span>
+                  <p>Checking if user is logged in... Yes! Calling saveTestResult("hsp", "high", {score:68}) to sync to Supabase cloud database.</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="supabase" style="display:none">
+                <div class="chat-avatar" style="background: #E06B56;">S</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#E06B56;">Supabase</span>
+                  <p>Received. Stored in test_results table. This user now has a cloud backup. If they log in on another device, I'll restore their history.</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="hsp" style="display:none">
+                <div class="chat-avatar" style="background: #2A7B9B;">H</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#2A7B9B;">test-hsp.html</span>
+                  <p>Great. Now I'm rendering the result card HTML with the user's type description. Calling result-download.js so they can save it as a PNG...</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="rd" style="display:none">
+                <div class="chat-avatar" style="background: #7B6DAA;">R</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#7B6DAA;">result-download.js</span>
+                  <p>Using html2canvas to screenshot the result card. Converting to PNG. Download ready! ✨</p>
+                </div>
+              </div>
+
+            </div>
+            <div class="chat-typing" id="cast-chat-typing" style="display:none">
+              <div class="chat-avatar" id="cast-chat-typing-avatar" style="background: #ccc;">?</div>
+              <div class="chat-typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+              </div>
+            </div>
+            <div class="chat-controls">
+              <button class="btn chat-next-btn">Next message</button>
+              <button class="btn chat-all-btn">Show all</button>
+              <button class="btn chat-reset-btn">Reset</button>
+              <span class="chat-progress">0 / 7 messages</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Quick check ✓</h2>
+          <div class="quiz-container" id="quiz-2">
+            <div class="quiz-question-block" data-correct="b"
+                 data-explanation-right="Exactly. header.js finds the empty div by ID and fills it with HTML. This is called the 'inject on load' pattern."
+                 data-explanation-wrong="The header HTML is NOT duplicated in every page. It lives only in header.js, which writes it into each page when it loads.">
+              <p class="quiz-question">How does She Is avoid duplicating the navigation header HTML in every single page file?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>The header HTML is copied into every page by hand</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>An empty div placeholder is left in each page; header.js fills it when the page loads</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>A CSS file creates the header automatically</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question-block" data-correct="a"
+                 data-explanation-right="Correct. Each test (HSP, ECR, ERQ, etc.) is self-contained in its own HTML file with questions, scoring logic, AND result display."
+                 data-explanation-wrong="Test results aren't shown on a separate shared page — each test-*.html file handles its own result display.">
+              <p class="quiz-question">You want to change how the HSP test result looks. Which file do you edit?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>test-hsp.html — each test file contains its own result display</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>results.html — there's a single shared results page</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>profile.html — that's where all results are shown</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <button class="quiz-check-btn" onclick="checkQuiz('quiz-2')">Check answers</button>
+            <button class="quiz-reset-btn" onclick="resetQuiz('quiz-2')">Reset</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <section class="module" id="module-3" style="background: var(--color-bg);">
+      <div class="module-content">
+
+        <header class="module-header animate-in">
+          <span class="module-number">03</span>
+          <h1 class="module-title">How Data Flows</h1>
+          <p class="module-subtitle">From a button click to a saved result — tracing information as it moves through the system.</p>
+        </header>
+
+        <!-- Screen 1: The two storage layers -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">She Is uses two places to remember you</h2>
+          <p>Most apps have to choose between speed and persistence. She Is is clever — it uses <em>both</em> a fast local cache and a reliable cloud backup, layered on top of each other.</p>
+
+          <div class="icon-rows stagger-children">
+            <div class="icon-row animate-in">
+              <div class="icon-circle" style="background: var(--color-accent-light);">💾</div>
+              <div>
+                <strong>localStorage (layer 1, instant)</strong>
+                <p>Saves test results directly in your browser. Zero network delay. Works offline. Data survives closing the tab but not clearing browser data. Used first, for speed.</p>
+              </div>
+            </div>
+            <div class="icon-row animate-in">
+              <div class="icon-circle" style="background: var(--color-success-light);">☁️</div>
+              <div>
+                <strong>Supabase database (layer 2, durable)</strong>
+                <p>A <span class="term" data-definition="A structured table that stores data in rows and columns, like a spreadsheet — but accessible from the internet and queryable with SQL.">PostgreSQL database</span> in the cloud. Saves results when you're logged in. Lets you access your history from any device. Requires network connection.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout-info animate-in">
+            <span class="callout-icon">🔍</span>
+            <div class="callout-content">
+              <span class="callout-title">The pattern: local-first, then sync</span>
+              <p>She Is always writes to localStorage first (instant, no failure risk), then attempts to sync to Supabase in the background. If the network is down or the user isn't logged in, the localStorage copy is still there. This pattern — called "local-first" — makes the app feel fast and resilient.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 2: The scoring logic translated -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">How a test scores your answers</h2>
+          <p>Each test file (like test-hsp.html) contains all its own scoring logic. Here's the HSP scoring code, translated into plain English:</p>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">JS (test-hsp.html)</span>
+<span class="code-line"><span class="code-keyword">const</span> <span class="code-function">QUESTIONS</span> = [</span>
+<span class="code-line">  <span class="code-string">"Are you bothered by intense stimuli?"</span>,</span>
+<span class="code-line">  <span class="code-comment">// 26 more questions...</span></span>
+<span class="code-line">];</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">let</span> total = <span class="code-number">0</span>;</span>
+<span class="code-line">answers.<span class="code-function">forEach</span>(score => {</span>
+<span class="code-line">  total += score; <span class="code-comment">// 1–7 per question</span></span>
+<span class="code-line">});</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">const</span> type =</span>
+<span class="code-line">  total &gt;= <span class="code-number">138</span> ? <span class="code-string">"high"</span> :</span>
+<span class="code-line">  total &gt;= <span class="code-number">96</span>  ? <span class="code-string">"medium"</span> :</span>
+<span class="code-line">                  <span class="code-string">"low"</span>;</span>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <div class="tl">There are 27 questions stored in a list</div>
+                <div class="tl">Each answer is a number from 1 (not at all) to 7 (extremely)</div>
+                <div class="tl">Add up all the scores → total</div>
+                <div class="tl">Max possible total: 27 × 7 = 189</div>
+                <div class="tl">If total ≥ 138: "High HSP" (very sensitive)</div>
+                <div class="tl">If total ≥ 96: "Medium HSP"</div>
+                <div class="tl">Below 96: "Low HSP"</div>
+              </div>
+            </div>
+          </div>
+
+          <p>After scoring, the code looks up a description object using the type as a key — like opening a dictionary at the word "high" to find the full explanation.</p>
+        </div>
+
+        <!-- Screen 3: Animated data flow -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Watch the data move — live animation</h2>
+          <p>Here's what happens when you submit your answers, step by step. Click "Next Step" to trace the data packet:</p>
+
+          <div class="flow-animation animate-in" id="flow-3"
+               data-steps='[
+                 {"highlight":"browser","label":"You click Submit. The browser collects all 27 answer values from the UI.","packet":false},
+                 {"highlight":"scorer","label":"The scoring function adds up your answers: total = 68. Type = high_hsp.","packet":false},
+                 {"highlight":"scorer","label":"Result object built: {score: 68, type: \"high_hsp\", date: \"...\"}","packet":false},
+                 {"highlight":"ls","label":"saveToLocalStorage() stores the result instantly in the browser. No network needed.","packet":true,"from":"scorer","to":"ls"},
+                 {"highlight":"auth","label":"Is the user logged in? Checking Supabase session...","packet":true,"from":"ls","to":"auth"},
+                 {"highlight":"supa","label":"Logged in ✓. Syncing result to Supabase cloud database via API call.","packet":true,"from":"auth","to":"supa"},
+                 {"highlight":"ui","label":"Result card HTML renders on screen. html2canvas is ready to screenshot it.","packet":true,"from":"supa","to":"ui"}
+               ]'>
+            <div class="flow-actors">
+              <div class="flow-actor" id="flow-browser">
+                <div class="flow-actor-icon">🖱️</div>
+                <span>Browser</span>
+              </div>
+              <div class="flow-actor" id="flow-scorer">
+                <div class="flow-actor-icon">🔢</div>
+                <span>Scoring JS</span>
+              </div>
+              <div class="flow-actor" id="flow-ls">
+                <div class="flow-actor-icon">💾</div>
+                <span>localStorage</span>
+              </div>
+              <div class="flow-actor" id="flow-auth">
+                <div class="flow-actor-icon">🔑</div>
+                <span>auth.js</span>
+              </div>
+              <div class="flow-actor" id="flow-supa">
+                <div class="flow-actor-icon">☁️</div>
+                <span>Supabase</span>
+              </div>
+              <div class="flow-actor" id="flow-ui">
+                <div class="flow-actor-icon">✨</div>
+                <span>Result Card</span>
+              </div>
+            </div>
+            <div class="flow-packet"></div>
+            <div class="flow-step-label">Click "Next Step" to begin</div>
+            <div class="flow-controls">
+              <button class="btn flow-next-btn">Next Step →</button>
+              <button class="btn flow-reset-btn">Reset</button>
+              <span class="flow-progress">Step 0 / 7</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 4: localStorage translation -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">What localStorage looks like in practice</h2>
+          <p>If you open your browser's DevTools (F12 → Application → Local Storage), you'd see something like this. Here's how to read it:</p>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">localStorage</span>
+<span class="code-line"><span class="code-comment">// Key → Value</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-string">"hsp_result"</span> → {</span>
+<span class="code-line">  <span class="code-property">"score"</span>: <span class="code-number">68</span>,</span>
+<span class="code-line">  <span class="code-property">"type"</span>: <span class="code-string">"high"</span>,</span>
+<span class="code-line">  <span class="code-property">"completedAt"</span>: <span class="code-string">"2025-06-01"</span></span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-string">"ecr_result"</span> → {</span>
+<span class="code-line">  <span class="code-property">"avoidance"</span>: <span class="code-number">3.2</span>,</span>
+<span class="code-line">  <span class="code-property">"anxiety"</span>: <span class="code-number">4.8</span>,</span>
+<span class="code-line">  <span class="code-property">"type"</span>: <span class="code-string">"fearful"</span></span>
+<span class="code-line">}</span>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">What this means</span>
+              <div class="translation-lines">
+                <div class="tl">localStorage is a dictionary — each key points to a value</div>
+                <div class="tl">"hsp_result" is the key; the object {score, type, date} is the value</div>
+                <div class="tl">Values stored as JSON — a text format for nested data structures</div>
+                <div class="tl">Your profile.html reads all these keys to build your inner map</div>
+                <div class="tl">Each test writes its own key — they don't interfere with each other</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Quick check ✓</h2>
+          <div class="quiz-container" id="quiz-3">
+            <div class="quiz-question-block" data-correct="c"
+                 data-explanation-right="Correct. localStorage is instant and works offline. Supabase sync happens after, in the background."
+                 data-explanation-wrong="She Is uses a local-first approach — it saves locally first (instantly), then syncs to the cloud. Not the other way around.">
+              <p class="quiz-question">In what order does She Is save a test result?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Supabase first, then localStorage as a backup</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Only to Supabase — localStorage is not used</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>localStorage first (instant), then Supabase in the background if logged in</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question-block" data-correct="b"
+                 data-explanation-right="Right. The score is just the sum of all answer values. The type (high/medium/low) is determined by comparing that sum against thresholds."
+                 data-explanation-wrong="She Is doesn't use any AI for scoring — it's pure arithmetic. AI is only used for the narrative interpretation feature.">
+              <p class="quiz-question">How does the HSP test calculate your result type (high / medium / low)?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>An AI model interprets your answers</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>It adds up all your numeric answers and compares the total against fixed thresholds</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>The answers are sent to a server which computes the score</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <button class="quiz-check-btn" onclick="checkQuiz('quiz-3')">Check answers</button>
+            <button class="quiz-reset-btn" onclick="resetQuiz('quiz-3')">Reset</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <section class="module" id="module-4" style="background: var(--color-bg-warm);">
+      <div class="module-content">
+
+        <header class="module-header animate-in">
+          <span class="module-number">04</span>
+          <h1 class="module-title">The Outside World</h1>
+          <p class="module-subtitle">Supabase, Netlify, and AI — the three external services that power She Is, and why each one is there.</p>
+        </header>
+
+        <!-- Screen 1: Supabase -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Supabase: the invisible database</h2>
+          <p>She Is doesn't own a server. Instead, it rents one from Supabase — a company that provides a ready-made database and authentication system via the internet.</p>
+          <p>Think of it like renting a storage unit instead of building a warehouse. You pay for the space; they handle the building, security, and plumbing.</p>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">assets/auth.js</span>
+<span class="code-line"><span class="code-keyword">const</span> sb = <span class="code-function">createClient</span>(</span>
+<span class="code-line">  <span class="code-string">'https://xagmrt...supabase.co'</span>,</span>
+<span class="code-line">  <span class="code-string">'sb_publishable_Vryw...'</span></span>
+<span class="code-line">);</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">async function</span> <span class="code-function">saveTestResult</span>(</span>
+<span class="code-line">  testName, resultType, resultData) {</span>
+<span class="code-line">  <span class="code-keyword">const</span> user = <span class="code-keyword">await</span> <span class="code-function">getUser</span>();</span>
+<span class="code-line">  <span class="code-keyword">if</span> (!user) <span class="code-keyword">return</span> <span class="code-keyword">null</span>;</span>
+<span class="code-line">  <span class="code-keyword">await</span> sb.<span class="code-function">from</span>(<span class="code-string">'test_results'</span>)</span>
+<span class="code-line">    .<span class="code-function">upsert</span>({ user_id: user.id, ... });</span>
+<span class="code-line">}</span>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <div class="tl">Connect to "our" Supabase project using its URL and a public key</div>
+                <div class="tl">The URL is the address of the database; the key is a badge that says "this is a She Is request"</div>
+                <div class="tl">saveTestResult is called after every test completion</div>
+                <div class="tl">First it checks: is the user logged in? If not, skip — no cloud save</div>
+                <div class="tl">.from('test_results') = "go to the table named test_results"</div>
+                <div class="tl">.upsert = "insert if new, update if already exists" (no duplicates)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout-accent animate-in">
+            <span class="callout-icon">🔑</span>
+            <div class="callout-content">
+              <span class="callout-title">Public key vs. secret key</span>
+              <p>The Supabase key in auth.js is marked <code>sb_publishable_</code> — it's safe to be public. It only allows reading/writing data for the logged-in user. A <em>secret</em> key (like an AI API key) would give access to everything and must never appear in client-side code.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 2: Magic link login flow -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Magic link login: no passwords, ever</h2>
+          <p>She Is uses "passwordless authentication." When you enter your email, Supabase sends you a link. Click the link → you're logged in. The link is your temporary password, delivered to your email.</p>
+
+          <div class="step-cards stagger-children">
+            <div class="step-card animate-in">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>You enter your email on login.html</strong>
+                <p>The code calls <code>sb.auth.signInWithOtp({ email })</code> — OTP stands for "one-time password"</p>
+              </div>
+            </div>
+            <div class="step-card animate-in">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Supabase sends you an email</strong>
+                <p>The email contains a unique link valid for 1 hour. She Is has a custom email template for this (email-template-magic-link.html)</p>
+              </div>
+            </div>
+            <div class="step-card animate-in">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>You click the link in the email</strong>
+                <p>Your browser opens the app with special tokens in the URL. Supabase JS library detects them.</p>
+              </div>
+            </div>
+            <div class="step-card animate-in">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Session established — you're logged in</strong>
+                <p>Supabase saves a session token in your browser. Every future request to the database includes this token automatically.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 3: Netlify Functions + AI -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Netlify Functions: the AI middleman</h2>
+          <p>She Is has two AI features: a <strong>narrative generator</strong> (turns your test results into a personal story) and a <strong>chat</strong> (ask questions about your results). Both use the Anthropic Claude API.</p>
+          <p>But calling the AI API directly from the browser would expose the secret API key. Solution: use a Netlify Function as a middleman.</p>
+
+          <div class="flow-animation animate-in" id="flow-4"
+               data-steps='[
+                 {"highlight":"browser4","label":"User clicks Generate Narrative. Browser sends test results to the Netlify function URL.","packet":false},
+                 {"highlight":"netlify4","label":"Netlify Function receives the request. It has access to the secret ANTHROPIC_API_KEY stored in Netlify's environment variables.","packet":true,"from":"browser4","to":"netlify4"},
+                 {"highlight":"claude4","label":"Netlify Function calls Claude API: send results + system prompt, get narrative text back.","packet":true,"from":"netlify4","to":"claude4"},
+                 {"highlight":"netlify4","label":"Claude returns the narrative. Netlify Function receives it.","packet":true,"from":"claude4","to":"netlify4"},
+                 {"highlight":"browser4","label":"Netlify Function sends the narrative text back to the browser. API key was never exposed.","packet":true,"from":"netlify4","to":"browser4"}
+               ]'>
+            <div class="flow-actors">
+              <div class="flow-actor" id="flow-browser4">
+                <div class="flow-actor-icon">🌐</div>
+                <span>Browser</span>
+              </div>
+              <div class="flow-actor" id="flow-netlify4">
+                <div class="flow-actor-icon">⚡</div>
+                <span>Netlify Fn</span>
+              </div>
+              <div class="flow-actor" id="flow-claude4">
+                <div class="flow-actor-icon">🤖</div>
+                <span>Claude API</span>
+              </div>
+            </div>
+            <div class="flow-packet"></div>
+            <div class="flow-step-label">Click "Next Step" to begin</div>
+            <div class="flow-controls">
+              <button class="btn flow-next-btn">Next Step →</button>
+              <button class="btn flow-reset-btn">Reset</button>
+              <span class="flow-progress">Step 0 / 5</span>
+            </div>
+          </div>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">netlify/functions/narrative.js</span>
+<span class="code-line"><span class="code-keyword">const</span> client = <span class="code-keyword">new</span> <span class="code-function">Anthropic</span>({</span>
+<span class="code-line">  apiKey: <span class="code-function">process.env</span>.<span class="code-property">ANTHROPIC_API_KEY</span></span>
+<span class="code-line">});</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">const</span> msg = <span class="code-keyword">await</span> client.messages</span>
+<span class="code-line">  .<span class="code-function">create</span>({</span>
+<span class="code-line">    model: <span class="code-string">"claude-opus-4-5"</span>,</span>
+<span class="code-line">    max_tokens: <span class="code-number">1024</span>,</span>
+<span class="code-line">    messages: [{ role: <span class="code-string">"user"</span>,</span>
+<span class="code-line">      content: prompt }]</span>
+<span class="code-line">  });</span>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <div class="tl">process.env.ANTHROPIC_API_KEY = read the secret key from Netlify's secure vault</div>
+                <div class="tl">The key is never written in the code — it's injected at runtime</div>
+                <div class="tl">client.messages.create sends the request to Claude</div>
+                <div class="tl">model: which version of Claude to use</div>
+                <div class="tl">max_tokens: 1024 means "stop after ~750 words to control cost"</div>
+                <div class="tl">messages: the actual prompt with the user's test results embedded</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Quick check ✓</h2>
+          <div class="quiz-container" id="quiz-4">
+            <div class="quiz-question-block" data-correct="a"
+                 data-explanation-right="Correct. The API key is stored in Netlify's environment variables — a secure vault that only the function can access at runtime. It's never in the client-side code."
+                 data-explanation-wrong="The API key is NOT in any client-side file. If it were, any user could open DevTools and copy it.">
+              <p class="quiz-question">Where is the Anthropic AI API key stored in She Is?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>In Netlify's environment variables — only the serverless function can read it</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>In assets/auth.js alongside the Supabase key</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>In a .env file in the project folder</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question-block" data-correct="b"
+                 data-explanation-right="Right — OTP means one-time password. The link in the email is the password, valid for one use."
+                 data-explanation-wrong="OTP stands for One-Time Password, not One-Time Profile. The magic link IS the password.">
+              <p class="quiz-question">What does OTP stand for in <code>sb.auth.signInWithOtp()</code>?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>One-Time Profile</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>One-Time Password — the magic link in the email is a temporary password</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Open Transfer Protocol</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <button class="quiz-check-btn" onclick="checkQuiz('quiz-4')">Check answers</button>
+            <button class="quiz-reset-btn" onclick="resetQuiz('quiz-4')">Reset</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <section class="module" id="module-5" style="background: var(--color-bg);">
+      <div class="module-content">
+
+        <header class="module-header animate-in">
+          <span class="module-number">05</span>
+          <h1 class="module-title">The Smart Tricks</h1>
+          <p class="module-subtitle">Patterns worth stealing — the elegant decisions baked into She Is that you can request from any AI coding agent.</p>
+        </header>
+
+        <!-- Screen 1: Design system / CSS tokens -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Trick #1: CSS Custom Properties as a design system</h2>
+          <p>She Is defines all its colors and fonts in one place, then uses variable <em>names</em> everywhere else. Change the name's value once — every element that uses it updates automatically. It's like a global search-and-replace that runs in real time.</p>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">css/style.css</span>
+<span class="code-line"><span class="code-tag">:root</span> {</span>
+<span class="code-line">  <span class="code-property">--c-primary</span>: <span class="code-value">#33185c</span>;</span>
+<span class="code-line">  <span class="code-property">--c-background</span>: <span class="code-value">#f5f0ea</span>;</span>
+<span class="code-line">  <span class="code-property">--c-secondary</span>: <span class="code-value">#8faf8a</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">/* Used throughout the app: */</span></span>
+<span class="code-line"><span class="code-tag">button</span> {</span>
+<span class="code-line">  <span class="code-property">background</span>: <span class="code-function">var</span>(<span class="code-value">--c-primary</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"><span class="code-tag">h1</span> {</span>
+<span class="code-line">  <span class="code-property">color</span>: <span class="code-function">var</span>(<span class="code-value">--c-primary</span>);</span>
+<span class="code-line">}</span>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <div class="tl">:root { } = "define variables for the whole document"</div>
+                <div class="tl">--c-primary: #33185c = "name this purple color 'primary'"</div>
+                <div class="tl">var(--c-primary) = "use whatever color is named 'primary'"</div>
+                <div class="tl">To change the brand color everywhere: edit ONE line in :root</div>
+                <div class="tl">This is called a CSS custom property or CSS variable</div>
+                <div class="tl">Tailwind config.js extends this — Tailwind uses the same variables</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout-accent animate-in">
+            <span class="callout-icon">🎯</span>
+            <div class="callout-content">
+              <span class="callout-title">How to use this when prompting AI</span>
+              <p>When asking AI to add a new UI element to She Is, say: "Use the existing CSS custom properties — reference var(--c-primary) for the brand color, var(--c-background) for backgrounds. Don't hardcode hex values." This keeps new elements consistent with the design system.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 2: Upsert pattern -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Trick #2: Upsert — insert or update in one move</h2>
+          <p>When saving test results to Supabase, She Is uses an "upsert" operation. This is a clever database command that means: <em>if a record for this user + this test already exists, update it. If not, create it.</em></p>
+          <p>This prevents duplicate results piling up in the database every time someone retakes a test. It's the database equivalent of "overwrite if exists."</p>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">assets/auth.js</span>
+<span class="code-line">sb.<span class="code-function">from</span>(<span class="code-string">'test_results'</span>)</span>
+<span class="code-line">  .<span class="code-function">upsert</span>({</span>
+<span class="code-line">    <span class="code-property">user_id</span>: user.id,</span>
+<span class="code-line">    <span class="code-property">test_name</span>: testName,</span>
+<span class="code-line">    <span class="code-property">result_type</span>: resultType,</span>
+<span class="code-line">    <span class="code-property">result_data</span>: resultData,</span>
+<span class="code-line">    <span class="code-property">completed_at</span>: <span class="code-keyword">new</span> Date().<span class="code-function">toISOString</span>()</span>
+<span class="code-line">  }, {</span>
+<span class="code-line">    onConflict: <span class="code-string">'user_id,test_name'</span></span>
+<span class="code-line">  });</span>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <div class="tl">Go to the test_results table in the database</div>
+                <div class="tl">Try to insert this new row of data</div>
+                <div class="tl">onConflict: 'user_id,test_name' = "if this user already has a result for this test..."</div>
+                <div class="tl">...then UPDATE the existing row instead of creating a duplicate</div>
+                <div class="tl">Result: each user has exactly one result per test, always the latest</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 3: html2canvas trick -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Trick #3: Screenshot your own HTML to make a shareable card</h2>
+          <p>She Is's beautiful result cards aren't just visual — users can download them as PNG images and share on social media. The trick? <strong>html2canvas</strong> — a library that takes a screenshot of any HTML element on the page and converts it to a downloadable image.</p>
+          <p>This is like the browser taking a photo of itself. No server, no image editing software needed.</p>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">assets/result-download.js</span>
+<span class="code-line"><span class="code-keyword">async function</span> <span class="code-function">downloadCard</span>(elementId) {</span>
+<span class="code-line">  <span class="code-keyword">const</span> el = document</span>
+<span class="code-line">    .<span class="code-function">getElementById</span>(elementId);</span>
+<span class="code-line"></span>
+<span class="code-line">  <span class="code-keyword">const</span> canvas = <span class="code-keyword">await</span> <span class="code-function">html2canvas</span>(el, {</span>
+<span class="code-line">    scale: <span class="code-number">2</span>, <span class="code-comment">// 2x for retina sharpness</span></span>
+<span class="code-line">    useCORS: <span class="code-keyword">true</span></span>
+<span class="code-line">  });</span>
+<span class="code-line"></span>
+<span class="code-line">  <span class="code-keyword">const</span> link = document.<span class="code-function">createElement</span>(<span class="code-string">'a'</span>);</span>
+<span class="code-line">  link.download = <span class="code-string">'my-result.png'</span>;</span>
+<span class="code-line">  link.href = canvas.<span class="code-function">toDataURL</span>();</span>
+<span class="code-line">  link.<span class="code-function">click</span>(); <span class="code-comment">// triggers download</span></span>
+<span class="code-line">}</span>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <div class="tl">Find the HTML element that contains the result card</div>
+                <div class="tl">html2canvas renders it onto an invisible canvas (like a paint surface)</div>
+                <div class="tl">scale: 2 = render at double resolution for crisp images on retina screens</div>
+                <div class="tl">canvas.toDataURL() converts the canvas to a PNG encoded as a text string</div>
+                <div class="tl">Create an invisible link element pointing to that PNG</div>
+                <div class="tl">Programmatically click it — this triggers the browser's file download</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 4: Group chat — AI asks the right questions -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">The AI narrative: how a test result becomes a story</h2>
+          <p>The most sophisticated feature of She Is is the AI-generated narrative. Here's the conversation between the app, the Netlify function, and Claude that turns a JSON score into a personal story:</p>
+
+          <div class="chat-window" id="narrative-chat">
+            <div class="chat-messages">
+
+              <div class="chat-message" data-sender="app5" style="display:none">
+                <div class="chat-avatar" style="background: #7B6DAA;">A</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#7B6DAA;">App (browser)</span>
+                  <p>User clicked "Generate My Story". Sending her results to Netlify: HSP=high, ECR=fearful_avoidant, ERQ=suppression_dominant</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="fn5" style="display:none">
+                <div class="chat-avatar" style="background: #E06B56;">N</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#E06B56;">Netlify Function</span>
+                  <p>Got the results. Building a system prompt: "You are a compassionate psychologist writing for a Chinese woman who is highly sensitive and has fearful-avoidant attachment..."</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="claude5" style="display:none">
+                <div class="chat-avatar" style="background: #D4A843;">C</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#D4A843;">Claude API</span>
+                  <p>Received. Generating narrative... Processing personality profile intersection of HSP × fearful-avoidant attachment × suppression emotion regulation...</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="claude5" style="display:none">
+                <div class="chat-avatar" style="background: #D4A843;">C</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#D4A843;">Claude API</span>
+                  <p>"你像一面镜子，把世界的每一道光都折射得更深..."  (Streaming text back, token by token)</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="fn5" style="display:none">
+                <div class="chat-avatar" style="background: #E06B56;">N</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#E06B56;">Netlify Function</span>
+                  <p>Streaming complete. 847 tokens used. Sending full narrative back to browser.</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="app5" style="display:none">
+                <div class="chat-avatar" style="background: #7B6DAA;">A</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#7B6DAA;">App (browser)</span>
+                  <p>Narrative received ✨ Rendering in the result panel. Showing the user her personalized story. The API key was never exposed.</p>
+                </div>
+              </div>
+
+            </div>
+            <div class="chat-typing" id="narrative-chat-typing" style="display:none">
+              <div class="chat-avatar" id="narrative-chat-typing-avatar" style="background: #ccc;">?</div>
+              <div class="chat-typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+              </div>
+            </div>
+            <div class="chat-controls">
+              <button class="btn chat-next-btn">Next message</button>
+              <button class="btn chat-all-btn">Show all</button>
+              <button class="btn chat-reset-btn">Reset</button>
+              <span class="chat-progress">0 / 6 messages</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 5: Final quiz + summary -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Final challenge 🏆</h2>
+
+          <div class="quiz-container" id="quiz-5">
+            <div class="quiz-question-block" data-correct="b"
+                 data-explanation-right="Correct! CSS custom properties are the design tokens. Define once in :root, reference everywhere with var(). Changing one value updates the whole app."
+                 data-explanation-wrong="She Is doesn't use Sass. It uses native CSS custom properties (CSS variables), which modern browsers support natively.">
+              <p class="quiz-question">A designer wants to change She Is's brand color from deep purple to coral pink across the entire app. What's the fastest way to do it?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Find and replace every hex color in every HTML file</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Change --c-primary in css/style.css (or tailwind-config.js) — everything updates automatically</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Edit the Sass variables file</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question-block" data-correct="c"
+                 data-explanation-right="Exactly. html2canvas takes a screenshot of an HTML element and converts it to a PNG — all in the browser, no server needed."
+                 data-explanation-wrong="html2canvas works entirely in the browser. No server is involved in generating the image.">
+              <p class="quiz-question">How does She Is let users download their result as a PNG image?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>A server-side script renders the card to an image and returns a download link</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>The result card is stored as an actual image on the server</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>html2canvas screenshots the HTML element in the browser and converts it to a downloadable PNG</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question-block" data-correct="a"
+                 data-explanation-right="Right. Upsert = insert if new, update if exists. This means each user has exactly one result per test — always their most recent attempt. No duplicates."
+                 data-explanation-wrong="Upsert specifically handles the case where a record already exists. It prevents duplicates by updating instead of inserting when there's a conflict.">
+              <p class="quiz-question">Why does She Is use .upsert() instead of .insert() when saving test results?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>To prevent duplicates — if you retake a test, it updates the existing record instead of creating a second one</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Because .insert() doesn't work with Supabase</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Upsert is faster than insert</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <button class="quiz-check-btn" onclick="checkQuiz('quiz-5')">Check answers</button>
+            <button class="quiz-reset-btn" onclick="resetQuiz('quiz-5')">Reset</button>
+          </div>
+
+          <div class="callout callout-accent animate-in" style="margin-top: var(--space-10);">
+            <span class="callout-icon">🌸</span>
+            <div class="callout-content">
+              <span class="callout-title">You've read the whole codebase</span>
+              <p>She Is is a beautifully structured static site. Plain HTML, shared JS components, a CSS design token system, localStorage for speed, Supabase for persistence, and Netlify Functions to safely call AI. Every design choice prioritizes simplicity, privacy, and emotion. Now you can steer AI with precision — you know what to touch and what to leave alone.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

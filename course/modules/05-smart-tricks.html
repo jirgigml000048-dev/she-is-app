@@ -1,0 +1,254 @@
+    <section class="module" id="module-5" style="background: var(--color-bg);">
+      <div class="module-content">
+
+        <header class="module-header animate-in">
+          <span class="module-number">05</span>
+          <h1 class="module-title">The Smart Tricks</h1>
+          <p class="module-subtitle">Patterns worth stealing — the elegant decisions baked into She Is that you can request from any AI coding agent.</p>
+        </header>
+
+        <!-- Screen 1: Design system / CSS tokens -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Trick #1: CSS Custom Properties as a design system</h2>
+          <p>She Is defines all its colors and fonts in one place, then uses variable <em>names</em> everywhere else. Change the name's value once — every element that uses it updates automatically. It's like a global search-and-replace that runs in real time.</p>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">css/style.css</span>
+<span class="code-line"><span class="code-tag">:root</span> {</span>
+<span class="code-line">  <span class="code-property">--c-primary</span>: <span class="code-value">#33185c</span>;</span>
+<span class="code-line">  <span class="code-property">--c-background</span>: <span class="code-value">#f5f0ea</span>;</span>
+<span class="code-line">  <span class="code-property">--c-secondary</span>: <span class="code-value">#8faf8a</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">/* Used throughout the app: */</span></span>
+<span class="code-line"><span class="code-tag">button</span> {</span>
+<span class="code-line">  <span class="code-property">background</span>: <span class="code-function">var</span>(<span class="code-value">--c-primary</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"><span class="code-tag">h1</span> {</span>
+<span class="code-line">  <span class="code-property">color</span>: <span class="code-function">var</span>(<span class="code-value">--c-primary</span>);</span>
+<span class="code-line">}</span>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <div class="tl">:root { } = "define variables for the whole document"</div>
+                <div class="tl">--c-primary: #33185c = "name this purple color 'primary'"</div>
+                <div class="tl">var(--c-primary) = "use whatever color is named 'primary'"</div>
+                <div class="tl">To change the brand color everywhere: edit ONE line in :root</div>
+                <div class="tl">This is called a CSS custom property or CSS variable</div>
+                <div class="tl">Tailwind config.js extends this — Tailwind uses the same variables</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout-accent animate-in">
+            <span class="callout-icon">🎯</span>
+            <div class="callout-content">
+              <span class="callout-title">How to use this when prompting AI</span>
+              <p>When asking AI to add a new UI element to She Is, say: "Use the existing CSS custom properties — reference var(--c-primary) for the brand color, var(--c-background) for backgrounds. Don't hardcode hex values." This keeps new elements consistent with the design system.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 2: Upsert pattern -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Trick #2: Upsert — insert or update in one move</h2>
+          <p>When saving test results to Supabase, She Is uses an "upsert" operation. This is a clever database command that means: <em>if a record for this user + this test already exists, update it. If not, create it.</em></p>
+          <p>This prevents duplicate results piling up in the database every time someone retakes a test. It's the database equivalent of "overwrite if exists."</p>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">assets/auth.js</span>
+<span class="code-line">sb.<span class="code-function">from</span>(<span class="code-string">'test_results'</span>)</span>
+<span class="code-line">  .<span class="code-function">upsert</span>({</span>
+<span class="code-line">    <span class="code-property">user_id</span>: user.id,</span>
+<span class="code-line">    <span class="code-property">test_name</span>: testName,</span>
+<span class="code-line">    <span class="code-property">result_type</span>: resultType,</span>
+<span class="code-line">    <span class="code-property">result_data</span>: resultData,</span>
+<span class="code-line">    <span class="code-property">completed_at</span>: <span class="code-keyword">new</span> Date().<span class="code-function">toISOString</span>()</span>
+<span class="code-line">  }, {</span>
+<span class="code-line">    onConflict: <span class="code-string">'user_id,test_name'</span></span>
+<span class="code-line">  });</span>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <div class="tl">Go to the test_results table in the database</div>
+                <div class="tl">Try to insert this new row of data</div>
+                <div class="tl">onConflict: 'user_id,test_name' = "if this user already has a result for this test..."</div>
+                <div class="tl">...then UPDATE the existing row instead of creating a duplicate</div>
+                <div class="tl">Result: each user has exactly one result per test, always the latest</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 3: html2canvas trick -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Trick #3: Screenshot your own HTML to make a shareable card</h2>
+          <p>She Is's beautiful result cards aren't just visual — users can download them as PNG images and share on social media. The trick? <strong>html2canvas</strong> — a library that takes a screenshot of any HTML element on the page and converts it to a downloadable image.</p>
+          <p>This is like the browser taking a photo of itself. No server, no image editing software needed.</p>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">assets/result-download.js</span>
+<span class="code-line"><span class="code-keyword">async function</span> <span class="code-function">downloadCard</span>(elementId) {</span>
+<span class="code-line">  <span class="code-keyword">const</span> el = document</span>
+<span class="code-line">    .<span class="code-function">getElementById</span>(elementId);</span>
+<span class="code-line"></span>
+<span class="code-line">  <span class="code-keyword">const</span> canvas = <span class="code-keyword">await</span> <span class="code-function">html2canvas</span>(el, {</span>
+<span class="code-line">    scale: <span class="code-number">2</span>, <span class="code-comment">// 2x for retina sharpness</span></span>
+<span class="code-line">    useCORS: <span class="code-keyword">true</span></span>
+<span class="code-line">  });</span>
+<span class="code-line"></span>
+<span class="code-line">  <span class="code-keyword">const</span> link = document.<span class="code-function">createElement</span>(<span class="code-string">'a'</span>);</span>
+<span class="code-line">  link.download = <span class="code-string">'my-result.png'</span>;</span>
+<span class="code-line">  link.href = canvas.<span class="code-function">toDataURL</span>();</span>
+<span class="code-line">  link.<span class="code-function">click</span>(); <span class="code-comment">// triggers download</span></span>
+<span class="code-line">}</span>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <div class="tl">Find the HTML element that contains the result card</div>
+                <div class="tl">html2canvas renders it onto an invisible canvas (like a paint surface)</div>
+                <div class="tl">scale: 2 = render at double resolution for crisp images on retina screens</div>
+                <div class="tl">canvas.toDataURL() converts the canvas to a PNG encoded as a text string</div>
+                <div class="tl">Create an invisible link element pointing to that PNG</div>
+                <div class="tl">Programmatically click it — this triggers the browser's file download</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 4: Group chat — AI asks the right questions -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">The AI narrative: how a test result becomes a story</h2>
+          <p>The most sophisticated feature of She Is is the AI-generated narrative. Here's the conversation between the app, the Netlify function, and Claude that turns a JSON score into a personal story:</p>
+
+          <div class="chat-window" id="narrative-chat">
+            <div class="chat-messages">
+
+              <div class="chat-message" data-sender="app5" style="display:none">
+                <div class="chat-avatar" style="background: #7B6DAA;">A</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#7B6DAA;">App (browser)</span>
+                  <p>User clicked "Generate My Story". Sending her results to Netlify: HSP=high, ECR=fearful_avoidant, ERQ=suppression_dominant</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="fn5" style="display:none">
+                <div class="chat-avatar" style="background: #E06B56;">N</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#E06B56;">Netlify Function</span>
+                  <p>Got the results. Building a system prompt: "You are a compassionate psychologist writing for a Chinese woman who is highly sensitive and has fearful-avoidant attachment..."</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="claude5" style="display:none">
+                <div class="chat-avatar" style="background: #D4A843;">C</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#D4A843;">Claude API</span>
+                  <p>Received. Generating narrative... Processing personality profile intersection of HSP × fearful-avoidant attachment × suppression emotion regulation...</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="claude5" style="display:none">
+                <div class="chat-avatar" style="background: #D4A843;">C</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#D4A843;">Claude API</span>
+                  <p>"你像一面镜子，把世界的每一道光都折射得更深..."  (Streaming text back, token by token)</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="fn5" style="display:none">
+                <div class="chat-avatar" style="background: #E06B56;">N</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#E06B56;">Netlify Function</span>
+                  <p>Streaming complete. 847 tokens used. Sending full narrative back to browser.</p>
+                </div>
+              </div>
+
+              <div class="chat-message" data-sender="app5" style="display:none">
+                <div class="chat-avatar" style="background: #7B6DAA;">A</div>
+                <div class="chat-bubble">
+                  <span class="chat-sender" style="color:#7B6DAA;">App (browser)</span>
+                  <p>Narrative received ✨ Rendering in the result panel. Showing the user her personalized story. The API key was never exposed.</p>
+                </div>
+              </div>
+
+            </div>
+            <div class="chat-typing" id="narrative-chat-typing" style="display:none">
+              <div class="chat-avatar" id="narrative-chat-typing-avatar" style="background: #ccc;">?</div>
+              <div class="chat-typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+              </div>
+            </div>
+            <div class="chat-controls">
+              <button class="btn chat-next-btn">Next message</button>
+              <button class="btn chat-all-btn">Show all</button>
+              <button class="btn chat-reset-btn">Reset</button>
+              <span class="chat-progress">0 / 6 messages</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 5: Final quiz + summary -->
+        <div class="screen animate-in">
+          <h2 class="screen-heading">Final challenge 🏆</h2>
+
+          <div class="quiz-container" id="quiz-5">
+            <div class="quiz-question-block" data-correct="b"
+                 data-explanation-right="Correct! CSS custom properties are the design tokens. Define once in :root, reference everywhere with var(). Changing one value updates the whole app."
+                 data-explanation-wrong="She Is doesn't use Sass. It uses native CSS custom properties (CSS variables), which modern browsers support natively.">
+              <p class="quiz-question">A designer wants to change She Is's brand color from deep purple to coral pink across the entire app. What's the fastest way to do it?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Find and replace every hex color in every HTML file</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Change --c-primary in css/style.css (or tailwind-config.js) — everything updates automatically</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Edit the Sass variables file</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question-block" data-correct="c"
+                 data-explanation-right="Exactly. html2canvas takes a screenshot of an HTML element and converts it to a PNG — all in the browser, no server needed."
+                 data-explanation-wrong="html2canvas works entirely in the browser. No server is involved in generating the image.">
+              <p class="quiz-question">How does She Is let users download their result as a PNG image?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>A server-side script renders the card to an image and returns a download link</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>The result card is stored as an actual image on the server</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>html2canvas screenshots the HTML element in the browser and converts it to a downloadable PNG</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question-block" data-correct="a"
+                 data-explanation-right="Right. Upsert = insert if new, update if exists. This means each user has exactly one result per test — always their most recent attempt. No duplicates."
+                 data-explanation-wrong="Upsert specifically handles the case where a record already exists. It prevents duplicates by updating instead of inserting when there's a conflict.">
+              <p class="quiz-question">Why does She Is use .upsert() instead of .insert() when saving test results?</p>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span>To prevent duplicates — if you retake a test, it updates the existing record instead of creating a second one</button>
+                <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Because .insert() doesn't work with Supabase</button>
+                <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span>Upsert is faster than insert</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+
+            <button class="quiz-check-btn" onclick="checkQuiz('quiz-5')">Check answers</button>
+            <button class="quiz-reset-btn" onclick="resetQuiz('quiz-5')">Reset</button>
+          </div>
+
+          <div class="callout callout-accent animate-in" style="margin-top: var(--space-10);">
+            <span class="callout-icon">🌸</span>
+            <div class="callout-content">
+              <span class="callout-title">You've read the whole codebase</span>
+              <p>She Is is a beautifully structured static site. Plain HTML, shared JS components, a CSS design token system, localStorage for speed, Supabase for persistence, and Netlify Functions to safely call AI. Every design choice prioritizes simplicity, privacy, and emotion. Now you can steer AI with precision — you know what to touch and what to leave alone.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
