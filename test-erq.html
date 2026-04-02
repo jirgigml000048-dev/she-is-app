@@ -658,7 +658,21 @@ function showResult() {
 }
 
 function goShareCard() {
-  window.location.href = 'erq-share-card.html';
+  const button = document.getElementById('saveResultBtn');
+  const originalText = button ? button.textContent : '分享卡片';
+  if (button) { button.disabled = true; button.textContent = '生成中…'; }
+  try {
+    generateResultCard({
+      testName: '情绪调节策略 · ERQ',
+      resultType: document.getElementById('rType')?.textContent?.trim() || '测试结果',
+      resultSubtitle: document.getElementById('rScoreLine')?.textContent?.trim() || '',
+      quote: document.getElementById('rQuote')?.textContent?.trim() || '',
+      score: document.getElementById('rScoreLine')?.textContent?.trim() || '',
+      fileName: 'erq-result'
+    });
+  } finally {
+    if (button) { button.disabled = false; button.textContent = originalText; }
+  }
 }
 window.goShareCard = goShareCard;
 
