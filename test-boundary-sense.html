@@ -677,7 +677,20 @@ function generateResultCard() {
     </div>
   `;
   document.body.appendChild(card);
-  return exportNodeAsImage(card, 'boundary-sense-result').finally(() => card.remove());
+  const button = document.getElementById('saveResultBtn');
+  if (button) { button.disabled = true; button.textContent = '生成中…'; }
+  return html2canvas(card, { scale: 2, backgroundColor: '#FAF7F4', useCORS: true, logging: false })
+    .then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'boundary-sense-result.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    })
+    .catch(err => { console.error('生成失败', err); alert('生成失败，请重试'); })
+    .finally(() => {
+      card.remove();
+      if (button) { button.disabled = false; button.textContent = '分享卡片'; }
+    });
 }
 
       const testData = {
