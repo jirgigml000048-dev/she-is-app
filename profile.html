@@ -63,6 +63,7 @@
 
 <!-- hidden functional elements -->
 <div id="headerUser" style="display:none;"></div>
+<div id="avatarDot" style="display:none;"></div>
 <button id="logoutBtn" type="button" style="display:none;position:absolute;left:-9999px;">退出登录</button>
 
 <!-- TopAppBar -->
@@ -286,7 +287,7 @@
     const displayName = getDisplayName(user);
     headerUser.textContent = `${displayName}\n${user.email||''}`;
     logoutBtn.style.display = 'inline';
-    avatarDot.textContent = displayName.charAt(0).toUpperCase();
+    if (avatarDot) avatarDot.textContent = displayName.charAt(0).toUpperCase();
 
     const coreItem = itemsMap.get('cognitive');
     const coreType = coreItem?.state === 'done' ? esc(coreItem.value) : '?';
