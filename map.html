@@ -326,7 +326,10 @@
     <span class="narrative-tag">Cross Reading · 交叉解读</span>
     <div class="narrative-line"></div>
   </div>
-  <p class="narrative-text" id="narrativeText"></p>
+  <div class="narrative-text" id="narrativeText"></div>
+  <div style="text-align:center;margin-top:20px;">
+    <button id="regenNarrativeBtn" onclick="regenNarrative()" style="padding:8px 24px;border:1px solid rgba(74,48,115,0.3);border-radius:50px;font-size:10px;letter-spacing:2px;color:var(--accent);font-family:'Noto Sans SC',sans-serif;background:transparent;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='rgba(74,48,115,0.06)'" onmouseout="this.style.background='transparent'">重新解读</button>
+  </div>
 </div>
 
 <!-- AI Chat Section -->
@@ -659,14 +662,55 @@
   function generateNarrativeFallback(results) {
     const parts = [];
     const cog = results['cognitive'] || results['cognitive-48'];
-    const hsp = results['hsp'], ecr = results['ecr'];
+    const hsp = results['hsp'], ecr = results['ecr'], erq = results['erq'];
     const fmps = results['fmps'], boundary = results['boundary-sense'];
-    if (cog) parts.push(`你的认知类型是 ${cog.summary || '未知类型'}，内在价值坐标精密，对可能性高度敏感。`);
-    if (hsp) parts.push(`HSP 得分 ${safeScore(hsp)}，${hsp.summary || ''}——你对情绪信号有极高的分辨率。`);
-    if (ecr) parts.push(`依恋类型偏向${ecr.topDimension || '未知'}，${ecr.summary || ''}。`);
-    if (fmps && boundary) parts.push(`完美主义倾向（${safeScore(fmps)}）与边界感（${safeScore(boundary)}）构成了一组张力：高标准与渗透性边界并存。`);
+    if (cog) parts.push(`**特质轴**\n你的认知类型是「${cog.summary || '未知类型'}」，这是你感知世界和做决策的底层操作系统——对可能性高度敏感，内在价值坐标精密而个人化。`);
+    if (hsp) parts.push(`**情绪轴（高敏感度）**\nHSP 得分 ${safeScore(hsp)}，${hsp.summary ? '属于「' + hsp.summary + '」' : ''}。你对情绪信号有极高的分辨率，外部环境的细微变化都会被你的神经系统接收并处理。`);
+    if (ecr) parts.push(`**情绪轴（依恋类型）**\n你的依恋风格偏向「${ecr.summary || ecr.topDimension || '未知'}」。这塑造了你在亲密关系中的默认反应模式——靠近与距离的张力，往往在你意识到之前就已经启动。`);
+    if (erq) parts.push(`**情绪轴（调节策略）**\n你的情绪调节风格：${erq.summary || ''}。这决定了你在压力下如何消化情绪，以及多少情绪最终会留在你身体里。`);
+    if (fmps) parts.push(`**行为轴（完美主义）**\n完美主义得分 ${safeScore(fmps)}，${fmps.summary ? '类型为「' + fmps.summary + '」' : ''}。高标准不是问题，问题是当标准变成自我评判的武器时，内耗就开始了。`);
+    if (boundary) parts.push(`**行为轴（边界感）**\n边界感评估：${boundary.summary || safeScore(boundary)}。你与他人之间的"可渗透程度"，直接影响你消耗了多少能量在别人的需求上。`);
+    if (fmps && boundary) parts.push(`**交叉解读**\n完美主义倾向与边界感构成了一组典型张力：对自己要求高，同时难以对外部要求说不——这往往是持续疲惫感的根源之一。`);
     if (parts.length === 0) return null;
-    return parts.join('') + ' 这张地图在持续生长，每完成一个测评，它就会更接近真实的你。';
+    parts.push(`这张地图在持续生长。每完成一个测评，它就会更接近真实的你。`);
+    return parts.join('\n\n');
+  }
+
+  function formatNarrative(text) {
+    if (!text) return '';
+    const paras = text.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
+    return paras.map(p => {
+      // Check for bold header **...**
+      const boldMatch = p.match(/^\*\*(.+?)\*\*\n?([\s\S]*)/);
+      if (boldMatch) {
+        return `<div style="margin-bottom:16px;"><div style="font-size:10px;letter-spacing:2px;color:var(--accent);font-family:'Noto Sans SC',sans-serif;margin-bottom:6px;opacity:0.7;">${boldMatch[1]}</div><p class="narrative-text" style="margin:0;">${boldMatch[2]}</p></div>`;
+      }
+      return `<p class="narrative-text" style="margin-bottom:14px;">${p}</p>`;
+    }).join('');
+  }
+
+  async function regenNarrative() {
+    const results = window._mapResults;
+    if (!results) return;
+    const ns = document.getElementById('narrativeSection');
+    const el = document.getElementById('narrativeText');
+    const btn = document.getElementById('regenNarrativeBtn');
+    if (!el) return;
+    el.innerHTML = '<p class="narrative-text" style="opacity:0.5;">重新解读中…</p>';
+    if (btn) { btn.disabled = true; btn.textContent = '生成中…'; }
+    // Clear cache to force fresh generation
+    const cacheKey = 'narrative_' + JSON.stringify(
+      Object.entries(results).map(([k, v]) => [k, v.summary, v.score]).sort()
+    ).slice(0, 200);
+    try { localStorage.removeItem(cacheKey); } catch(e) {}
+    const narrative = await generateNarrative(results);
+    if (narrative) {
+      el.innerHTML = formatNarrative(narrative);
+      if (ns) { ns.style.display = 'block'; ns.classList.add('visible'); }
+    } else {
+      el.innerHTML = '<p class="narrative-text" style="opacity:0.5;">完成更多测评，解读将在这里生长。</p>';
+    }
+    if (btn) { btn.disabled = false; btn.textContent = '重新解读'; }
   }
 
   function renderMoodCalendar() {
@@ -858,7 +902,7 @@
         <div style="font-size:9px;color:rgba(74,48,115,0.5);letter-spacing:2px;font-family:'Noto Serif', Georgia, serif;font-style:italic;margin-bottom:5px;">${axis.nameEn}</div>
         <div style="font-size:12px;color:#1E1628;font-family:'Noto Serif SC',serif;letter-spacing:1px;margin-bottom:6px;">${axis.name}</div>
         <div style="display:flex;flex-wrap:wrap;gap:4px;">
-          ${tags.length ? tags.map(t => `<span style="font-size:8px;padding:2px 7px;border-radius:10px;background:rgba(74,48,115,0.08);color:#4A3073;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.5px;">${String(t).substring(0,10)}</span>`).join('') : '<span style="font-size:8px;color:rgba(30,22,40,0.25);font-family:\'Noto Sans SC\',sans-serif;letter-spacing:1px;">待探索</span>'}
+          ${tags.length ? tags.map(t => `<span style="font-size:8px;padding:2px 7px;border-radius:10px;background:rgba(74,48,115,0.08);color:#4A3073;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.5px;">${String(t).substring(0,16)}</span>`).join('') : '<span style="font-size:8px;color:rgba(30,22,40,0.25);font-family:\'Noto Sans SC\',sans-serif;letter-spacing:1px;">待探索</span>'}
         </div>`;
       axesDiv.appendChild(cell);
     });
@@ -873,7 +917,7 @@
     wrap.appendChild(narDiv);
     generateNarrative(results).then(narrative => {
       const el = document.getElementById('shareNarrativeText');
-      if (el) el.textContent = narrative || '完成更多测评，解读将在这里生长。';
+      if (el) el.textContent = narrative ? narrative.replace(/\*\*[^*]+\*\*/g, '').trim() : '完成更多测评，解读将在这里生长。';
     });
 
     // Branding footer
@@ -900,12 +944,12 @@
       </div>`;
 
     const allTests = [
-      { id: 'cognitive', name: '荣格认知功能', nameEn: 'Jungian Cognitive' },
-      { id: 'cognitive-48', name: '荣格认知 48题', nameEn: 'Cognitive 48' },
+      { id: 'cognitive', name: '荣格认知功能 · 完整版', nameEn: 'Jungian Cognitive Functions' },
+      { id: 'cognitive-48', name: '荣格认知功能 · 快速版', nameEn: 'Cognitive Functions (Quick)' },
       { id: 'hsp', name: '高敏感度特质测试', nameEn: 'High Sensitivity' },
       { id: 'erq', name: '情绪调节策略', nameEn: 'Emotion Regulation' },
       { id: 'ecr', name: '成人依恋类型', nameEn: 'Attachment Style' },
-      { id: 'fmps', name: '完美主义倾向', nameEn: 'Perfectionism' },
+      { id: 'fmps', name: '完美主义倾向量表', nameEn: 'Perfectionism Scale' },
       { id: 'boundary-sense', name: '边界感评估', nameEn: 'Boundary Sense' },
       { id: 'abm-love-animal', name: '爱情动物测评', nameEn: 'Love Animal' },
     ];
@@ -932,7 +976,7 @@
               <div style="font-size:12px;color:#1E1628;letter-spacing:1px;font-family:'Noto Serif SC',serif;">${test.name}</div>
               <div style="font-size:9px;color:rgba(30,22,40,0.35);letter-spacing:1.5px;font-family:'Noto Serif', Georgia, serif;font-style:italic;margin-top:2px;">${test.nameEn}</div>
             </div>
-            ${summary ? `<span style="font-size:9px;padding:3px 10px;border-radius:12px;background:rgba(74,48,115,0.08);color:#4A3073;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.5px;white-space:nowrap;">${String(summary).substring(0,10)}</span>` : (score !== '—' ? `<span style="font-size:11px;color:rgba(74,48,115,0.6);font-family:'Noto Serif', Georgia, serif;font-weight:300;">${score}</span>` : '')}
+            ${summary ? `<span style="font-size:9px;padding:3px 10px;border-radius:12px;background:rgba(74,48,115,0.08);color:#4A3073;font-family:'Noto Sans SC',sans-serif;letter-spacing:0.5px;white-space:nowrap;">${String(summary).substring(0,16)}</span>` : (score !== '—' ? `<span style="font-size:11px;color:rgba(74,48,115,0.6);font-family:'Noto Serif', Georgia, serif;font-weight:300;">${score}</span>` : '')}
           </div>
           ${scoreNum !== null ? `<div style="height:2px;background:rgba(74,48,115,0.08);border-radius:1px;overflow:hidden;"><div style="height:100%;width:${scoreNum}%;background:rgba(74,48,115,0.3);border-radius:1px;transition:width 0.6s;"></div></div>` : ''}`;
         listDiv.appendChild(card);
@@ -971,12 +1015,12 @@
     const axes = [
       { id: 'trait', name: '特质轴', nameEn: 'Trait Axis', desc: '你如何感知、思考、做决策——这是你最底层的操作系统', tests: [
         { id: 'cognitive', name: '荣格认知功能 · 完整版', nameEn: 'Jungian Cognitive Functions', scoreKey: 'summary', path: 'test-cognitive.html' },
-        { id: 'cognitive-48', name: '荣格认知功能 · 48题版', nameEn: 'Cognitive Functions 48Q', scoreKey: 'summary', path: 'test-cognitive-48.html' },
+        { id: 'cognitive-48', name: '荣格认知功能 · 快速版', nameEn: 'Cognitive Functions (Quick)', scoreKey: 'summary', path: 'test-cognitive-48.html' },
       ]},
       { id: 'emotion', name: '情绪轴', nameEn: 'Emotion Axis', desc: '你如何感受、消化、应对情绪——这里藏着你消耗最多能量的地方', tests: [
         { id: 'hsp', name: '高敏感度特质测试', nameEn: 'High Sensitivity', scoreKey: 'score', path: 'test-hsp.html' },
         { id: 'erq', name: '情绪调节策略', nameEn: 'Emotion Regulation', scoreKey: 'score', path: 'test-erq.html' },
-        { id: 'ecr', name: '成人依恋类型', nameEn: 'Attachment Style', scoreKey: 'topDimension', path: 'test-ecr.html' },
+        { id: 'ecr', name: '成人依恋类型', nameEn: 'Attachment Style', scoreKey: 'summary', path: 'test-ecr.html' },
       ]},
       { id: 'behavior', name: '行为轴', nameEn: 'Behavior Axis', desc: '你如何行动、设标准、划边界——这决定了你和世界的互动方式', tests: [
         { id: 'fmps', name: '完美主义倾向量表', nameEn: 'Perfectionism', scoreKey: 'score', path: 'test-fmps.html' },
@@ -1015,7 +1059,17 @@
         if (r) {
           const rawVal = r[test.scoreKey];
           const val = rawVal && typeof rawVal === 'object' ? safeScore(r) : rawVal;
-          badge = val ? String(val).substring(0, 8) : '已完成';
+          // Build richer badge text per test type
+          if (test.id === 'hsp') {
+            const score = safeScore(r);
+            badge = r.summary ? `${score} · ${r.summary}` : (score && score !== '—' ? `${score}` : '已完成');
+          } else if (test.id === 'ecr') {
+            badge = r.summary ? `${r.summary}依恋` : (val ? String(val).substring(0, 16) : '已完成');
+          } else if (test.id === 'erq') {
+            badge = r.summary || (val ? String(val).substring(0, 16) : '已完成');
+          } else {
+            badge = val ? String(val).substring(0, 16) : '已完成';
+          }
           progressWidth = typeof r.score === 'number' ? Math.min(100, r.score) : 70;
         }
         const testLink = test.path || '#';
@@ -1162,12 +1216,16 @@
       // Show narrative section with placeholder, then fill async
       const ns = document.getElementById('narrativeSection');
       const narrativeTextEl = document.getElementById('narrativeText');
-      narrativeTextEl.textContent = '解读生成中…';
+      narrativeTextEl.innerHTML = '<p class="narrative-text" style="opacity:0.5;">解读生成中…</p>';
       ns.style.display = 'block';
       setTimeout(() => ns.classList.add('visible'), 2000);
       generateNarrative(results).then(narrative => {
-        narrativeTextEl.textContent = narrative || '完成更多测评，解读将在这里生长。';
-        if (!narrative) ns.style.display = 'none';
+        if (narrative) {
+          narrativeTextEl.innerHTML = formatNarrative(narrative);
+        } else {
+          narrativeTextEl.innerHTML = '<p class="narrative-text" style="opacity:0.5;">完成更多测评，解读将在这里生长。</p>';
+          ns.style.display = 'none';
+        }
       });
     }
     renderAxesCards(results);
