@@ -1,3 +1,13 @@
+/* Preserve icon fonts */
+.material-icons,
+.material-icons-outlined,
+.material-symbols-outlined,
+.material-symbols-rounded,
+[class*="material-icons"],
+[class*="material-symbols"] {
+  font-family: 'Material Symbols Outlined', 'Material Icons' !important;
+}
+
 body,
 p,
 li,
@@ -40,7 +50,7 @@ h6,
   font-family: "Noto Serif SC", "Cormorant Garamond", "Source Han Serif SC", serif !important;
 }
 
-body * {
+body *:not(.material-icons):not(.material-icons-outlined):not(.material-symbols-outlined):not(.material-symbols-rounded):not([class*="material-icons"]):not([class*="material-symbols"]) {
   font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif !important;
 }
 
