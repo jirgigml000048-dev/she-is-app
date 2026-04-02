@@ -199,7 +199,10 @@ function toggleReflection() {
   const icon = document.getElementById('reflectionIcon');
   const bars = document.getElementById('reflectionBars');
   if (audio.paused) {
-    audio.play();
+    audio.play().catch(function() {
+      icon.textContent = 'music_off';
+      setTimeout(function() { icon.textContent = 'play_arrow'; }, 1500);
+    });
     icon.textContent = 'pause';
     bars.style.opacity = '1';
   } else {

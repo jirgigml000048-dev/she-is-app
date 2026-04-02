@@ -234,7 +234,7 @@
     const bgTime = document.getElementById('bgTime');
     function formatBgTime(s) { return Math.floor(s/60) + ':' + String(Math.floor(s%60)).padStart(2,'0'); }
     bgPlayBtn.addEventListener('click', () => {
-      if (bgAudio.paused) { bgAudio.play(); bgPlayBtn.querySelector('.material-symbols-outlined').textContent = 'pause'; }
+      if (bgAudio.paused) { bgAudio.play().catch(function(){}); bgPlayBtn.querySelector('.material-symbols-outlined').textContent = 'pause'; }
       else { bgAudio.pause(); bgPlayBtn.querySelector('.material-symbols-outlined').textContent = 'play_arrow'; }
     });
     bgAudio.addEventListener('timeupdate', () => {
@@ -282,7 +282,7 @@
 
     storyPlayBtn.addEventListener('click', () => {
       if (storyAudio.paused) {
-        storyAudio.play();
+        storyAudio.play().catch(function(){ storyPlayIcon.textContent='music_off'; });
         storyPlayIcon.textContent = 'pause';
       } else {
         storyAudio.pause();
