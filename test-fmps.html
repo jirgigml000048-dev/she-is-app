@@ -2,6 +2,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
+<script src="assets/theme-init.js"></script>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Perfectionism 完美主义倾向 | 女也 She Is</title>
     <style>
@@ -616,7 +617,7 @@
   <body>
 <header style="position:fixed;top:0;width:100%;z-index:50;background:rgba(252,249,246,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);">
 <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 20px;width:100%;">
-<a href="/assessment" style="text-decoration:none;display:flex;align-items:center;">
+<a href="assessment.html" style="text-decoration:none;display:flex;align-items:center;">
 <span aria-hidden="true" style="color:#33185c;font-size:22px;line-height:1;">←</span>
 </a>
 <div style="display:flex;align-items:center;gap:6px;">
@@ -733,6 +734,8 @@
     
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/auth.js"></script>
 <script src="assets/profile-utils.js"></script>
 <script>
       let storyRec;
@@ -1084,14 +1087,16 @@
         progressText.textContent = "完成";
 
         if (window.SheProfileStore) {
+          var fmpsLabels = { high_cm_da:'恐惧驱动型', high_ps_low_cm:'高标准低焦虑', high_pe:'父母标准内化', high_da_low_cm:'行动困难型', high_or:'秩序需求型', balanced:'均衡型' };
           window.SheProfileStore.saveResult({
             moduleId: "fmps",
             moduleName: "完美主义",
-            summary: r.title.slice(0, 4),
+            summary: fmpsLabels[resultId] || r.title.slice(0, 6),
             score: { ...scores, selfCompassion: Math.max(0, Math.min(5, 6 - ((scores.CM + scores.PS + scores.DA) / 3))) },
             topDimension: sortedDimensions[0][0]
           });
         }
+        if (typeof saveTestResult === 'function') saveTestResult('fmps', fmpsLabels[resultId] || resultId, { score: scores, resultId: resultId });
 
         resultEl.innerHTML = `
           <div id="result-capture" class="result-capture-card">

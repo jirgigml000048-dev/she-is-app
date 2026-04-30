@@ -17,9 +17,8 @@ exports.handler = async (event) => {
   if (results.ecr) dataLines.push(`依恋类型: ${results.ecr.topDimension}，${results.ecr.summary}`);
   if (results.fmps) {
     const s = results.fmps.score;
-    const dims = typeof s === 'object' ? Object.entries(s).filter(([k]) => ['CM','OR','PE','PS','DA'].includes(k)).map(([k,v]) => ({CM:'担心错误',OR:'条理性',PE:'父母期望',PS:'个人标准',DA:'行动疑虑'}[k] + ':' + (typeof v === 'number' ? v.toFixed(1) : v))).join('、') : '';
-    const top = results.fmps.topDimension ? ({CM:'担心错误',OR:'条理性',PE:'父母期望',PS:'个人标准',DA:'行动疑虑'}[results.fmps.topDimension] || results.fmps.topDimension) : '';
-    dataLines.push(`完美主义类型: ${results.fmps.summary}${top ? '，最突出维度: ' + top : ''}${dims ? '，各维度: ' + dims : ''}`);
+    const total = typeof s === 'object' ? Object.values(s).reduce((a, b) => a + b, 0) : s;
+    dataLines.push(`完美主义倾向总分: ${total}，结论: ${results.fmps.summary}`);
   }
   if (results['boundary-sense']) {
     const s = results['boundary-sense'].score;

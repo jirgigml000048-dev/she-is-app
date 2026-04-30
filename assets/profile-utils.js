@@ -17,7 +17,6 @@
         topDimension: payload.topDimension || ''
       };
       localStorage.setItem(PREFIX + payload.moduleId, JSON.stringify(record));
-      // Append to history (keeps last 20 entries per module)
       const histKey = PREFIX + 'history_' + payload.moduleId;
       const history = JSON.parse(localStorage.getItem(histKey) || '[]');
       history.push(record);
@@ -63,14 +62,9 @@
 
   function getHistory(moduleId) {
     if (!moduleId) return [];
-    try {
-      return JSON.parse(localStorage.getItem(PREFIX + 'history_' + moduleId) || '[]');
-    } catch (e) {
-      return [];
-    }
+    try { return JSON.parse(localStorage.getItem(PREFIX + 'history_' + moduleId) || '[]'); } catch(e) { return []; }
   }
 
-  // Returns { moduleId: [entries] } for modules with >1 history entry
   function readAllHistory() {
     const out = {};
     try {

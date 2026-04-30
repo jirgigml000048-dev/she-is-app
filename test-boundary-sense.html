@@ -2,6 +2,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
+<script src="assets/theme-init.js"></script>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>边界感测评 | 女也 She Is</title>
     <link rel="preconnect" href="https://fonts.loli.net" />
@@ -477,7 +478,7 @@
   <body>
 <header style="position:fixed;top:0;width:100%;z-index:50;background:rgba(252,249,246,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);">
 <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 20px;width:100%;">
-<a href="/assessment" style="text-decoration:none;display:flex;align-items:center;">
+<a href="assessment.html" style="text-decoration:none;display:flex;align-items:center;">
 <span aria-hidden="true" style="color:#33185c;font-size:22px;line-height:1;">←</span>
 </a>
 <div style="display:flex;align-items:center;gap:6px;">
@@ -605,7 +606,9 @@
       </section>
     </main>
 
-        <script src="assets/profile-utils.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/auth.js"></script>
+<script src="assets/profile-utils.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 
@@ -1010,11 +1013,12 @@ function generateResultCard() {
           window.SheProfileStore.saveResult({
             moduleId: 'boundary-sense',
             moduleName: '边界感',
-            summary: tag.replace(/ — .*/, '').slice(0, 4),
+            summary: tag.replace(/ — .*/, ''),
             score: counts,
             topDimension: topEntry[0]
           });
         }
+        if (typeof saveTestResult === 'function') saveTestResult('boundary-sense', tag.replace(/ — .*/, ''), { score: counts });
         applyStoryRecommendation(tag);
         setView(resultView);
         storyRec.style.display = 'block';
