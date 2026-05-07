@@ -84,7 +84,10 @@ article > section + section::before {
 <p class="text-[10px] text-outline/40 text-right px-8 mb-4 font-label tracking-wider max-w-3xl mx-auto">Cover image is AIGC and does not represent real individuals.</p>
 
 <!-- Narrative Content -->
-<article class="px-8 max-w-3xl mx-auto space-y-16">
+<div id="storyPlayer" data-bgm="" data-tts=""></div>
+<script src="assets/story-player.js"></script>
+
+    <article class="px-8 max-w-3xl mx-auto space-y-16">
 <section>
 <p class="text-on-surface text-lg leading-[1.9] font-light mb-6"><!-- 在此粘贴正文内容 --></p>
 </section>
@@ -139,30 +142,6 @@ article > section + section::before {
 </a>
 </div>
 
-
-<audio id="bgAudio" loop>
-  <source src="assets/audio/story-xiaoming.mp3" type="audio/mpeg">
-</audio>
-<script>
-(function() {
-  const audio = document.getElementById('bgAudio');
-  if (!audio) return;
-  audio.volume = 0.35;
-  audio.muted = true;
-  audio.play().catch(function(){});
-  let unmuted = false;
-  function unmute() {
-    if (!unmuted) {
-      audio.muted = false;
-      unmuted = true;
-    }
-    document.removeEventListener('click', unmute);
-    document.removeEventListener('touchstart', unmute);
-  }
-  document.addEventListener('click', unmute);
-  document.addEventListener('touchstart', unmute);
-})();
-</script>
 
 <script>
   (async () => {

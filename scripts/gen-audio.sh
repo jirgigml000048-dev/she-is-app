@@ -7,7 +7,7 @@
 
 set -e
 VOICE="zh-CN-YunjianNeural"
-OUT_DIR="assets/audio"
+OUT_DIR="assets/audio/tts"
 mkdir -p "$OUT_DIR"
 
 # Extract story text from HTML → plain text

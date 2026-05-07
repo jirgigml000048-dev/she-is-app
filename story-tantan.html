@@ -56,6 +56,9 @@
       </div>
     </section>
 
+    <div id="storyPlayer" data-bgm="assets/audio/bgm/bg-permafrost.mp3" data-tts="assets/audio/tts/story-tantan.mp3"></div>
+<script src="assets/story-player.js"></script>
+
     <article class="mx-auto max-w-3xl px-6 py-12 sm:px-8">
       <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">她给我发私信的时候，我以为至少是个大学生。"创新学校"让我刻板印象，认为是大学毕业、甚至已经工作后的业余项目。见面以后我问她多大。</p>
       <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">"还不到18，我17岁。"</p>
@@ -172,25 +175,6 @@
         alert('链接已复制');
       } catch (error) { console.error(error); }
     });
-  </script>
-  <audio id="bgAudio" loop>
-    <source src="assets/audio/story-tantan.mp3" type="audio/mpeg">
-  </audio>
-  <script>
-    (function() {
-      const audio = document.getElementById('bgAudio');
-      audio.volume = 0.35;
-      audio.muted = true;
-      audio.play().catch(function(){});
-      var unmuted = false;
-      function unmute() {
-        if (!unmuted) { audio.muted = false; unmuted = true; }
-        document.removeEventListener('click', unmute);
-        document.removeEventListener('touchstart', unmute);
-      }
-      document.addEventListener('click', unmute);
-      document.addEventListener('touchstart', unmute);
-    })();
   </script>
   <script>
   (async () => {
