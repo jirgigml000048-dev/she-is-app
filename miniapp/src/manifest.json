@@ -1,7 +1,7 @@
 {
-    "name" : "",
-    "appid" : "",
-    "description" : "",
+    "name" : "女也 She Is",
+    "appid" : "__UNI__SHEIS",
+    "description" : "100位真实女孩的非虚构故事",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
@@ -50,7 +50,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wxf9a302447ba08677",
         "setting" : {
             "urlCheck" : false
         },
