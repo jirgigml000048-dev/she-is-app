@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="light" lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+<script src="assets/theme-init.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小鱼：她只喜欢女人造的男人 | 女也 She Is</title>
+  <link rel="preconnect" href="https://fonts.loli.net">
+  <link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="assets/tailwind-config.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { -webkit-font-smoothing: antialiased; background: #fcf9f6; }
+    .editorial-shadow { box-shadow: 0 32px 64px -12px rgba(28, 28, 26, 0.08); }
+    .mode-btn { padding: 6px 18px; border-radius: 999px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; border: none; cursor: pointer; transition: all 0.2s; background: transparent; color: #7b7580; }
+    .mode-btn.active { background: #4a3073; color: #fff; }
+    .speed-btn { padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; border: 1.5px solid #ccc4d1; background: transparent; color: #4a454f; cursor: pointer; transition: all 0.2s; }
+    .speed-btn.active { border-color: #4a3073; background: #4a3073; color: #fff; }
+    #storyProgress { -webkit-appearance: none; appearance: none; height: 4px; border-radius: 2px; background: linear-gradient(to right, #4a3073 var(--prog,0%), #e5e2df var(--prog,0%)); cursor: pointer; }
+    #storyProgress::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #4a3073; cursor: pointer; }
+    .story-section { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .story-section.visible { opacity: 1; transform: none; }
+</style>
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/font-override.css">
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/20">
+  <div id="app-header" data-back="true"></div>
+  <script src="assets/header.js"></script>
+
+  <main class="pb-32 pt-16">
+    <section class="relative isolate flex h-[70vh] min-h-[520px] items-end overflow-hidden">
+      <div class="absolute inset-0 bg-[linear-gradient(135deg,#33185c_0%,#5c2c73_36%,#9c3c62_72%,#f0d6d8_100%)]"></div>
+      <img src="assets/covers/cover-010-xiaoyu.jpg" alt="小鱼：她只喜欢女人造的男人" class="absolute inset-0 h-full w-full object-cover opacity-60" onerror="this.style.display='none'">
+      <div class="absolute inset-0 bg-gradient-to-b from-white/20 via-white/40 to-[#fcf9f6]"></div>
+      <div class="relative z-10 mx-auto w-full max-w-5xl px-6 pb-12 sm:px-8 md:pb-14">
+        <span class="font-label text-sm uppercase tracking-[0.3em] text-primary mb-4">Volume 010 / 100位女孩</span>
+        <h2 class="font-headline text-4xl md:text-5xl text-primary leading-tight font-bold max-w-[90%] mb-2">她只喜欢女人造的男人</h2>
+        <span class="font-headline text-xl md:text-2xl text-primary/70 font-normal tracking-normal">She Only Loves the Men Women Create</span>
+      </div>
+    </section>
+
+    <div id="storyPlayer" data-bgm="assets/audio/bgm/your-reflection.mp3" data-tts="assets/audio/tts/story-010.mp3"></div>
+    <script src="assets/story-player.js"></script>
+
+    <article id="storyArticle" class="mx-auto max-w-3xl px-6 py-12 sm:px-8 article-listen-mode">
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">五道营胡同的一家泰餐厅，她从西二旗坐了一个多小时地铁过来，说"正好进城玩一下"。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">小鱼刚从伦敦硕士毕业，在某互联网大厂实习了三个月，马上要转正。湖南人，小学跟妈妈来北京上学，本科毕业于上海一所985，硕士英国一年，然后回来了。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">"感觉外面不好玩。伦敦商场太少了。我喜金水，喜欢繁华的地方。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">她瘦瘦的，吃东西很慢，聊天更慢，每次都要停顿好久，像从系统里拉取记忆、重新组织，才慢慢一点点表达出来。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-8">我们从职场聊到恋爱，从二次元聊到婚姻制度的存废，从乙女游戏聊到基因决定论。这些东西应该在她脑子里住了很久了，全都想好了。只是在等一个人系统地问。</p>
+
+      <section class="pt-6 mt-14 story-section"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-secondary leading-none">01</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-primary font-bold leading-tight">出厂设置</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-primary/55">Factory Default</p></div></div></section>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">大多数"大女主"是被生活教出来的。被渣男伤过，被职场歧视过，被婚姻碾压过，然后决定"我要为自己活"。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">那是一种觉醒。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">小鱼不是。她好像出厂就是这样。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"我从幼儿园就知道什么是喜欢了。"她说这话的时候轻描淡写，像在陈述一个物种特征。"而且我每到一个新的地方，就一定要找那里最帅的人来暗恋。虽然我可能根本不了解他。从幼儿园到现在一直是这样。暗恋是我用来鞭策自己的一个手段，这样无论那个人最后喜不喜欢我，我都变得更好了。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她很清楚地记得这是她小学就有的想法。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我问她恋爱经历。她说最长的谈了一年多，"分手的时候也还没到法定年龄"，她继续用勺子把盘里的虾膏炒饭盛到碗里，坦荡得看不到一丝娇羞，"最短的两周。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"如果我喜欢的那个人喜欢了我，我就想逃。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她不需要追到。她需要的是追的过程本身，那种"我要了，我得到了"的成就感。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"成就感"三个字是她自己总结的人生主题词。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">但这里有一个矛盾。她喜欢追不到的人，但谈恋爱又必须对方围着她转。不围着她转的，两周就散了。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我说这不是矛盾吗？</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"平时我喜欢追一个我追不到的人。但谈了，他就得围着我转。"她自己也觉得好笑。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">后来她又说了一句让我觉得很有意思的话。她以为自己是恋爱脑，后来发现不是。"恋爱脑是想要索取爱。但我是我的爱太多了，我不爱一个人我难受。而且我只是单方面享受暗恋的感觉。恋爱对我来说是一种消遣，不是必需品。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">一种消遣。大多数女生把感情当成生活的重心，她把感情当成生活的调味料。这不是她学来的，不是被伤了以后悟出来的道理，是她天生如此，感情浓度够了她就去忙别的了。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">理想中的男朋友呢？</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"以我为尊。服务型，会做饭，把我照顾好，把我伺候好。很人夫感。"她想了想，补了一句，"就是我娶一个老婆的那种。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我说你这是骨子里的大女主。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"这不是人本位吗？理应如此啊。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她没有一秒钟觉得这个想法需要被解释或者被辩护。小鱼觉得女性本来就应该被这样对待。"动物界都是雄性负责把自己装扮得很漂亮，然后等雌性挑。只有人类才反过来了。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">这跟我见过的所有"大女主叙事"都不一样。大多数叙事的底层是反抗，我们被压迫过，所以我们要翻身。但小鱼的底层不是反抗，是天然。她没有一段需要翻身的历史。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她的女性主义不是后天觉醒的产物，是一种本能，就像有的人天生左撇子，你让她用右手写字，她不是不会，是别扭。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">而且她特别生气的一件事是：别人总以为她厌男是因为被某个男人辜负过。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"他们会把我对整个社会结构的愤怒，缩小成一段情情爱爱。好像我是因为失恋了才变成这样的。这让我非常愤怒。"</p>
+
+      <section class="pt-6 mt-14 story-section"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-secondary leading-none">02</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-primary font-bold leading-tight">女人造的男人</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-primary/55">Men That Women Made</p></div></div></section>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">小鱼玩乙女游戏，看同人文，搞二次元。我问她二次元里喜欢的男性类型跟现实里一样吗？</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"一样。但现实里找不到。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"我后来发现，我喜欢的不是真实的男生。我喜欢的是女人塑造的男人。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">乙女游戏的男主角是女性编剧写的，女性画师画的，按照女性的情感需求设计的。他温柔但不软弱，强大但不压迫，有自己的灵魂但永远以你为中心。这种男人在现实里几乎不存在，因为现实中的男性是被另一套系统塑造出来的。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"我从小到大喜欢的男生，都会被其他男生说娘。"她说，"我甚至喜欢过一个同性恋，当时不知道他是。我就是喜欢有女性气质的男生。不是那种大直男。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她试过 dating APP。下载了，看了一圈，卸了。"上面的人说两句就开始开黄腔。"她说男性的问题是"小头控制大头，还没有进化成人类。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我问她，那在二次元里不会觉得是假的吗？</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"很多人觉得它是假的。但真实的东西也未必能给我这么多快乐。我的快乐是真实的，这就足够了。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">而且二次元给她的不仅是情感代偿。带她进入工作的学姐是在漫展上认识的，帮她写论文的朋友也是同好。"我们喜欢同一款男生，说明我们的人生经历有很多重合的地方，所以聊什么都能聊。这是一个很快捷的匹配方式。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我突然理解了：她不是在"逃避现实"，她是在一个由女性主导的平行世界里建设了自己的社交网络。在那个世界里，男性是按照女性的标准被创造的，女性之间的连接是通过"我们都想要什么样的人"来建立的。这比现实高效得多，也安全得多。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她说到这里的时候，聊到了一个更深的层面，她认为女性从基因上就是"第一性"。"只有我们有孕育生命的能力。男生连自己孩子是不是自己的都无法确认，但妈妈永远知道。从基因上，女人本来才是这个世界的第一性。男人只是提供了一个配子。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">这段话我不评价对错。但我注意到她说这些话的时候，跟说"我想吃虾糕炒饭"的语气是一样的。</p>
+
+      <section class="pt-6 mt-14 story-section"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-secondary leading-none">03</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-primary font-bold leading-tight">用独立换自由</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-primary/55">Trading Independence for Freedom</p></div></div></section>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她说她不会结婚。不是"现在不想"，是"确定不会"。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"婚姻对女性是一种压迫。这个制度已经落后了，应该可以取消了。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">这个想法最早是她妈妈告诉她的。妈妈在体制内工作，平时会给她转抨击父权的文章。妈妈也不想让她结婚。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她妈妈的故事本身就挺有意思的。当年从老家来北京，本来是陪她上学的。结果她后来回老家高考了，妈妈反而留在了北京，"她自己在北京闯出了一番事业。"女儿来了又走了，陪读的人变成了主角。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她爸在老家。全家每个人都很独立，"各自的事自己做主。我的事我自己做主。"父母之间的关系她"不太了解"。我说你们家好像每个人都在过自己的日子。她说"自己决定自己的事情就好了。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她的理想生活是"都市丽人"：自己赚很多钱，吃好的，喝好的，全国到处玩。我问她为什么选大厂不选金融，她说大厂氛围更年轻，"而且看不到白头发的人，我正在思考自己头发白的那天会在哪。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我问她从小自己做所有决定不觉得累吗。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"我的一贯宗旨就是，我做好了，你们跟着开心就行。你们不要管我怎么做好的。但我要是做了什么不好的，也轮不到你们指责。好的坏的，我自己承担。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我说你这是用独立换自由。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"对。但这种把自己放到这个位置上，就会比较容易焦虑。因为在我心里，还是我自己对自己的一切负责。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她在英国的时候，一结课就开始刷实习，一边刷实习一边写论文一边准备秋招。"最近终于能闲下来了。这就是比较开心的事情。"她把"闲下来"当成了成就。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">但她想要孩子。去父留子，只生女儿。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"我跟我妈关系很好。想再延续这份东西。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我问她一个人不会孤独吗。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她停了一下。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"其实会想。以前经常想。我是独生女，家人如果离世了会怎样？"她在英国的时候去看过学校的心理咨询师，也聊过这个问题。"后来想通了：要相信以后的自己有能力不让自己孤单。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">这句话从一个二十出头的女孩嘴里说出来，听着很轻。但那个停顿泄露了它的重量，她不是没想过最坏的情况，她是想过了，然后选择了相信自己。</p>
+
+      <section class="pt-6 mt-14 story-section"><div class="flex items-baseline gap-4 mb-6"><span class="text-6xl md:text-7xl font-headline text-secondary leading-none">04</span><div class="min-w-0"><h3 class="font-headline text-2xl md:text-3xl text-primary font-bold leading-tight">想要不需要资格</h3><p class="mt-2 text-sm uppercase tracking-[0.22em] text-primary/55">Wanting Needs No Qualification</p></div></div></section>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">听起来这个女孩子，所有的逻辑都是："我想要，我得到。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我问她："你会质疑自己的'想要'吗？"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">小鱼露出了愤怒，因为这把她拉回网上有人攻击女生"挑挑拣拣"——你自己什么条件，还要求这么高。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"我的需求和我是什么样的人，是两件完全独立的事情。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">她说得很快，但每个字都是想过的。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">"我可以有这个需求。找不找得到，是我的事。但你不能否定我有这个需求。我条件好，我可以有这个需求。我条件不好，我一样可以有这个需求。需求不需要前提条件。我的条件只能影响到我的需求是否能被满足，而并不能影响我是否能有这个需求。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">这个逻辑干净到我不知道怎么接。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">因为大多数人，包括很多女性自己，都在用"我配不配"来审核自己的欲望。想要好的爱情之前先问自己够不够好，想要高薪之前先问自己够不够格，想要被尊重之前先问自己做了什么值得尊重的事。我们太习惯给"想要"设置门槛了。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">但她说这是两件事。"我可以不够好，但我依然可以想要。想要本身不需要任何资格。"</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">小鱼准备去五道营胡同转转，再坐一个多小时的地铁回西二旗。我看着她瘦瘦的背影，走路很轻，像一尾滑进水里的鱼，转眼就不见了。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">我站在胡同口想，我见过的女孩里，有人在学着变强，有人在练习不怕，有人在从废墟里一块砖一块砖地把自己砌回来。但小鱼不是。她没有废墟。她只是一开始就长成了这个样子。</p>
+      <p class="text-lg leading-[1.9] font-light text-on-surface mb-7">说不上来是羡慕还是好奇。可能两者都有。</p>
+
+<section class="mt-24 rounded-[2rem] border border-primary/10 bg-[#f0edea] p-8 shadow-[0_30px_80px_rgba(51,24,92,0.07)]">
+  <div class="mb-8">
+    <h5 class="font-headline text-2xl text-primary font-bold mb-1">A Moment for You</h5>
+    <p class="font-headline text-sm text-primary/40 mb-3">心灵寄语</p>
+    <div class="w-12 h-1 bg-secondary rounded-full"></div>
+  </div>
+  <p class="text-[#4a454f] leading-relaxed mb-2">你有没有一个"想要"，是你一直在等自己"够格"了才敢承认的？</p>
+  <p class="text-[#4a454f]/60 text-sm italic leading-relaxed mb-6">Is there something you want — but have been waiting to "deserve" before admitting it?</p>
+  <p class="text-[#4a454f] text-sm leading-relaxed mb-8">如果想要不需要资格，你现在最想要什么？</p>
+  <div class="relative mb-4">
+    <textarea class="w-full bg-white/60 border-0 border-b border-[#ccc4d1] focus:ring-0 focus:bg-white rounded-none py-4 px-0 min-h-[120px] text-on-surface placeholder:text-[#7b7580]/40 font-body" placeholder="写点什么..."></textarea>
+  </div>
+  <div class="flex items-center gap-3">
+    <button class="flex-1 min-w-0 flex items-center justify-center gap-1.5 px-3 py-3 rounded-full bg-primary text-white text-[10px] font-label font-bold uppercase tracking-wide whitespace-nowrap transition-colors" onclick="this.dataset.public = this.dataset.public === 'true' ? 'false' : 'true'; const isPublic = this.dataset.public === 'true'; this.querySelector('.icon').textContent = isPublic ? 'public' : 'lock'; this.querySelector('.label-text').textContent = isPublic ? 'Public / 公开' : 'Private / 仅自己';" data-public="true">
+      <span class="material-symbols-outlined text-sm icon">public</span>
+      <span class="label-text whitespace-nowrap">Public / 公开</span>
+    </button>
+    <button class="flex-1 min-w-0 py-3 px-3 bg-white/70 text-on-surface rounded-full font-label uppercase tracking-wide text-[10px] font-bold shadow-sm active:scale-95 transition-transform text-center whitespace-nowrap border border-[#7b7580]/20">
+      Save / 留下感悟
+    </button>
+  </div>
+</section>
+
+<section class="mt-12 space-y-6">
+  <h5 class="font-headline text-xl text-primary font-bold mb-2">Reflections <span class="text-base font-normal text-primary/40">/ 读者感悟</span></h5>
+  <article class="rounded-xl border border-[#ccc4d1]/40 bg-white/70 p-6 shadow-sm">
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+        <span class="text-[10px] font-bold text-primary">?</span>
+      </div>
+      <span class="font-label text-[10px] uppercase tracking-widest text-[#4a454f]/60">Waiting for you</span>
+    </div>
+    <p class="font-body text-sm text-[#4a454f] leading-relaxed">你的感受，也许会照亮下一个读到这里的人。</p>
+  </article>
+</section>
+    </article>
+  </main>
+
+  <div class="fixed bottom-6 left-1/2 z-40 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2">
+    <a href="stories.html" class="flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_20px_60px_rgba(51,24,92,0.28)] transition hover:bg-[#44206f]">
+      <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      返回故事列表
+    </a>
+  </div>
+
+  <script>
+    document.getElementById('shareButton')?.addEventListener('click', async () => {
+      const shareData = { title: document.title, text: '小鱼：她只喜欢女人造的男人 | 女也 She Is', url: window.location.href };
+      try {
+        if (navigator.share) { await navigator.share(shareData); return; }
+        await navigator.clipboard.writeText(window.location.href);
+        alert('链接已复制');
+      } catch (error) { console.error(error); }
+    });
+  </script>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.story-section').forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
