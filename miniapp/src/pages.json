@@ -1,0 +1,22 @@
+{
+  "pages": [
+    { "path": "pages/index/index", "style": { "navigationBarTitleText": "女也 She Is" } },
+    { "path": "pages/stories/list", "style": { "navigationBarTitleText": "100位女孩" } },
+    { "path": "pages/stories/detail", "style": { "navigationBarTitleText": "", "navigationStyle": "custom" } }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "女也 She Is",
+    "navigationBarBackgroundColor": "#fcf9f6",
+    "backgroundColor": "#fcf9f6"
+  },
+  "tabBar": {
+    "color": "#7b7580",
+    "selectedColor": "#4A3073",
+    "backgroundColor": "#ffffff",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页", "iconPath": "static/tab-home.png", "selectedIconPath": "static/tab-home-active.png" },
+      { "pagePath": "pages/stories/list", "text": "故事", "iconPath": "static/tab-stories.png", "selectedIconPath": "static/tab-stories-active.png" }
+    ]
+  }
+}
