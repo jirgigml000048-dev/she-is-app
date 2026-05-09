@@ -137,11 +137,9 @@
       </view>
     </view>
 
-  <!-- Hidden canvases for card export -->
-  <!-- resultCard: 750px wide (2x coords) → exports 1:1, no upscaling = sharp -->
-  <canvas canvas-id="resultCard" class="result-canvas" />
-  <!-- quoteCard: 390×693 quote-only card, exports at 2x -->
-  <canvas canvas-id="quoteCard" class="quote-canvas" />
+  <!-- 2D canvas API: canvas.width/height set in JS → true pixel resolution, always sharp -->
+  <canvas type="2d" id="sheResultCanvas" class="result-canvas" />
+  <canvas type="2d" id="sheQuoteCanvas"  class="quote-canvas"  />
 
   </view>
 </template>
@@ -306,214 +304,218 @@ export default {
         uni.showToast({ title: '生成失败，请重试', icon: 'none' })
       }
     },
-    // ── Quote card (金句卡) — 390×693 style, elegant minimal ──────────
-    _generateQuoteCard() {
+    // ── Get 2D canvas node ──────────────────────────────────────────────
+    _getCanvas(id) {
       return new Promise((resolve, reject) => {
-        const ctx = uni.createCanvasContext('quoteCard', this)
-        const W = 390, H = 693
-        const label = this.result?.label || ''
-        const quote = this.result?.quote || ''
-
-        ctx.setFillStyle('#FAF7F4')
-        ctx.fillRect(0, 0, W, H)
-
-        // Decorative soft circles (approximate radial glow)
-        ctx.setFillStyle('rgba(160,133,214,0.10)')
-        ctx.beginPath(); ctx.arc(-40, 20, 160, 0, Math.PI * 2); ctx.fill()
-        ctx.setFillStyle('rgba(160,133,214,0.08)')
-        ctx.beginPath(); ctx.arc(W + 40, H - 20, 160, 0, Math.PI * 2); ctx.fill()
-
-        // Test name label (centered)
-        ctx.setFontSize(10)
-        ctx.setFillStyle('#4A3073')
-        const testName = (this.test.title || '').toUpperCase()
-        const tnW = ctx.measureText(testName).width
-        ctx.fillText(testName, (W - tnW) / 2, 58)
-
-        // Thin divider
-        ctx.setFillStyle('rgba(74,48,115,0.15)')
-        ctx.fillRect((W - 72) / 2, 68, 72, 1)
-
-        // Result type (large, centered)
-        ctx.setFontSize(38)
-        ctx.setFillStyle('#33185c')
-        const lbW = ctx.measureText(label).width
-        ctx.fillText(label, Math.max(28, (W - lbW) / 2), H / 2 - 14)
-
-        // Quote (wrapped, left-aligned with margins)
-        if (quote) {
-          ctx.setFontSize(15)
-          ctx.setFillStyle('#5b5167')
-          this._wrapText(ctx, quote, 34, H / 2 + 18, W - 68, 26)
-        }
-
-        // Footer rule + branding
-        ctx.setFillStyle('rgba(74,48,115,0.12)')
-        ctx.fillRect(0, H - 56, W, 1)
-
-        ctx.setFontSize(10)
-        ctx.setFillStyle('rgba(74,48,115,0.35)')
-        ctx.fillText('女也 She Is', 28, H - 24)
-
-        ctx.setFontSize(12)
-        ctx.setFillStyle('#4A3073')
-        const brand = 'she is ______.'
-        ctx.fillText(brand, W - 28 - ctx.measureText(brand).width, H - 24)
-
-        ctx.draw(false, () => {
-          uni.canvasToTempFilePath({
-            canvasId: 'quoteCard',
-            x: 0, y: 0, width: W, height: H,
-            destWidth: W * 2, destHeight: H * 2,   // 2x = 780×1386
-            success: r => resolve(r.tempFilePath),
-            fail: reject,
-          }, this)
-        })
-      })
-    },
-
-    // ── Full result card (结果长图) — draws at 2× coords → exports 1:1 (sharp) ──
-    _generateCard() {
-      return new Promise((resolve, reject) => {
-        const ctx = uni.createCanvasContext('resultCard', this)
-        // Draw in a 750-unit coordinate space (CSS canvas is 750px wide)
-        // Export 1:1: no upscaling → sharp on 2x and 3x screens
-        const S = 2   // scale factor vs visual design units
-        const W = 375 * S  // 750 drawing units
-        const label   = this.result?.label   || ''
-        const tagline = this.result?.tagline || ''
-        const quote   = this.result?.quote   || ''
-        const desc    = this.descParagraphs[0] || ''
-
-        ctx.setFillStyle('#fcf9f6')
-        ctx.fillRect(0, 0, W, 1400)
-
-        // Top bar
-        ctx.setFillStyle('#33185c')
-        ctx.fillRect(0, 0, W, 4 * S)
-        ctx.setFillStyle('rgba(156,60,98,0.12)')
-        ctx.fillRect(0, 0, 4 * S, 1400)
-
-        // Header
-        let y = 30 * S
-        ctx.setFontSize(10 * S)
-        ctx.setFillStyle('rgba(74,48,115,0.4)')
-        ctx.fillText('自我图鉴 · SELF DISCOVERY', 22 * S, y)
-        y += 20 * S
-
-        ctx.setFontSize(10 * S)
-        ctx.setFillStyle('rgba(74,48,115,0.65)')
-        ctx.fillText(this.test.titleEn || this.test.title, 22 * S, y)
-        y += 36 * S
-
-        // Result label
-        ctx.setFontSize(30 * S)
-        ctx.setFillStyle('#1c1c1a')
-        ctx.fillText(label, 22 * S, y)
-        y += 38 * S
-
-        // Tagline
-        if (tagline) {
-          ctx.setFontSize(13 * S)
-          ctx.setFillStyle('#9c3c62')
-          ctx.fillText(tagline, 22 * S, y)
-          y += 30 * S
-        } else {
-          y += 10 * S
-        }
-
-        // Score bars
-        if (this.scoreRows.length) {
-          y += 12 * S
-          const BX = 82 * S, BW = 224 * S
-          this.scoreRows.forEach(row => {
-            ctx.setFontSize(11 * S)
-            ctx.setFillStyle('#999')
-            ctx.fillText(row.label, 22 * S, y + 8 * S)
-
-            ctx.setFillStyle('rgba(74,48,115,0.1)')
-            ctx.fillRect(BX, y + 2 * S, BW, 5 * S)
-            ctx.setFillStyle('#4A3073')
-            ctx.fillRect(BX, y + 2 * S, BW * row.pct / 100, 5 * S)
-
-            ctx.setFontSize(11 * S)
-            ctx.setFillStyle('#4A3073')
-            ctx.fillText(row.pct + '%', 314 * S, y + 8 * S)
-            y += 34 * S
+        uni.createSelectorQuery().in(this)
+          .select('#' + id)
+          .fields({ node: true, size: true })
+          .exec(res => {
+            if (res && res[0] && res[0].node) resolve(res[0].node)
+            else reject(new Error('canvas not found: ' + id))
           })
-          y += 12 * S
-        }
+      })
+    },
 
-        // Divider
-        ctx.setFillStyle('rgba(74,48,115,0.09)')
-        ctx.fillRect(22 * S, y, (W - 44 * S), 1 * S)
-        y += 22 * S
+    // ── Quote card (金句卡) — 1:1 mirror of web 390×693 design ─────────
+    async _generateQuoteCard() {
+      const canvas = await this._getCanvas('sheQuoteCanvas')
+      const ctx    = canvas.getContext('2d')
+      // Draw at 780×1386 (2× of web 390×693) → true pixel resolution
+      const W = 780, H = 1386
+      canvas.width = W; canvas.height = H
 
-        // Quote + left accent
-        if (quote) {
-          const lines = Math.ceil(quote.length / 22)
-          ctx.setFillStyle('rgba(156,60,98,0.4)')
-          ctx.fillRect(22 * S, y - 2 * S, 3 * S, lines * 20 * S + 6 * S)
-          ctx.setFontSize(13 * S)
-          ctx.setFillStyle('#3d3158')
-          y = this._wrapText(ctx, quote, 32 * S, y, (W - 54 * S), 20 * S)
-          y += 18 * S
-        }
+      const label = this.result?.label || ''
+      const quote = this.result?.quote || ''
 
-        // Desc
-        if (desc) {
-          ctx.setFontSize(12 * S)
-          ctx.setFillStyle('#666')
-          y = this._wrapText(ctx, desc, 22 * S, y, (W - 44 * S), 18 * S)
-          y += 10 * S
-        }
+      // Background
+      ctx.fillStyle = '#FAF7F4'
+      ctx.fillRect(0, 0, W, H)
 
-        // Footer
-        const footerY = y + 16 * S
-        ctx.setFillStyle('rgba(74,48,115,0.06)')
-        ctx.fillRect(0, footerY, W, 52 * S)
-        ctx.setFillStyle('rgba(74,48,115,0.1)')
-        ctx.fillRect(0, footerY, W, 1 * S)
+      // Radial glow — top-left
+      const g1 = ctx.createRadialGradient(-124, -144, 0, -124, -144, 480)
+      g1.addColorStop(0, 'rgba(160,133,214,0.18)')
+      g1.addColorStop(1, 'rgba(160,133,214,0)')
+      ctx.fillStyle = g1; ctx.fillRect(0, 0, W, H)
 
-        ctx.setFontSize(14 * S)
-        ctx.setFillStyle('#33185c')
-        ctx.fillText('女也', 22 * S, footerY + 20 * S)
+      // Radial glow — bottom-right
+      const g2 = ctx.createRadialGradient(W + 144, H + 140, 0, W + 144, H + 140, 480)
+      g2.addColorStop(0, 'rgba(160,133,214,0.16)')
+      g2.addColorStop(1, 'rgba(160,133,214,0)')
+      ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H)
 
-        ctx.setFontSize(10 * S)
-        ctx.setFillStyle('rgba(74,48,115,0.45)')
-        ctx.fillText('She Is ______. · 自我图鉴', 22 * S, footerY + 37 * S)
+      // Test name (12px → 24px at 2×, centered, uppercase, letter-spacing via spacing)
+      const testName = (this.test.title || '').toUpperCase()
+      ctx.font = '600 24px sans-serif'
+      ctx.fillStyle = '#4A3073'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'top'
+      ctx.fillText(testName, W / 2, 88)
 
-        ctx.setFontSize(10 * S)
-        ctx.setFillStyle('rgba(74,48,115,0.3)')
-        const idLabel = this.test.id.toUpperCase()
-        ctx.fillText(idLabel, W - 22 * S - ctx.measureText(idLabel).width, footerY + 29 * S)
+      // Thin rule (1px → 2px)
+      ctx.fillStyle = 'rgba(74,48,115,0.15)'
+      ctx.fillRect(W / 2 - 80, 124, 160, 2)
 
-        const finalH = footerY + 52 * S + 12 * S
+      // Result label — large, centered, vertically centered in middle third
+      ctx.font = 'bold 68px sans-serif'
+      ctx.fillStyle = '#4A3073'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.fillText(label, W / 2, H * 0.44)
 
-        ctx.draw(false, () => {
-          uni.canvasToTempFilePath({
-            canvasId: 'resultCard',
-            x: 0, y: 0,
-            width: W, height: finalH,     // crop to content
-            destWidth: W, destHeight: finalH,  // 1:1 export — no upscale, always sharp
-            success: r => resolve(r.tempFilePath),
-            fail: reject,
-          }, this)
+      // Quote — left-aligned with padding, below label
+      if (quote) {
+        ctx.font = '36px sans-serif'
+        ctx.fillStyle = '#5b5167'
+        ctx.textAlign = 'left'
+        ctx.textBaseline = 'top'
+        this._wrapText2D(ctx, quote, 68, H * 0.53, W - 136, 52)
+      }
+
+      // Footer rule
+      ctx.fillStyle = 'rgba(74,48,115,0.12)'
+      ctx.fillRect(0, H - 112, W, 2)
+
+      // Branding
+      ctx.font = '22px monospace'
+      ctx.fillStyle = '#9d948d'
+      ctx.textAlign = 'left'
+      ctx.textBaseline = 'bottom'
+      ctx.fillText('she-is-app', 56, H - 52)
+
+      ctx.font = '26px monospace'
+      ctx.fillStyle = '#4A3073'
+      ctx.textAlign = 'right'
+      ctx.fillText('she is ______.', W - 56, H - 52)
+
+      return new Promise((resolve, reject) => {
+        wx.canvasToTempFilePath({
+          canvas, x: 0, y: 0, width: W, height: H,
+          destWidth: W, destHeight: H,
+          success: r => resolve(r.tempFilePath),
+          fail: reject,
         })
       })
     },
-    _wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-      let line = ''
-      let curY = y
+
+    // ── Full result card (结果长图) ──────────────────────────────────────
+    async _generateCard() {
+      const canvas = await this._getCanvas('sheResultCanvas')
+      const ctx    = canvas.getContext('2d')
+      // 750px wide @ native resolution → sharp on all screens
+      const W = 750, H_MAX = 1600
+      canvas.width = W; canvas.height = H_MAX
+
+      const label   = this.result?.label   || ''
+      const tagline = this.result?.tagline || ''
+      const quote   = this.result?.quote   || ''
+      const desc    = this.descParagraphs[0] || ''
+
+      ctx.textBaseline = 'top'
+      ctx.fillStyle = '#fcf9f6'
+      ctx.fillRect(0, 0, W, H_MAX)
+
+      // Top bar + left stripe
+      ctx.fillStyle = '#33185c'
+      ctx.fillRect(0, 0, W, 8)
+      ctx.fillStyle = 'rgba(156,60,98,0.12)'
+      ctx.fillRect(0, 0, 8, H_MAX)
+
+      // Header
+      let y = 60
+      ctx.font = '20px sans-serif'; ctx.fillStyle = 'rgba(74,48,115,0.4)'
+      ctx.textAlign = 'left'
+      ctx.fillText('自我图鉴 · SELF DISCOVERY', 44, y); y += 32
+
+      ctx.font = '20px sans-serif'; ctx.fillStyle = 'rgba(74,48,115,0.65)'
+      ctx.fillText(this.test.titleEn || this.test.title, 44, y); y += 64
+
+      // Result label
+      ctx.font = 'bold 60px sans-serif'; ctx.fillStyle = '#1c1c1a'
+      ctx.fillText(label, 44, y); y += 72
+
+      // Tagline
+      if (tagline) {
+        ctx.font = '26px sans-serif'; ctx.fillStyle = '#9c3c62'
+        ctx.fillText(tagline, 44, y); y += 56
+      } else { y += 16 }
+
+      // Score bars
+      if (this.scoreRows.length) {
+        y += 20
+        const BX = 160, BW = 460
+        this.scoreRows.forEach(row => {
+          ctx.font = '22px sans-serif'; ctx.fillStyle = '#999'
+          ctx.fillText(row.label, 44, y + 6)
+
+          ctx.fillStyle = 'rgba(74,48,115,0.1)'
+          ctx.fillRect(BX, y + 8, BW, 10)
+          ctx.fillStyle = '#4A3073'
+          ctx.fillRect(BX, y + 8, BW * row.pct / 100, 10)
+
+          ctx.font = '22px sans-serif'; ctx.fillStyle = '#4A3073'
+          ctx.textAlign = 'right'
+          ctx.fillText(row.pct + '%', 628, y + 6)
+          ctx.textAlign = 'left'
+          y += 64
+        })
+        y += 20
+      }
+
+      // Divider
+      ctx.fillStyle = 'rgba(74,48,115,0.09)'
+      ctx.fillRect(44, y, W - 88, 2); y += 40
+
+      // Quote
+      if (quote) {
+        const lines = Math.ceil(quote.length / 20)
+        ctx.fillStyle = 'rgba(156,60,98,0.4)'
+        ctx.fillRect(44, y, 6, lines * 40 + 8)
+        ctx.font = '26px sans-serif'; ctx.fillStyle = '#3d3158'
+        y = this._wrapText2D(ctx, quote, 62, y, W - 106, 40); y += 32
+      }
+
+      // Desc
+      if (desc) {
+        ctx.font = '24px sans-serif'; ctx.fillStyle = '#666'
+        y = this._wrapText2D(ctx, desc, 44, y, W - 88, 36); y += 20
+      }
+
+      // Footer
+      const footerY = y + 32
+      ctx.fillStyle = 'rgba(74,48,115,0.06)'
+      ctx.fillRect(0, footerY, W, 100)
+      ctx.fillStyle = 'rgba(74,48,115,0.1)'
+      ctx.fillRect(0, footerY, W, 2)
+
+      ctx.font = 'bold 28px sans-serif'; ctx.fillStyle = '#33185c'
+      ctx.fillText('女也', 44, footerY + 18)
+      ctx.font = '20px sans-serif'; ctx.fillStyle = 'rgba(74,48,115,0.45)'
+      ctx.fillText('She Is ______. · 自我图鉴', 44, footerY + 58)
+      ctx.font = '20px sans-serif'; ctx.fillStyle = 'rgba(74,48,115,0.3)'
+      ctx.textAlign = 'right'
+      ctx.fillText(this.test.id.toUpperCase(), W - 44, footerY + 38)
+      ctx.textAlign = 'left'
+
+      const finalH = footerY + 100 + 24
+
+      return new Promise((resolve, reject) => {
+        wx.canvasToTempFilePath({
+          canvas, x: 0, y: 0, width: W, height: finalH,
+          destWidth: W, destHeight: finalH,  // 1:1, no upscaling
+          success: r => resolve(r.tempFilePath),
+          fail: reject,
+        })
+      })
+    },
+
+    _wrapText2D(ctx, text, x, y, maxWidth, lineHeight) {
+      let line = '', curY = y
       for (const ch of text) {
-        const test = line + ch
-        if (ctx.measureText(test).width > maxWidth && line) {
-          ctx.fillText(line, x, curY)
-          line = ch
-          curY += lineHeight
-        } else {
-          line = test
-        }
+        const t = line + ch
+        if (ctx.measureText(t).width > maxWidth && line) {
+          ctx.fillText(line, x, curY); line = ch; curY += lineHeight
+        } else { line = t }
       }
       if (line) { ctx.fillText(line, x, curY); curY += lineHeight }
       return curY
@@ -529,11 +531,9 @@ export default {
 </script>
 
 <style scoped>
-/* ── CANVAS (off-screen) ── */
-/* resultCard: CSS 750px wide → draws at 2× coords → exports 1:1 (sharp) */
-.result-canvas { position: fixed; left: -9999px; top: 0; width: 750px; height: 1400px; z-index: -1; }
-/* quoteCard: 390×693 quote card, exports at 2× */
-.quote-canvas  { position: fixed; left: -9999px; top: 0; width: 390px; height: 693px;  z-index: -1; }
+/* ── 2D CANVAS (off-screen) ── */
+/* canvas.width/height set in JS — CSS size irrelevant for resolution */
+.result-canvas, .quote-canvas { position: fixed; left: -9999px; top: 0; width: 1px; height: 1px; z-index: -1; }
 
 /* ── ECR RESULT ── */
 .ecr-page {
