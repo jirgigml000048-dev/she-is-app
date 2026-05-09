@@ -275,127 +275,126 @@ export default {
       return new Promise((resolve, reject) => {
         const ctx = uni.createCanvasContext('resultCard', this)
         const W = 375
-        const label = this.result?.label || ''
+        const label   = this.result?.label   || ''
         const tagline = this.result?.tagline || ''
-        const quote = this.result?.quote || ''
-        const desc = this.descParagraphs[0] || ''
+        const quote   = this.result?.quote   || ''
+        const desc    = this.descParagraphs[0] || ''
 
-        // Measure dynamic height
-        let H = 4    // top bar
-        H += 64      // header lines
-        H += 52      // result label
-        H += tagline ? 28 : 16
-        H += this.scoreRows.length ? this.scoreRows.length * 34 + 28 : 0
-        H += 1 + 28  // divider
-        if (quote) H += Math.ceil(quote.length / 23) * 20 + 36
-        if (desc)  H += Math.ceil(desc.length / 26) * 18 + 28
-        H += 56      // footer
-        H = Math.min(Math.max(H, 400), 700)
-
-        // Background
+        // ── Draw content, tracking actual y ──────────────────────────
         ctx.setFillStyle('#fcf9f6')
-        ctx.fillRect(0, 0, W, H)
+        ctx.fillRect(0, 0, W, 700)   // clear full canvas
 
-        // Top color bar
+        // Top bar + left stripe
         ctx.setFillStyle('#33185c')
         ctx.fillRect(0, 0, W, 4)
-
-        // Left accent stripe
         ctx.setFillStyle('rgba(156,60,98,0.12)')
-        ctx.fillRect(0, 0, 4, H)
+        ctx.fillRect(0, 0, 4, 700)
 
-        // Header labels
-        let y = 34
-        ctx.font = '10px sans-serif'
+        // Header labels  (old-api safe: setFontSize for size, font for weight)
+        let y = 30
+        ctx.setFontSize(10)
         ctx.setFillStyle('rgba(74,48,115,0.4)')
         ctx.fillText('自我图鉴 · SELF DISCOVERY', 22, y)
-        y += 18
-        ctx.font = 'bold 10px sans-serif'
-        ctx.setFillStyle('rgba(74,48,115,0.6)')
-        ctx.fillText(this.test.titleEn || this.test.title, 22, y)
-        y += 30
+        y += 20
 
-        // Result label
-        ctx.font = 'bold 32px sans-serif'
+        ctx.setFontSize(10)
+        ctx.setFillStyle('rgba(74,48,115,0.65)')
+        ctx.fillText(this.test.titleEn || this.test.title, 22, y)
+        y += 36
+
+        // Result label (large)
+        ctx.setFontSize(30)
         ctx.setFillStyle('#1c1c1a')
         ctx.fillText(label, 22, y)
-        y += 8
+        y += 38   // 30px font + 8px gap
 
         // Tagline
         if (tagline) {
-          ctx.font = '13px sans-serif'
+          ctx.setFontSize(13)
           ctx.setFillStyle('#9c3c62')
           ctx.fillText(tagline, 22, y)
-          y += 28
+          y += 30
         } else {
-          y += 14
+          y += 10
         }
 
         // Score bars
         if (this.scoreRows.length) {
-          y += 8
+          y += 12
           this.scoreRows.forEach(row => {
-            ctx.font = '11px sans-serif'
+            ctx.setFontSize(11)
             ctx.setFillStyle('#999')
-            ctx.fillText(row.label, 22, y + 7)
-            const BX = 80, BW = 228
+            ctx.fillText(row.label, 22, y + 8)
+
+            const BX = 82, BW = 224
             ctx.setFillStyle('rgba(74,48,115,0.1)')
-            ctx.fillRect(BX, y, BW, 4)
+            ctx.fillRect(BX, y + 2, BW, 5)
             ctx.setFillStyle('#4A3073')
-            ctx.fillRect(BX, y, BW * row.pct / 100, 4)
-            ctx.font = '11px sans-serif'
+            ctx.fillRect(BX, y + 2, BW * row.pct / 100, 5)
+
+            ctx.setFontSize(11)
             ctx.setFillStyle('#4A3073')
-            ctx.fillText(row.pct + '%', 316, y + 7)
+            ctx.fillText(row.pct + '%', 314, y + 8)
             y += 34
           })
-          y += 8
-        }
-
-        // Divider
-        ctx.setFillStyle('rgba(74,48,115,0.08)')
-        ctx.fillRect(22, y, W - 44, 1)
-        y += 20
-
-        // Quote
-        if (quote) {
-          ctx.setFillStyle('rgba(156,60,98,0.45)')
-          ctx.fillRect(22, y - 2, 3, Math.ceil(quote.length / 23) * 20 + 8)
-          ctx.font = '13px sans-serif'
-          ctx.setFillStyle('#3d3158')
-          y = this._wrapText(ctx, quote, 32, y, W - 54, 20)
-          y += 20
-        }
-
-        // Desc
-        if (desc) {
-          ctx.font = '12px sans-serif'
-          ctx.setFillStyle('#666')
-          y = this._wrapText(ctx, desc, 22, y, W - 44, 18)
           y += 12
         }
 
-        // Footer
-        const footerY = H - 52
-        ctx.setFillStyle('rgba(74,48,115,0.07)')
+        // Divider
+        ctx.setFillStyle('rgba(74,48,115,0.09)')
+        ctx.fillRect(22, y, W - 44, 1)
+        y += 22
+
+        // Quote with left accent
+        if (quote) {
+          const estimatedLines = Math.ceil(quote.length / 22)
+          ctx.setFillStyle('rgba(156,60,98,0.4)')
+          ctx.fillRect(22, y - 2, 3, estimatedLines * 20 + 6)
+          ctx.setFontSize(13)
+          ctx.setFillStyle('#3d3158')
+          y = this._wrapText(ctx, quote, 32, y, W - 54, 20)
+          y += 18
+        }
+
+        // Desc paragraph
+        if (desc) {
+          ctx.setFontSize(12)
+          ctx.setFillStyle('#666')
+          y = this._wrapText(ctx, desc, 22, y, W - 44, 18)
+          y += 10
+        }
+
+        // Footer — placed right after content
+        const footerY = y + 16
+        ctx.setFillStyle('rgba(74,48,115,0.06)')
         ctx.fillRect(0, footerY, W, 52)
-        ctx.setFillStyle('rgba(74,48,115,0.12)')
+        ctx.setFillStyle('rgba(74,48,115,0.1)')
         ctx.fillRect(0, footerY, W, 1)
-        ctx.font = 'bold 14px sans-serif'
+
+        ctx.setFontSize(14)
         ctx.setFillStyle('#33185c')
-        ctx.fillText('女也', 22, footerY + 22)
-        ctx.font = '10px sans-serif'
-        ctx.setFillStyle('rgba(74,48,115,0.5)')
-        ctx.fillText('She Is ______. · 自我图鉴', 22, footerY + 38)
-        ctx.font = '10px sans-serif'
-        ctx.setFillStyle('rgba(74,48,115,0.35)')
+        ctx.fillText('女也', 22, footerY + 20)
+
+        ctx.setFontSize(10)
+        ctx.setFillStyle('rgba(74,48,115,0.45)')
+        ctx.fillText('She Is ______. · 自我图鉴', 22, footerY + 37)
+
+        ctx.setFontSize(10)
+        ctx.setFillStyle('rgba(74,48,115,0.3)')
         const idLabel = this.test.id.toUpperCase()
-        ctx.fillText(idLabel, W - 22 - ctx.measureText(idLabel).width, footerY + 30)
+        ctx.fillText(idLabel, W - 22 - ctx.measureText(idLabel).width, footerY + 29)
+
+        // Final height = footer bottom + bottom padding
+        const finalH = footerY + 52 + 12
 
         ctx.draw(false, () => {
           uni.canvasToTempFilePath({
             canvasId: 'resultCard',
-            destWidth: 750,
-            destHeight: H * 2,
+            x: 0, y: 0,
+            width: W,
+            height: finalH,      // ← crop to actual content height
+            destWidth: W * 2,
+            destHeight: finalH * 2,
             success: (res) => resolve(res.tempFilePath),
             fail: reject,
           }, this)
