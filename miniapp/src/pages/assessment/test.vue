@@ -1,7 +1,7 @@
 <template>
   <view class="page" v-if="test">
 
-    <!-- ── Intro screen (ECR and any test with hasIntro) ── -->
+    <!-- ── Intro screen (any test with hasIntro) ── -->
     <view v-if="showIntro" class="intro-wrap">
       <view class="intro-glow intro-glow--top" />
       <view class="intro-glow intro-glow--bottom" />
@@ -9,28 +9,28 @@
         <!-- Header -->
         <view class="intro-header">
           <text class="intro-label">Self Discovery</text>
-          <text class="intro-title-en">Attachment Style</text>
-          <text class="intro-title-cn">成人依恋类型</text>
+          <text class="intro-title-en">{{ test.intro.titleEn }}</text>
+          <text class="intro-title-cn">{{ test.intro.titleCn }}</text>
           <view class="intro-hr" />
-          <text class="intro-sub">ECR · Experiences in Close Relationships</text>
+          <text class="intro-sub">{{ test.intro.code }}</text>
         </view>
         <!-- Reflective text -->
         <view class="intro-quote-wrap">
-          <text class="intro-quote">"How do you love, and how do you let yourself be loved?"</text>
-          <text class="intro-quote-cn">在亲密关系里，你是往前靠的那个，还是悄悄后退的那个？</text>
+          <text class="intro-quote">{{ test.intro.quote }}</text>
+          <text class="intro-quote-cn">{{ test.intro.quoteCn }}</text>
         </view>
         <!-- CTA -->
         <view class="intro-cta-wrap">
           <view class="intro-btn" @tap="startTest">
             <text class="intro-btn-text">Ready / 准备好了 →</text>
           </view>
-          <text class="intro-time">Approx. 8-10 Minutes</text>
+          <text class="intro-time">{{ test.intro.time }}</text>
         </view>
       </view>
     </view>
 
-    <!-- ── ECR 7-circle Likert layout ── -->
-    <view v-else-if="test.type === 'ecr'" class="ecr-page">
+    <!-- ── Likert circle layout (ECR, HSP, FMPS…) ── -->
+    <view v-else-if="test.type === 'likert'" class="ecr-page">
       <!-- Counter + status -->
       <view class="ecr-top">
         <view class="ecr-counter-row">
@@ -51,10 +51,10 @@
         <text class="ecr-q-text">{{ test.questions[cur].text }}</text>
         <text class="ecr-q-en" v-if="test.questions[cur].text_en">{{ test.questions[cur].text_en }}</text>
 
-        <!-- 7 circles -->
+        <!-- Dynamic circles based on test.scale -->
         <view class="ecr-likert">
           <view
-            v-for="n in 7" :key="n"
+            v-for="n in test.scale" :key="n"
             :class="['ecr-circle', answers[cur] === n ? 'ecr-circle--active' : '']"
             @tap="selectLikert(n)"
           >
@@ -65,12 +65,10 @@
         <!-- Scale labels -->
         <view class="ecr-scale-labels">
           <view class="ecr-scale-left">
-            <text class="ecr-scale-main">1 非常不同意</text>
-            <text class="ecr-scale-en">Strongly Disagree</text>
+            <text class="ecr-scale-main">1 {{ test.scaleLabels[0] }}</text>
           </view>
           <view class="ecr-scale-right">
-            <text class="ecr-scale-main">7 非常同意</text>
-            <text class="ecr-scale-en">Strongly Agree</text>
+            <text class="ecr-scale-main">{{ test.scale }} {{ test.scaleLabels[test.scale - 1] }}</text>
           </view>
         </view>
       </view>
@@ -239,8 +237,8 @@ export default {
       if (this.cur > 0) this.cur--
     },
     next() {
-      // ECR submit: only allow when all answered
-      if (this.test.type === 'ecr') {
+      // Likert submit: only allow when all answered
+      if (this.test.type === 'likert') {
         if (this.cur < this.test.questions.length - 1) {
           this.cur++
           return

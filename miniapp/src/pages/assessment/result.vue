@@ -1,8 +1,8 @@
 <template>
   <view class="page" v-if="test">
 
-    <!-- ── ECR result card ── -->
-    <view v-if="isEcr && ecrScores" class="ecr-page">
+    <!-- ── Score bar result card (any test with computeScores) ── -->
+    <view v-if="hasScores && scoreRows.length" class="ecr-page">
 
       <!-- Glow blobs -->
       <view class="ecr-glow ecr-glow--top" />
@@ -10,7 +10,7 @@
 
       <!-- Header label -->
       <view class="ecr-header">
-        <text class="ecr-header-label">成人依恋类型 · ECR-36</text>
+        <text class="ecr-header-label">{{ test.title }} · {{ test.titleEn }}</text>
       </view>
 
       <!-- Result capture card -->
@@ -18,23 +18,15 @@
 
         <!-- Type -->
         <text class="r-type">{{ result.label }}</text>
-        <text class="r-score-line">回避 {{ ecrScores.avoidanceStr }} · 焦虑 {{ ecrScores.anxietyStr }}</text>
 
         <!-- Score bars -->
         <view class="r-viz">
-          <view class="r-score-row">
-            <text class="r-score-label">回避</text>
+          <view v-for="row in scoreRows" :key="row.label" class="r-score-row">
+            <text class="r-score-label">{{ row.label }}</text>
             <view class="r-bar-bg">
-              <view class="r-bar-fill" :style="{ width: ecrScores.avoidancePct + '%' }" />
+              <view class="r-bar-fill" :style="{ width: row.pct + '%' }" />
             </view>
-            <text class="r-score-val">{{ ecrScores.avoidancePct }}%</text>
-          </view>
-          <view class="r-score-row">
-            <text class="r-score-label">焦虑</text>
-            <view class="r-bar-bg">
-              <view class="r-bar-fill" :style="{ width: ecrScores.anxietyPct + '%' }" />
-            </view>
-            <text class="r-score-val">{{ ecrScores.anxietyPct }}%</text>
+            <text class="r-score-val">{{ row.pct }}%</text>
           </view>
         </view>
 
@@ -149,7 +141,7 @@ export default {
       result: null,
       resultKey: '',
       cognitiveProfile: null,
-      ecrScores: null,
+      scoreRows: [],
     }
   },
   onLoad(query) {
@@ -159,24 +151,14 @@ export default {
       this.resultKey = decodeURIComponent(query.result || '')
       this.result = t.results[this.resultKey] || null
 
+      const answers = uni.getStorageSync(`test-answers-${t.id}`) || []
+
       if (t.customResult === 'cognitive') {
-        const answers = uni.getStorageSync(`test-answers-${t.id}`) || []
         this.cognitiveProfile = this.computeCognitiveProfile(t, answers)
       }
 
-      if (t.type === 'ecr' && t.computeScores) {
-        const answers = uni.getStorageSync(`test-answers-${t.id}`) || []
-        const { avoidance, anxiety } = t.computeScores(answers)
-        const avPct = Math.round(((avoidance - 1) / 6) * 100)
-        const axPct = Math.round(((anxiety - 1) / 6) * 100)
-        this.ecrScores = {
-          avoidance,
-          anxiety,
-          avoidancePct: avPct,
-          anxietyPct: axPct,
-          avoidanceStr: avoidance.toFixed(2),
-          anxietyStr: anxiety.toFixed(2),
-        }
+      if (typeof t.computeScores === 'function') {
+        this.scoreRows = t.computeScores(answers)
       }
 
       uni.setNavigationBarTitle({ title: '你的结果' })
@@ -184,14 +166,16 @@ export default {
   },
   onShareAppMessage() {
     if (!this.result || !this.test) return {}
+    const label = this.result.label || ''
+    const tagline = this.result.tagline || ''
     return {
-      title: `我的依恋风格：${this.result.label} — ${this.result.tagline}`,
+      title: `${this.test.title}：${label}${tagline ? ' — ' + tagline : ''}`,
       path: `/pages/assessment/test?id=${this.test.id}`,
     }
   },
   computed: {
-    isEcr() {
-      return this.test?.type === 'ecr'
+    hasScores() {
+      return typeof this.test?.computeScores === 'function'
     },
     descParagraphs() {
       if (!this.result?.desc) return []
