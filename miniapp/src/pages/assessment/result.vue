@@ -60,6 +60,9 @@
           <text class="r-save-btn-text">保存结果卡</text>
         </view>
       </view>
+      <view class="r-share-img-row" @tap="shareImage">
+        <text class="r-share-img-text">分享长图 →</text>
+      </view>
 
       <!-- Back + retry -->
       <view class="r-actions">
@@ -127,6 +130,9 @@
         </view>
       </view>
     </view>
+
+  <!-- Hidden canvas for result card export -->
+  <canvas canvas-id="resultCard" class="result-canvas" />
 
   </view>
 </template>
@@ -218,8 +224,199 @@ export default {
         avg: sums[d.id].total / sums[d.id].count,
       })).sort((a, b) => b.avg - a.avg)
     },
-    saveCard() {
-      uni.showToast({ title: '长按图片即可保存', icon: 'none', duration: 2000 })
+    async saveCard() {
+      uni.showLoading({ title: '生成结果卡...' })
+      try {
+        const filePath = await this._generateCard()
+        uni.hideLoading()
+        uni.saveImageToPhotosAlbum({
+          filePath,
+          success: () => uni.showToast({ title: '已保存到相册', icon: 'success' }),
+          fail: (err) => {
+            if (err && err.errMsg && err.errMsg.includes('auth')) {
+              uni.showModal({
+                title: '需要相册权限',
+                content: '请在设置中允许访问相册',
+                confirmText: '去设置',
+                success: (r) => { if (r.confirm) uni.openSetting() },
+              })
+            } else {
+              uni.showToast({ title: '保存失败，请重试', icon: 'none' })
+            }
+          },
+        })
+      } catch {
+        uni.hideLoading()
+        uni.showToast({ title: '生成失败，请重试', icon: 'none' })
+      }
+    },
+    async shareImage() {
+      uni.showLoading({ title: '生成长图...' })
+      try {
+        const filePath = await this._generateCard()
+        uni.hideLoading()
+        wx.showShareImageMenu({
+          path: filePath,
+          fail: () => {
+            // Fallback: save to album
+            uni.saveImageToPhotosAlbum({
+              filePath,
+              success: () => uni.showToast({ title: '图片已保存，请从相册分享', icon: 'none', duration: 2500 }),
+              fail: () => uni.showToast({ title: '请截图后分享', icon: 'none' }),
+            })
+          },
+        })
+      } catch {
+        uni.hideLoading()
+        uni.showToast({ title: '生成失败，请重试', icon: 'none' })
+      }
+    },
+    _generateCard() {
+      return new Promise((resolve, reject) => {
+        const ctx = uni.createCanvasContext('resultCard', this)
+        const W = 375
+        const label = this.result?.label || ''
+        const tagline = this.result?.tagline || ''
+        const quote = this.result?.quote || ''
+        const desc = this.descParagraphs[0] || ''
+
+        // Measure dynamic height
+        let H = 4    // top bar
+        H += 64      // header lines
+        H += 52      // result label
+        H += tagline ? 28 : 16
+        H += this.scoreRows.length ? this.scoreRows.length * 34 + 28 : 0
+        H += 1 + 28  // divider
+        if (quote) H += Math.ceil(quote.length / 23) * 20 + 36
+        if (desc)  H += Math.ceil(desc.length / 26) * 18 + 28
+        H += 56      // footer
+        H = Math.min(Math.max(H, 400), 700)
+
+        // Background
+        ctx.setFillStyle('#fcf9f6')
+        ctx.fillRect(0, 0, W, H)
+
+        // Top color bar
+        ctx.setFillStyle('#33185c')
+        ctx.fillRect(0, 0, W, 4)
+
+        // Left accent stripe
+        ctx.setFillStyle('rgba(156,60,98,0.12)')
+        ctx.fillRect(0, 0, 4, H)
+
+        // Header labels
+        let y = 34
+        ctx.font = '10px sans-serif'
+        ctx.setFillStyle('rgba(74,48,115,0.4)')
+        ctx.fillText('自我图鉴 · SELF DISCOVERY', 22, y)
+        y += 18
+        ctx.font = 'bold 10px sans-serif'
+        ctx.setFillStyle('rgba(74,48,115,0.6)')
+        ctx.fillText(this.test.titleEn || this.test.title, 22, y)
+        y += 30
+
+        // Result label
+        ctx.font = 'bold 32px sans-serif'
+        ctx.setFillStyle('#1c1c1a')
+        ctx.fillText(label, 22, y)
+        y += 8
+
+        // Tagline
+        if (tagline) {
+          ctx.font = '13px sans-serif'
+          ctx.setFillStyle('#9c3c62')
+          ctx.fillText(tagline, 22, y)
+          y += 28
+        } else {
+          y += 14
+        }
+
+        // Score bars
+        if (this.scoreRows.length) {
+          y += 8
+          this.scoreRows.forEach(row => {
+            ctx.font = '11px sans-serif'
+            ctx.setFillStyle('#999')
+            ctx.fillText(row.label, 22, y + 7)
+            const BX = 80, BW = 228
+            ctx.setFillStyle('rgba(74,48,115,0.1)')
+            ctx.fillRect(BX, y, BW, 4)
+            ctx.setFillStyle('#4A3073')
+            ctx.fillRect(BX, y, BW * row.pct / 100, 4)
+            ctx.font = '11px sans-serif'
+            ctx.setFillStyle('#4A3073')
+            ctx.fillText(row.pct + '%', 316, y + 7)
+            y += 34
+          })
+          y += 8
+        }
+
+        // Divider
+        ctx.setFillStyle('rgba(74,48,115,0.08)')
+        ctx.fillRect(22, y, W - 44, 1)
+        y += 20
+
+        // Quote
+        if (quote) {
+          ctx.setFillStyle('rgba(156,60,98,0.45)')
+          ctx.fillRect(22, y - 2, 3, Math.ceil(quote.length / 23) * 20 + 8)
+          ctx.font = '13px sans-serif'
+          ctx.setFillStyle('#3d3158')
+          y = this._wrapText(ctx, quote, 32, y, W - 54, 20)
+          y += 20
+        }
+
+        // Desc
+        if (desc) {
+          ctx.font = '12px sans-serif'
+          ctx.setFillStyle('#666')
+          y = this._wrapText(ctx, desc, 22, y, W - 44, 18)
+          y += 12
+        }
+
+        // Footer
+        const footerY = H - 52
+        ctx.setFillStyle('rgba(74,48,115,0.07)')
+        ctx.fillRect(0, footerY, W, 52)
+        ctx.setFillStyle('rgba(74,48,115,0.12)')
+        ctx.fillRect(0, footerY, W, 1)
+        ctx.font = 'bold 14px sans-serif'
+        ctx.setFillStyle('#33185c')
+        ctx.fillText('女也', 22, footerY + 22)
+        ctx.font = '10px sans-serif'
+        ctx.setFillStyle('rgba(74,48,115,0.5)')
+        ctx.fillText('She Is ______. · 自我图鉴', 22, footerY + 38)
+        ctx.font = '10px sans-serif'
+        ctx.setFillStyle('rgba(74,48,115,0.35)')
+        const idLabel = this.test.id.toUpperCase()
+        ctx.fillText(idLabel, W - 22 - ctx.measureText(idLabel).width, footerY + 30)
+
+        ctx.draw(false, () => {
+          uni.canvasToTempFilePath({
+            canvasId: 'resultCard',
+            destWidth: 750,
+            destHeight: H * 2,
+            success: (res) => resolve(res.tempFilePath),
+            fail: reject,
+          }, this)
+        })
+      })
+    },
+    _wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+      let line = ''
+      let curY = y
+      for (const ch of text) {
+        const test = line + ch
+        if (ctx.measureText(test).width > maxWidth && line) {
+          ctx.fillText(line, x, curY)
+          line = ch
+          curY += lineHeight
+        } else {
+          line = test
+        }
+      }
+      if (line) { ctx.fillText(line, x, curY); curY += lineHeight }
+      return curY
     },
     retry() {
       uni.redirectTo({ url: `/pages/assessment/test?id=${this.test.id}` })
@@ -232,6 +429,9 @@ export default {
 </script>
 
 <style scoped>
+/* ── CANVAS (off-screen) ── */
+.result-canvas { position: fixed; left: -9999px; top: 0; width: 375px; height: 700px; z-index: -1; }
+
 /* ── ECR RESULT ── */
 .ecr-page {
   background: #fcf9f6;
@@ -384,6 +584,8 @@ export default {
 .r-back-btn-text { font-size: 26rpx; color: #fff; font-weight: 600; letter-spacing: 2rpx; }
 .r-retry-btn { padding: 16rpx 0; text-align: center; }
 .r-retry-btn-text { font-size: 22rpx; color: #bbb; letter-spacing: 2rpx; }
+.r-share-img-row { padding: 12rpx 0 20rpx; text-align: center; position: relative; z-index: 1; }
+.r-share-img-text { font-size: 22rpx; color: rgba(74,48,115,0.45); letter-spacing: 3rpx; }
 
 /* ── STANDARD (non-ECR) ── */
 .page { background: #faf7f4; min-height: 100vh; padding: 0 40rpx 120rpx; }

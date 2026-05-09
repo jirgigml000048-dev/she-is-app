@@ -9,6 +9,23 @@
       <text class="hero-desc">A curated digital anthology celebrating the fierce and soft journeys of a hundred individual lives. Each story is a reflection, a muse, and a testament to being.</text>
     </view>
 
+    <!-- Search bar -->
+    <view class="search-wrap">
+      <view class="search-row">
+        <text class="search-icon">⌕</text>
+        <input
+          class="search-input"
+          v-model="searchQuery"
+          placeholder="搜索故事标题或内容..."
+          placeholder-class="search-ph"
+          confirm-type="search"
+        />
+        <view v-if="searchQuery" class="search-clear" @tap="searchQuery = ''">
+          <text class="search-clear-text">×</text>
+        </view>
+      </view>
+    </view>
+
     <!-- Filter bar -->
     <scroll-view scroll-x class="filter-bar" :show-scrollbar="false">
       <view class="filter-inner">
@@ -68,6 +85,7 @@ export default {
     return {
       stories,
       activeTag: 'all',
+      searchQuery: '',
       tags: [
         { key: 'all', label: 'All' },
         { key: 'inner-soul', label: 'Inner Soul' },
@@ -79,8 +97,20 @@ export default {
   },
   computed: {
     filtered() {
-      if (this.activeTag === 'all') return this.stories
-      return this.stories.filter(s => s.tags.includes(this.activeTag))
+      let list = this.stories
+      if (this.activeTag !== 'all') {
+        list = list.filter(s => s.tags && s.tags.includes(this.activeTag))
+      }
+      const q = this.searchQuery.trim()
+      if (q) {
+        const ql = q.toLowerCase()
+        list = list.filter(s =>
+          s.title.toLowerCase().includes(ql) ||
+          (s.titleEn && s.titleEn.toLowerCase().includes(ql)) ||
+          (s.summary && s.summary.toLowerCase().includes(ql))
+        )
+      }
+      return list
     },
   },
   methods: {
@@ -126,6 +156,23 @@ export default {
   color: rgba(51,24,92,0.5);
   line-height: 1.85;
 }
+
+/* Search */
+.search-wrap { padding: 0 40rpx 24rpx; }
+.search-row {
+  display: flex;
+  align-items: center;
+  background: rgba(30,22,40,0.05);
+  border-radius: 999rpx;
+  padding: 0 28rpx;
+  height: 72rpx;
+  gap: 16rpx;
+}
+.search-icon { font-size: 36rpx; color: rgba(74,48,115,0.4); line-height: 1; }
+.search-input { flex: 1; font-size: 26rpx; color: #33185c; background: transparent; height: 72rpx; }
+.search-ph { color: rgba(74,48,115,0.3); }
+.search-clear { width: 40rpx; height: 40rpx; display: flex; align-items: center; justify-content: center; }
+.search-clear-text { font-size: 36rpx; color: rgba(74,48,115,0.35); line-height: 1; }
 
 /* Filter */
 .filter-bar { padding: 0 40rpx 32rpx; white-space: nowrap; }
