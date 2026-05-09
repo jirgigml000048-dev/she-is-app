@@ -51,17 +51,23 @@
       <!-- Share caption -->
       <text class="r-share-caption">分享你的结果</text>
 
-      <!-- Share buttons row -->
+      <!-- Row 1: friend share + quote card -->
       <view class="r-share-row">
         <button class="r-save-btn" open-type="share">
           <text class="r-save-btn-text">分享给好友</text>
         </button>
-        <view class="r-save-btn" @tap="saveCard">
-          <text class="r-save-btn-text">保存结果卡</text>
+        <view class="r-save-btn" @tap="saveQuoteCard">
+          <text class="r-save-btn-text">保存金句卡</text>
         </view>
       </view>
-      <view class="r-share-img-row" @tap="shareImage">
-        <text class="r-share-img-text">分享长图 →</text>
+      <!-- Row 2: full result -->
+      <view class="r-share-row" style="margin-top:16rpx;">
+        <view class="r-save-btn" @tap="saveCard">
+          <text class="r-save-btn-text">保存结果长图</text>
+        </view>
+        <view class="r-save-btn" @tap="shareImage">
+          <text class="r-save-btn-text">分享长图</text>
+        </view>
       </view>
 
       <!-- Back + retry -->
@@ -131,8 +137,11 @@
       </view>
     </view>
 
-  <!-- Hidden canvas for result card export -->
+  <!-- Hidden canvases for card export -->
+  <!-- resultCard: 750px wide (2x coords) → exports 1:1, no upscaling = sharp -->
   <canvas canvas-id="resultCard" class="result-canvas" />
+  <!-- quoteCard: 390×693 quote-only card, exports at 2x -->
+  <canvas canvas-id="quoteCard" class="quote-canvas" />
 
   </view>
 </template>
@@ -224,6 +233,32 @@ export default {
         avg: sums[d.id].total / sums[d.id].count,
       })).sort((a, b) => b.avg - a.avg)
     },
+    async saveQuoteCard() {
+      uni.showLoading({ title: '生成金句卡...' })
+      try {
+        const filePath = await this._generateQuoteCard()
+        uni.hideLoading()
+        uni.saveImageToPhotosAlbum({
+          filePath,
+          success: () => uni.showToast({ title: '金句卡已保存', icon: 'success' }),
+          fail: (err) => {
+            if (err && err.errMsg && err.errMsg.includes('auth')) {
+              uni.showModal({
+                title: '需要相册权限',
+                content: '请在设置中允许访问相册',
+                confirmText: '去设置',
+                success: (r) => { if (r.confirm) uni.openSetting() },
+              })
+            } else {
+              uni.showToast({ title: '保存失败，请重试', icon: 'none' })
+            }
+          },
+        })
+      } catch {
+        uni.hideLoading()
+        uni.showToast({ title: '生成失败，请重试', icon: 'none' })
+      }
+    },
     async saveCard() {
       uni.showLoading({ title: '生成结果卡...' })
       try {
@@ -271,131 +306,197 @@ export default {
         uni.showToast({ title: '生成失败，请重试', icon: 'none' })
       }
     },
+    // ── Quote card (金句卡) — 390×693 style, elegant minimal ──────────
+    _generateQuoteCard() {
+      return new Promise((resolve, reject) => {
+        const ctx = uni.createCanvasContext('quoteCard', this)
+        const W = 390, H = 693
+        const label = this.result?.label || ''
+        const quote = this.result?.quote || ''
+
+        ctx.setFillStyle('#FAF7F4')
+        ctx.fillRect(0, 0, W, H)
+
+        // Decorative soft circles (approximate radial glow)
+        ctx.setFillStyle('rgba(160,133,214,0.10)')
+        ctx.beginPath(); ctx.arc(-40, 20, 160, 0, Math.PI * 2); ctx.fill()
+        ctx.setFillStyle('rgba(160,133,214,0.08)')
+        ctx.beginPath(); ctx.arc(W + 40, H - 20, 160, 0, Math.PI * 2); ctx.fill()
+
+        // Test name label (centered)
+        ctx.setFontSize(10)
+        ctx.setFillStyle('#4A3073')
+        const testName = (this.test.title || '').toUpperCase()
+        const tnW = ctx.measureText(testName).width
+        ctx.fillText(testName, (W - tnW) / 2, 58)
+
+        // Thin divider
+        ctx.setFillStyle('rgba(74,48,115,0.15)')
+        ctx.fillRect((W - 72) / 2, 68, 72, 1)
+
+        // Result type (large, centered)
+        ctx.setFontSize(38)
+        ctx.setFillStyle('#33185c')
+        const lbW = ctx.measureText(label).width
+        ctx.fillText(label, Math.max(28, (W - lbW) / 2), H / 2 - 14)
+
+        // Quote (wrapped, left-aligned with margins)
+        if (quote) {
+          ctx.setFontSize(15)
+          ctx.setFillStyle('#5b5167')
+          this._wrapText(ctx, quote, 34, H / 2 + 18, W - 68, 26)
+        }
+
+        // Footer rule + branding
+        ctx.setFillStyle('rgba(74,48,115,0.12)')
+        ctx.fillRect(0, H - 56, W, 1)
+
+        ctx.setFontSize(10)
+        ctx.setFillStyle('rgba(74,48,115,0.35)')
+        ctx.fillText('女也 She Is', 28, H - 24)
+
+        ctx.setFontSize(12)
+        ctx.setFillStyle('#4A3073')
+        const brand = 'she is ______.'
+        ctx.fillText(brand, W - 28 - ctx.measureText(brand).width, H - 24)
+
+        ctx.draw(false, () => {
+          uni.canvasToTempFilePath({
+            canvasId: 'quoteCard',
+            x: 0, y: 0, width: W, height: H,
+            destWidth: W * 2, destHeight: H * 2,   // 2x = 780×1386
+            success: r => resolve(r.tempFilePath),
+            fail: reject,
+          }, this)
+        })
+      })
+    },
+
+    // ── Full result card (结果长图) — draws at 2× coords → exports 1:1 (sharp) ──
     _generateCard() {
       return new Promise((resolve, reject) => {
         const ctx = uni.createCanvasContext('resultCard', this)
-        const W = 375
+        // Draw in a 750-unit coordinate space (CSS canvas is 750px wide)
+        // Export 1:1: no upscaling → sharp on 2x and 3x screens
+        const S = 2   // scale factor vs visual design units
+        const W = 375 * S  // 750 drawing units
         const label   = this.result?.label   || ''
         const tagline = this.result?.tagline || ''
         const quote   = this.result?.quote   || ''
         const desc    = this.descParagraphs[0] || ''
 
-        // ── Draw content, tracking actual y ──────────────────────────
         ctx.setFillStyle('#fcf9f6')
-        ctx.fillRect(0, 0, W, 700)   // clear full canvas
+        ctx.fillRect(0, 0, W, 1400)
 
-        // Top bar + left stripe
+        // Top bar
         ctx.setFillStyle('#33185c')
-        ctx.fillRect(0, 0, W, 4)
+        ctx.fillRect(0, 0, W, 4 * S)
         ctx.setFillStyle('rgba(156,60,98,0.12)')
-        ctx.fillRect(0, 0, 4, 700)
+        ctx.fillRect(0, 0, 4 * S, 1400)
 
-        // Header labels  (old-api safe: setFontSize for size, font for weight)
-        let y = 30
-        ctx.setFontSize(10)
+        // Header
+        let y = 30 * S
+        ctx.setFontSize(10 * S)
         ctx.setFillStyle('rgba(74,48,115,0.4)')
-        ctx.fillText('自我图鉴 · SELF DISCOVERY', 22, y)
-        y += 20
+        ctx.fillText('自我图鉴 · SELF DISCOVERY', 22 * S, y)
+        y += 20 * S
 
-        ctx.setFontSize(10)
+        ctx.setFontSize(10 * S)
         ctx.setFillStyle('rgba(74,48,115,0.65)')
-        ctx.fillText(this.test.titleEn || this.test.title, 22, y)
-        y += 36
+        ctx.fillText(this.test.titleEn || this.test.title, 22 * S, y)
+        y += 36 * S
 
-        // Result label (large)
-        ctx.setFontSize(30)
+        // Result label
+        ctx.setFontSize(30 * S)
         ctx.setFillStyle('#1c1c1a')
-        ctx.fillText(label, 22, y)
-        y += 38   // 30px font + 8px gap
+        ctx.fillText(label, 22 * S, y)
+        y += 38 * S
 
         // Tagline
         if (tagline) {
-          ctx.setFontSize(13)
+          ctx.setFontSize(13 * S)
           ctx.setFillStyle('#9c3c62')
-          ctx.fillText(tagline, 22, y)
-          y += 30
+          ctx.fillText(tagline, 22 * S, y)
+          y += 30 * S
         } else {
-          y += 10
+          y += 10 * S
         }
 
         // Score bars
         if (this.scoreRows.length) {
-          y += 12
+          y += 12 * S
+          const BX = 82 * S, BW = 224 * S
           this.scoreRows.forEach(row => {
-            ctx.setFontSize(11)
+            ctx.setFontSize(11 * S)
             ctx.setFillStyle('#999')
-            ctx.fillText(row.label, 22, y + 8)
+            ctx.fillText(row.label, 22 * S, y + 8 * S)
 
-            const BX = 82, BW = 224
             ctx.setFillStyle('rgba(74,48,115,0.1)')
-            ctx.fillRect(BX, y + 2, BW, 5)
+            ctx.fillRect(BX, y + 2 * S, BW, 5 * S)
             ctx.setFillStyle('#4A3073')
-            ctx.fillRect(BX, y + 2, BW * row.pct / 100, 5)
+            ctx.fillRect(BX, y + 2 * S, BW * row.pct / 100, 5 * S)
 
-            ctx.setFontSize(11)
+            ctx.setFontSize(11 * S)
             ctx.setFillStyle('#4A3073')
-            ctx.fillText(row.pct + '%', 314, y + 8)
-            y += 34
+            ctx.fillText(row.pct + '%', 314 * S, y + 8 * S)
+            y += 34 * S
           })
-          y += 12
+          y += 12 * S
         }
 
         // Divider
         ctx.setFillStyle('rgba(74,48,115,0.09)')
-        ctx.fillRect(22, y, W - 44, 1)
-        y += 22
+        ctx.fillRect(22 * S, y, (W - 44 * S), 1 * S)
+        y += 22 * S
 
-        // Quote with left accent
+        // Quote + left accent
         if (quote) {
-          const estimatedLines = Math.ceil(quote.length / 22)
+          const lines = Math.ceil(quote.length / 22)
           ctx.setFillStyle('rgba(156,60,98,0.4)')
-          ctx.fillRect(22, y - 2, 3, estimatedLines * 20 + 6)
-          ctx.setFontSize(13)
+          ctx.fillRect(22 * S, y - 2 * S, 3 * S, lines * 20 * S + 6 * S)
+          ctx.setFontSize(13 * S)
           ctx.setFillStyle('#3d3158')
-          y = this._wrapText(ctx, quote, 32, y, W - 54, 20)
-          y += 18
+          y = this._wrapText(ctx, quote, 32 * S, y, (W - 54 * S), 20 * S)
+          y += 18 * S
         }
 
-        // Desc paragraph
+        // Desc
         if (desc) {
-          ctx.setFontSize(12)
+          ctx.setFontSize(12 * S)
           ctx.setFillStyle('#666')
-          y = this._wrapText(ctx, desc, 22, y, W - 44, 18)
-          y += 10
+          y = this._wrapText(ctx, desc, 22 * S, y, (W - 44 * S), 18 * S)
+          y += 10 * S
         }
 
-        // Footer — placed right after content
-        const footerY = y + 16
+        // Footer
+        const footerY = y + 16 * S
         ctx.setFillStyle('rgba(74,48,115,0.06)')
-        ctx.fillRect(0, footerY, W, 52)
+        ctx.fillRect(0, footerY, W, 52 * S)
         ctx.setFillStyle('rgba(74,48,115,0.1)')
-        ctx.fillRect(0, footerY, W, 1)
+        ctx.fillRect(0, footerY, W, 1 * S)
 
-        ctx.setFontSize(14)
+        ctx.setFontSize(14 * S)
         ctx.setFillStyle('#33185c')
-        ctx.fillText('女也', 22, footerY + 20)
+        ctx.fillText('女也', 22 * S, footerY + 20 * S)
 
-        ctx.setFontSize(10)
+        ctx.setFontSize(10 * S)
         ctx.setFillStyle('rgba(74,48,115,0.45)')
-        ctx.fillText('She Is ______. · 自我图鉴', 22, footerY + 37)
+        ctx.fillText('She Is ______. · 自我图鉴', 22 * S, footerY + 37 * S)
 
-        ctx.setFontSize(10)
+        ctx.setFontSize(10 * S)
         ctx.setFillStyle('rgba(74,48,115,0.3)')
         const idLabel = this.test.id.toUpperCase()
-        ctx.fillText(idLabel, W - 22 - ctx.measureText(idLabel).width, footerY + 29)
+        ctx.fillText(idLabel, W - 22 * S - ctx.measureText(idLabel).width, footerY + 29 * S)
 
-        // Final height = footer bottom + bottom padding
-        const finalH = footerY + 52 + 12
+        const finalH = footerY + 52 * S + 12 * S
 
         ctx.draw(false, () => {
           uni.canvasToTempFilePath({
             canvasId: 'resultCard',
             x: 0, y: 0,
-            width: W,
-            height: finalH,      // ← crop to actual content height
-            destWidth: W * 2,
-            destHeight: finalH * 2,
-            success: (res) => resolve(res.tempFilePath),
+            width: W, height: finalH,     // crop to content
+            destWidth: W, destHeight: finalH,  // 1:1 export — no upscale, always sharp
+            success: r => resolve(r.tempFilePath),
             fail: reject,
           }, this)
         })
@@ -429,7 +530,10 @@ export default {
 
 <style scoped>
 /* ── CANVAS (off-screen) ── */
-.result-canvas { position: fixed; left: -9999px; top: 0; width: 375px; height: 700px; z-index: -1; }
+/* resultCard: CSS 750px wide → draws at 2× coords → exports 1:1 (sharp) */
+.result-canvas { position: fixed; left: -9999px; top: 0; width: 750px; height: 1400px; z-index: -1; }
+/* quoteCard: 390×693 quote card, exports at 2× */
+.quote-canvas  { position: fixed; left: -9999px; top: 0; width: 390px; height: 693px;  z-index: -1; }
 
 /* ── ECR RESULT ── */
 .ecr-page {
