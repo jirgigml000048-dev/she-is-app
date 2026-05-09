@@ -1,6 +1,6 @@
 export const stories = [
   {
-    id: '011', slug: 'manman',
+    id: '011', slug: 'manman', page: 'story-011',
     title: '把宽度藏在口袋里', titleEn: 'Width, Folded in a Pocket',
     name: '蛮蛮', tags: ['relationship', 'identity'],
     cover: '/static/covers/cover-011-manman.png',
@@ -10,7 +10,7 @@ export const stories = [
     readTime: '12 min',
   },
   {
-    id: '010', slug: 'xiaoyu',
+    id: '010', slug: 'xiaoyu', page: 'story-010',
     title: '她只喜欢女人造的男人', titleEn: 'She Only Loves the Men Women Create',
     name: '小鱼', tags: ['identity', 'relationship'],
     cover: '/static/covers/cover-010-xiaoyu.png',
@@ -20,7 +20,7 @@ export const stories = [
     readTime: '10 min',
   },
   {
-    id: '009', slug: 'tantan',
+    id: '009', slug: 'tantan', page: 'story-009',
     title: '贪心的17岁女人', titleEn: 'The Greedy Girl at Seventeen',
     name: '探探', tags: ['inner-soul', 'identity'],
     cover: '/static/covers/cover-009-tantan.jpg',
@@ -30,7 +30,7 @@ export const stories = [
     readTime: '7 min',
   },
   {
-    id: '008', slug: 'xiaozhou',
+    id: '008', slug: 'xiaozhou', page: 'story-008',
     title: '我们都需要一个痛苦的剂量', titleEn: 'Everyone Needs Their Dose of Pain',
     name: '小舟', tags: ['inner-soul', 'relationship'],
     cover: '/static/covers/cover-008-xiaozhou.jpg',
@@ -40,7 +40,7 @@ export const stories = [
     readTime: '8 min',
   },
   {
-    id: '007', slug: 'queqie',
+    id: '007', slug: 'queqie', page: 'story-detail',
     title: '真空里的野蛮生长', titleEn: 'Feral Growth in a Vacuum',
     name: '曲奇', tags: ['inner-soul', 'identity'],
     cover: '/static/covers/cover-007-quqi.png',
@@ -50,7 +50,7 @@ export const stories = [
     readTime: '9 min',
   },
   {
-    id: '006', slug: 'xiuxiu',
+    id: '006', slug: 'xiuxiu', page: 'story-xiuxiu',
     title: '在北京，允许不长大', titleEn: 'Permission Not to Grow Up',
     name: '秀秀', tags: ['inner-soul', 'identity'],
     cover: '/static/covers/cover-006-xiuxiu.png',
@@ -60,7 +60,7 @@ export const stories = [
     readTime: '8 min',
   },
   {
-    id: '005', slug: 'bingbing',
+    id: '005', slug: 'bingbing', page: 'story-bingbing',
     title: '穿百褶裙的机甲驾驶员', titleEn: 'Mecha in a Pleated Skirt',
     name: '冰冰', tags: ['art', 'identity'],
     cover: '/static/covers/cover-005-bingbing.png',
@@ -70,7 +70,7 @@ export const stories = [
     readTime: '9 min',
   },
   {
-    id: '004', slug: 'xiaoli',
+    id: '004', slug: 'xiaoli', page: 'story-xiaoli',
     title: '从废墟里长出来的花', titleEn: 'A Flower from the Ruins',
     name: '小莉', tags: ['inner-soul', 'relationship'],
     cover: '/static/covers/cover-004-xiaoli.png',
@@ -80,7 +80,7 @@ export const stories = [
     readTime: '10 min',
   },
   {
-    id: '003', slug: 'zixingche',
+    id: '003', slug: 'zixingche', page: 'story-zixingche',
     title: '骑自行车的女孩', titleEn: 'The Girl on a Bicycle',
     name: '自行车', tags: ['identity', 'relationship'],
     cover: '/static/covers/cover-003-zixingche.png',
@@ -90,7 +90,7 @@ export const stories = [
     readTime: '8 min',
   },
   {
-    id: '002', slug: 'xiaochen',
+    id: '002', slug: 'xiaochen', page: 'story-xiaochen',
     title: '温柔的刺', titleEn: 'A Gentle Thorn',
     name: '小陈', tags: ['inner-soul', 'relationship'],
     cover: '/static/covers/cover-002-xiaochen.png',
@@ -100,7 +100,7 @@ export const stories = [
     readTime: '9 min',
   },
   {
-    id: '001', slug: 'tuanzi',
+    id: '001', slug: 'tuanzi', page: 'story-tuanzi-v3',
     title: '被看见的勇气', titleEn: 'The Courage to Be Seen',
     name: '团子', tags: ['inner-soul', 'identity'],
     cover: '/static/covers/cover-001-tuanzi.png',

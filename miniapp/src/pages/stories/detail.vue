@@ -100,7 +100,7 @@ export default {
   },
   methods: {
     async loadArticle(story) {
-      const url = `https://she-is-app.netlify.app/story-${story.id === '007' ? 'detail' : story.id}.html`
+      const url = `https://she-is-app.netlify.app/${story.page}.html`
       try {
         const [err, res] = await uni.request({ url })
         if (err || !res?.data) { this.articleHtml = '<p>暂时无法加载</p>'; return }
