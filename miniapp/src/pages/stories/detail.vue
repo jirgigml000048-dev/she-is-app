@@ -58,6 +58,7 @@
 
 <script>
 import { stories } from '@/data/stories.js'
+import { storyContents } from '@/data/story-contents.js'
 
 export default {
   data() {
@@ -78,7 +79,7 @@ export default {
     if (s) {
       this.story = s
       uni.setNavigationBarTitle({ title: s.name + '的故事' })
-      this.loadArticle(s)
+      this.loadArticleLocal(s)
       this.bgmCtx = uni.createInnerAudioContext()
       this.bgmCtx.src = s.bgm
       this.bgmCtx.loop = true
@@ -99,26 +100,12 @@ export default {
     if (this.ttsCtx) { this.ttsCtx.stop(); this.ttsCtx.destroy() }
   },
   methods: {
-    async loadArticle(story) {
-      const url = `https://she-is-app.netlify.app/${story.page}.html`
-      try {
-        const [err, res] = await uni.request({ url })
-        if (err || !res?.data) { this.articleHtml = '<p>暂时无法加载</p>'; return }
-        const html = res.data
-        const match = html.match(/<article[^>]*>([\s\S]*?)<\/article>/)
-        if (match) {
-          let content = match[1]
-            .replace(/<section class="mt-24[\s\S]*$/, '')
-            .replace(/class="[^"]*"/g, '')
-            .replace(/style="[^"]*"/g, '')
-          content = content.replace(/<p>/g, '<p style="font-size:16px;line-height:1.9;color:#1c1c1a;margin-bottom:24px;font-weight:300;">')
-          content = content.replace(/<h3>/g, '<h3 style="font-size:22px;color:#33185c;font-weight:700;margin:40px 0 12px;">')
-          content = content.replace(/<span>/g, '<span style="color:#9c3c62;">')
-          this.articleHtml = content
-        }
-      } catch (e) {
-        this.articleHtml = '<p>加载失败，请检查网络</p>'
-      }
+    loadArticleLocal(story) {
+      let content = storyContents[story.id] || '<p>暂无内容</p>'
+      content = content.replace(/<p>/g, '<p style="font-size:16px;line-height:1.9;color:#1c1c1a;margin-bottom:24px;font-weight:300;">')
+      content = content.replace(/<h3>/g, '<h3 style="font-size:22px;color:#33185c;font-weight:700;margin:40px 0 12px;">')
+      content = content.replace(/<span>/g, '<span style="color:#9c3c62;">')
+      this.articleHtml = content
     },
     switchMode(m) {
       this.mode = m
