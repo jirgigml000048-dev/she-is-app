@@ -138,7 +138,7 @@
     </view>
 
   <!-- off-screen canvases (old API — createCanvasContext, proven working) -->
-  <canvas canvas-id="resultCard" class="result-canvas" />
+  <canvas canvas-id="resultCard" class="result-canvas" :style="{height: resultCardH + 'px'}" />
   <canvas canvas-id="quoteCard"  class="quote-canvas"  />
 
   </view>
@@ -155,6 +155,7 @@ export default {
       resultKey: '',
       cognitiveProfile: null,
       scoreRows: [],
+      resultCardH: 700,
     }
   },
   onLoad(query) {
@@ -367,23 +368,48 @@ export default {
       })
     },
 
+    // ── Estimate card height so canvas CSS matches content (avoids blank bottom) ──
+    _estimateCardH() {
+      let y = 86  // header: 30 + 20 + 36
+      y += 38     // title (font 30)
+      if (this.result?.tagline) y += 30; else y += 10
+      if (this.scoreRows.length) y += 12 + this.scoreRows.length * 34 + 12
+      y += 22     // divider
+      const quote = this.result?.quote || ''
+      if (quote) {
+        const lines = Math.max(1, Math.ceil(quote.length / Math.floor(321 / 13)))
+        y += lines * 20 + 18
+      }
+      const desc = this.descParagraphs[0] || ''
+      if (desc) {
+        const lines = Math.max(1, Math.ceil(desc.length / Math.floor(331 / 12)))
+        y += lines * 18 + 10
+      }
+      return y + 16 + 52 + 20  // footerY + footer box + bottom padding
+    },
+
     // ── Full result card (结果长图) — same design as approved ERQ screenshot ──
     _generateCard() {
       return new Promise((resolve, reject) => {
-        const ctx = uni.createCanvasContext('resultCard', this)
+        // Pass 1: resize canvas CSS to exact content height, then redraw
         const W = 375
+        this.resultCardH = Math.min(this._estimateCardH(), 700)
+
+        this.$nextTick(() => {
+        const ctx = uni.createCanvasContext('resultCard', this)
         const label   = this.result?.label   || ''
         const tagline = this.result?.tagline || ''
         const quote   = this.result?.quote   || ''
         const desc    = this.descParagraphs[0] || ''
 
+        const H = this.resultCardH
         ctx.setFillStyle('#fcf9f6')
-        ctx.fillRect(0, 0, W, 700)
+        ctx.fillRect(0, 0, W, H)
 
         ctx.setFillStyle('#33185c')
         ctx.fillRect(0, 0, W, 4)
         ctx.setFillStyle('rgba(156,60,98,0.12)')
-        ctx.fillRect(0, 0, 4, 700)
+        ctx.fillRect(0, 0, 4, H)
 
         let y = 30
         ctx.setFontSize(10); ctx.setFillStyle('rgba(74,48,115,0.4)')
@@ -447,17 +473,16 @@ export default {
         const idLabel = this.test.id.toUpperCase()
         ctx.fillText(idLabel, W - 22 - ctx.measureText(idLabel).width, footerY + 29)
 
-        const finalH = footerY + 52 + 12
-
         ctx.draw(false, () => {
           uni.canvasToTempFilePath({
             canvasId: 'resultCard',
-            x: 0, y: 0, width: W, height: finalH,
-            destWidth: W * 2, destHeight: finalH * 2,
+            destWidth: W * 2,
+            destHeight: this.resultCardH * 2,
             success: r => resolve(r.tempFilePath),
             fail: reject,
           }, this)
         })
+        }) // $nextTick
       })
     },
 
@@ -484,7 +509,7 @@ export default {
 
 <style scoped>
 /* ── CANVAS (off-screen, old API) ── */
-/* Old API coordinate space = CSS pixel size; must match drawing dimensions */
+/* result-canvas height is set dynamically via :style to eliminate blank bottom space */
 .result-canvas { position: fixed; left: -9999px; top: 0; width: 375px; height: 700px; z-index: -1; }
 .quote-canvas  { position: fixed; left: -9999px; top: 0; width: 390px; height: 693px; z-index: -1; }
 
