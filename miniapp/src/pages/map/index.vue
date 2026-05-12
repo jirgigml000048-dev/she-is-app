@@ -159,28 +159,37 @@ export default {
   },
   methods: {
     loadData() {
-      this.axisData = axes.map(axis => {
-        const items = axis.tests.map(testId => {
-          const t = testsById[testId]
-          const answers = uni.getStorageSync(`test-answers-${testId}`) || []
-          const done = answers.length > 0
-          let resultLabel = '', scores = []
-          if (done && typeof t.computeScores === 'function') {
-            scores = t.computeScores(answers)
+      try {
+        this.axisData = axes.map(axis => {
+          const items = (axis.tests || []).map(testId => {
+            const t = testsById[testId]
+            if (!t) return { id: testId, title: testId, subtitle: '', done: false, resultLabel: '', scores: [] }
+            let answers = []
+            try { answers = uni.getStorageSync(`test-answers-${testId}`) || [] } catch (e) { answers = [] }
+            const done = Array.isArray(answers) && answers.length > 0
+            let resultLabel = '', scores = []
+            try {
+              if (done && typeof t.computeScores === 'function') scores = t.computeScores(answers) || []
+            } catch (e) { scores = [] }
+            try {
+              if (done && typeof t.score === 'function' && t.results && Object.keys(t.results).length > 0) {
+                const key = t.score(answers)
+                resultLabel = (t.results[key] && t.results[key].label) || ''
+              }
+            } catch (e) { resultLabel = '' }
+            return { id: t.id, title: t.title, subtitle: t.subtitle, done, resultLabel, scores }
+          })
+          return {
+            ...axis,
+            items,
+            completed: items.filter(i => i.done).length,
+            total: items.length,
           }
-          if (done && t.score && t.results && Object.keys(t.results).length > 0) {
-            const key = t.score(answers)
-            resultLabel = t.results[key]?.label || ''
-          }
-          return { id: t.id, title: t.title, subtitle: t.subtitle, done, resultLabel, scores }
         })
-        return {
-          ...axis,
-          items,
-          completed: items.filter(i => i.done).length,
-          total: items.length,
-        }
-      })
+      } catch (e) {
+        console.error('[map] loadData error', e)
+        this.axisData = []
+      }
       this.checkAIPortrait()
     },
     checkAIPortrait() {
@@ -189,9 +198,11 @@ export default {
         this.aiPortrait = null
         return
       }
-      const cached = uni.getStorageSync('ai-portrait-v1')
-      const sameIds = cached?.completedIds?.join(',') === completedIds.join(',')
-      if (cached && sameIds) {
+      let cached = null
+      try { cached = uni.getStorageSync('ai-portrait-v1') } catch (e) { cached = null }
+      const cachedIds = cached && Array.isArray(cached.completedIds) ? cached.completedIds.join(',') : ''
+      const sameIds = cachedIds === completedIds.join(',')
+      if (cached && cached.text && sameIds) {
         this.aiPortrait = cached.text
         this.aiUpToDate = true
       } else {
@@ -223,10 +234,15 @@ export default {
         ).join('\n')
       }\n\n请写一段200-300字的个性化内在画像。要求：\n1. 找到这些测评结果之间的交叉联系（比如依恋风格如何影响情绪调节策略）\n2. 不要逐条列举，要综合叙述\n3. 语气直觉性、非临床，犀利、冷峻、共情，参考风格韩江、伍尔夫\n4. 中文，第二人称"你"，不要加任何标题或前缀`
 
+      if (!ANTHROPIC_API_KEY || ANTHROPIC_API_KEY === 'YOUR_ANTHROPIC_API_KEY_HERE') {
+        this.aiPortrait = ''
+        return
+      }
+
       this.aiLoading = true
       this.aiPortrait = null
 
-      wx.request({
+      uni.request({
         url: 'https://api.anthropic.com/v1/messages',
         method: 'POST',
         header: {
@@ -240,7 +256,7 @@ export default {
           messages: [{ role: 'user', content: prompt }],
         },
         success: (res) => {
-          const text = res.data?.content?.[0]?.text || ''
+          const text = (res && res.data && res.data.content && res.data.content[0] && res.data.content[0].text) || ''
           this.aiPortrait = text || ''
           this.aiUpToDate = true
           if (text) uni.setStorageSync('ai-portrait-v1', { text, completedIds })
