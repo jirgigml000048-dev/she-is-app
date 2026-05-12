@@ -305,56 +305,75 @@ export default {
         uni.showToast({ title: '生成失败，请重试', icon: 'none' })
       }
     },
-    // ── Quote card (金句卡) — 390×693 style: test name + big label + quote only ──
+    // ── Quote card (金句卡) — matches web reference design ──
     _generateQuoteCard() {
       return new Promise((resolve, reject) => {
         const ctx = uni.createCanvasContext('quoteCard', this)
         const W = 390, H = 693
 
-        // Background
-        ctx.setFillStyle('#FAF7F4')
+        // Background — warm off-white
+        ctx.setFillStyle('#edeae5')
         ctx.fillRect(0, 0, W, H)
 
-        // Test name — centered, small uppercase
-        const testName = this.test.title || ''
-        ctx.setFontSize(11)
-        ctx.setFillStyle('#4A3073')
-        const tnW = ctx.measureText(testName).width
-        ctx.fillText(testName, (W - tnW) / 2, 58)
+        // Header: "测评名 · CODE"
+        const code = (this.test.id || '').toUpperCase()
+        ctx.font = '11px sans-serif'
+        ctx.setFillStyle('rgba(45,36,112,0.5)')
+        ctx.fillText(`${this.test.title} · ${code}`, 28, 52)
 
         // Thin horizontal rule
-        ctx.setFillStyle('rgba(74,48,115,0.15)')
-        ctx.fillRect((W - 72) / 2, 68, 72, 1)
+        ctx.setFillStyle('rgba(45,36,112,0.15)')
+        ctx.fillRect(28, 62, W - 56, 1)
 
-        // Result label — large, centered (vertically middle of card)
+        // Large result label
         const label = this.result?.label || ''
-        ctx.setFontSize(40)
-        ctx.setFillStyle('#4A3073')
-        const lbW = ctx.measureText(label).width
-        ctx.fillText(label, Math.max(28, (W - lbW) / 2), H * 0.44)
+        ctx.font = 'bold 46px sans-serif'
+        ctx.setFillStyle('#2d2470')
+        ctx.fillText(label, 28, 174)
 
-        // Quote — left-aligned, italic-style spacing
+        // Tagline — medium weight below label
+        let y = 212
+        const tagline = this.result?.tagline || ''
+        if (tagline) {
+          ctx.font = '17px sans-serif'
+          ctx.setFillStyle('#2d2470')
+          y = this._wrapText(ctx, tagline, 28, y, W - 56, 28)
+          y += 40
+        }
+
+        // Quote — italic, lighter
         const quote = this.result?.quote || ''
         if (quote) {
-          ctx.setFontSize(16)
-          ctx.setFillStyle('#5b5167')
-          this._wrapText(ctx, quote, 34, H * 0.54, W - 68, 26)
+          ctx.font = 'italic 15px sans-serif'
+          ctx.setFillStyle('rgba(45,36,112,0.52)')
+          y = this._wrapText(ctx, quote, 28, y, W - 56, 24)
+          y += 36
+        }
+
+        // Score summary (scale-based tests only: HSP, ECR …)
+        if (this.test.scale && this.scoreRows.length) {
+          const avgPct = this.scoreRows.reduce((s, r) => s + r.pct, 0) / this.scoreRows.length
+          const raw = (avgPct / 100 * this.test.scale).toFixed(2)
+          ctx.font = '12px sans-serif'
+          ctx.setFillStyle('rgba(45,36,112,0.38)')
+          ctx.fillText(`平均得分 ${raw} / ${this.test.scale}`, 28, y)
         }
 
         // Footer rule
-        ctx.setFillStyle('rgba(74,48,115,0.12)')
-        ctx.fillRect(0, H - 52, W, 1)
+        ctx.setFillStyle('rgba(45,36,112,0.12)')
+        ctx.fillRect(0, H - 60, W, 1)
 
-        // Branding
-        ctx.setFontSize(9)
-        ctx.setFillStyle('rgba(157,148,141,0.9)')
-        ctx.fillText('she-is-app', 28, H - 24)
+        // Footer left: URL
+        ctx.font = '11px sans-serif'
+        ctx.setFillStyle('rgba(45,36,112,0.38)')
+        ctx.fillText('she-is-app.netlify.app', 28, H - 30)
 
-        ctx.setFontSize(12)
-        ctx.setFillStyle('#4A3073')
+        // Footer right: brand mark
+        ctx.font = '14px sans-serif'
+        ctx.setFillStyle('#2d2470')
         const brand = 'she is ______.'
-        const brW = ctx.measureText(brand).width
-        ctx.fillText(brand, W - 28 - brW, H - 24)
+        const bW = ctx.measureText(brand).width
+        ctx.fillText(brand, W - 28 - bW, H - 30)
 
         ctx.draw(false, () => {
           uni.canvasToTempFilePath({
