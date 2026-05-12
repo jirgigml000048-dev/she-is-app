@@ -5,6 +5,9 @@
       <text class="hero-title">Discover Your{{'\n'}}Inner Landscape</text>
       <text class="hero-sub">探索你的内在</text>
       <text class="hero-desc">通过四个维度的深度测评，开启你的内在探索之旅：你是谁，你怎么感受，你怎么行动，以及你为什么会成为现在的你。</text>
+      <view class="map-entry" @tap="goMap">
+        <text class="map-entry-text">查看我的内在图谱 →</text>
+      </view>
     </view>
 
     <view class="axes">
@@ -78,6 +81,9 @@ export default {
     goTest(id) {
       uni.navigateTo({ url: `/pages/assessment/test?id=${id}` })
     },
+    goMap() {
+      uni.navigateTo({ url: '/pages/map/index' })
+    },
   },
 }
 </script>
@@ -90,6 +96,9 @@ export default {
 .hero-title { display: block; font-size: 64rpx; font-weight: 700; color: #33185c; line-height: 1.25; font-style: italic; margin-bottom: 12rpx; }
 .hero-sub { display: block; font-size: 28rpx; color: rgba(51,24,92,0.4); letter-spacing: 8rpx; margin-bottom: 28rpx; }
 .hero-desc { display: block; font-size: 24rpx; color: #6c6862; line-height: 1.85; max-width: 90%; }
+
+.map-entry { display: inline-flex; margin-top: 28rpx; padding: 18rpx 36rpx; background: #4A3073; border-radius: 999rpx; }
+.map-entry-text { font-size: 24rpx; color: #fff; letter-spacing: 2rpx; }
 
 .axes { padding: 0 32rpx; display: flex; flex-direction: column; gap: 20rpx; }
 
