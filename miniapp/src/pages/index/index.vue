@@ -10,10 +10,10 @@
     </view>
 
     <view class="map-card" @tap="goMap">
-      <view class="map-blob map-blob-1" />
-      <view class="map-blob map-blob-2" />
-      <view class="map-blob map-blob-3" />
-      <view class="map-blob map-blob-4" />
+      <view class="map-blob map-blob-1"></view>
+      <view class="map-blob map-blob-2"></view>
+      <view class="map-blob map-blob-3"></view>
+      <view class="map-blob map-blob-4"></view>
       <view class="map-card-content">
         <text class="map-card-label">INNER MAP · 内在图谱</text>
         <text class="map-card-title">你的内在画像</text>

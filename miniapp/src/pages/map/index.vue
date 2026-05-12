@@ -8,10 +8,10 @@
     <!-- 4-blob abstract visualization -->
     <view class="viz-wrap">
       <view class="viz-bg">
-        <view class="blob blob-trait" :style="{ opacity: blobOpacity('trait') }" />
-        <view class="blob blob-emotion" :style="{ opacity: blobOpacity('emotion') }" />
-        <view class="blob blob-behavior" :style="{ opacity: blobOpacity('behavior') }" />
-        <view class="blob blob-motivation" :style="{ opacity: blobOpacity('motivation') }" />
+        <view class="blob blob-trait" :style="{ opacity: blobOpacity('trait') }"></view>
+        <view class="blob blob-emotion" :style="{ opacity: blobOpacity('emotion') }"></view>
+        <view class="blob blob-behavior" :style="{ opacity: blobOpacity('behavior') }"></view>
+        <view class="blob blob-motivation" :style="{ opacity: blobOpacity('motivation') }"></view>
         <text class="corner-label corner-tl">特质</text>
         <text class="corner-label corner-tr">情绪</text>
         <text class="corner-label corner-bl">行为</text>
@@ -36,7 +36,7 @@
           </view>
         </view>
         <view v-if="aiLoading" class="ai-loading-row">
-          <view class="ai-spinner" />
+          <view class="ai-spinner"></view>
           <text class="ai-loading-text">正在生成你的内在画像…</text>
         </view>
         <text v-else-if="aiPortrait" class="ai-text">{{ aiPortrait }}</text>
@@ -57,7 +57,7 @@
 
       <view v-for="axis in axisData" :key="axis.id" class="axis-card">
         <view class="axis-header" @tap="toggleAxis(axis.id)">
-          <view class="axis-dot" :style="{ background: axisColor(axis.id) }" />
+          <view class="axis-dot" :style="{ background: axisColor(axis.id) }"></view>
           <view class="axis-meta">
             <text class="axis-name">{{ axis.name }}</text>
             <text class="axis-name-en">· {{ axis.nameEn }}</text>
@@ -80,7 +80,7 @@
               <view v-for="row in item.scores" :key="row.label" class="score-row">
                 <text class="score-lbl">{{ row.label }}</text>
                 <view class="bar-bg">
-                  <view class="bar-fill" :style="{ width: row.pct + '%', background: axisColor(axis.id) }" />
+                  <view class="bar-fill" :style="{ width: row.pct + '%', background: axisColor(axis.id) }"></view>
                 </view>
                 <text class="score-val">{{ row.pct }}%</text>
               </view>

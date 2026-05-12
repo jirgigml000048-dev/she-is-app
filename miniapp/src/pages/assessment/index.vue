@@ -1,10 +1,10 @@
 <template>
   <view class="page">
     <view class="map-banner" @tap="goMap">
-      <view class="mb-blob mb-blob-1" />
-      <view class="mb-blob mb-blob-2" />
-      <view class="mb-blob mb-blob-3" />
-      <view class="mb-blob mb-blob-4" />
+      <view class="mb-blob mb-blob-1"></view>
+      <view class="mb-blob mb-blob-2"></view>
+      <view class="mb-blob mb-blob-3"></view>
+      <view class="mb-blob mb-blob-4"></view>
       <view class="mb-content">
         <text class="mb-label">INNER MAP</text>
         <text class="mb-title">查看我的内在图谱</text>
