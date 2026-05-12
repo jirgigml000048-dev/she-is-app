@@ -1,13 +1,23 @@
 <template>
   <view class="page">
+    <view class="map-banner" @tap="goMap">
+      <view class="mb-blob mb-blob-1" />
+      <view class="mb-blob mb-blob-2" />
+      <view class="mb-blob mb-blob-3" />
+      <view class="mb-blob mb-blob-4" />
+      <view class="mb-content">
+        <text class="mb-label">INNER MAP</text>
+        <text class="mb-title">查看我的内在图谱</text>
+        <text class="mb-sub">4 维度综合 · AI 解读</text>
+      </view>
+      <text class="mb-arrow">→</text>
+    </view>
+
     <view class="hero">
       <text class="hero-label">PERSONAL DISCOVERY · 自我图鉴</text>
       <text class="hero-title">Discover Your{{'\n'}}Inner Landscape</text>
       <text class="hero-sub">探索你的内在</text>
       <text class="hero-desc">通过四个维度的深度测评，开启你的内在探索之旅：你是谁，你怎么感受，你怎么行动，以及你为什么会成为现在的你。</text>
-      <view class="map-entry" @tap="goMap">
-        <text class="map-entry-text">查看我的内在图谱 →</text>
-      </view>
     </view>
 
     <view class="axes">
@@ -97,8 +107,17 @@ export default {
 .hero-sub { display: block; font-size: 28rpx; color: rgba(51,24,92,0.4); letter-spacing: 8rpx; margin-bottom: 28rpx; }
 .hero-desc { display: block; font-size: 24rpx; color: #6c6862; line-height: 1.85; max-width: 90%; }
 
-.map-entry { display: inline-flex; margin-top: 28rpx; padding: 18rpx 36rpx; background: #4A3073; border-radius: 999rpx; }
-.map-entry-text { font-size: 24rpx; color: #fff; letter-spacing: 2rpx; }
+.map-banner { position: relative; overflow: hidden; margin: 32rpx 32rpx 0; background: #1a0f2e; border-radius: 24rpx; padding: 32rpx 32rpx; display: flex; align-items: center; }
+.mb-blob { position: absolute; width: 200rpx; height: 200rpx; border-radius: 50%; opacity: 0.4; }
+.mb-blob-1 { background: radial-gradient(circle, #7c5cbf 0%, transparent 70%); top: -60rpx; left: -40rpx; }
+.mb-blob-2 { background: radial-gradient(circle, #d4607e 0%, transparent 70%); top: -60rpx; right: -40rpx; }
+.mb-blob-3 { background: radial-gradient(circle, #3fa882 0%, transparent 70%); bottom: -60rpx; left: 30%; opacity: 0.28; }
+.mb-blob-4 { background: radial-gradient(circle, #c9a05c 0%, transparent 70%); bottom: -60rpx; right: -40rpx; opacity: 0.25; }
+.mb-content { position: relative; z-index: 1; flex: 1; }
+.mb-label { display: block; font-size: 18rpx; letter-spacing: 6rpx; color: rgba(255,255,255,0.55); margin-bottom: 10rpx; }
+.mb-title { display: block; font-size: 32rpx; font-weight: 700; color: #fff; letter-spacing: 2rpx; margin-bottom: 6rpx; }
+.mb-sub { display: block; font-size: 22rpx; color: rgba(255,255,255,0.55); letter-spacing: 1rpx; }
+.mb-arrow { position: relative; z-index: 1; font-size: 32rpx; color: rgba(255,255,255,0.7); margin-left: 16rpx; }
 
 .axes { padding: 0 32rpx; display: flex; flex-direction: column; gap: 20rpx; }
 
