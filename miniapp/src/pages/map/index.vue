@@ -124,7 +124,8 @@
 
 <script>
 import { axes, testsById } from '@/data/tests.js'
-import { ANTHROPIC_API_KEY } from '@/config.js'
+
+const ANTHROPIC_API_KEY = ''  // 填入你的 Anthropic API Key
 
 const AXIS_COLORS = {
   trait: '#7c5cbf',
