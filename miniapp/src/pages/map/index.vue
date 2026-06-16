@@ -125,7 +125,8 @@
 <script>
 import { axes, testsById } from '@/data/tests.js'
 
-const ANTHROPIC_API_KEY = ''  // 填入你的 Anthropic API Key
+// 填入你的 Netlify 站点地址，例如 'https://she-is.netlify.app'
+const NETLIFY_BASE = ''
 
 const AXIS_COLORS = {
   trait: '#7c5cbf',
@@ -229,13 +230,7 @@ export default {
           }))
       )
 
-      const prompt = `你是「她也」App的内在洞察师。用户完成了以下心理测评：\n\n${
-        completedResults.map(r =>
-          `- ${r.axisName} · ${r.testTitle}：${r.resultLabel}（${r.scores.join('，')}）`
-        ).join('\n')
-      }\n\n请写一段200-300字的个性化内在画像。要求：\n1. 找到这些测评结果之间的交叉联系（比如依恋风格如何影响情绪调节策略）\n2. 不要逐条列举，要综合叙述\n3. 语气直觉性、非临床，犀利、冷峻、共情，参考风格韩江、伍尔夫\n4. 中文，第二人称"你"，不要加任何标题或前缀`
-
-      if (!ANTHROPIC_API_KEY || ANTHROPIC_API_KEY === 'YOUR_ANTHROPIC_API_KEY_HERE') {
+      if (!NETLIFY_BASE) {
         this.aiPortrait = ''
         return
       }
@@ -244,20 +239,12 @@ export default {
       this.aiPortrait = null
 
       uni.request({
-        url: 'https://api.anthropic.com/v1/messages',
+        url: NETLIFY_BASE + '/.netlify/functions/portrait',
         method: 'POST',
-        header: {
-          'content-type': 'application/json',
-          'x-api-key': ANTHROPIC_API_KEY,
-          'anthropic-version': '2023-06-01',
-        },
-        data: {
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 600,
-          messages: [{ role: 'user', content: prompt }],
-        },
+        header: { 'content-type': 'application/json' },
+        data: { completedResults },
         success: (res) => {
-          const text = (res && res.data && res.data.content && res.data.content[0] && res.data.content[0].text) || ''
+          const text = (res && res.data && res.data.text) || ''
           this.aiPortrait = text || ''
           this.aiUpToDate = true
           if (text) uni.setStorageSync('ai-portrait-v1', { text, completedIds })
