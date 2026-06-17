@@ -310,6 +310,7 @@ export default {
       return new Promise((resolve, reject) => {
         const ctx = uni.createCanvasContext('quoteCard', this)
         const W = 390, H = 693
+        const dpr = (uni.getSystemInfoSync().pixelRatio) || 2
 
         // Background — warm off-white
         ctx.setFillStyle('#edeae5')
@@ -379,7 +380,7 @@ export default {
           uni.canvasToTempFilePath({
             canvasId: 'quoteCard',
             x: 0, y: 0, width: W, height: H,
-            destWidth: W * 2, destHeight: H * 2,
+            destWidth: W * dpr, destHeight: H * dpr,
             success: r => resolve(r.tempFilePath),
             fail: reject,
           }, this)
@@ -412,6 +413,7 @@ export default {
       return new Promise((resolve, reject) => {
         // Pass 1: resize canvas CSS to exact content height, then redraw
         const W = 375
+        const dpr = (uni.getSystemInfoSync().pixelRatio) || 2
         this.resultCardH = Math.min(this._estimateCardH(), 700)
 
         this.$nextTick(() => {
@@ -495,8 +497,8 @@ export default {
         ctx.draw(false, () => {
           uni.canvasToTempFilePath({
             canvasId: 'resultCard',
-            destWidth: W * 2,
-            destHeight: this.resultCardH * 2,
+            destWidth: W * dpr,
+            destHeight: this.resultCardH * dpr,
             success: r => resolve(r.tempFilePath),
             fail: reject,
           }, this)
