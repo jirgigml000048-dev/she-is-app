@@ -68,8 +68,8 @@
 
         <view v-if="openAxes[axis.id]" class="axis-body">
           <view
-            v-for="item in axis.items.filter(i => i.done)"
-            :key="item.id + '-done'"
+            v-for="item in axis.doneItems"
+            :key="item.id"
             class="test-item test-done"
           >
             <view class="done-head">
@@ -88,8 +88,8 @@
           </view>
 
           <view
-            v-for="item in axis.items.filter(i => !i.done)"
-            :key="item.id + '-todo'"
+            v-for="item in axis.todoItems"
+            :key="item.id"
             class="test-item test-todo"
             @tap="goTest(item.id)"
           >
@@ -152,7 +152,9 @@ export default {
       return this.axisData.reduce((sum, a) => sum + a.total, 0)
     },
     completedTestIds() {
-      return this.axisData.flatMap(a => a.items.filter(i => i.done).map(i => i.id))
+      const ids = []
+      this.axisData.forEach(a => (a.items || []).forEach(i => { if (i.done) ids.push(i.id) }))
+      return ids
     },
   },
   onShow() {
@@ -180,10 +182,14 @@ export default {
             } catch (e) { resultLabel = '' }
             return { id: t.id, title: t.title, subtitle: t.subtitle, done, resultLabel, scores }
           })
+          const doneItems = items.filter(i => i.done)
+          const todoItems = items.filter(i => !i.done)
           return {
             ...axis,
             items,
-            completed: items.filter(i => i.done).length,
+            doneItems,
+            todoItems,
+            completed: doneItems.length,
             total: items.length,
           }
         })
@@ -218,16 +224,16 @@ export default {
     },
     fetchAIPortrait() {
       const completedIds = this.completedTestIds
-      const completedResults = this.axisData.flatMap(axis =>
-        axis.items
-          .filter(i => i.done)
-          .map(i => ({
-            axisName: axis.name,
-            testTitle: i.title,
-            resultLabel: i.resultLabel || '已完成',
-            scores: i.scores.map(s => `${s.label}:${s.pct}%`),
-          }))
-      )
+      const completedResults = []
+      this.axisData.forEach(axis => (axis.items || []).forEach(i => {
+        if (!i.done) return
+        completedResults.push({
+          axisName: axis.name,
+          testTitle: i.title,
+          resultLabel: i.resultLabel || '已完成',
+          scores: (i.scores || []).map(s => `${s.label}:${s.pct}%`),
+        })
+      }))
 
       if (!DEEPSEEK_API_KEY) {
         this.aiPortrait = ''
