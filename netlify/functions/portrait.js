@@ -1,12 +1,10 @@
-const Anthropic = require('@anthropic-ai/sdk');
-
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Content-Type': 'application/json',
-};
-
 exports.handler = async (event) => {
+  const CORS_HEADERS = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Content-Type': 'application/json',
+  };
+
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 204, headers: CORS_HEADERS, body: '' };
   }
@@ -39,17 +37,30 @@ ${resultLines}
 3. 语气直觉性、非临床，犀利、冷峻、共情，参考风格韩江、伍尔夫
 4. 中文，第二人称"你"，不要加任何标题或前缀`;
 
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
-  const message = await client.messages.create({
-    model: 'claude-haiku-4-5-20251001',
-    max_tokens: 600,
-    messages: [{ role: 'user', content: prompt }],
+  const res = await fetch('https://api.deepseek.com/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.DEEPSEEK_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: 'deepseek-chat',
+      max_tokens: 600,
+      messages: [{ role: 'user', content: prompt }],
+    }),
   });
+
+  if (!res.ok) {
+    const err = await res.text();
+    return { statusCode: 502, headers: CORS_HEADERS, body: JSON.stringify({ error: err }) };
+  }
+
+  const data = await res.json();
+  const text = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content || '';
 
   return {
     statusCode: 200,
     headers: CORS_HEADERS,
-    body: JSON.stringify({ text: message.content[0].text }),
+    body: JSON.stringify({ text }),
   };
 };
