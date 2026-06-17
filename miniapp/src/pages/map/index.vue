@@ -125,8 +125,7 @@
 <script>
 import { axes, testsById } from '@/data/tests.js'
 
-// 填入你的 Netlify 站点地址，例如 'https://she-is.netlify.app'
-const NETLIFY_BASE = ''
+const DEEPSEEK_API_KEY = ''  // 填入你的 DeepSeek API Key
 
 const AXIS_COLORS = {
   trait: '#7c5cbf',
@@ -230,21 +229,34 @@ export default {
           }))
       )
 
-      if (!NETLIFY_BASE) {
+      if (!DEEPSEEK_API_KEY) {
         this.aiPortrait = ''
         return
       }
+
+      const prompt = `你是「她也」App的内在洞察师。用户完成了以下心理测评：\n\n${
+        completedResults.map(r =>
+          `- ${r.axisName} · ${r.testTitle}：${r.resultLabel}（${r.scores.join('，')}）`
+        ).join('\n')
+      }\n\n请写一段200-300字的个性化内在画像。要求：\n1. 找到这些测评结果之间的交叉联系（比如依恋风格如何影响情绪调节策略）\n2. 不要逐条列举，要综合叙述\n3. 语气直觉性、非临床，犀利、冷峻、共情，参考风格韩江、伍尔夫\n4. 中文，第二人称"你"，不要加任何标题或前缀`
 
       this.aiLoading = true
       this.aiPortrait = null
 
       uni.request({
-        url: NETLIFY_BASE + '/.netlify/functions/portrait',
+        url: 'https://api.deepseek.com/chat/completions',
         method: 'POST',
-        header: { 'content-type': 'application/json' },
-        data: { completedResults },
+        header: {
+          'content-type': 'application/json',
+          'Authorization': 'Bearer ' + DEEPSEEK_API_KEY,
+        },
+        data: {
+          model: 'deepseek-chat',
+          max_tokens: 600,
+          messages: [{ role: 'user', content: prompt }],
+        },
         success: (res) => {
-          const text = (res && res.data && res.data.text) || ''
+          const text = (res && res.data && res.data.choices && res.data.choices[0] && res.data.choices[0].message && res.data.choices[0].message.content) || ''
           this.aiPortrait = text || ''
           this.aiUpToDate = true
           if (text) uni.setStorageSync('ai-portrait-v1', { text, completedIds })
