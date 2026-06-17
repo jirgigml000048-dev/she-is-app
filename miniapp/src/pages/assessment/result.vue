@@ -366,7 +366,7 @@ export default {
         // Footer left: URL
         ctx.font = '11px sans-serif'
         ctx.setFillStyle('rgba(45,36,112,0.38)')
-        ctx.fillText('she-is-app.netlify.app', 28, H - 30)
+        ctx.fillText('微信小程序「女也 She Is」', 28, H - 30)
 
         // Footer right: brand mark
         ctx.font = '14px sans-serif'
