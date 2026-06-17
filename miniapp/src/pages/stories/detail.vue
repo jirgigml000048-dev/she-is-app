@@ -14,7 +14,8 @@
     <!-- Mode Toggle -->
     <view class="mode-bar">
       <view :class="['mode-btn', mode === 'read' ? 'active' : '']" @tap="switchMode('read')">阅读</view>
-      <view :class="['mode-btn', mode === 'listen' ? 'active' : '']" @tap="switchMode('listen')">听故事</view>
+      <view v-if="story.tts" :class="['mode-btn', mode === 'listen' ? 'active' : '']" @tap="switchMode('listen')">听故事</view>
+      <view v-else class="mode-btn mode-btn--soon">听故事 · 筹备中</view>
     </view>
 
     <!-- BGM Player (read mode) -->
@@ -84,15 +85,17 @@ export default {
       this.bgmCtx.src = s.bgm
       this.bgmCtx.loop = true
       this.bgmCtx.volume = 0.35
-      this.ttsCtx = uni.createInnerAudioContext()
-      this.ttsCtx.src = s.tts
-      this.ttsCtx.onTimeUpdate(() => {
+      if (s.tts) {
+        this.ttsCtx = uni.createInnerAudioContext()
+        this.ttsCtx.src = s.tts
+        this.ttsCtx.onTimeUpdate(() => {
         const c = this.ttsCtx.currentTime || 0
         const m = Math.floor(c / 60)
         const sec = Math.floor(c % 60)
         this.ttsTime = m + ':' + String(sec).padStart(2, '0')
       })
       this.ttsCtx.onEnded(() => { this.ttsPlaying = false })
+      }
     }
   },
   onUnload() {
@@ -144,6 +147,7 @@ export default {
 .mode-btn:first-child { border-radius: 999rpx 0 0 999rpx; }
 .mode-btn:last-child { border-radius: 0 999rpx 999rpx 0; border-left: none; }
 .mode-btn.active { background: rgba(51,24,92,0.08); color: #33185c; }
+.mode-btn--soon { color: rgba(51,24,92,0.25); border-color: rgba(51,24,92,0.08); font-size: 22rpx; }
 
 .player-card { margin: 0 40rpx 24rpx; padding: 24rpx 32rpx; background: rgba(255,255,255,0.7); border-radius: 24rpx; border: 2rpx solid rgba(51,24,92,0.06); }
 .player-row { display: flex; align-items: center; gap: 20rpx; }
