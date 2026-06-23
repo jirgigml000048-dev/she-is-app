@@ -1,14 +1,20 @@
 <script>
+// ↓ 填入你的云开发环境 ID（在微信开发者工具 → 云开发 → 环境 里找到）
+const CLOUD_ENV_ID = 'your-env-id'
+
 export default {
   onLaunch: function () {
-    console.log('App Launch')
+    // #ifdef MP-WEIXIN
+    if (wx.cloud) {
+      wx.cloud.init({
+        env: CLOUD_ENV_ID,
+        traceUser: true,
+      })
+    }
+    // #endif
   },
-  onShow: function () {
-    console.log('App Show')
-  },
-  onHide: function () {
-    console.log('App Hide')
-  },
+  onShow: function () {},
+  onHide: function () {},
 }
 </script>
 

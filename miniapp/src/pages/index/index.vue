@@ -1,8 +1,14 @@
 <template>
   <view class="page">
-    <view class="brand">
-      <text class="brand-zh">女也</text>
-      <text class="brand-en">She Is ______.</text>
+    <view class="top-bar">
+      <view class="brand">
+        <text class="brand-zh">女也</text>
+        <text class="brand-en">She Is ______.</text>
+      </view>
+      <view class="profile-btn" @tap="goProfile">
+        <text class="profile-icon">{{ loggedIn ? '●' : '○' }}</text>
+        <text class="profile-label">{{ loggedIn ? '我的' : '登录' }}</text>
+      </view>
     </view>
     <view class="quote-card">
       <text class="quote-zh">内心的注视是种无畏的爱。</text>
@@ -42,21 +48,28 @@
 
 <script>
 import { stories } from '@/data/stories.js'
+import { isLoggedIn } from '@/utils/user.js'
 export default {
-  data() { return { stories } },
+  data() { return { stories, loggedIn: false } },
+  onShow() { this.loggedIn = isLoggedIn() },
   methods: {
     goStory(story) { uni.navigateTo({ url: '/pages/stories/detail?id=' + story.id }) },
     goStories() { uni.switchTab({ url: '/pages/stories/list' }) },
     goMap() { uni.navigateTo({ url: '/pages/map/index' }) },
+    goProfile() { uni.navigateTo({ url: '/pages/profile/index' }) },
   },
 }
 </script>
 
 <style scoped>
 .page { background: #fcf9f6; min-height: 100vh; padding: 80rpx 40rpx 120rpx; }
-.brand { margin-bottom: 60rpx; }
+.top-bar { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 60rpx; }
+.brand { flex: 1; }
 .brand-zh { font-size: 56rpx; font-weight: 700; color: #33185c; display: block; letter-spacing: 8rpx; }
 .brand-en { font-size: 24rpx; color: rgba(51,24,92,0.5); letter-spacing: 4rpx; display: block; margin-top: 8rpx; }
+.profile-btn { display: flex; flex-direction: column; align-items: center; gap: 4rpx; padding: 8rpx 16rpx; }
+.profile-icon { font-size: 36rpx; color: #33185c; }
+.profile-label { font-size: 18rpx; color: rgba(51,24,92,0.5); letter-spacing: 2rpx; }
 
 .quote-card { padding: 48rpx 40rpx; background: rgba(74,48,115,0.03); border-radius: 24rpx; border-left: 6rpx solid #33185c; margin-bottom: 64rpx; }
 .quote-zh { font-size: 36rpx; font-weight: 500; color: #33185c; line-height: 1.6; display: block; }

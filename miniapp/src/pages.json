@@ -6,7 +6,8 @@
     { "path": "pages/assessment/index", "style": { "navigationBarTitleText": "自我图鉴" } },
     { "path": "pages/assessment/test", "style": { "navigationBarTitleText": "测评" } },
     { "path": "pages/assessment/result", "style": { "navigationBarTitleText": "你的结果" } },
-    { "path": "pages/map/index", "style": { "navigationBarTitleText": "我的内在图谱" } }
+    { "path": "pages/map/index", "style": { "navigationBarTitleText": "我的内在图谱" } },
+    { "path": "pages/profile/index", "style": { "navigationBarTitleText": "我的" } }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
