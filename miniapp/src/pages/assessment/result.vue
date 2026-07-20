@@ -137,6 +137,10 @@
       </view>
     </view>
 
+    <view class="result-disclaimer">
+      <text class="result-disclaimer-text">本测评仅用于自我探索，不构成医学、心理诊断或治疗建议。</text>
+    </view>
+
   <!-- off-screen canvases (old API — createCanvasContext, proven working) -->
   <canvas canvas-id="resultCard" class="result-canvas" :style="{height: resultCardH + 'px'}" />
   <canvas canvas-id="quoteCard"  class="quote-canvas"  />
@@ -725,4 +729,6 @@ export default {
 .btn-retry-text { font-size: 26rpx; color: #33185c; font-weight: 600; }
 .btn-back { background: #33185c; border-radius: 999rpx; padding: 28rpx 0; text-align: center; }
 .btn-back-text { font-size: 26rpx; color: #fff; font-weight: 700; letter-spacing: 2rpx; }
+.result-disclaimer { padding: 36rpx 12rpx 0; text-align: center; position: relative; z-index: 1; }
+.result-disclaimer-text { font-size: 20rpx; color: rgba(74,48,115,0.35); line-height: 1.7; }
 </style>

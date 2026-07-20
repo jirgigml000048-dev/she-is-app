@@ -1,34 +1,45 @@
 <template>
   <view class="page">
-    <!-- Header -->
     <view class="header">
       <text class="logo">女也</text>
       <text class="logo-en">She Is</text>
     </view>
 
-    <!-- Not logged in -->
     <view v-if="!user" class="card">
       <view class="avatar-placeholder">
         <text class="avatar-icon">○</text>
       </view>
-      <text class="hint-title">登录后可跨设备保存你的探索记录</text>
-      <text class="hint-sub">你的测评结果、内在图谱将安全同步</text>
+      <text class="hint-title">跨设备保存你的探索记录</text>
+      <text class="hint-sub">登录后会合并本机与云端的测评结果和阅读记录</text>
       <view class="login-btn" @tap="doLogin">
-        <text class="login-btn-text">{{ logging ? '登录中…' : '微信一键登录' }}</text>
+        <text class="login-btn-text">{{ logging ? '正在同步…' : '开启微信同步' }}</text>
       </view>
+      <text class="consent-tip">点击即表示你同意按下方说明保存探索记录</text>
       <text v-if="loginErr" class="err-tip">{{ loginErr }}</text>
     </view>
 
-    <!-- Logged in -->
-    <view v-if="user" class="card card--loggedin">
-      <view class="avatar-wrap">
-        <image v-if="user.avatarUrl" :src="user.avatarUrl" class="avatar" mode="aspectFill" />
+    <view v-else class="card card--loggedin">
+      <button class="avatar-picker" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
+        <image v-if="avatarPreview" :src="avatarPreview" class="avatar" mode="aspectFill" />
         <view v-else class="avatar-placeholder avatar-placeholder--sm">
           <text class="avatar-icon">♀</text>
         </view>
+        <text class="avatar-edit">更换头像</text>
+      </button>
+
+      <input
+        class="nickname-input"
+        type="nickname"
+        :value="draftNickname"
+        maxlength="24"
+        placeholder="给自己一个称呼"
+        @input="onNicknameInput"
+      />
+
+      <view class="profile-save" @tap="saveProfile">
+        <text class="profile-save-text">{{ savingProfile ? '保存中…' : '保存个人资料' }}</text>
       </view>
-      <text class="username">{{ user.nickname || '女也用户' }}</text>
-      <text class="openid-hint">已登录 · 数据同步中</text>
+      <text class="sync-hint">{{ syncing ? '正在合并云端记录…' : '已开启跨设备同步' }}</text>
 
       <view class="divider"></view>
 
@@ -46,281 +57,230 @@
       <view class="action-btn" @tap="goMap">
         <text class="action-btn-text">查看我的内在图谱 →</text>
       </view>
-
       <view class="logout-btn" @tap="doLogout">
-        <text class="logout-text">退出登录</text>
+        <text class="logout-text">退出同步</text>
       </view>
     </view>
 
-    <!-- Footer -->
+    <view class="privacy-card">
+      <view class="privacy-head" @tap="showPrivacy = !showPrivacy">
+        <view>
+          <text class="privacy-title">隐私与数据</text>
+          <text class="privacy-sub">你可以随时了解或删除云端记录</text>
+        </view>
+        <text class="privacy-toggle">{{ showPrivacy ? '−' : '+' }}</text>
+      </view>
+
+      <view v-if="showPrivacy" class="privacy-body">
+        <text class="privacy-text">开启同步后，我们会保存你的微信匿名身份标识、测评答案与结果、读过的故事，以及你主动选择的昵称和头像，仅用于跨设备同步和生成你的个人图谱。</text>
+        <text class="privacy-text">只有在你点击“同意并生成画像”后，测评名称、结果标签和分数才会发送给 DeepSeek；不会发送昵称、微信身份或原始答案。</text>
+        <text class="privacy-text">测评和内在画像只用于自我探索，不构成医学、心理诊断或治疗建议。请不要据此替代专业帮助。</text>
+        <text class="privacy-text">退出同步不会删除本机记录。删除云端数据后，本机测评仍会保留，你可以继续离线使用。</text>
+
+        <view v-if="user" class="delete-btn" @tap="deleteCloudData">
+          <text class="delete-text">{{ deleting ? '正在删除…' : '删除我的全部云端数据' }}</text>
+        </view>
+      </view>
+    </view>
+
     <view class="footer">
-      <text class="footer-text">女也 She Is · 100位真实女孩的非虚构故事</text>
+      <text class="footer-text">女也 She Is · 真实女孩的非虚构故事</text>
     </view>
   </view>
 </template>
 
 <script>
-import { getUser, cloudLogin, clearUser, isLoggedIn } from '@/utils/user.js'
+import {
+  getUser,
+  cloudLogin,
+  clearUser,
+  getCompletedTestCount,
+  getReadStoryIds,
+  uploadAvatar,
+  deleteCloudUserData,
+} from '@/utils/user.js'
 
 export default {
   data() {
     return {
       user: null,
       logging: false,
+      syncing: false,
+      savingProfile: false,
+      deleting: false,
       loginErr: '',
       completedTests: 0,
       readStories: 0,
+      draftNickname: '',
+      pendingAvatarPath: '',
+      showPrivacy: false,
     }
+  },
+  computed: {
+    avatarPreview() {
+      return this.pendingAvatarPath || (this.user && this.user.avatarUrl) || ''
+    },
   },
   onShow() {
     this.user = getUser()
-    if (this.user) this.loadStats()
+    this.draftNickname = (this.user && this.user.nickname) || ''
+    this.loadStats()
   },
   methods: {
     loadStats() {
-      try {
-        const axes = ['trait', 'emotion', 'behavior', 'motivation']
-        let done = 0
-        axes.forEach(ax => {
-          const data = uni.getStorageSync('axis-' + ax)
-          if (data && data.items) {
-            done += data.items.filter(i => i.done).length
-          }
-        })
-        this.completedTests = done
-        // Story reads tracked by readStoryIds set
-        const ids = uni.getStorageSync('read-story-ids')
-        this.readStories = ids ? ids.length : 0
-      } catch (e) {}
+      this.completedTests = getCompletedTestCount()
+      this.readStories = getReadStoryIds().length
     },
-    doLogin() {
+    async doLogin() {
       if (this.logging) return
       this.logging = true
+      this.syncing = true
       this.loginErr = ''
-      cloudLogin()
-        .then(user => {
-          this.user = user
-          this.loadStats()
-          uni.showToast({ title: '登录成功', icon: 'success' })
-        })
-        .catch(err => {
-          console.error('login err', err)
-          this.loginErr = '登录失败，请重试'
-        })
-        .finally(() => { this.logging = false })
+      try {
+        this.user = await cloudLogin()
+        this.draftNickname = this.user.nickname || ''
+        this.loadStats()
+        uni.showToast({ title: '同步已开启', icon: 'success' })
+      } catch (error) {
+        console.error('login err', error)
+        this.loginErr = '暂时无法同步，请检查网络后重试'
+      } finally {
+        this.logging = false
+        this.syncing = false
+      }
+    },
+    onChooseAvatar(event) {
+      this.pendingAvatarPath = event && event.detail && event.detail.avatarUrl
+        ? event.detail.avatarUrl
+        : ''
+    },
+    onNicknameInput(event) {
+      this.draftNickname = event && event.detail ? event.detail.value : ''
+    },
+    async saveProfile() {
+      if (this.savingProfile || !this.user) return
+      this.savingProfile = true
+      try {
+        let avatarUrl = this.user.avatarUrl || ''
+        if (this.pendingAvatarPath) avatarUrl = await uploadAvatar(this.pendingAvatarPath)
+        this.user = await cloudLogin({ nickname: this.draftNickname, avatarUrl })
+        this.pendingAvatarPath = ''
+        uni.showToast({ title: '资料已保存', icon: 'success' })
+      } catch (error) {
+        console.error('profile save err', error)
+        uni.showToast({ title: '保存失败，请重试', icon: 'none' })
+      } finally {
+        this.savingProfile = false
+      }
     },
     doLogout() {
       uni.showModal({
-        title: '退出登录',
-        content: '退出后本地数据依然保留，下次登录会重新同步。',
+        title: '退出同步',
+        content: '本机的测评与阅读记录会保留，下次开启同步时会重新合并。',
         confirmText: '退出',
         cancelText: '取消',
-        success: (res) => {
-          if (res.confirm) {
+        success: result => {
+          if (result.confirm) {
             clearUser()
             this.user = null
+            this.pendingAvatarPath = ''
+            this.draftNickname = ''
           }
-        }
+        },
+      })
+    },
+    deleteCloudData() {
+      if (this.deleting || !this.user) return
+      uni.showModal({
+        title: '删除云端数据？',
+        content: '昵称、头像、云端测评、阅读记录和内在画像将永久删除；本机记录不受影响。',
+        confirmText: '确认删除',
+        confirmColor: '#b13b5c',
+        success: async result => {
+          if (!result.confirm) return
+          this.deleting = true
+          try {
+            await deleteCloudUserData()
+            this.user = null
+            this.pendingAvatarPath = ''
+            this.draftNickname = ''
+            uni.showToast({ title: '云端数据已删除', icon: 'success' })
+          } catch (error) {
+            console.error('delete data err', error)
+            uni.showToast({ title: '删除失败，请重试', icon: 'none' })
+          } finally {
+            this.deleting = false
+          }
+        },
       })
     },
     goMap() {
       uni.navigateTo({ url: '/pages/map/index' })
     },
-  }
+  },
 }
 </script>
 
 <style scoped>
 .page {
   min-height: 100vh;
+  box-sizing: border-box;
   background: #fcf9f6;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 80rpx 48rpx 120rpx;
 }
-
-.header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 64rpx;
-}
-.logo {
-  font-size: 64rpx;
-  font-weight: 700;
-  color: #33185c;
-  letter-spacing: 8rpx;
-}
-.logo-en {
-  font-size: 28rpx;
-  color: rgba(51,24,92,0.45);
-  letter-spacing: 6rpx;
-  margin-top: 4rpx;
-  font-style: italic;
-}
-
-.card {
+.header { display: flex; flex-direction: column; align-items: center; margin-bottom: 56rpx; }
+.logo { font-size: 64rpx; font-weight: 700; color: #33185c; letter-spacing: 8rpx; }
+.logo-en { font-size: 28rpx; color: rgba(51,24,92,0.45); letter-spacing: 6rpx; margin-top: 4rpx; font-style: italic; }
+.card, .privacy-card {
+  box-sizing: border-box;
   width: 100%;
   background: #fff;
   border-radius: 32rpx;
-  padding: 56rpx 48rpx;
+  padding: 48rpx 40rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-shadow: 0 4rpx 40rpx rgba(51,24,92,0.06);
 }
-
-.avatar-placeholder {
-  width: 128rpx;
-  height: 128rpx;
-  border-radius: 50%;
-  background: rgba(51,24,92,0.06);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 32rpx;
-}
-.avatar-placeholder--sm {
-  width: 112rpx;
-  height: 112rpx;
-  background: linear-gradient(135deg, #7c5cbf, #d4607e);
-  margin-bottom: 24rpx;
-}
-.avatar-icon {
-  font-size: 52rpx;
-  color: rgba(51,24,92,0.3);
-}
-.avatar-placeholder--sm .avatar-icon {
-  color: #fff;
-  font-size: 48rpx;
-}
-
-.avatar {
-  width: 112rpx;
-  height: 112rpx;
-  border-radius: 50%;
-  margin-bottom: 24rpx;
-}
-
-.hint-title {
-  font-size: 30rpx;
-  font-weight: 600;
-  color: #33185c;
-  text-align: center;
-  margin-bottom: 12rpx;
-  line-height: 1.5;
-}
-.hint-sub {
-  font-size: 24rpx;
-  color: rgba(51,24,92,0.45);
-  text-align: center;
-  margin-bottom: 48rpx;
-}
-
-.login-btn {
-  width: 100%;
-  padding: 28rpx;
-  background: #33185c;
-  border-radius: 999rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.login-btn-text {
-  font-size: 30rpx;
-  font-weight: 600;
-  color: #fff;
-  letter-spacing: 2rpx;
-}
-
-.err-tip {
-  margin-top: 20rpx;
-  font-size: 24rpx;
-  color: #d4607e;
-}
-
-/* logged in card */
-.card--loggedin {
-  gap: 0;
-}
-
-.avatar-wrap {
-  margin-bottom: 20rpx;
-}
-
-.username {
-  font-size: 36rpx;
-  font-weight: 700;
-  color: #33185c;
-  margin-bottom: 8rpx;
-}
-.openid-hint {
-  font-size: 22rpx;
-  color: rgba(51,24,92,0.4);
-  margin-bottom: 40rpx;
-}
-
-.divider {
-  width: 100%;
-  height: 1rpx;
-  background: rgba(51,24,92,0.08);
-  margin-bottom: 40rpx;
-}
-
-.stat-row {
-  display: flex;
-  justify-content: center;
-  gap: 64rpx;
-  margin-bottom: 48rpx;
-}
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.stat-num {
-  font-size: 52rpx;
-  font-weight: 700;
-  color: #33185c;
-  line-height: 1;
-  margin-bottom: 8rpx;
-}
-.stat-label {
-  font-size: 22rpx;
-  color: rgba(51,24,92,0.45);
-}
-
-.action-btn {
-  width: 100%;
-  padding: 24rpx;
-  background: rgba(51,24,92,0.06);
-  border-radius: 999rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 24rpx;
-}
-.action-btn-text {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #33185c;
-}
-
-.logout-btn {
-  padding: 16rpx 40rpx;
-}
-.logout-text {
-  font-size: 24rpx;
-  color: rgba(51,24,92,0.35);
-}
-
-.footer {
-  margin-top: 64rpx;
-}
-.footer-text {
-  font-size: 22rpx;
-  color: rgba(51,24,92,0.25);
-  text-align: center;
-}
+.avatar-placeholder { width: 128rpx; height: 128rpx; border-radius: 50%; background: rgba(51,24,92,0.06); display: flex; align-items: center; justify-content: center; margin-bottom: 32rpx; }
+.avatar-placeholder--sm { width: 112rpx; height: 112rpx; background: linear-gradient(135deg, #7c5cbf, #d4607e); margin-bottom: 0; }
+.avatar-icon { font-size: 52rpx; color: rgba(51,24,92,0.3); }
+.avatar-placeholder--sm .avatar-icon { color: #fff; font-size: 48rpx; }
+.avatar-picker { padding: 0; margin: 0 0 20rpx; border: 0; background: transparent; display: flex; flex-direction: column; align-items: center; line-height: 1; }
+.avatar-picker::after { border: none; }
+.avatar { width: 112rpx; height: 112rpx; border-radius: 50%; }
+.avatar-edit { margin-top: 14rpx; font-size: 20rpx; color: rgba(51,24,92,0.45); }
+.hint-title { font-size: 30rpx; font-weight: 600; color: #33185c; text-align: center; margin-bottom: 12rpx; line-height: 1.5; }
+.hint-sub { font-size: 24rpx; color: rgba(51,24,92,0.45); text-align: center; line-height: 1.7; margin-bottom: 40rpx; }
+.login-btn { box-sizing: border-box; width: 100%; padding: 28rpx; background: #33185c; border-radius: 999rpx; display: flex; align-items: center; justify-content: center; }
+.login-btn-text { font-size: 30rpx; font-weight: 600; color: #fff; letter-spacing: 2rpx; }
+.consent-tip { margin-top: 20rpx; font-size: 20rpx; color: rgba(51,24,92,0.35); text-align: center; }
+.err-tip { margin-top: 20rpx; font-size: 24rpx; color: #d4607e; }
+.nickname-input { box-sizing: border-box; width: 100%; text-align: center; font-size: 34rpx; font-weight: 700; color: #33185c; padding: 18rpx 24rpx; background: rgba(51,24,92,0.04); border-radius: 18rpx; }
+.profile-save { margin-top: 18rpx; padding: 18rpx 36rpx; border-radius: 999rpx; background: #33185c; }
+.profile-save-text { color: #fff; font-size: 24rpx; font-weight: 600; }
+.sync-hint { font-size: 21rpx; color: rgba(51,24,92,0.4); margin-top: 18rpx; }
+.divider { width: 100%; height: 1rpx; background: rgba(51,24,92,0.08); margin: 36rpx 0; }
+.stat-row { display: flex; justify-content: center; gap: 80rpx; margin-bottom: 40rpx; }
+.stat-item { display: flex; flex-direction: column; align-items: center; }
+.stat-num { font-size: 52rpx; font-weight: 700; color: #33185c; line-height: 1; margin-bottom: 8rpx; }
+.stat-label { font-size: 22rpx; color: rgba(51,24,92,0.45); }
+.action-btn { box-sizing: border-box; width: 100%; padding: 24rpx; background: rgba(51,24,92,0.06); border-radius: 999rpx; display: flex; align-items: center; justify-content: center; margin-bottom: 18rpx; }
+.action-btn-text { font-size: 28rpx; font-weight: 600; color: #33185c; }
+.logout-btn { padding: 16rpx 40rpx; }
+.logout-text { font-size: 24rpx; color: rgba(51,24,92,0.38); }
+.privacy-card { margin-top: 28rpx; padding: 32rpx 36rpx; align-items: stretch; }
+.privacy-head { display: flex; align-items: center; justify-content: space-between; }
+.privacy-title { display: block; font-size: 27rpx; font-weight: 700; color: #33185c; }
+.privacy-sub { display: block; margin-top: 8rpx; font-size: 21rpx; color: rgba(51,24,92,0.42); }
+.privacy-toggle { font-size: 36rpx; color: rgba(51,24,92,0.45); }
+.privacy-body { border-top: 1rpx solid rgba(51,24,92,0.08); margin-top: 28rpx; padding-top: 28rpx; }
+.privacy-text { display: block; font-size: 23rpx; color: #6c6862; line-height: 1.8; margin-bottom: 20rpx; }
+.delete-btn { margin-top: 12rpx; padding: 22rpx; border: 1rpx solid rgba(177,59,92,0.28); border-radius: 999rpx; text-align: center; }
+.delete-text { font-size: 23rpx; color: #b13b5c; }
+.footer { margin-top: 56rpx; }
+.footer-text { font-size: 22rpx; color: rgba(51,24,92,0.25); text-align: center; }
 </style>

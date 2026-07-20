@@ -79,15 +79,14 @@
           <view class="ecr-prev" @tap="prev" :style="{ opacity: cur === 0 ? 0.4 : 1 }">
             <text class="ecr-prev-text">← 上一题</text>
           </view>
-          <view class="ecr-next" @tap="next" :style="{ opacity: cur === test.questions.length - 1 ? 0.4 : 1 }">
-            <text class="ecr-next-text">下一题 →</text>
+          <view
+            :class="['ecr-next', answers[cur] === null ? 'ecr-next--disabled' : '']"
+            @tap="next"
+          >
+            <text class="ecr-next-text">
+              {{ cur === test.questions.length - 1 ? '查看结果 →' : '下一题 →' }}
+            </text>
           </view>
-        </view>
-        <view
-          :class="['ecr-submit', answeredCount === test.questions.length ? 'ecr-submit--ready' : 'ecr-submit--dim']"
-          @tap="next"
-        >
-          <text class="ecr-submit-text">✦ 翻开这一页 / Flip this page</text>
         </view>
       </view>
     </view>
@@ -168,6 +167,7 @@
 
 <script>
 import { testsById } from '@/data/tests.js'
+import { recordAssessment } from '@/utils/user.js'
 
 export default {
   data() {
@@ -214,9 +214,6 @@ export default {
       const arr = [...this.answers]
       arr[this.cur] = val
       this.answers = arr
-      if (this.cur < this.test.questions.length - 1) {
-        setTimeout(() => { this.cur++ }, 300)
-      }
     },
     onSlide(e) {
       const arr = [...this.answers]
@@ -227,11 +224,6 @@ export default {
       const arr = [...this.answers]
       arr[this.cur] = tag
       this.answers = arr
-      setTimeout(() => {
-        if (this.cur < this.test.questions.length - 1) {
-          this.cur++
-        }
-      }, 300)
     },
     prev() {
       if (this.cur > 0) this.cur--
@@ -239,11 +231,17 @@ export default {
     next() {
       // Likert submit: only allow when all answered
       if (this.test.type === 'likert') {
+        if (this.answers[this.cur] === null) {
+          uni.showToast({ title: '请先选择一个选项', icon: 'none' })
+          return
+        }
         if (this.cur < this.test.questions.length - 1) {
           this.cur++
           return
         }
         if (this.answeredCount < this.test.questions.length) {
+          const firstUnanswered = this.answers.findIndex(value => value === null)
+          if (firstUnanswered >= 0) this.cur = firstUnanswered
           uni.showToast({ title: '请完成所有题目再提交', icon: 'none' })
           return
         }
@@ -269,8 +267,10 @@ export default {
       }
     },
     _submit() {
-      uni.setStorageSync(`test-answers-${this.test.id}`, this.answers)
       const resultKey = this.test.score(this.answers)
+      recordAssessment(this.test.id, this.answers, resultKey).catch(error => {
+        console.warn('[assessment] cloud sync deferred', error)
+      })
       uni.redirectTo({
         url: `/pages/assessment/result?id=${this.test.id}&result=${encodeURIComponent(resultKey)}`,
       })
@@ -529,6 +529,7 @@ export default {
   box-shadow: 0 8rpx 32rpx rgba(51,24,92,0.15);
 }
 .ecr-next-text { font-size: 28rpx; color: #fff; font-weight: 600; }
+.ecr-next--disabled { opacity: 0.38; box-shadow: none; }
 .ecr-submit {
   width: 100%; padding: 40rpx;
   border-radius: 24rpx;

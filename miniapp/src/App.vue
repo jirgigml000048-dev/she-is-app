@@ -1,6 +1,6 @@
 <script>
-// ↓ 填入你的云开发环境 ID（在微信开发者工具 → 云开发 → 环境 里找到）
-const CLOUD_ENV_ID = 'cloud1-d4gkbgtzob1673d47'
+import { getUser, cloudLogin } from '@/utils/user.js'
+import { CLOUD_ENV_ID } from '@/config.js'
 
 export default {
   onLaunch: function () {
@@ -10,6 +10,10 @@ export default {
         env: CLOUD_ENV_ID,
         traceUser: true,
       })
+      // 已主动开启过同步的用户，启动时静默合并本机与云端记录。
+      if (getUser()) {
+        cloudLogin().catch(error => console.warn('[sync] launch sync deferred', error))
+      }
     }
     // #endif
   },

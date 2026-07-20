@@ -60,6 +60,7 @@
 <script>
 import { stories } from '@/data/stories.js'
 import { storyContents } from '@/data/story-contents.js'
+import { markStoryRead } from '@/utils/user.js'
 
 export default {
   data() {
@@ -79,6 +80,9 @@ export default {
     const s = stories.find(item => item.id === query.id)
     if (s) {
       this.story = s
+      markStoryRead(s.id).catch(error => {
+        console.warn('[story] cloud sync deferred', error)
+      })
       uni.setNavigationBarTitle({ title: s.name + '的故事' })
       this.loadArticleLocal(s)
       this.bgmCtx = uni.createInnerAudioContext()

@@ -29,7 +29,7 @@
       <view v-if="totalCompleted >= 2 || aiPortrait !== null" class="ai-card">
         <view class="ai-header-row">
           <text class="ai-title">✦ 内在画像</text>
-          <view v-if="!aiLoading" @tap="refreshAI" class="ai-refresh-btn">
+          <view v-if="!aiLoading && aiPortrait" @tap="refreshAI" class="ai-refresh-btn">
             <text :class="['ai-refresh-text', aiUpToDate ? 'refresh-done' : 'refresh-ready']">
               {{ aiUpToDate ? '已是最新' : '重新解读 ↺' }}
             </text>
@@ -39,10 +39,33 @@
           <view class="ai-spinner"></view>
           <text class="ai-loading-text">正在生成你的内在画像…</text>
         </view>
-        <text v-else-if="aiPortrait" class="ai-text">{{ aiPortrait }}</text>
+        <view v-else-if="aiConsentNeeded" class="ai-consent">
+          <text class="ai-consent-text">生成时会将测评名称、结果标签和分数发送给 DeepSeek；不会发送昵称、微信身份或原始答案。</text>
+          <view class="ai-consent-btn" @tap="requestAIPortrait">
+            <text class="ai-consent-btn-text">同意并生成画像</text>
+          </view>
+        </view>
+        <view v-else-if="aiPortrait" class="ai-content">
+          <view class="ai-paragraph-list">
+            <view
+              v-for="(paragraph, index) in visibleAIPortraitParagraphs"
+              :key="index"
+              :class="['ai-paragraph', paragraph.isQuestion ? 'ai-question' : '']"
+            >
+              <text v-if="paragraph.isQuestion" class="ai-question-label">留给此刻的你</text>
+              <text :class="paragraph.isQuestion ? 'ai-question-text' : 'ai-paragraph-text'">
+                {{ paragraph.text }}
+              </text>
+            </view>
+          </view>
+          <view v-if="aiPortraitHasMore" class="ai-expand-btn" @tap="toggleAIPortrait">
+            <text class="ai-expand-text">{{ aiExpanded ? '收起内容' : '展开完整解读' }}</text>
+            <text :class="['ai-expand-arrow', aiExpanded ? 'arrow-up' : '']">⌄</text>
+          </view>
+        </view>
         <view v-else class="ai-error-row">
-          <text class="ai-error-text">解读生成失败</text>
-          <text class="ai-retry" @tap="refreshAI">重试</text>
+          <text class="ai-error-text">{{ aiError || '解读生成失败' }}</text>
+          <text v-if="aiCanRetry" class="ai-retry" @tap="refreshAI">重试</text>
         </view>
       </view>
       <view v-else class="ai-hint">
@@ -125,8 +148,6 @@
 <script>
 import { axes, testsById } from '@/data/tests.js'
 
-const DEEPSEEK_API_KEY = ''  // 填入你的 DeepSeek API Key
-
 const AXIS_COLORS = {
   trait: '#7c5cbf',
   emotion: '#d4607e',
@@ -142,6 +163,10 @@ export default {
       aiPortrait: null,
       aiLoading: false,
       aiUpToDate: false,
+      aiError: '',
+      aiCanRetry: false,
+      aiConsentNeeded: false,
+      aiExpanded: true,
     }
   },
   computed: {
@@ -155,6 +180,16 @@ export default {
       const ids = []
       this.axisData.forEach(a => (a.items || []).forEach(i => { if (i.done) ids.push(i.id) }))
       return ids
+    },
+    aiPortraitParagraphs() {
+      return this.formatPortraitParagraphs(this.aiPortrait)
+    },
+    visibleAIPortraitParagraphs() {
+      if (this.aiExpanded || this.aiPortraitParagraphs.length <= 2) return this.aiPortraitParagraphs
+      return this.aiPortraitParagraphs.slice(0, 2)
+    },
+    aiPortraitHasMore() {
+      return this.aiPortraitParagraphs.length > 2
     },
   },
   onShow() {
@@ -200,80 +235,98 @@ export default {
       this.checkAIPortrait()
     },
     checkAIPortrait() {
-      const completedIds = this.completedTestIds
-      if (completedIds.length < 2) {
+      const completedResults = this.buildPortraitResults()
+      if (completedResults.length < 2) {
         this.aiPortrait = null
+        this.aiError = ''
+        this.aiConsentNeeded = false
         return
       }
       let cached = null
       try { cached = uni.getStorageSync('ai-portrait-v1') } catch (e) { cached = null }
-      const cachedIds = cached && Array.isArray(cached.completedIds) ? cached.completedIds.join(',') : ''
-      const sameIds = cachedIds === completedIds.join(',')
-      if (cached && cached.text && sameIds) {
+      const inputKey = JSON.stringify(completedResults)
+      if (cached && cached.text && cached.inputKey === inputKey) {
         this.aiPortrait = cached.text
+        this.aiExpanded = true
         this.aiUpToDate = true
+        this.aiError = ''
+        this.aiConsentNeeded = false
       } else {
         this.aiUpToDate = false
-        this.fetchAIPortrait()
+        this.aiPortrait = ''
+        this.aiError = ''
+        this.aiConsentNeeded = true
       }
+    },
+    requestAIPortrait() {
+      this.aiConsentNeeded = false
+      this.fetchAIPortrait(false)
     },
     refreshAI() {
       if (this.aiLoading) return
       this.aiUpToDate = false
-      this.fetchAIPortrait()
+      this.fetchAIPortrait(true)
     },
-    fetchAIPortrait() {
-      const completedIds = this.completedTestIds
-      const completedResults = []
-      this.axisData.forEach(axis => (axis.items || []).forEach(i => {
-        if (!i.done) return
-        completedResults.push({
+    buildPortraitResults() {
+      const results = []
+      this.axisData.forEach(axis => (axis.items || []).forEach(item => {
+        if (!item.done) return
+        results.push({
+          id: item.id,
           axisName: axis.name,
-          testTitle: i.title,
-          resultLabel: i.resultLabel || '已完成',
-          scores: (i.scores || []).map(s => `${s.label}:${s.pct}%`),
+          testTitle: item.title,
+          resultLabel: item.resultLabel || '已完成',
+          scores: (item.scores || []).map(score => `${score.label}:${score.pct}%`),
         })
       }))
+      return results
+    },
+    fetchAIPortrait(force = false, preparedResults = null) {
+      const completedResults = preparedResults || this.buildPortraitResults()
+      if (completedResults.length < 2 || this.aiLoading) return
 
-      if (!DEEPSEEK_API_KEY) {
-        this.aiPortrait = ''
-        return
-      }
-
-      const prompt = `你是「她也」App的内在洞察师。用户完成了以下心理测评：\n\n${
-        completedResults.map(r =>
-          `- ${r.axisName} · ${r.testTitle}：${r.resultLabel}（${r.scores.join('，')}）`
-        ).join('\n')
-      }\n\n请写一段200-300字的个性化内在画像。要求：\n1. 找到这些测评结果之间的交叉联系（比如依恋风格如何影响情绪调节策略）\n2. 不要逐条列举，要综合叙述\n3. 语气直觉性、非临床，犀利、冷峻、共情，参考风格韩江、伍尔夫\n4. 中文，第二人称"你"，不要加任何标题或前缀`
-
+      const inputKey = JSON.stringify(completedResults)
       this.aiLoading = true
       this.aiPortrait = null
+      this.aiError = ''
+      this.aiCanRetry = false
+      this.aiConsentNeeded = false
 
-      uni.request({
-        url: 'https://api.deepseek.com/chat/completions',
-        method: 'POST',
-        header: {
-          'content-type': 'application/json',
-          'Authorization': 'Bearer ' + DEEPSEEK_API_KEY,
-        },
-        data: {
-          model: 'deepseek-chat',
-          max_tokens: 600,
-          messages: [{ role: 'user', content: prompt }],
-        },
-        success: (res) => {
-          const text = (res && res.data && res.data.choices && res.data.choices[0] && res.data.choices[0].message && res.data.choices[0].message.content) || ''
-          this.aiPortrait = text || ''
-          this.aiUpToDate = true
-          if (text) uni.setStorageSync('ai-portrait-v1', { text, completedIds })
+      // #ifdef MP-WEIXIN
+      wx.cloud.callFunction({
+        name: 'generatePortrait',
+        // 仅发送去标识化的结果摘要；不发送昵称、OpenID 或原始答案。
+        data: { completedResults, force },
+        success: response => {
+          const result = response && response.result
+          if (result && result.success && result.text) {
+            this.aiPortrait = result.text
+            this.aiExpanded = true
+            this.aiUpToDate = true
+            uni.setStorageSync('ai-portrait-v1', {
+              text: result.text,
+              inputKey,
+              fingerprint: result.fingerprint || '',
+            })
+            return
+          }
+          this.aiPortrait = ''
+          this.aiError = (result && result.message) || '解读生成失败'
+          this.aiCanRetry = !result || result.code !== 'AI_NOT_CONFIGURED'
         },
         fail: () => {
           this.aiPortrait = ''
+          this.aiError = '网络开小差了，请稍后再试'
+          this.aiCanRetry = true
         },
-        complete: () => {
-          this.aiLoading = false
-        },
+        complete: () => { this.aiLoading = false },
       })
+      // #endif
+      // #ifndef MP-WEIXIN
+      this.aiPortrait = ''
+      this.aiError = 'AI 解读仅在微信小程序中提供'
+      this.aiLoading = false
+      // #endif
     },
     blobOpacity(axisId) {
       const axis = this.axisData.find(a => a.id === axisId)
@@ -288,6 +341,53 @@ export default {
     },
     goTest(id) {
       uni.navigateTo({ url: `/pages/assessment/test?id=${id}` })
+    },
+    toggleAIPortrait() {
+      this.aiExpanded = !this.aiExpanded
+    },
+    formatPortraitParagraphs(value) {
+      if (typeof value !== 'string' || !value.trim()) return []
+
+      const cleaned = value
+        .replace(/\*\*/g, '')
+        .replace(/[*_`#]/g, '')
+        .replace(/^\s*[-•]\s*/gm, '')
+        .replace(/\r/g, '')
+        .trim()
+
+      const lines = cleaned
+        .split(/\n+/)
+        .map(line => line.replace(/\s+/g, ' ').trim())
+        .filter(Boolean)
+      const paragraphs = []
+
+      lines.forEach(line => {
+        const sentences = line.match(/[^。！？!?]+[。！？!?]?/g) || [line]
+        let current = ''
+        sentences.forEach(sentence => {
+          const text = sentence.trim()
+          if (!text) return
+          const isQuestion = /[？?]$/.test(text)
+          if (isQuestion) {
+            if (current) paragraphs.push(current)
+            paragraphs.push(text)
+            current = ''
+            return
+          }
+          if (current && current.length + text.length > 92) {
+            paragraphs.push(current)
+            current = text
+          } else {
+            current += text
+          }
+        })
+        if (current) paragraphs.push(current)
+      })
+
+      return paragraphs.map((text, index) => ({
+        text,
+        isQuestion: index === paragraphs.length - 1 && /[？?]$/.test(text),
+      }))
     },
   },
 }
@@ -387,7 +487,55 @@ export default {
 @keyframes spin { to { transform: rotate(360deg); } }
 .ai-loading-text { font-size: 24rpx; color: rgba(74,48,115,0.4); }
 
-.ai-text { display: block; font-size: 28rpx; color: #33185c; line-height: 2; letter-spacing: 1rpx; }
+.ai-content { display: flex; flex-direction: column; }
+.ai-paragraph-list { display: flex; flex-direction: column; gap: 28rpx; }
+.ai-paragraph { display: block; }
+.ai-paragraph-text {
+  display: block;
+  font-size: 27rpx;
+  color: #3f2a60;
+  line-height: 1.9;
+  letter-spacing: 0.5rpx;
+  text-align: justify;
+}
+.ai-question {
+  margin-top: 4rpx;
+  padding: 26rpx 28rpx;
+  border-radius: 20rpx;
+  background: rgba(156,60,98,0.055);
+  border-left: 5rpx solid rgba(156,60,98,0.45);
+}
+.ai-question-label {
+  display: block;
+  margin-bottom: 12rpx;
+  font-size: 19rpx;
+  color: rgba(156,60,98,0.72);
+  letter-spacing: 3rpx;
+  font-weight: 600;
+}
+.ai-question-text {
+  display: block;
+  font-size: 26rpx;
+  color: #56346c;
+  line-height: 1.8;
+}
+.ai-expand-btn {
+  margin-top: 30rpx;
+  padding-top: 24rpx;
+  border-top: 2rpx solid rgba(74,48,115,0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+}
+.ai-expand-text { font-size: 22rpx; color: #9c3c62; letter-spacing: 1rpx; }
+.ai-expand-arrow { font-size: 24rpx; color: #9c3c62; transition: transform 0.2s ease; }
+.arrow-up { transform: rotate(180deg); }
+
+.ai-consent { display: flex; flex-direction: column; gap: 24rpx; }
+.ai-consent-text { font-size: 23rpx; color: rgba(74,48,115,0.55); line-height: 1.75; }
+.ai-consent-btn { padding: 22rpx 28rpx; border-radius: 999rpx; background: #9c3c62; text-align: center; }
+.ai-consent-btn-text { font-size: 24rpx; color: #fff; font-weight: 600; letter-spacing: 1rpx; }
 
 .ai-error-row { display: flex; align-items: center; gap: 20rpx; }
 .ai-error-text { font-size: 24rpx; color: rgba(74,48,115,0.4); }
