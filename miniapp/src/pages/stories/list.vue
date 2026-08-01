@@ -78,12 +78,13 @@
 </template>
 
 <script>
-import { stories } from '@/data/stories.js'
+import { getInitialStories, loadStoryCatalog } from '@/utils/stories.js'
 
 export default {
   data() {
     return {
-      stories,
+      stories: getInitialStories(),
+      refreshing: false,
       activeTag: 'all',
       searchQuery: '',
       tags: [
@@ -94,6 +95,12 @@ export default {
         { key: 'art', label: 'Art' },
       ],
     }
+  },
+  onShow() {
+    this.refreshStories()
+  },
+  onPullDownRefresh() {
+    this.refreshStories(true).finally(() => uni.stopPullDownRefresh())
   },
   computed: {
     filtered() {
@@ -114,6 +121,15 @@ export default {
     },
   },
   methods: {
+    async refreshStories(force = false) {
+      if (this.refreshing) return
+      this.refreshing = true
+      try {
+        this.stories = await loadStoryCatalog({ force })
+      } finally {
+        this.refreshing = false
+      }
+    },
     goDetail(story) {
       uni.navigateTo({ url: `/pages/stories/detail?id=${story.id}` })
     },

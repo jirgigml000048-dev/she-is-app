@@ -1,0 +1,9 @@
+{
+  "name": "adminStats",
+  "version": "1.0.0",
+  "description": "Admin-only anonymous product statistics",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

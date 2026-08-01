@@ -1,6 +1,6 @@
 // 静态资源 CDN 根地址，切换托管时只改这一行
 // 阿里云 OSS 示例: 'https://your-bucket.oss-cn-shanghai.aliyuncs.com'
-export const CDN_BASE = 'https://sheisapp.oss-cn-beijing.aliyuncs.com'
+export const CDN_BASE = 'https://sheisapp-audio-2026.oss-cn-beijing.aliyuncs.com'
 const LOCAL_COVER_BASE = '/static/covers-mini'
 
 export const stories = [

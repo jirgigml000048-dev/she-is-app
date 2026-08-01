@@ -5,6 +5,7 @@ import { allTests } from '@/data/tests.js'
 
 const USER_CACHE_KEY = 'sheis-user'
 const READ_STORIES_KEY = 'read-story-ids'
+const REFLECTIONS_KEY = 'inner-reflections-v1'
 const RESULT_META_PREFIX = 'test-result-'
 
 function getStorage(key, fallback = null) {
@@ -94,8 +95,139 @@ export function getReadStoryIds() {
   return Array.isArray(ids) ? [...new Set(ids.filter(id => typeof id === 'string'))] : []
 }
 
+function cleanReflection(value) {
+  if (!value || typeof value !== 'object' || typeof value.id !== 'string') return null
+  const themes = ['boundary', 'desire', 'relationship', 'self', 'emotion', 'body', 'choice', 'change']
+  if (!/^reflection-[a-z0-9-]{8,64}$/.test(value.id)) return null
+  if (typeof value.promptId !== 'string' || !/^[a-z]+-\d{2}$/.test(value.promptId)) return null
+  if (!themes.includes(value.theme)) return null
+  const question = typeof value.question === 'string' ? value.question.trim().slice(0, 120) : ''
+  const answerText = typeof value.answerText === 'string' ? value.answerText.trim().slice(0, 500) : ''
+  const selectedOptions = Array.isArray(value.selectedOptions)
+    ? [...new Set(value.selectedOptions
+      .filter(option => typeof option === 'string')
+      .map(option => option.trim().slice(0, 30))
+      .filter(Boolean))]
+      .slice(0, 3)
+    : []
+  if (!question || (!answerText && !selectedOptions.length)) return null
+  const now = Date.now()
+  return {
+    id: value.id,
+    promptId: value.promptId,
+    theme: value.theme,
+    question,
+    answerText,
+    selectedOptions,
+    createdAt: Number(value.createdAt) || now,
+    updatedAt: Number(value.updatedAt) || now,
+  }
+}
+
+function saveLocalReflections(reflections) {
+  const clean = (Array.isArray(reflections) ? reflections : [])
+    .map(cleanReflection)
+    .filter(Boolean)
+    .sort((a, b) => Number(b.createdAt) - Number(a.createdAt))
+    .slice(0, 80)
+  setStorage(REFLECTIONS_KEY, clean)
+  return clean
+}
+
+export function getReflections() {
+  return saveLocalReflections(getStorage(REFLECTIONS_KEY, []))
+}
+
+export function getReflectionCount() {
+  return getReflections().length
+}
+
+export function getLatestReflection() {
+  return getReflections()[0] || null
+}
+
+function saveReflectionsToCloud(reflections) {
+  if (!isLoggedIn() || !Array.isArray(reflections) || !reflections.length) return Promise.resolve(null)
+  return callCloud('saveReflection', { reflections })
+}
+
+// 每次回答先写入本机，再尽力同步云端；网络失败不会丢失刚写下的内容。
+export function recordReflection(values) {
+  const now = Date.now()
+  const nonce = Math.random().toString(36).slice(2, 10)
+  const entry = cleanReflection({
+    ...values,
+    id: `reflection-${now.toString(36)}-${nonce}`,
+    createdAt: now,
+    updatedAt: now,
+  })
+  if (!entry) return Promise.reject(new Error('回答内容不完整'))
+  saveLocalReflections([entry, ...getReflections()])
+  return saveReflectionsToCloud([entry]).then(result => ({ entry, result }))
+}
+
 export function getCompletedTestCount() {
   return allTests.reduce((count, test) => count + (getLocalAssessment(test) ? 1 : 0), 0)
+}
+
+// 只整理用户自己设备上的数据，不包含 OpenID、云函数日志或任何后台统计信息。
+export function exportLocalUserData() {
+  const user = getUser()
+  const portrait = getStorage('ai-portrait-v1', null)
+  return {
+    product: '女也 She Is',
+    formatVersion: 1,
+    exportedAt: new Date().toISOString(),
+    profile: user ? {
+      nickname: user.nickname || '',
+      avatarUrl: user.avatarUrl || '',
+      syncEnabled: true,
+      lastSyncAt: Number(user.lastSeenAt) || 0,
+    } : { nickname: '', avatarUrl: '', syncEnabled: false, lastSyncAt: 0 },
+    assessments: allTests.map(getLocalAssessment).filter(Boolean),
+    readStoryIds: getReadStoryIds(),
+    reflections: getReflections(),
+    portrait: portrait && typeof portrait === 'object' ? portrait : null,
+  }
+}
+
+// 清除这台设备上的探索记录；登录状态和云端副本不受影响。
+export function clearLocalExplorationData() {
+  allTests.forEach(test => {
+    try { uni.removeStorageSync(`test-answers-${test.id}`) } catch (_) {}
+    try { uni.removeStorageSync(`${RESULT_META_PREFIX}${test.id}`) } catch (_) {}
+  })
+  ;[READ_STORIES_KEY, REFLECTIONS_KEY, 'ai-portrait-v1'].forEach(key => {
+    try { uni.removeStorageSync(key) } catch (_) {}
+  })
+}
+
+// 只在本机整理已完成测评，供组合洞察与个性化推荐使用。
+// 原始答案不会因为调用这个方法而上传；云端同步仍只走用户主动登录后的既有流程。
+export function getCompletedAssessments() {
+  return allTests.map(test => {
+    const local = getLocalAssessment(test)
+    if (!local) return null
+    let resultKey = local.resultKey
+    let scores = []
+    try {
+      if (!resultKey && typeof test.score === 'function') resultKey = test.score(local.answers)
+    } catch (_) { resultKey = '' }
+    try {
+      if (typeof test.computeScores === 'function') scores = test.computeScores(local.answers) || []
+    } catch (_) { scores = [] }
+    const result = test.results && test.results[resultKey]
+    return {
+      testId: test.id,
+      testTitle: test.title,
+      axis: test.axis,
+      resultKey: resultKey || '',
+      resultLabel: (result && result.label) || '',
+      scores,
+      answers: [...local.answers],
+      updatedAt: local.updatedAt,
+    }
+  }).filter(Boolean)
 }
 
 export function saveAssessmentToCloud(entry) {
@@ -160,6 +292,23 @@ async function mergeRemoteState(state) {
   localStoryIds
     .filter(id => !remoteStoryIds.includes(id))
     .forEach(id => uploads.push(callCloud('saveStoryRead', { storyId: id }).catch(() => null)))
+
+  const remoteReflections = Array.isArray(state && state.reflections)
+    ? state.reflections.map(cleanReflection).filter(Boolean)
+    : []
+  const localReflections = getReflections()
+  const mergedById = new Map()
+  remoteReflections.forEach(item => mergedById.set(item.id, item))
+  localReflections.forEach(item => {
+    const remote = mergedById.get(item.id)
+    if (!remote || Number(item.updatedAt) > Number(remote.updatedAt)) mergedById.set(item.id, item)
+  })
+  const mergedReflections = saveLocalReflections([...mergedById.values()])
+  const localNeedsUpload = localReflections.some(local => {
+    const remote = remoteReflections.find(item => item.id === local.id)
+    return !remote || Number(local.updatedAt) > Number(remote.updatedAt)
+  })
+  if (localNeedsUpload) uploads.push(saveReflectionsToCloud(mergedReflections).catch(() => null))
 
   await Promise.all(uploads)
 }

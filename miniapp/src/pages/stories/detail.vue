@@ -1,5 +1,9 @@
 <template>
   <view class="page" v-if="story">
+    <view class="top-back" :style="{ top: (statusBarHeight + 8) + 'px' }" @tap="goBack">
+      <text class="top-back-icon">←</text>
+    </view>
+
     <!-- Hero -->
     <view class="hero">
       <image :src="story.cover" class="hero-bg" mode="aspectFill" />
@@ -19,7 +23,7 @@
     </view>
 
     <!-- BGM Player (read mode) -->
-    <view class="player-card" v-if="mode === 'read'">
+    <view class="player-card" v-if="mode === 'read' && story.bgm">
       <view class="player-row">
         <view class="play-btn" @tap="toggleBgm">
           <text class="play-icon">{{ bgmPlaying ? '⏸' : '▶' }}</text>
@@ -55,12 +59,21 @@
       <view class="back-btn" @tap="goBack">← 返回故事列表</view>
     </view>
   </view>
+  <view class="page story-state" v-else>
+    <text class="story-state-title">{{ loadError ? '这篇故事暂时无法打开' : '正在取来这篇故事…' }}</text>
+    <text v-if="loadError" class="story-state-sub">{{ loadError }}</text>
+    <view v-if="loadError" class="story-state-btn" @tap="goBack">返回故事列表</view>
+  </view>
 </template>
 
 <script>
-import { stories } from '@/data/stories.js'
-import { storyContents } from '@/data/story-contents.js'
 import { markStoryRead } from '@/utils/user.js'
+import { findInitialStory, loadStoryDetail } from '@/utils/stories.js'
+import { formatArticleHtml } from '@/utils/article.js'
+
+function isPlayableAudioUrl(value) {
+  return !!value && !/^cloud:\/\//i.test(value)
+}
 
 export default {
   data() {
@@ -73,46 +86,81 @@ export default {
       ttsTime: '0:00',
       bgmCtx: null,
       ttsCtx: null,
+      statusBarHeight: 20,
       articleHtml: '<p style="color:#999;font-size:14px;">加载中…</p>',
+      storyId: '',
+      loadError: '',
     }
   },
   onLoad(query) {
-    const s = stories.find(item => item.id === query.id)
-    if (s) {
-      this.story = s
-      markStoryRead(s.id).catch(error => {
-        console.warn('[story] cloud sync deferred', error)
-      })
-      uni.setNavigationBarTitle({ title: s.name + '的故事' })
-      this.loadArticleLocal(s)
-      this.bgmCtx = uni.createInnerAudioContext()
-      this.bgmCtx.src = s.bgm
-      this.bgmCtx.loop = true
-      this.bgmCtx.volume = 0.35
-      if (s.tts) {
-        this.ttsCtx = uni.createInnerAudioContext()
-        this.ttsCtx.src = s.tts
-        this.ttsCtx.onTimeUpdate(() => {
-        const c = this.ttsCtx.currentTime || 0
-        const m = Math.floor(c / 60)
-        const sec = Math.floor(c % 60)
-        this.ttsTime = m + ':' + String(sec).padStart(2, '0')
-      })
-      this.ttsCtx.onEnded(() => { this.ttsPlaying = false })
-      }
+    try {
+      const systemInfo = uni.getSystemInfoSync()
+      this.statusBarHeight = systemInfo.statusBarHeight || 20
+    } catch (error) {
+      this.statusBarHeight = 20
     }
+    this.storyId = String(query && query.id || '').trim().toLowerCase()
+    const initial = findInitialStory(this.storyId)
+    if (initial) this.applyStory(initial)
+    this.fetchStory()
   },
   onUnload() {
     if (this.bgmCtx) { this.bgmCtx.stop(); this.bgmCtx.destroy() }
     if (this.ttsCtx) { this.ttsCtx.stop(); this.ttsCtx.destroy() }
   },
   methods: {
-    loadArticleLocal(story) {
-      let content = storyContents[story.id] || '<p>暂无内容</p>'
-      content = content.replace(/<p>/g, '<p style="font-size:16px;line-height:1.9;color:#1c1c1a;margin-bottom:24px;font-weight:300;">')
-      content = content.replace(/<h3>/g, '<h3 style="font-size:22px;color:#33185c;font-weight:700;margin:40px 0 12px;">')
-      content = content.replace(/<span>/g, '<span style="color:#9c3c62;">')
-      this.articleHtml = content
+    async fetchStory(force = false) {
+      this.loadError = ''
+      try {
+        const detail = await loadStoryDetail(this.storyId, { force })
+        if (!detail || detail.hidden || !detail.story) {
+          this.story = null
+          this.loadError = detail && detail.hidden ? '这篇故事尚未发布或已经下架。' : '没有找到这篇故事。'
+          return
+        }
+        this.applyStory(detail.story)
+        this.loadArticle(detail.bodyHtml)
+        markStoryRead(detail.story.id).catch(error => {
+          console.warn('[story] cloud sync deferred', error)
+        })
+      } catch (error) {
+        console.error('[story] load failed', error)
+        this.loadError = '请检查网络后再试。'
+      }
+    },
+    applyStory(story) {
+      const audioChanged = !this.story
+        || this.story.bgm !== story.bgm
+        || this.story.tts !== story.tts
+      this.story = story
+      uni.setNavigationBarTitle({ title: story.name + '的故事' })
+      if (audioChanged) this.setupAudio(story)
+    },
+    setupAudio(story) {
+      if (this.bgmCtx) { this.bgmCtx.stop(); this.bgmCtx.destroy(); this.bgmCtx = null }
+      if (this.ttsCtx) { this.ttsCtx.stop(); this.ttsCtx.destroy(); this.ttsCtx = null }
+      this.bgmPlaying = false
+      this.ttsPlaying = false
+      if (isPlayableAudioUrl(story.bgm)) {
+        this.bgmCtx = uni.createInnerAudioContext()
+        this.bgmCtx.src = story.bgm
+        this.bgmCtx.loop = true
+        this.bgmCtx.volume = 0.35
+      }
+      if (isPlayableAudioUrl(story.tts)) {
+        this.ttsCtx = uni.createInnerAudioContext()
+        this.ttsCtx.src = story.tts
+        this.ttsCtx.onTimeUpdate(() => {
+          const c = this.ttsCtx.currentTime || 0
+          const m = Math.floor(c / 60)
+          const sec = Math.floor(c % 60)
+          this.ttsTime = m + ':' + String(sec).padStart(2, '0')
+        })
+        this.ttsCtx.onEnded(() => { this.ttsPlaying = false })
+      }
+    },
+    loadArticle(bodyHtml) {
+      this.articleHtml = formatArticleHtml(bodyHtml || '<p>正文正在整理中。</p>')
     },
     switchMode(m) {
       this.mode = m
@@ -120,10 +168,12 @@ export default {
       if (m === 'listen') { if (this.bgmCtx) this.bgmCtx.pause(); this.bgmPlaying = false }
     },
     toggleBgm() {
+      if (!this.bgmCtx) return
       if (this.bgmPlaying) { this.bgmCtx.pause() } else { this.bgmCtx.play() }
       this.bgmPlaying = !this.bgmPlaying
     },
     toggleTts() {
+      if (!this.ttsCtx) return
       if (this.ttsPlaying) { this.ttsCtx.pause() } else { this.ttsCtx.play() }
       this.ttsPlaying = !this.ttsPlaying
     },
@@ -131,13 +181,26 @@ export default {
       this.ttsSpeed = s
       if (this.ttsCtx) this.ttsCtx.playbackRate = s
     },
-    goBack() { uni.navigateBack() },
+    goBack() {
+      const pageStack = getCurrentPages()
+      if (pageStack.length > 1) {
+        uni.navigateBack()
+        return
+      }
+      uni.switchTab({ url: '/pages/stories/list' })
+    },
   },
 }
 </script>
 
 <style scoped>
 .page { background: #fcf9f6; min-height: 100vh; }
+.story-state { box-sizing: border-box; padding: 280rpx 64rpx 100rpx; text-align: center; }
+.story-state-title { display: block; color: #33185c; font-size: 34rpx; font-weight: 700; line-height: 1.6; }
+.story-state-sub { display: block; margin-top: 18rpx; color: rgba(51,24,92,0.45); font-size: 24rpx; }
+.story-state-btn { margin: 48rpx auto 0; padding: 24rpx 42rpx; border-radius: 999rpx; background: #33185c; color: #fff; font-size: 25rpx; }
+.top-back { position: fixed; left: 24rpx; z-index: 30; width: 68rpx; height: 68rpx; border-radius: 50%; background: rgba(252,249,246,0.9); border: 2rpx solid rgba(51,24,92,0.08); box-shadow: 0 8rpx 24rpx rgba(51,24,92,0.12); display: flex; align-items: center; justify-content: center; }
+.top-back-icon { font-size: 30rpx; line-height: 1; color: #33185c; font-weight: 600; }
 .hero { position: relative; height: 560rpx; overflow: hidden; }
 .hero-bg { position: absolute; width: 100%; height: 100%; }
 .hero-overlay { position: absolute; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(252,249,246,1)); }

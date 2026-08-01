@@ -60,6 +60,7 @@ exports.main = async (event) => {
     state: {
       assessments: (assessmentDoc && assessmentDoc.entries) || {},
       readStoryIds: (activityDoc && activityDoc.readStoryIds) || [],
+      reflections: (activityDoc && activityDoc.reflections) || [],
     },
   }
 }

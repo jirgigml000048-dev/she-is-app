@@ -19,6 +19,16 @@
           <text class="intro-quote">{{ test.intro.quote }}</text>
           <text class="intro-quote-cn">{{ test.intro.quoteCn }}</text>
         </view>
+        <!-- Scale identity: shown for adapted/exploratory instruments -->
+        <view v-if="test.scaleName" class="intro-scale-card">
+          <text class="intro-scale-label">量表 / SCALE</text>
+          <text class="intro-scale-name">{{ test.scaleName }}</text>
+          <text class="intro-scale-note">{{ test.scaleNote }}</text>
+          <view v-if="test.instruction" class="intro-scale-instruction">
+            <text class="intro-scale-instruction-label">作答方式</text>
+            <text class="intro-scale-instruction-text">{{ test.instruction }}</text>
+          </view>
+        </view>
         <!-- CTA -->
         <view class="intro-cta-wrap">
           <view class="intro-btn" @tap="startTest">
@@ -48,7 +58,10 @@
       <!-- Question card -->
       <view class="ecr-card">
         <view class="ecr-card-rule" />
-        <text class="ecr-q-text">{{ test.questions[cur].text }}</text>
+        <text class="ecr-q-prompt" v-if="test.questionPrompt">{{ test.questionPrompt }}</text>
+        <text
+          :class="['ecr-q-text', !test.questions[cur].text_en ? 'ecr-q-text--solo' : '']"
+        >{{ test.questions[cur].text }}</text>
         <text class="ecr-q-en" v-if="test.questions[cur].text_en">{{ test.questions[cur].text_en }}</text>
 
         <!-- Dynamic circles based on test.scale -->
@@ -359,6 +372,56 @@ export default {
   line-height: 1.6;
   font-weight: 300;
 }
+.intro-scale-card {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 28rpx 30rpx;
+  background: rgba(255,255,255,0.72);
+  border: 2rpx solid rgba(74,48,115,0.1);
+  border-radius: 24rpx;
+  text-align: left;
+}
+.intro-scale-label {
+  display: block;
+  font-size: 18rpx;
+  color: #9c3c62;
+  letter-spacing: 4rpx;
+  font-weight: 700;
+  margin-bottom: 12rpx;
+}
+.intro-scale-name {
+  display: block;
+  font-size: 24rpx;
+  color: #33185c;
+  line-height: 1.55;
+  font-weight: 600;
+  margin-bottom: 10rpx;
+}
+.intro-scale-note {
+  display: block;
+  font-size: 20rpx;
+  color: #7b7580;
+  line-height: 1.7;
+}
+.intro-scale-instruction {
+  margin-top: 22rpx;
+  padding-top: 20rpx;
+  border-top: 2rpx solid rgba(74,48,115,0.08);
+}
+.intro-scale-instruction-label {
+  display: block;
+  font-size: 18rpx;
+  color: #9c3c62;
+  letter-spacing: 2rpx;
+  font-weight: 700;
+  margin-bottom: 8rpx;
+}
+.intro-scale-instruction-text {
+  display: block;
+  font-size: 20rpx;
+  color: #5f5863;
+  line-height: 1.7;
+}
 .intro-cta-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 40rpx; }
 .intro-btn {
   width: 100%;
@@ -447,6 +510,14 @@ export default {
   border-radius: 9999rpx;
   margin-bottom: 48rpx;
 }
+.ecr-q-prompt {
+  display: block;
+  font-size: 19rpx;
+  color: #9c3c62;
+  letter-spacing: 3rpx;
+  font-weight: 700;
+  margin-bottom: 24rpx;
+}
 .ecr-q-text {
   display: block;
   font-size: 48rpx;
@@ -456,6 +527,7 @@ export default {
   margin-bottom: 20rpx;
   padding: 0 8rpx;
 }
+.ecr-q-text--solo { margin-bottom: 64rpx; }
 .ecr-q-en {
   display: block;
   font-size: 28rpx;

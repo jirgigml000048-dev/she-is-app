@@ -10,7 +10,7 @@
         <text class="avatar-icon">○</text>
       </view>
       <text class="hint-title">跨设备保存你的探索记录</text>
-      <text class="hint-sub">登录后会合并本机与云端的测评结果和阅读记录</text>
+      <text class="hint-sub">登录后会合并本机与云端的测评、阅读和“内在一问”回答</text>
       <view class="login-btn" @tap="doLogin">
         <text class="login-btn-text">{{ logging ? '正在同步…' : '开启微信同步' }}</text>
       </view>
@@ -39,7 +39,7 @@
       <view class="profile-save" @tap="saveProfile">
         <text class="profile-save-text">{{ savingProfile ? '保存中…' : '保存个人资料' }}</text>
       </view>
-      <text class="sync-hint">{{ syncing ? '正在合并云端记录…' : '已开启跨设备同步' }}</text>
+      <text class="sync-hint">{{ syncing ? '正在合并云端记录…' : syncStatusText }}</text>
 
       <view class="divider"></view>
 
@@ -52,10 +52,20 @@
           <text class="stat-num">{{ readStories }}</text>
           <text class="stat-label">读过故事</text>
         </view>
+        <view class="stat-item">
+          <text class="stat-num">{{ reflectionCount }}</text>
+          <text class="stat-label">内在回答</text>
+        </view>
       </view>
 
+      <view class="action-btn action-btn--question" @tap="goQuestion">
+        <text class="action-btn-text action-btn-text--question">回答新的内在一问 →</text>
+      </view>
       <view class="action-btn" @tap="goMap">
         <text class="action-btn-text">查看我的内在图谱 →</text>
+      </view>
+      <view v-if="isAdmin" class="action-btn action-btn--admin" @tap="goAdmin">
+        <text class="action-btn-text action-btn-text--admin">内容与数据后台 →</text>
       </view>
       <view class="logout-btn" @tap="doLogout">
         <text class="logout-text">退出同步</text>
@@ -72,10 +82,17 @@
       </view>
 
       <view v-if="showPrivacy" class="privacy-body">
-        <text class="privacy-text">开启同步后，我们会保存你的微信匿名身份标识、测评答案与结果、读过的故事，以及你主动选择的昵称和头像，仅用于跨设备同步和生成你的个人图谱。</text>
-        <text class="privacy-text">只有在你点击“同意并生成画像”后，测评名称、结果标签和分数才会发送给 DeepSeek；不会发送昵称、微信身份或原始答案。</text>
+        <text class="privacy-text">开启同步后，我们会保存你的微信匿名身份标识、测评答案与结果、读过的故事、你主动写下的“内在一问”回答，以及你选择的昵称和头像，仅用于跨设备同步、回答回顾和生成个人图谱。</text>
+        <text class="privacy-text">只有在你点击“同意并生成画像”后，测评名称、结果标签和分数才会发送给 DeepSeek；不会发送昵称、微信身份、原始测评答案或“内在一问”的文字回答。</text>
         <text class="privacy-text">测评和内在画像只用于自我探索，不构成医学、心理诊断或治疗建议。请不要据此替代专业帮助。</text>
         <text class="privacy-text">退出同步不会删除本机记录。删除云端数据后，本机测评仍会保留，你可以继续离线使用。</text>
+
+        <view class="data-btn" @tap="copyMyData">
+          <text class="data-btn-text">复制我的数据</text>
+        </view>
+        <view class="data-btn" @tap="clearLocalData">
+          <text class="data-btn-text">清除这台设备上的记录</text>
+        </view>
 
         <view v-if="user" class="delete-btn" @tap="deleteCloudData">
           <text class="delete-text">{{ deleting ? '正在删除…' : '删除我的全部云端数据' }}</text>
@@ -95,10 +112,14 @@ import {
   cloudLogin,
   clearUser,
   getCompletedTestCount,
+  getReflectionCount,
   getReadStoryIds,
   uploadAvatar,
   deleteCloudUserData,
+  exportLocalUserData,
+  clearLocalExplorationData,
 } from '@/utils/user.js'
+import { checkAdminAccess } from '@/utils/admin.js'
 
 export default {
   data() {
@@ -111,25 +132,44 @@ export default {
       loginErr: '',
       completedTests: 0,
       readStories: 0,
+      reflectionCount: 0,
       draftNickname: '',
       pendingAvatarPath: '',
       showPrivacy: false,
+      isAdmin: false,
     }
   },
   computed: {
     avatarPreview() {
       return this.pendingAvatarPath || (this.user && this.user.avatarUrl) || ''
     },
+    syncStatusText() {
+      const timestamp = Number(this.user && this.user.lastSeenAt)
+      if (!timestamp) return '已开启跨设备同步'
+      const date = new Date(timestamp)
+      const minute = String(date.getMinutes()).padStart(2, '0')
+      return `最近同步 · ${date.getMonth() + 1}月${date.getDate()}日 ${date.getHours()}:${minute}`
+    },
   },
   onShow() {
     this.user = getUser()
     this.draftNickname = (this.user && this.user.nickname) || ''
     this.loadStats()
+    this.checkAdmin()
   },
   methods: {
     loadStats() {
       this.completedTests = getCompletedTestCount()
       this.readStories = getReadStoryIds().length
+      this.reflectionCount = getReflectionCount()
+    },
+    async checkAdmin() {
+      this.isAdmin = false
+      if (!this.user) return
+      try {
+        const result = await checkAdminAccess()
+        this.isAdmin = !!(result && result.isAdmin)
+      } catch (_) {}
     },
     async doLogin() {
       if (this.logging) return
@@ -140,6 +180,7 @@ export default {
         this.user = await cloudLogin()
         this.draftNickname = this.user.nickname || ''
         this.loadStats()
+        this.checkAdmin()
         uni.showToast({ title: '同步已开启', icon: 'success' })
       } catch (error) {
         console.error('login err', error)
@@ -176,7 +217,7 @@ export default {
     doLogout() {
       uni.showModal({
         title: '退出同步',
-        content: '本机的测评与阅读记录会保留，下次开启同步时会重新合并。',
+        content: '本机的测评、阅读和内在回答会保留，下次开启同步时会重新合并。',
         confirmText: '退出',
         cancelText: '取消',
         success: result => {
@@ -185,6 +226,7 @@ export default {
             this.user = null
             this.pendingAvatarPath = ''
             this.draftNickname = ''
+            this.isAdmin = false
           }
         },
       })
@@ -193,7 +235,7 @@ export default {
       if (this.deleting || !this.user) return
       uni.showModal({
         title: '删除云端数据？',
-        content: '昵称、头像、云端测评、阅读记录和内在画像将永久删除；本机记录不受影响。',
+        content: '昵称、头像、云端测评、阅读、内在回答和内在画像将永久删除；本机记录不受影响。',
         confirmText: '确认删除',
         confirmColor: '#b13b5c',
         success: async result => {
@@ -214,8 +256,38 @@ export default {
         },
       })
     },
+    copyMyData() {
+      const text = JSON.stringify(exportLocalUserData(), null, 2)
+      uni.setClipboardData({
+        data: text,
+        success: () => uni.showToast({ title: '数据已复制', icon: 'success' }),
+        fail: () => uni.showToast({ title: '复制失败，请重试', icon: 'none' }),
+      })
+    },
+    clearLocalData() {
+      uni.showModal({
+        title: '清除本机记录？',
+        content: this.user
+          ? '这台设备上的测评、阅读和内在回答会被清除；云端副本仍会保留，之后同步可能再次下载。'
+          : '这台设备上的测评、阅读和内在回答会被清除，且无法恢复。',
+        confirmText: '清除',
+        confirmColor: '#b13b5c',
+        success: result => {
+          if (!result.confirm) return
+          clearLocalExplorationData()
+          this.loadStats()
+          uni.showToast({ title: '本机记录已清除', icon: 'success' })
+        },
+      })
+    },
+    goAdmin() {
+      if (this.isAdmin) uni.navigateTo({ url: '/pages/admin/index' })
+    },
     goMap() {
       uni.navigateTo({ url: '/pages/map/index' })
+    },
+    goQuestion() {
+      uni.navigateTo({ url: '/pages/journey/question' })
     },
   },
 }
@@ -264,12 +336,16 @@ export default {
 .profile-save-text { color: #fff; font-size: 24rpx; font-weight: 600; }
 .sync-hint { font-size: 21rpx; color: rgba(51,24,92,0.4); margin-top: 18rpx; }
 .divider { width: 100%; height: 1rpx; background: rgba(51,24,92,0.08); margin: 36rpx 0; }
-.stat-row { display: flex; justify-content: center; gap: 80rpx; margin-bottom: 40rpx; }
+.stat-row { width: 100%; display: flex; justify-content: space-around; gap: 20rpx; margin-bottom: 40rpx; }
 .stat-item { display: flex; flex-direction: column; align-items: center; }
 .stat-num { font-size: 52rpx; font-weight: 700; color: #33185c; line-height: 1; margin-bottom: 8rpx; }
 .stat-label { font-size: 22rpx; color: rgba(51,24,92,0.45); }
 .action-btn { box-sizing: border-box; width: 100%; padding: 24rpx; background: rgba(51,24,92,0.06); border-radius: 999rpx; display: flex; align-items: center; justify-content: center; margin-bottom: 18rpx; }
 .action-btn-text { font-size: 28rpx; font-weight: 600; color: #33185c; }
+.action-btn--question { background: #33185c; }
+.action-btn-text--question { color: #fff; }
+.action-btn--admin { background: rgba(156,60,98,0.09); border: 1rpx solid rgba(156,60,98,0.15); }
+.action-btn-text--admin { color: #9c3c62; }
 .logout-btn { padding: 16rpx 40rpx; }
 .logout-text { font-size: 24rpx; color: rgba(51,24,92,0.38); }
 .privacy-card { margin-top: 28rpx; padding: 32rpx 36rpx; align-items: stretch; }
@@ -279,6 +355,8 @@ export default {
 .privacy-toggle { font-size: 36rpx; color: rgba(51,24,92,0.45); }
 .privacy-body { border-top: 1rpx solid rgba(51,24,92,0.08); margin-top: 28rpx; padding-top: 28rpx; }
 .privacy-text { display: block; font-size: 23rpx; color: #6c6862; line-height: 1.8; margin-bottom: 20rpx; }
+.data-btn { margin-top: 12rpx; padding: 22rpx; border-radius: 999rpx; background: rgba(51,24,92,0.055); text-align: center; }
+.data-btn-text { font-size: 23rpx; color: #4a3073; }
 .delete-btn { margin-top: 12rpx; padding: 22rpx; border: 1rpx solid rgba(177,59,92,0.28); border-radius: 999rpx; text-align: center; }
 .delete-text { font-size: 23rpx; color: #b13b5c; }
 .footer { margin-top: 56rpx; }

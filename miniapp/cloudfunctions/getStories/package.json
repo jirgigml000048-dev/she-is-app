@@ -1,0 +1,9 @@
+{
+  "name": "getStories",
+  "version": "1.0.0",
+  "description": "Read published stories from the managed story catalog",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

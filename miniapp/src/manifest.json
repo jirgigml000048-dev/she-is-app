@@ -51,6 +51,7 @@
     /* 小程序特有相关 */
     "mp-weixin" : {
         "appid" : "wxf9a302447ba08677",
+        "libVersion" : "3.17.0",
         "setting" : {
             "urlCheck" : false
         },
