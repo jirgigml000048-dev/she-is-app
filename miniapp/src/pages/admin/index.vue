@@ -50,7 +50,29 @@
           <text class="section-label">STORIES · 内容库</text>
           <text class="section-title">文章管理</text>
         </view>
-        <view class="new-btn" @tap="startNew"><text>＋ 新文章</text></view>
+        <view class="story-head-actions">
+          <view class="health-btn" @tap="checkMediaHealth"><text>{{ checkingMedia ? '检查中…' : '检查素材' }}</text></view>
+          <view class="new-btn" @tap="startNew"><text>＋ 新文章</text></view>
+        </view>
+      </view>
+
+      <view v-if="mediaHealth || mediaHealthError" :class="['health-card', mediaIssueStories.length ? 'health-card--warning' : '']">
+        <template v-if="mediaHealth">
+          <view class="health-head">
+            <view>
+              <text class="health-title">{{ mediaIssueStories.length ? '有素材需要处理' : '故事素材正常' }}</text>
+              <text class="health-sub">已检查 {{ mediaHealth.summary.stories }} 篇公开文章 · {{ formatDateTime(mediaHealth.checkedAt) }}</text>
+            </view>
+            <text :class="['health-count', mediaIssueStories.length ? 'health-count--warning' : '']">{{ mediaHealth.summary.issues }}</text>
+          </view>
+          <view v-for="story in mediaIssueStories" :key="story.id" class="health-story">
+            <text class="health-story-title">VOL. {{ story.id }} · {{ story.title }}</text>
+            <text v-for="asset in story.assets.filter(item => item.status !== 'ok')" :key="asset.kind" class="health-issue">
+              {{ assetLabel(asset.kind) }}：{{ asset.message }}
+            </text>
+          </view>
+        </template>
+        <text v-else class="health-error">{{ mediaHealthError }}</text>
       </view>
 
       <view v-if="!editing" class="story-list">
@@ -174,6 +196,7 @@
 <script>
 import {
   checkAdminAccess,
+  checkManagedStoryMedia,
   getAnonymousStats,
   getManagedStories,
   getManagedStory,
@@ -204,6 +227,9 @@ export default {
       saving: false,
       saveError: '',
       importing: false,
+      checkingMedia: false,
+      mediaHealth: null,
+      mediaHealthError: '',
       form: blankStory(),
     }
   },
@@ -244,6 +270,12 @@ export default {
         .sort((a, b) => b.value - a.value)
         .slice(0, 5)
     },
+    mediaIssueStories() {
+      const stories = this.mediaHealth && Array.isArray(this.mediaHealth.stories)
+        ? this.mediaHealth.stories
+        : []
+      return stories.filter(story => Number(story.issueCount) > 0)
+    },
   },
   onLoad() {
     this.initialize()
@@ -272,6 +304,56 @@ export default {
       } catch (error) {
         this.statsError = '统计暂时没有取到，不影响文章发布。'
       }
+    },
+    async checkMediaHealth() {
+      if (this.checkingMedia) return
+      this.checkingMedia = true
+      this.mediaHealthError = ''
+      try {
+        const stories = []
+        const candidates = this.managedStories.filter(story => story.status !== 'archived')
+        for (let index = 0; index < candidates.length; index += 3) {
+          const batch = candidates.slice(index, index + 3)
+          const results = await Promise.all(batch.map(async item => {
+            try {
+              const result = await checkManagedStoryMedia(item.id)
+              return result && result.story ? result.story : null
+            } catch (error) {
+              return {
+                id: item.id,
+                title: item.title,
+                issueCount: 1,
+                assets: [{ kind: 'request', status: 'broken', message: error.message || '检查请求失败' }],
+              }
+            }
+          }))
+          stories.push(...results.filter(Boolean))
+        }
+        const issues = stories.reduce((count, story) => count + Number(story.issueCount || 0), 0)
+        this.mediaHealth = {
+          checkedAt: Date.now(),
+          summary: {
+            stories: stories.length,
+            healthyStories: stories.filter(story => !Number(story.issueCount)).length,
+            issues,
+          },
+          stories,
+        }
+      } catch (error) {
+        this.mediaHealth = null
+        this.mediaHealthError = error.message || '素材检查暂时失败，请稍后重试。'
+      } finally {
+        this.checkingMedia = false
+      }
+    },
+    assetLabel(kind) {
+      return ({ cover: '封面', bgm: '背景音乐', tts: '朗读音频' })[kind] || '素材'
+    },
+    formatDateTime(timestamp) {
+      if (!Number(timestamp)) return '刚刚'
+      const date = new Date(Number(timestamp))
+      const minute = String(date.getMinutes()).padStart(2, '0')
+      return `${date.getMonth() + 1}月${date.getDate()}日 ${date.getHours()}:${minute}`
     },
     startNew() {
       this.form = blankStory()
@@ -416,6 +498,19 @@ export default {
 .breakdown-name { flex: 1; overflow: hidden; font-size: 20rpx; color: rgba(51,24,92,0.62); white-space: nowrap; text-overflow: ellipsis; }
 .breakdown-value { flex-shrink: 0; font-size: 20rpx; font-weight: 600; color: #9c3c62; }
 .new-btn { padding: 17rpx 24rpx; border-radius: 999rpx; background: #33185c; color: #fff; font-size: 22rpx; }
+.story-head-actions { display: flex; align-items: center; gap: 12rpx; }
+.health-btn { padding: 16rpx 20rpx; border: 1rpx solid rgba(51,24,92,0.14); border-radius: 999rpx; color: rgba(51,24,92,0.65); font-size: 20rpx; }
+.health-card { margin-bottom: 20rpx; padding: 26rpx; border: 1rpx solid rgba(63,168,130,0.18); border-radius: 22rpx; background: rgba(63,168,130,0.055); }
+.health-card--warning { border-color: rgba(177,59,92,0.18); background: rgba(177,59,92,0.045); }
+.health-head { display: flex; align-items: center; justify-content: space-between; gap: 20rpx; }
+.health-title { display: block; font-size: 24rpx; font-weight: 700; }
+.health-sub { display: block; margin-top: 7rpx; font-size: 18rpx; color: rgba(51,24,92,0.42); }
+.health-count { font-size: 34rpx; font-weight: 700; color: #3fa882; }
+.health-count--warning { color: #b13b5c; }
+.health-story { margin-top: 20rpx; padding-top: 18rpx; border-top: 1rpx solid rgba(51,24,92,0.08); }
+.health-story-title { display: block; font-size: 21rpx; font-weight: 700; }
+.health-issue { display: block; margin-top: 8rpx; font-size: 19rpx; color: #9c3c62; }
+.health-error { font-size: 21rpx; color: #b13b5c; }
 .story-list { display: flex; flex-direction: column; gap: 16rpx; }
 .story-row { display: flex; align-items: center; gap: 18rpx; padding: 28rpx 26rpx; border-radius: 24rpx; background: #fff; box-shadow: 0 5rpx 24rpx rgba(51,24,92,0.045); }
 .story-main { flex: 1; min-width: 0; }

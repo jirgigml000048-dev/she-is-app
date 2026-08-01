@@ -197,7 +197,7 @@ export function clearLocalExplorationData() {
     try { uni.removeStorageSync(`test-answers-${test.id}`) } catch (_) {}
     try { uni.removeStorageSync(`${RESULT_META_PREFIX}${test.id}`) } catch (_) {}
   })
-  ;[READ_STORIES_KEY, REFLECTIONS_KEY, 'ai-portrait-v1'].forEach(key => {
+  ;[READ_STORIES_KEY, REFLECTIONS_KEY, 'ai-portrait-v1', 'assessment-drafts-v1'].forEach(key => {
     try { uni.removeStorageSync(key) } catch (_) {}
   })
 }

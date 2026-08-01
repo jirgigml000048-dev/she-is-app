@@ -15,6 +15,20 @@
       <text class="quote-en">The inner gaze is a fierce act of love.</text>
     </view>
 
+    <view v-if="assessmentDraft" class="continue-card" @tap="continueAssessment">
+      <view class="continue-copy">
+        <text class="continue-label">CONTINUE · 继续上次</text>
+        <text class="continue-title">{{ assessmentDraft.title }}</text>
+        <view class="continue-progress">
+          <view class="continue-progress-fill" :style="{ width: assessmentDraft.progress + '%' }"></view>
+        </view>
+      </view>
+      <view class="continue-action">
+        <text class="continue-count">{{ assessmentDraft.answeredCount }}/{{ assessmentDraft.total }}</text>
+        <text class="continue-arrow">→</text>
+      </view>
+    </view>
+
     <view v-if="recommendation" class="recommend-block">
       <view class="recommend-card" @tap="goRecommendedStory">
         <image :src="recommendation.story.cover" class="recommend-cover" mode="aspectFill" />
@@ -89,6 +103,8 @@
 
 <script>
 import { getAssessmentInsightContext } from '@/utils/insights.js'
+import { testsById } from '@/data/tests.js'
+import { getLatestAssessmentDraft } from '@/utils/assessmentDrafts.js'
 import { getInitialStories, loadStoryCatalog } from '@/utils/stories.js'
 import {
   getReflectionStoryRecommendation,
@@ -110,6 +126,7 @@ export default {
       reflectionCount: 0,
       recommendation: null,
       assessmentContext: null,
+      assessmentDraft: null,
     }
   },
   onShow() {
@@ -141,6 +158,12 @@ export default {
   methods: {
     async refreshHome() {
       this.loggedIn = isLoggedIn()
+      const draft = getLatestAssessmentDraft(testsById)
+      this.assessmentDraft = draft ? {
+        ...draft,
+        title: testsById[draft.testId].title,
+        progress: Math.round(draft.answeredCount / draft.total * 100),
+      } : null
       const reflections = getReflections()
       this.assessmentContext = getAssessmentInsightContext()
       this.reflectionCount = reflections.length
@@ -167,6 +190,10 @@ export default {
     goRecommendedStory() {
       if (this.recommendation) this.goStory(this.recommendation.story)
     },
+    continueAssessment() {
+      if (!this.assessmentDraft) return
+      uni.navigateTo({ url: `/pages/assessment/test?id=${this.assessmentDraft.testId}&resume=1` })
+    },
     goStories() { uni.switchTab({ url: '/pages/stories/list' }) },
     goQuestion() { uni.navigateTo({ url: '/pages/journey/question' }) },
     goMap() { uni.navigateTo({ url: '/pages/map/index' }) },
@@ -188,6 +215,16 @@ export default {
 .quote-card { padding: 48rpx 40rpx; background: rgba(74,48,115,0.03); border-radius: 24rpx; border-left: 6rpx solid #33185c; margin-bottom: 64rpx; }
 .quote-zh { font-size: 36rpx; font-weight: 500; color: #33185c; line-height: 1.6; display: block; }
 .quote-en { font-size: 24rpx; color: rgba(51,24,92,0.4); font-style: italic; display: block; margin-top: 16rpx; }
+
+.continue-card { display: flex; align-items: center; gap: 24rpx; margin: -28rpx 0 56rpx; padding: 26rpx 28rpx; border: 2rpx solid rgba(74,48,115,0.08); border-radius: 22rpx; background: #fff; box-shadow: 0 6rpx 24rpx rgba(51,24,92,0.045); }
+.continue-copy { flex: 1; min-width: 0; }
+.continue-label { display: block; font-size: 16rpx; font-weight: 700; color: #9c3c62; letter-spacing: 3rpx; }
+.continue-title { display: block; overflow: hidden; margin-top: 8rpx; font-size: 27rpx; font-weight: 700; color: #33185c; white-space: nowrap; text-overflow: ellipsis; }
+.continue-progress { overflow: hidden; height: 5rpx; margin-top: 16rpx; border-radius: 999rpx; background: rgba(74,48,115,0.08); }
+.continue-progress-fill { height: 100%; border-radius: 999rpx; background: linear-gradient(90deg, #9c3c62, #4a3073); }
+.continue-action { display: flex; align-items: center; gap: 12rpx; flex-shrink: 0; }
+.continue-count { font-size: 19rpx; color: rgba(51,24,92,0.42); }
+.continue-arrow { font-size: 28rpx; color: #33185c; }
 
 .question-card { position: relative; overflow: hidden; box-sizing: border-box; margin-bottom: 28rpx; padding: 36rpx; border-radius: 28rpx; background: #fff; border: 2rpx solid rgba(74,48,115,0.09); box-shadow: 0 8rpx 30rpx rgba(51,24,92,0.055); }
 .question-glow { position: absolute; top: -160rpx; right: -120rpx; width: 340rpx; height: 340rpx; border-radius: 50%; opacity: 0.1; }

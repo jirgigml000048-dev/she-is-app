@@ -2,6 +2,8 @@
 .netlify
 .DS_Store
 node_modules/
+__pycache__/
+*.pyc
 
 # Development screenshots (keep project root clean)
 /*.png

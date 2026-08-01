@@ -43,6 +43,10 @@ export function saveManagedStory(story) {
   return callCloud('adminStories', { action: 'save', story })
 }
 
+export function checkManagedStoryMedia(id) {
+  return callCloud('adminStories', { action: 'health', id })
+}
+
 export function getAnonymousStats() {
   return callCloud('adminStats')
 }

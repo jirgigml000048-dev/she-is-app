@@ -180,6 +180,11 @@
 
 <script>
 import { testsById } from '@/data/tests.js'
+import {
+  clearAssessmentDraft,
+  getAssessmentDraft,
+  saveAssessmentDraft,
+} from '@/utils/assessmentDrafts.js'
 import { recordAssessment } from '@/utils/user.js'
 
 export default {
@@ -189,6 +194,7 @@ export default {
       cur: 0,
       answers: [],
       showIntro: false,
+      submitted: false,
     }
   },
   onLoad(query) {
@@ -198,7 +204,28 @@ export default {
       this.answers = new Array(t.questions.length).fill(null)
       this.showIntro = !!t.hasIntro
       uni.setNavigationBarTitle({ title: t.title })
+      const draft = getAssessmentDraft(t.id, t.questions.length)
+      if (draft && query.resume === '1') {
+        this.restoreDraft(draft)
+      } else if (draft) {
+        uni.showModal({
+          title: '继续上次的测评？',
+          content: `上次已完成 ${draft.answeredCount} / ${draft.total} 题。`,
+          confirmText: '继续作答',
+          cancelText: '重新开始',
+          success: result => {
+            if (result.confirm) this.restoreDraft(draft)
+            else clearAssessmentDraft(t.id)
+          },
+        })
+      }
     }
+  },
+  onHide() {
+    this.persistDraft()
+  },
+  onUnload() {
+    this.persistDraft()
   },
   computed: {
     answeredCount() {
@@ -220,6 +247,17 @@ export default {
     },
   },
   methods: {
+    restoreDraft(draft) {
+      this.answers = [...draft.answers]
+      this.cur = draft.cursor
+      this.showIntro = false
+      uni.showToast({ title: '已接着上次进度', icon: 'none' })
+    },
+    persistDraft() {
+      if (this.submitted || !this.test || !Array.isArray(this.answers)) return
+      if (!this.answers.some(answer => answer !== null && answer !== undefined && answer !== '')) return
+      saveAssessmentDraft(this.test.id, this.answers, this.cur)
+    },
     startTest() {
       this.showIntro = false
     },
@@ -227,19 +265,25 @@ export default {
       const arr = [...this.answers]
       arr[this.cur] = val
       this.answers = arr
+      this.persistDraft()
     },
     onSlide(e) {
       const arr = [...this.answers]
       arr[this.cur] = e.detail.value
       this.answers = arr
+      this.persistDraft()
     },
     selectChoice(tag) {
       const arr = [...this.answers]
       arr[this.cur] = tag
       this.answers = arr
+      this.persistDraft()
     },
     prev() {
-      if (this.cur > 0) this.cur--
+      if (this.cur > 0) {
+        this.cur--
+        this.persistDraft()
+      }
     },
     next() {
       // Likert submit: only allow when all answered
@@ -250,11 +294,13 @@ export default {
         }
         if (this.cur < this.test.questions.length - 1) {
           this.cur++
+          this.persistDraft()
           return
         }
         if (this.answeredCount < this.test.questions.length) {
           const firstUnanswered = this.answers.findIndex(value => value === null)
           if (firstUnanswered >= 0) this.cur = firstUnanswered
+          this.persistDraft()
           uni.showToast({ title: '请完成所有题目再提交', icon: 'none' })
           return
         }
@@ -272,6 +318,7 @@ export default {
           this.answers = arr
         }
         this.cur++
+        this.persistDraft()
       } else {
         if (this.test.type === 'slider') {
           this.answers = this.answers.map(a => a === null ? Math.ceil(this.test.scale / 2) : a)
@@ -281,6 +328,8 @@ export default {
     },
     _submit() {
       const resultKey = this.test.score(this.answers)
+      this.submitted = true
+      clearAssessmentDraft(this.test.id)
       recordAssessment(this.test.id, this.answers, resultKey).catch(error => {
         console.warn('[assessment] cloud sync deferred', error)
       })

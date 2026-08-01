@@ -1,4 +1,5 @@
 const cloud = require('wx-server-sdk')
+const https = require('https')
 
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()
@@ -118,6 +119,68 @@ async function getDocument(id) {
   }
 }
 
+function isPrivateHost(hostname) {
+  const host = String(hostname || '').toLowerCase()
+  if (!host || host === 'localhost' || host.endsWith('.local')) return true
+  if (host === '169.254.169.254' || host === 'metadata.google.internal') return true
+  if (/^127\./.test(host) || /^10\./.test(host) || /^192\.168\./.test(host)) return true
+  const match = host.match(/^172\.(\d+)\./)
+  return !!(match && Number(match[1]) >= 16 && Number(match[1]) <= 31)
+}
+
+function requestMedia(url, redirects = 0) {
+  return new Promise(resolve => {
+    let parsed
+    try { parsed = new URL(url) } catch (_) {
+      resolve({ status: 'broken', message: '地址格式不正确' })
+      return
+    }
+    if (parsed.protocol !== 'https:' || isPrivateHost(parsed.hostname)) {
+      resolve({ status: 'broken', message: '只检查公开的 HTTPS 地址' })
+      return
+    }
+    const request = https.request(parsed, { method: 'HEAD', timeout: 1500 }, response => {
+      const code = Number(response.statusCode) || 0
+      const location = response.headers.location
+      response.resume()
+      if (code >= 300 && code < 400 && location && redirects < 3) {
+        let nextUrl = location
+        try { nextUrl = new URL(location, parsed).toString() } catch (_) {}
+        requestMedia(nextUrl, redirects + 1).then(resolve)
+        return
+      }
+      if (code >= 200 && code < 400) {
+        resolve({ status: 'ok', code, message: '可以访问' })
+      } else {
+        resolve({ status: 'broken', code, message: code ? `返回 ${code}` : '无法访问' })
+      }
+    })
+    request.on('timeout', () => request.destroy(new Error('timeout')))
+    request.on('error', error => {
+      resolve({ status: 'broken', message: error && error.message === 'timeout' ? '访问超时' : '网络连接失败' })
+    })
+    request.end()
+  })
+}
+
+async function checkAsset(rawUrl, kind) {
+  const url = cleanString(rawUrl, 1000)
+  if (!url) return { kind, url: '', status: 'missing', message: '尚未填写' }
+  if (/^\/static\//.test(url)) return { kind, url, status: 'ok', message: '随小程序发布' }
+  let checkUrl = url
+  if (/^cloud:\/\//i.test(url)) {
+    try {
+      const result = await cloud.getTempFileURL({ fileList: [url] })
+      checkUrl = result && result.fileList && result.fileList[0] && result.fileList[0].tempFileURL
+      if (!checkUrl) throw new Error('no temp url')
+    } catch (_) {
+      return { kind, url, status: 'broken', message: '云存储文件不存在或无权限' }
+    }
+  }
+  const result = await requestMedia(checkUrl)
+  return { kind, url, ...result }
+}
+
 exports.main = async (event) => {
   const { OPENID } = cloud.getWXContext()
   if (!isAdmin(OPENID)) {
@@ -147,6 +210,32 @@ exports.main = async (event) => {
     if (!ID_PATTERN.test(id)) return { success: false, code: 'INVALID_STORY', message: '故事编号不正确' }
     const story = await getDocument(id)
     return { success: true, story }
+  }
+
+  if (action === 'health') {
+    const id = cleanString(event && event.id, 40).toLowerCase()
+    if (!ID_PATTERN.test(id)) return { success: false, code: 'INVALID_STORY', message: '故事编号不正确' }
+    const item = await getDocument(id)
+    if (!item || (item.status !== 'published' && item.publicVisible !== true)) {
+      return { success: true, checkedAt: Date.now(), story: null }
+    }
+    const snapshot = item.status === 'published' ? item : (item.publishedVersion || item)
+    const assets = await Promise.all([
+      checkAsset(snapshot.cover, 'cover'),
+      checkAsset(snapshot.bgm, 'bgm'),
+      checkAsset(snapshot.tts, 'tts'),
+    ])
+    const issueCount = assets.filter(asset => asset.status !== 'ok').length
+    return {
+      success: true,
+      checkedAt: Date.now(),
+      story: {
+        id: cleanString(snapshot.id || item.id || item._id, 40),
+        title: cleanString(snapshot.title || item.title, 100),
+        assets,
+        issueCount,
+      },
+    }
   }
 
   if (action === 'save') {
